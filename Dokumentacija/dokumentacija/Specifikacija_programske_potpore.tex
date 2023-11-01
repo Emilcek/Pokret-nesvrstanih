@@ -13,9 +13,10 @@
 			
 			\begin{packed_enum}
 				
-				\item Dionik 1
-				\item Dionik 2				
-				\item ...
+				\item Voditelj postaje
+				\item Istraživač	
+				\item Tragač
+				\item Administrator
 				
 			\end{packed_enum}
 			
@@ -23,30 +24,41 @@
 			
 			
 			\begin{packed_enum}
-				\item  \underbar{Aktor 1 (inicijator) može:}
+				\item  \underbar{Voditelj postaje može:}
 				
 				\begin{packed_enum}
 					
-					\item funkcionalnost 1
-					\item funkcionalnost 2
-					\begin{packed_enum}
-						
-						\item  podfunkcionalnost 1 
-						\item  podfunkcionalnost 2
-				
-					\end{packed_enum}
-					\item  funkcionalnost 3
+					\item vidjeti kartu s ponuđenim postajama
+					\item odabrati postaju čiji voditelj želi postati
+					\item odabrati tragače svoje postaje
+					\item definirati način prijevoza svojih tragača - pješke, dronom, automobilom, cross motorom, brodom ili helikopterom
+					\item prihvatiti ili odbiti zahtjev za tragačima od istraživača
 					
 				\end{packed_enum}
 			
-				\item  \underbar{Aktor 2 (sudionik) može:}
+				\item  \underbar{Istraživač može:}
 				
 				\begin{packed_enum}
 					
-					\item funkcionalnost 1
-					\item funkcionalnost 2
+					\item kreirati nove akcije pretraživanja i praćenja životinja
+					\item poslati zahtjev za tragačima voditelju postaje
+					\item podijeliti zadatke tragačima koje je dobio od voditelja postaje
+					\item vidjeti interaktivnu kartu s podacima o pozicijama životinja, životinja, tragača i postaja
+					\item odabrati kriterije filtriranja karte
 					
 				\end{packed_enum}
+				
+				\item  \underbar{Tragač može:}
+				
+				\begin{packed_enum}
+					
+					\item na karti vidjeti svoje zadatke, životinje te ostale tragače na istoj akciji
+					\item Obavljati zadatke koje mu je dodijelio istraživač
+					\item Prilikom obavljanja akcije ostaviti komentar za ostale tragače
+					
+				\end{packed_enum}
+				
+				
 			\end{packed_enum}
 			
 			\eject 
@@ -61,7 +73,7 @@
 					\textit{Funkcionalne zahtjeve razraditi u obliku obrazaca uporabe. Svaki obrazac je potrebno razraditi prema donjem predlošku. Ukoliko u nekom koraku može doći do odstupanja, potrebno je to odstupanje opisati i po mogućnosti ponuditi rješenje kojim bi se tijek obrasca vratio na osnovni tijek.}\\
 					
 
-					\noindent \underbar{\textbf{UC$<$broj obrasca$>$ -$<$ime obrasca$>$}}
+					\noindent \underbar{\textbf{UC1 - Registracija}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }$<$sudionik$>$
@@ -95,8 +107,988 @@
 							
 						\end{packed_item}
 					\end{packed_item}
-				
 					
+					\noindent \underbar{\textbf{UC2 - Prijava u sustav}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$sudionik$>$
+						\item  \textbf{Cilj:} $<$cilj$>$
+						\item  \textbf{Sudionici:} $<$sudionici$>$
+						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$opis korak jedan$>$
+							\item $<$opis korak dva$>$
+							\item $<$opis korak tri$>$
+							\item $<$opis korak četiri$>$
+							\item $<$opis korak pet$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$opis rješenja mogućeg scenarija korak 1$>$
+								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								
+							\end{packed_enum}
+							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC3 - Pregled osobnih podataka}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$sudionik$>$
+						\item  \textbf{Cilj:} $<$cilj$>$
+						\item  \textbf{Sudionici:} $<$sudionici$>$
+						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$opis korak jedan$>$
+							\item $<$opis korak dva$>$
+							\item $<$opis korak tri$>$
+							\item $<$opis korak četiri$>$
+							\item $<$opis korak pet$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$opis rješenja mogućeg scenarija korak 1$>$
+								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								
+							\end{packed_enum}
+							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC4 - Promjena osobnih podataka}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$sudionik$>$
+						\item  \textbf{Cilj:} $<$cilj$>$
+						\item  \textbf{Sudionici:} $<$sudionici$>$
+						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$opis korak jedan$>$
+							\item $<$opis korak dva$>$
+							\item $<$opis korak tri$>$
+							\item $<$opis korak četiri$>$
+							\item $<$opis korak pet$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$opis rješenja mogućeg scenarija korak 1$>$
+								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								
+							\end{packed_enum}
+							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC5 - Brisanje korisničkog računa}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$sudionik$>$
+						\item  \textbf{Cilj:} $<$cilj$>$
+						\item  \textbf{Sudionici:} $<$sudionici$>$
+						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$opis korak jedan$>$
+							\item $<$opis korak dva$>$
+							\item $<$opis korak tri$>$
+							\item $<$opis korak četiri$>$
+							\item $<$opis korak pet$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$opis rješenja mogućeg scenarija korak 1$>$
+								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								
+							\end{packed_enum}
+							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC6 - Potvrda korisnika mailom}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$sudionik$>$
+						\item  \textbf{Cilj:} $<$cilj$>$
+						\item  \textbf{Sudionici:} $<$sudionici$>$
+						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$opis korak jedan$>$
+							\item $<$opis korak dva$>$
+							\item $<$opis korak tri$>$
+							\item $<$opis korak četiri$>$
+							\item $<$opis korak pet$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$opis rješenja mogućeg scenarija korak 1$>$
+								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								
+							\end{packed_enum}
+							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC7 - Potvrda uloge od strane admina}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$sudionik$>$
+						\item  \textbf{Cilj:} $<$cilj$>$
+						\item  \textbf{Sudionici:} $<$sudionici$>$
+						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$opis korak jedan$>$
+							\item $<$opis korak dva$>$
+							\item $<$opis korak tri$>$
+							\item $<$opis korak četiri$>$
+							\item $<$opis korak pet$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$opis rješenja mogućeg scenarija korak 1$>$
+								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								
+							\end{packed_enum}
+							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC8 - Prikazivanje pozicije životinje}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$sudionik$>$
+						\item  \textbf{Cilj:} $<$cilj$>$
+						\item  \textbf{Sudionici:} $<$sudionici$>$
+						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$opis korak jedan$>$
+							\item $<$opis korak dva$>$
+							\item $<$opis korak tri$>$
+							\item $<$opis korak četiri$>$
+							\item $<$opis korak pet$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$opis rješenja mogućeg scenarija korak 1$>$
+								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								
+							\end{packed_enum}
+							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC9 - Prikazivanje pozicije tragača}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$sudionik$>$
+						\item  \textbf{Cilj:} $<$cilj$>$
+						\item  \textbf{Sudionici:} $<$sudionici$>$
+						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$opis korak jedan$>$
+							\item $<$opis korak dva$>$
+							\item $<$opis korak tri$>$
+							\item $<$opis korak četiri$>$
+							\item $<$opis korak pet$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$opis rješenja mogućeg scenarija korak 1$>$
+								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								
+							\end{packed_enum}
+							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC10 - Prikazivanje pozicije postaje}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$sudionik$>$
+						\item  \textbf{Cilj:} $<$cilj$>$
+						\item  \textbf{Sudionici:} $<$sudionici$>$
+						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$opis korak jedan$>$
+							\item $<$opis korak dva$>$
+							\item $<$opis korak tri$>$
+							\item $<$opis korak četiri$>$
+							\item $<$opis korak pet$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$opis rješenja mogućeg scenarija korak 1$>$
+								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								
+							\end{packed_enum}
+							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC11 - Prikaz informacija o životinji}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$sudionik$>$
+						\item  \textbf{Cilj:} $<$cilj$>$
+						\item  \textbf{Sudionici:} $<$sudionici$>$
+						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$opis korak jedan$>$
+							\item $<$opis korak dva$>$
+							\item $<$opis korak tri$>$
+							\item $<$opis korak četiri$>$
+							\item $<$opis korak pet$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$opis rješenja mogućeg scenarija korak 1$>$
+								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								
+							\end{packed_enum}
+							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC12 - Odabir postaje}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$sudionik$>$
+						\item  \textbf{Cilj:} $<$cilj$>$
+						\item  \textbf{Sudionici:} $<$sudionici$>$
+						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$opis korak jedan$>$
+							\item $<$opis korak dva$>$
+							\item $<$opis korak tri$>$
+							\item $<$opis korak četiri$>$
+							\item $<$opis korak pet$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$opis rješenja mogućeg scenarija korak 1$>$
+								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								
+							\end{packed_enum}
+							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC13 - Odabir tragača i definiranje kompetencija tragača}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$sudionik$>$
+						\item  \textbf{Cilj:} $<$cilj$>$
+						\item  \textbf{Sudionici:} $<$sudionici$>$
+						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$opis korak jedan$>$
+							\item $<$opis korak dva$>$
+							\item $<$opis korak tri$>$
+							\item $<$opis korak četiri$>$
+							\item $<$opis korak pet$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$opis rješenja mogućeg scenarija korak 1$>$
+								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								
+							\end{packed_enum}
+							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC14 - Uređivanje kompetencija tragača}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$sudionik$>$
+						\item  \textbf{Cilj:} $<$cilj$>$
+						\item  \textbf{Sudionici:} $<$sudionici$>$
+						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$opis korak jedan$>$
+							\item $<$opis korak dva$>$
+							\item $<$opis korak tri$>$
+							\item $<$opis korak četiri$>$
+							\item $<$opis korak pet$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$opis rješenja mogućeg scenarija korak 1$>$
+								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								
+							\end{packed_enum}
+							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC15 - Brisanje tragača}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$sudionik$>$
+						\item  \textbf{Cilj:} $<$cilj$>$
+						\item  \textbf{Sudionici:} $<$sudionici$>$
+						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$opis korak jedan$>$
+							\item $<$opis korak dva$>$
+							\item $<$opis korak tri$>$
+							\item $<$opis korak četiri$>$
+							\item $<$opis korak pet$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$opis rješenja mogućeg scenarija korak 1$>$
+								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								
+							\end{packed_enum}
+							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC16 - Pregled popisa tragača}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$sudionik$>$
+						\item  \textbf{Cilj:} $<$cilj$>$
+						\item  \textbf{Sudionici:} $<$sudionici$>$
+						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$opis korak jedan$>$
+							\item $<$opis korak dva$>$
+							\item $<$opis korak tri$>$
+							\item $<$opis korak četiri$>$
+							\item $<$opis korak pet$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$opis rješenja mogućeg scenarija korak 1$>$
+								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								
+							\end{packed_enum}
+							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC17 - Pregled zahtjeva}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$sudionik$>$
+						\item  \textbf{Cilj:} $<$cilj$>$
+						\item  \textbf{Sudionici:} $<$sudionici$>$
+						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$opis korak jedan$>$
+							\item $<$opis korak dva$>$
+							\item $<$opis korak tri$>$
+							\item $<$opis korak četiri$>$
+							\item $<$opis korak pet$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$opis rješenja mogućeg scenarija korak 1$>$
+								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								
+							\end{packed_enum}
+							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC18 - Obrada zahtjeva}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$sudionik$>$
+						\item  \textbf{Cilj:} $<$cilj$>$
+						\item  \textbf{Sudionici:} $<$sudionici$>$
+						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$opis korak jedan$>$
+							\item $<$opis korak dva$>$
+							\item $<$opis korak tri$>$
+							\item $<$opis korak četiri$>$
+							\item $<$opis korak pet$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$opis rješenja mogućeg scenarija korak 1$>$
+								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								
+							\end{packed_enum}
+							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC19 - Kreiranje akcije}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$sudionik$>$
+						\item  \textbf{Cilj:} $<$cilj$>$
+						\item  \textbf{Sudionici:} $<$sudionici$>$
+						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$opis korak jedan$>$
+							\item $<$opis korak dva$>$
+							\item $<$opis korak tri$>$
+							\item $<$opis korak četiri$>$
+							\item $<$opis korak pet$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$opis rješenja mogućeg scenarija korak 1$>$
+								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								
+							\end{packed_enum}
+							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC20 - Slanje zahtjeva voditelju}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$sudionik$>$
+						\item  \textbf{Cilj:} $<$cilj$>$
+						\item  \textbf{Sudionici:} $<$sudionici$>$
+						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$opis korak jedan$>$
+							\item $<$opis korak dva$>$
+							\item $<$opis korak tri$>$
+							\item $<$opis korak četiri$>$
+							\item $<$opis korak pet$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$opis rješenja mogućeg scenarija korak 1$>$
+								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								
+							\end{packed_enum}
+							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC21 - Pregled stanja zahtjeva}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$sudionik$>$
+						\item  \textbf{Cilj:} $<$cilj$>$
+						\item  \textbf{Sudionici:} $<$sudionici$>$
+						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$opis korak jedan$>$
+							\item $<$opis korak dva$>$
+							\item $<$opis korak tri$>$
+							\item $<$opis korak četiri$>$
+							\item $<$opis korak pet$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$opis rješenja mogućeg scenarija korak 1$>$
+								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								
+							\end{packed_enum}
+							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC22 - Kreiranje zadataka}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$sudionik$>$
+						\item  \textbf{Cilj:} $<$cilj$>$
+						\item  \textbf{Sudionici:} $<$sudionici$>$
+						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$opis korak jedan$>$
+							\item $<$opis korak dva$>$
+							\item $<$opis korak tri$>$
+							\item $<$opis korak četiri$>$
+							\item $<$opis korak pet$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$opis rješenja mogućeg scenarija korak 1$>$
+								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								
+							\end{packed_enum}
+							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC23 - Dodjela zadataka}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$sudionik$>$
+						\item  \textbf{Cilj:} $<$cilj$>$
+						\item  \textbf{Sudionici:} $<$sudionici$>$
+						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$opis korak jedan$>$
+							\item $<$opis korak dva$>$
+							\item $<$opis korak tri$>$
+							\item $<$opis korak četiri$>$
+							\item $<$opis korak pet$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$opis rješenja mogućeg scenarija korak 1$>$
+								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								
+							\end{packed_enum}
+							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC24 - Definiranje prikaza na karti}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$sudionik$>$
+						\item  \textbf{Cilj:} $<$cilj$>$
+						\item  \textbf{Sudionici:} $<$sudionici$>$
+						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$opis korak jedan$>$
+							\item $<$opis korak dva$>$
+							\item $<$opis korak tri$>$
+							\item $<$opis korak četiri$>$
+							\item $<$opis korak pet$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$opis rješenja mogućeg scenarija korak 1$>$
+								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								
+							\end{packed_enum}
+							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC25 - Postavljanje komentara na karti}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$sudionik$>$
+						\item  \textbf{Cilj:} $<$cilj$>$
+						\item  \textbf{Sudionici:} $<$sudionici$>$
+						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$opis korak jedan$>$
+							\item $<$opis korak dva$>$
+							\item $<$opis korak tri$>$
+							\item $<$opis korak četiri$>$
+							\item $<$opis korak pet$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$opis rješenja mogućeg scenarija korak 1$>$
+								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								
+							\end{packed_enum}
+							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC26 - Pregled komentara}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$sudionik$>$
+						\item  \textbf{Cilj:} $<$cilj$>$
+						\item  \textbf{Sudionici:} $<$sudionici$>$
+						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$opis korak jedan$>$
+							\item $<$opis korak dva$>$
+							\item $<$opis korak tri$>$
+							\item $<$opis korak četiri$>$
+							\item $<$opis korak pet$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$opis rješenja mogućeg scenarija korak 1$>$
+								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								
+							\end{packed_enum}
+							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC27 - Brisanje komentara}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$sudionik$>$
+						\item  \textbf{Cilj:} $<$cilj$>$
+						\item  \textbf{Sudionici:} $<$sudionici$>$
+						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$opis korak jedan$>$
+							\item $<$opis korak dva$>$
+							\item $<$opis korak tri$>$
+							\item $<$opis korak četiri$>$
+							\item $<$opis korak pet$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$opis rješenja mogućeg scenarija korak 1$>$
+								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								
+							\end{packed_enum}
+							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC28 - Prikaz karte s tragačima na akciji}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$sudionik$>$
+						\item  \textbf{Cilj:} $<$cilj$>$
+						\item  \textbf{Sudionici:} $<$sudionici$>$
+						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$opis korak jedan$>$
+							\item $<$opis korak dva$>$
+							\item $<$opis korak tri$>$
+							\item $<$opis korak četiri$>$
+							\item $<$opis korak pet$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$opis rješenja mogućeg scenarija korak 1$>$
+								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								
+							\end{packed_enum}
+							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC29 - Pregled zadatka}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$sudionik$>$
+						\item  \textbf{Cilj:} $<$cilj$>$
+						\item  \textbf{Sudionici:} $<$sudionici$>$
+						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$opis korak jedan$>$
+							\item $<$opis korak dva$>$
+							\item $<$opis korak tri$>$
+							\item $<$opis korak četiri$>$
+							\item $<$opis korak pet$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$opis rješenja mogućeg scenarija korak 1$>$
+								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								
+							\end{packed_enum}
+							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+
 				\subsubsection{Dijagrami obrazaca uporabe}
 					
 					\textit{Prikazati odnos aktora i obrazaca uporabe odgovarajućim UML dijagramom. Nije nužno nacrtati sve na jednom dijagramu. Modelirati po razinama apstrakcije i skupovima srodnih funkcionalnosti.}
