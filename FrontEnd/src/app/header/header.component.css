@@ -1,3 +1,12 @@
-#header{
-    background-color: rgb(161, 103, 74);
+.navbar-container {
+    justify-content: space-between;
+    height: 93px;
+    align-items: center;
+    min-width: 83vw;
+    margin: 20px 30px;
+
+    .header-subtitle {
+        align-self: flex-end;
+        color: #927979;
+    }
 }
