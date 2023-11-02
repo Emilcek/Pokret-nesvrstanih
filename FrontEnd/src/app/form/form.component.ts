@@ -11,19 +11,29 @@ export class FormComponent {
     password:new FormControl('')
   })
   signUpForm=new FormGroup({
-
+    position:new FormControl(''),
+    ability:new FormControl(''),
+    station:new FormControl(''),
+    photo:new FormControl(''),
+    name:new FormControl(''),
+    surname:new FormControl(''),
+    username:new FormControl(''),
+    password:new FormControl(''),
+    email:new FormControl(''),
   })
   signIn(){
-    if(this.signInForm.value.username!=undefined && localStorage.getItem(this.signInForm.value.username) 
-    && this.signInForm.value.password==localStorage.getItem(this.signInForm.value.username)){
-      console.log("Uspješna prijava")
-    }else{
-      console.log("Username or password are invalid or you don't have an account")
+    if(localStorage.getItem(this.signInForm.value.username as string)!==null){
+      console.log(this.signInForm.value)
+    } else {
+      alert("Pogrešno uneseno korisničko ime ili lozinka")
     }
+    
   }
 
   signUp(){
-    
+    if(this.signInForm.pristine){
+      alert("Ispunite sva navedena polja s podacima")
+  }
   }
   showDiv(event:any){
     if(event.target.value=="tragac"){
@@ -37,5 +47,19 @@ export class FormComponent {
       document.getElementById("stations")!.style.display="none"
     }
   }
+
+  abilities=[
+    {id:1,name:'hodanje'},
+    {id:2,name:'dron'},
+    {id:3,name:'auto'},
+    {id:4,name:'brod'},
+    {id:5,name:'cross motor'},
+    {id:6,name:'helikopter'}
+  ]
+
+  stations=[
+    {id:1,name:'Biokovo'},
+    {id:2,name:'Lonjsko polje'}
+  ]
   
 }
