@@ -515,125 +515,66 @@
 					\noindent \underbar{\textbf{UC18 - Obrada zahtjeva}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: }Voditelj
-						\item  \textbf{Cilj:} Odobriti ili odbiti zahtjev
-						\item  \textbf{Sudionici:} Voditelj
-						\item  \textbf{Preduvjet:} Istraživač prethodno poslao zahtjev
+						\item \textbf{Glavni sudionik: } Voditelj
+						\item  \textbf{Cilj:} Prihvatiti/odbaciti zahtjev
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Voditelj je prijavljen i poslan je barem jedan zahtjev od strane istraživača
 						\item  \textbf{Opis osnovnog tijeka:}
 						
-						\item[] \begin{packed_enum}
-
-							\item Istraživač poslao zahtjev							
-							\item Zahtjev stigao do voditelja
-							\item Voditelj donosi odluku na temelju broja dostupnih kvalificiranih ljudi
-							\item Voditelj šalje odgovor na zahtjev istraživaču
-							
+						\item[] \begin{packed_enum}						
+							\item Voditelj odabire opciju "Obrada zahtjeva"
+							\item Voditelju se prikazuje karta na kojoj se nalaze samo tragači koji pripadaju njegovoj postaji
+							\item Voditelju se prikazuju broj tragača potrebnih za akciju te popis zadataka akcije
+							\item Voditelj s obzirom na zadatke odabire kvalificirane tragače  
+							\item Voditelj šalje istraživaču popis tragača ako ima dovoljan broj kvalificiranih tragača, a u suprotnom odbija zahtjev
 						\end{packed_enum}
 					\end{packed_item}
 					
 					\noindent \underbar{\textbf{UC19 - Kreiranje akcije}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: }$<$sudionik$>$
-						\item  \textbf{Cilj:} $<$cilj$>$
-						\item  \textbf{Sudionici:} $<$sudionici$>$
-						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item \textbf{Glavni sudionik: } Istraživač
+						\item  \textbf{Cilj:} Kreiranje nove akcije
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Istraživač je prijavljen u sustav
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 							
-							\item $<$opis korak jedan$>$
-							\item $<$opis korak dva$>$
-							\item $<$opis korak tri$>$
-							\item $<$opis korak četiri$>$
-							\item $<$opis korak pet$>$
+							\item Istraživač odabire opciju "Nova akcija"
+							\item Istraživač odabire broj tragača, potrebne kvalifikacije tragača te upisuje zadatke
 						\end{packed_enum}
-						
-						\item  \textbf{Opis mogućih odstupanja:}
-						
-						\item[] \begin{packed_item}
-							
-							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
-							\item[] \begin{packed_enum}
-								
-								\item $<$opis rješenja mogućeg scenarija korak 1$>$
-								\item $<$opis rješenja mogućeg scenarija korak 2$>$
-								
-							\end{packed_enum}
-							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
-							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
-							
-						\end{packed_item}
 					\end{packed_item}
 					
 					\noindent \underbar{\textbf{UC20 - Slanje zahtjeva voditelju}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: }$<$sudionik$>$
-						\item  \textbf{Cilj:} $<$cilj$>$
-						\item  \textbf{Sudionici:} $<$sudionici$>$
-						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item \textbf{Glavni sudionik: } Istraživač
+						\item  \textbf{Cilj:} Poslati zahtjev voditelju
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Istraživač je prijavljen u sustav
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 							
-							\item $<$opis korak jedan$>$
-							\item $<$opis korak dva$>$
-							\item $<$opis korak tri$>$
-							\item $<$opis korak četiri$>$
-							\item $<$opis korak pet$>$
+							\item Istraživač šalje voditelju/voditeljima zahtjev za tragačima
 						\end{packed_enum}
-						
-						\item  \textbf{Opis mogućih odstupanja:}
-						
-						\item[] \begin{packed_item}
-							
-							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
-							\item[] \begin{packed_enum}
-								
-								\item $<$opis rješenja mogućeg scenarija korak 1$>$
-								\item $<$opis rješenja mogućeg scenarija korak 2$>$
-								
-							\end{packed_enum}
-							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
-							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
-							
-						\end{packed_item}
 					\end{packed_item}
 					
 					\noindent \underbar{\textbf{UC21 - Pregled stanja zahtjeva}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: }$<$sudionik$>$
-						\item  \textbf{Cilj:} $<$cilj$>$
-						\item  \textbf{Sudionici:} $<$sudionici$>$
-						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item \textbf{Glavni sudionik: } Istraživač
+						\item  \textbf{Cilj:} Uvid u stanje zahtjeva
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Istraživač je prijavljen u sustav te je poslan barem jedan zahtjev
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 							
-							\item $<$opis korak jedan$>$
-							\item $<$opis korak dva$>$
-							\item $<$opis korak tri$>$
-							\item $<$opis korak četiri$>$
-							\item $<$opis korak pet$>$
+							\item Istraživač odabire opciju "Određeni zahtjev" (npr. "Postavljanje GPS-uređaja na zeca)")
+							\item Istraživaču se prikazuje stanje "Određenog zahtjeva", je li zahtjev odobren, odbijen ili je u stanju čekanja 
 						\end{packed_enum}
-						
-						\item  \textbf{Opis mogućih odstupanja:}
-						
-						\item[] \begin{packed_item}
-							
-							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
-							\item[] \begin{packed_enum}
-								
-								\item $<$opis rješenja mogućeg scenarija korak 1$>$
-								\item $<$opis rješenja mogućeg scenarija korak 2$>$
-								
-							\end{packed_enum}
-							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
-							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
-							
-						\end{packed_item}
 					\end{packed_item}
 					
 					\noindent \underbar{\textbf{UC22 - Kreiranje zadataka}}
