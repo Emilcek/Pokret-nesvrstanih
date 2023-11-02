@@ -43,8 +43,9 @@
 					\item kreirati nove akcije pretraživanja i praćenja životinja
 					\item poslati zahtjev za tragačima voditelju postaje
 					\item podijeliti zadatke tragačima koje je dobio od voditelja postaje
-					\item vidjeti interaktivnu kartu s podacima o pozicijama životinja, životinja, tragača i postaja
+					\item vidjeti interaktivnu kartu s podacima o pozicijama životinja, tragača i postaja
 					\item odabrati kriterije filtriranja karte
+					\item ostaviti komentar tragačima na akciji
 					
 				\end{packed_enum}
 				
@@ -76,30 +77,29 @@
 					\noindent \underbar{\textbf{UC1 - Registracija}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }$<$Korisnik$>$
-						\item  \textbf{Cilj:} $<$Stvoriti korisnicki račun za pristup sustavu$>$
-						\item  \textbf{Sudionici:} $<$Baza podataka$>$
-						\item  \textbf{Preduvjet:} $<$-$>$
+						\item \textbf{Glavni sudionik: }Korisnik
+						\item  \textbf{Cilj:} Stvoriti korisnički račun za pristup sustavu
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} -
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item $<$Korisnik odabire opciju za registraciju$>$
-							\item $<$Korisnik popunjava korisnicke podatke$>$
-							\item $<$Korisnik prima e-mail za verifikaciju korisničkog računa$>$
+							\item Korisnik odabire opciju za registraciju
+							\item Korisnik popunjava korisničke podatke
+							\item Korisnik prima e-mail za verifikaciju korisničkog računa
 						\end{packed_enum}
 						
 						\item  \textbf{Opis mogućih odstupanja:}
 						
 						\item[] \begin{packed_item}
 	
-							\item[2.a] $<$Odabir već zauzetog korisničkog imena ili e-mail adrese, unos podataka
-							u pogrešnom formatu, nepotpun unos podataka$>$
+							\item[2.a] Odabir već zauzetog korisničkog imena ili e-mail adrese, unos podataka
+							u pogrešnom formatu, nepotpun unos podataka
 							\item[] \begin{packed_enum}
 								
-								\item $<$Sustav obavjestava korisnika o neuspjeloj registraciji i upućuje na pogrešna polja$>$
-								\item $<$Korisnik mijenja ili nadopunjava potrebne podatke te zavrsava unos ili odustaje od ˇ
-								registracije$>$
+								\item Sustav obavještava korisnika o neuspjeloj registraciji i upućuje na pogrešna polja
+								\item Korisnik mijenja ili nadopunjava potrebne podatke te završava unos ili odustaje od registracije
 								
 							\end{packed_enum}
 							
@@ -109,17 +109,17 @@
 					\noindent \underbar{\textbf{UC2 - Prijava u sustav}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: }$<$Korisnik, administrator$>$
-						\item  \textbf{Cilj:} $<$Dobiti pristup korisničkom sučelju$>$
-						\item  \textbf{Sudionici:} $<$Baza podataka$>$
-						\item  \textbf{Preduvjet:} $<$Registracija ili ništa u slučaju administratora$>$
+						\item \textbf{Glavni sudionik: }Korisnik, administrator
+						\item  \textbf{Cilj:} Dobiti pristup korisničkom sučelju
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Registracija ili ništa u slučaju administratora
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 							
-							\item $<$Unos korisničkog imena i lozinke$>$
-							\item $<$Potvrda o ispravnosti unesenih podataka$>$
-							\item $<$Pristup korisničkom sučelju$>$
+							\item Unos korisničkog imena i lozinke
+							\item Potvrda o ispravnosti unesenih podataka
+							\item Pristup korisničkom sučelju
 
 						\end{packed_enum}
 						
@@ -127,11 +127,11 @@
 						
 						\item[] \begin{packed_item}
 							
-							\item[2.a] $<$Neispravno korisničko ime ili lozinka$>$
+							\item[2.a] Neispravno korisničko ime ili lozinka
 							\item[] \begin{packed_enum}
 
-								\item $<$Sustav obavještava korisnika o neispravnom unosu podataka i traži korisnika da ponovi unos ili da se registrira$>$
-								\item $<$Korisnik unosi ispravne podatke te završava unos ili odustaje od prijave$>$
+								\item Sustav obavještava korisnika o neispravnom unosu podataka i traži korisnika da ponovi unos ili da se registrira
+								\item Korisnik unosi ispravne podatke te završava unos ili odustaje od prijave
 								
 							\end{packed_enum}
 							
@@ -141,16 +141,16 @@
 					\noindent \underbar{\textbf{UC3 - Pregled osobnih podataka}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: }$<$Korisnik$>$
-						\item  \textbf{Cilj:} $<$Pregledati osobne podatke$>$
-						\item  \textbf{Sudionici:} $<$:Baza podataka$>$
-						\item  \textbf{Preduvjet:} $<$Korisnik je prijavljen$>$
+						\item \textbf{Glavni sudionik: }Korisnik
+						\item  \textbf{Cilj:} Pregledati osobne podatke
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 							
-							\item $<$Korisnik odabire opciju ”Prikaz osobnih podataka”$>$
-							\item $<$Sustav prikazuje osobne podatke korisnika$>$
+							\item Korisnik odabire opciju ”Prikaz osobnih podataka”
+							\item Sustav prikazuje osobne podatke korisnika
 						\end{packed_enum}
 
 					\end{packed_item}
@@ -158,30 +158,30 @@
 					\noindent \underbar{\textbf{UC4 - Promjena osobnih podataka}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: }$<$Korisnik$>$
-						\item  \textbf{Cilj:} $<$Promijeniti osobne podatke$>$
-						\item  \textbf{Sudionici:} $<$Baza podataka$>$
-						\item  \textbf{Preduvjet:} $<$Korisnik je prijavljen$>$
+						\item \textbf{Glavni sudionik: }Korisnik
+						\item  \textbf{Cilj:} Promijeniti osobne podatke
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 							
-							\item $<$Korisnik odabire opciju ”Prikaz osobnih podataka”$>$
-							\item $<$Korisnik odabire opciju ”Ažuriraj osobne podatake”$>$
-							\item $<$Korisnik mijenja svoje osobne podatke$>$
-							\item $<$Korisnik sprema promjene$>$
-							\item $<$Baza podataka se ažurira $>$
+							\item Korisnik odabire opciju ”Prikaz osobnih podataka”
+							\item Korisnik odabire opciju ”Ažuriraj osobne podatke”
+							\item Korisnik mijenja svoje osobne podatke
+							\item Korisnik sprema promjene
+							\item Baza podataka se ažurira
 						\end{packed_enum}
 						
 						\item  \textbf{Opis mogućih odstupanja:}
 						
 						\item[] \begin{packed_item}
 							
-							\item[3.a] $<$Unos podataka u pogrešnom formatu, brisanje podataka iz obaznih polja$>$
+							\item[3.a] Unos podataka u pogrešnom formatu, brisanje podataka iz obaveznih polja
 							\item[] \begin{packed_enum}
 								
-								\item $<$Sustav obavještava korisnika o neispravnom unosu podataka i traži korisnika da ponovi unos$>$
-								\item $<$Korisnik unosi ispravne podatke ili odustaje od izmjena$>$
+								\item Sustav obavještava korisnika o neispravnom unosu podataka i traži korisnika da ponovi unos
+								\item Korisnik unosi ispravne podatke ili odustaje od izmjena
 								
 							\end{packed_enum}
 							
@@ -191,18 +191,18 @@
 					\noindent \underbar{\textbf{UC5 - Brisanje korisničkog računa}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: }$<$Korisnik$>$
-						\item  \textbf{Cilj:} $<$Izbrisati svoj korisnicki račun$>$
-						\item  \textbf{Sudionici:} $<$Baza podataka$>$
-						\item  \textbf{Preduvjet:} $<$Korisnik je prijavljen$>$
+						\item \textbf{Glavni sudionik: }Korisnik
+						\item  \textbf{Cilj:} Izbrisati svoj korisnički račun
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 							
-							\item $<$Korisnik odabire opciju ”Prikaz osobnih podataka”$>$
-							\item $<$Korisnik odabire opciju ”Izbriši korisnički račun”$>$
-							\item $<$Korisnicki račun se izbriše iz baze podataka$>$
-							\item $<$Otvara se početna stranica$>$
+							\item Korisnik odabire opciju ”Prikaz osobnih podataka”
+							\item Korisnik odabire opciju ”Izbriši korisnički račun”
+							\item Korisnički račun se izbriše iz baze podataka
+							\item Otvara se početna stranica
 						\end{packed_enum}
 
 					\end{packed_item}
@@ -210,8 +210,8 @@
 					\noindent \underbar{\textbf{UC6 - Potvrda korisnika mailom}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: } Korisnik
-						\item  \textbf{Cilj:} Potvrditi korisički račun e-mailom
+						\item \textbf{Glavni sudionik: }Korisnik
+						\item  \textbf{Cilj:} Potvrditi korisnički račun e-mailom
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} Korisnik je upisao podatke potrebne za registraciju
 						\item  \textbf{Opis osnovnog tijeka:}
@@ -246,12 +246,12 @@
 						\end{packed_item}
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC7 - Potvrda uloge od strane admina}}
+					\noindent \underbar{\textbf{UC7 - Potvrda uloge od strane administratora}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Administrator
 						\item  \textbf{Cilj:} Potvrditi registraciju voditelja postaje ili istraživača
-						\item  \textbf{Sudionici:} Istraživač, tragač i baza podataka
+						\item  \textbf{Sudionici:} Istraživač, voditelj postaje, baza podataka
 						\item  \textbf{Preduvjet:} Istraživač ili voditelj su unijeli svoje podatke za registraciju
 						\item  \textbf{Opis osnovnog tijeka:}
 						
@@ -260,7 +260,7 @@
 							\item Administrator se prijavljuje u sustav
 							\item Administrator vidi popis neriješenih registracija
 							\item Administrator otvara jednu od registracija i pregleda
-							\item Administator prihvati ili odbije registraciju
+							\item Administrator prihvati ili odbije registraciju
 							\item Istraživač ili voditelj dobiju obavijest o prihvaćenoj/odbijenoj registraciji
 						\end{packed_enum}
 						
@@ -270,7 +270,7 @@
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionici: }Administrator, istraživač i tragač
-						\item  \textbf{Cilj:} Prikaz pozijcije životinje na karti
+						\item  \textbf{Cilj:} Prikaz pozicije životinje na karti
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} -
 						\item  \textbf{Opis osnovnog tijeka:}
@@ -289,7 +289,7 @@
 						\item \textbf{Glavni sudionik: } Korisnik
 						\item  \textbf{Cilj:} Prikaz pozicije tragača na karti
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} -
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -307,14 +307,14 @@
 						\item \textbf{Glavni sudionik: } Korisnik
 						\item  \textbf{Cilj:} Na karti pokazati geografsku poziciju postaje
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} -
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 							
 							\item Korisnik odabire opciju "Postaje"
 							\item Aplikacija pokazuje kartu sa svim postajama
-							\item Korisnik u polje predodređeno za tekst upisuje ime postaje čiju geografsku poziciju želi detaljnije pogledat
+							\item Korisnik u polje predodređeno za tekst upisuje ime postaje čiju geografsku poziciju želi detaljnije pogledati
 						\end{packed_enum}
 						
 					\end{packed_item}
@@ -322,7 +322,7 @@
 					\noindent \underbar{\textbf{UC11 - Prikaz informacija o životinji}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: } Istraživač i tragač
+						\item \textbf{Glavni sudionik: }Istraživač i tragač
 						\item  \textbf{Cilj:} Prikaz informacija o pojedinoj životinji (povijest kretanja i trenutna lokacija, opis jedinke, slika i naziv vrste)
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} -
@@ -331,7 +331,8 @@
 						\item[] \begin{packed_enum}
 							
 							\item Istraživaču i tragaču su na karti prikazane GPS lokacije životinja
-							\item Klikom na određenu životinju/GPS lokaciju otvaraju im se podaci o životinji
+							\item Kliknu na određenu životinju/GPS lokaciju 
+							\item Otvaraju im se podaci o životinji
 						\end{packed_enum}
 						
 					\end{packed_item}
@@ -340,15 +341,16 @@
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: } Voditelj
-						\item  \textbf{Cilj:} Voditelj odabire postaju koje nemaju voditelja
+						\item  \textbf{Cilj:} Voditelj odabire postaju koja nema voditelja
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Registracija
+						\item  \textbf{Preduvjet:} Voditelj je registriran i potvrđen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 							
 							\item Nakon registracije voditelju se prikazuje karta na kojoj su označene postaje bez voditelja
 							\item Voditelj proizvoljno bira postaju
+							\item Promjene se spremaju u bazu
 						\end{packed_enum}
 						
 						\item  \textbf{Opis mogućih odstupanja:}
@@ -370,7 +372,7 @@
 						
 						\item \textbf{Glavni sudionik: } Voditelj
 						\item  \textbf{Cilj:} Odabir tragača unutar jedne postaje te definiranje kompetencija pojedinog tragača
-						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Sudionici:} Baza podataka, tragač
 						\item  \textbf{Preduvjet:} Voditelj je odabrao postaju
 						\item  \textbf{Opis osnovnog tijeka:}
 						
@@ -378,6 +380,7 @@
 							
 							\item Nakon odabira postaje voditelju se prikazuje popis svih tragača koji nisu raspoređeni ni u jednoj postaji
 							\item Voditelj klikom odabire tragače i njihove kompetencije
+							\item Tragaču i u bazi se ažuriraju promjene
 						\end{packed_enum}
 						
 						\item  \textbf{Opis mogućih odstupanja:}
@@ -387,7 +390,7 @@
 							\item[2.a] Svi su registrirani tragači dodijeljeni nekoj postaji 
 							\item[] \begin{packed_enum}
 								
-								\item  Voditelj čeka da se registrira novi tragač ili da tragač ode iz postaje kojoj je dodijeljen
+								\item  Voditelj čeka da se registrira novi tragač ili da tragač bude otpušten iz postaje kojoj je dodijeljen
 								
 								
 							\end{packed_enum}
@@ -419,7 +422,7 @@
 						
 						\item \textbf{Glavni sudionik: }Voditelj
 						\item  \textbf{Cilj:} Trajno brisanje tragača iz postaje
-						\item  \textbf{Sudionici:} Baza podataka,voditelj
+						\item  \textbf{Sudionici:} Baza podataka, voditelj
 						\item  \textbf{Preduvjet:} Tragač je dio voditeljeve postaje
 						\item  \textbf{Opis osnovnog tijeka:}
 						
