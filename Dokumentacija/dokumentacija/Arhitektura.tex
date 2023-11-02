@@ -8,8 +8,38 @@
 		\item 	\textit{organizaciju sustava s najviše razine apstrakcije (npr. klijent-poslužitelj, baza podataka, datotečni sustav, grafičko sučelje)}
 		\item 	\textit{organizaciju aplikacije (npr. slojevi frontend i backend, MVC arhitektura) }		
 	\end{itemize}
-
 	
+		\begin{center}
+		\includegraphics[width=0.7\textwidth]{slike/arh.png} %veličina u odnosu na širinu linije
+	\end{center}
+
+	Arhitektura sustava može se podijeliti na tri glavna podsustava:
+	
+	\begin{itemize}
+		\item \textit {Web poslužitelj} je odgovoran za komunikaciju klijenta i web aplikacije. Klijent je web preglednik - prevoditelj koji stranicu pisanu u kodu interpretira u web stranicu razumljivu korisnicima.  Korisnik putem web preglednika šalje zahtjev web poslužitelju. Komunikacija se odvija protokolom za prijenos informacija na webu - HTTP (HyperText Transfer Protocol). Web poslužitelj prima zahtjeve od korisnika putem web preglednika i prosljeđuje ih web aplikaciji na daljnju obradu.
+		
+		\item \textit {Web aplikacija} predstavlja središte sustava i obrađuje zahtjeve koje prima od korisnika putem web poslužitelja. Ovisno o zahtjevu, pristupa bazi podataka kako bi dohvatila ili ažurirala podatke.
+		
+		\item \textit {Baza podataka} je podsustav za trajnu pohranu podataka koji se koriste u aplikaciji. Web aplikacija komunicira s bazom podataka kako bi dohvatila, ažurirala, brisala ili pohranila podatke prema korisničkim zahtjevima. Podaci se strukturirano pohranjuju i dohvaćaju putem upita. \newline
+		
+	\end{itemize}
+	
+		Arhitektura sustava temelji se na MVC (Model-View-Controller) konceptu. Ovaj pristup omogućuje jasnu podjelu odgovornosti unutar sustava, olakšava održavanje, testiranje i proširivost aplikacije. 
+		
+		\begin{center}
+			\includegraphics[width=0.4\textwidth]{slike/mvc.png} %veličina u odnosu na širinu linije
+		\end{center}
+		
+		\begin{itemize}
+			\item \textit{Model} predstavlja podatke i poslovnu logiku aplikacije. Model je odgovoran za dohvaćanje, pohranu i upravljanje podacima. Komunicira s Controllerom i obavještava ga o ažuriranim informacijama.
+			
+			\item \textit{View} predstavlja korisničko sučelje aplikacije. Sve što korisnik vidi je dio Viewa. On prikazuje podatke koje dobiva od Modela.
+			
+			\item \textit{Controller} je posrednik između Modela i Viewa. Prima korisničke zahtjeve iz Viewa, interpretira ih i odabire odgovarajuće akcije. Ovisno o korisničkom zahtjevu, Controller može ažurirati Model (kao što je spremanje podataka u bazu) i/ili ažurirati View (kao što je prikazivanje novih podataka na web stranici). Controller šalje informacije od Viewa prema Modelu, a zatim ažurirane podatke iz Modela šalje natrag Viewu za prikaz korisnicima.
+		\end{itemize}
+		
+		 
+		Aplikacija ima slojeve frontend i backend, te bazu podataka. Baza podataka zadužena za pohranu podataka naše web aplikacije je PostgreSQL. Iz nje backend sloj dohvaća odatke koristeći Spring Boot tehnologiju. Za frontend sloj koji korisniku prikazuje podatke koje dobiva iz backenda putem API-a koristimo Angular.
 		
 
 		

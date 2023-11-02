@@ -429,6 +429,7 @@
 							\item Voditelj ga briše iz svoje postaje
 							\item Unešena promjena se sprema u bazu podataka
 							\item Tragač dobiva informaciju o voditeljevoj odluci
+							\item Tragač postaje dostupan ostalim voditeljima i može biti izabran za drugu postaju
 						\end{packed_enum}
 					\end{packed_item}
 					
@@ -436,16 +437,16 @@
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Voditelj
-						\item  \textbf{Cilj:} Voditeljev pregled svih tragača
-						\item  \textbf{Sudionici:} Baza podataka,voditelj
+						\item  \textbf{Cilj:} Voditeljev pregled svih tragača u njegovoj postaji
+						\item  \textbf{Sudionici:} Baza podataka, voditelj
 						\item  \textbf{Preduvjet:} Tragač je dio voditeljeve postaje
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 							
-							\item Voditelj odabire tragače svoje postaje
+							\item Voditelj odabire prikaz tragača svoje postaje
 							\item Voditelju se prikaže popis njegovih tragača
-							\item Unešene promjene spremaju se u bazu podataka
+							\item Voditelj ima mogućnost brisati i uređivati podatke svojih tragača
 						\end{packed_enum}
 					\end{packed_item}
 					
@@ -454,15 +455,17 @@
 						
 						\item \textbf{Glavni sudionik: }Voditelj
 						\item  \textbf{Cilj:} Započeti komunikaciju između voditelja i istraživača 
-						\item  \textbf{Sudionici:} Voditelj,istraživač
+						\item  \textbf{Sudionici:} Voditelj, istraživač
 						\item  \textbf{Preduvjet:} -
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 							
 							\item Istraživač voditelju šalje zahtjev za tragačima
-							\item U zahtjevu zapisan broj potrebnih ljudi i zadaci
-							\item Voditelj dobiva zahtjev te dalje slijedi obrada
+							\item U zahtjevu je zapisan broj potrebnih ljudi i zadaci u akciji
+							\item Voditelj dobiva zahtjev
+							\item Voditelj može pregledati sve svoje zahtjeve
+							\item Voditelj može odabrati zahtjev koji želi obraditi
 						\end{packed_enum}
 					\end{packed_item}
 					
@@ -478,9 +481,9 @@
 						\item[] \begin{packed_enum}						
 							\item Voditelj odabire opciju "Obrada zahtjeva"
 							\item Voditelju se prikazuje karta na kojoj se nalaze samo tragači koji pripadaju njegovoj postaji
-							\item Voditelju se prikazuju broj tragača potrebnih za akciju te popis zadataka akcije
+							\item Voditelju se prikazuje broj tragača potrebnih za akciju te popis zadataka akcije
 							\item Voditelj s obzirom na zadatke odabire kvalificirane tragače  
-							\item Voditelj šalje istraživaču popis tragača ako ima dovoljan broj kvalificiranih tragača, a u suprotnom odbija zahtjev
+							\item Ako ima dovoljan broj kvalificiranih tragača, voditelj šalje popis istraživaču od kojeg je dobio zahtjev, a u suprotnom odbija zahtjev
 						\end{packed_enum}
 					\end{packed_item}
 					
@@ -489,7 +492,7 @@
 						
 						\item \textbf{Glavni sudionik: } Istraživač
 						\item  \textbf{Cilj:} Kreiranje nove akcije
-						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Sudionici:} Baza podataka, tragači
 						\item  \textbf{Preduvjet:} Istraživač je prijavljen u sustav
 						\item  \textbf{Opis osnovnog tijeka:}
 						
@@ -506,12 +509,12 @@
 						\item \textbf{Glavni sudionik: } Istraživač
 						\item  \textbf{Cilj:} Poslati zahtjev voditelju
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Istraživač je prijavljen u sustav
+						\item  \textbf{Preduvjet:} Istraživač je kreirao novu akciju.
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 							
-							\item Istraživač šalje voditelju/voditeljima zahtjev za tragačima
+							\item Istraživač šalje voditelju/voditeljima zahtjev za tragačima s napisanim zadacima
 						\end{packed_enum}
 					\end{packed_item}
 					
@@ -537,7 +540,7 @@
 						\item \textbf{Glavni sudionik: }Istraživač
 						\item  \textbf{Cilj:} Stvoriti zadatke za tragače
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Istraživač je prijavljen u sustav
+						\item  \textbf{Preduvjet:} Istraživač je u postupku kreiranja akcije
 						\item  \textbf{Opis osnovnog tijeka:} 
 						\item[] \begin{packed_enum}
 							
@@ -557,6 +560,7 @@
 						
 						\item[] \begin{packed_enum}
 							
+							\item Istraživaču se prikaže lista zadataka u akciji
 							\item Istraživaču se prilaže lista tragača kompatibilnih za određene zadatke
 							\item Istraživač odabire koji tragač će obaviti pojedine zadatke
 						\end{packed_enum}
@@ -582,7 +586,7 @@
 					\noindent \underbar{\textbf{UC25 - Postavljanje komentara na karti}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: }Tragač,Istraživač
+						\item \textbf{Glavni sudionik: }Tragač, Istraživač
 						\item  \textbf{Cilj:} Informiranje i komunikacija istraživača i/ili tragača na akciji 
 						\item  \textbf{Sudionici:} Istraživač, tragač
 						\item  \textbf{Preduvjet:} Akcija je u tijeku 
@@ -590,7 +594,7 @@
 						
 						\item[] \begin{packed_enum}
 							
-							\item Istraživač/Tragač označuje poziciju na karti 
+							\item Istraživač/Tragač označava poziciju na karti 
 							\item Istraživač/Tragač zapisuje komentar
 						\end{packed_enum}
 				
@@ -608,7 +612,7 @@
 						\item[] \begin{packed_enum}
 							
 							\item Istraživač/tragač filtrira kartu kako bi pokazivala komentare
-							\item Označuje određeni komentar
+							\item Odabire komentar koji želi pročitati
 						\end{packed_enum}
 						
 						
@@ -625,7 +629,7 @@
 						
 						\item[] \begin{packed_enum}
 							
-							\item Glavni sudionik odabire svoj komentar
+							\item Glavni sudionik odabire komentar
 							\item Glavni sudionik odabire opciju "Obriši komentar"
 							\item Komentar se briše iz baze podataka
 							\item Komentar se više ne prikazuje istraživačima i tragačima
@@ -643,7 +647,7 @@
 						
 						\item[] \begin{packed_enum}
 							
-							\item Korisnik odabire prikaz karte
+							\item Korisnik odabire prikaz karte s tragačima
 							\item Aplikacija prikazuje kartu s lokacijama tragača na akciji
 						\end{packed_enum}
 					\end{packed_item}
