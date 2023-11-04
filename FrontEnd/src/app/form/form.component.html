@@ -1,62 +1,69 @@
 <div class="login-wrap">
 	<div id="title-signIn">WILD TRACK</div>
 	<div class="login-html">
-		<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
-		<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+		<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Prijava</label>
+		<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Registracija</label>
 		<div class="login-form">
-			<div class="sign-in-htm">
+			<form [formGroup]="signInForm" class="sign-in-htm" (ngSubmit)="signIn()">
 				<div class="group">
-					<label for="user" class="label">Username</label>
-					<input id="user" type="text" class="input">
+					<label for="user" class="label">Korisničko ime</label>
+					<input uniqe id="user" type="text" class="input" placeholder="Unesi korisničko ime" formControlName="username">
 				</div>
 				<div class="group">
-					<label for="pass" class="label">Password</label>
-					<input id="pass" type="password" class="input" data-type="password">
+					<label for="pass" class="label">Lozinka</label>
+					<input id="pass" type="password" class="input" data-type="password" placeholder="Unesi lozinku" formControlName="password">
 				</div>
 				<div class="group">
-					<input id="check" type="checkbox" class="check" checked>
+					<input type="submit" class="button" value="Prijavi se">
 				</div>
-				<div class="group">
-					<input type="submit" class="button" value="Sign In">
-				</div>
-			</div>
-			<div class="sign-up-htm">
+			</form>
+			<form class="sign-up-htm" [formGroup]="signUpForm" (ngSubmit)="signUp()">
                 <div class="group">
-                    <label for="pass" class="label">Position</label>
-					<select name="position" id="pos">
+                    <label for="pass" class="label">Uloga</label>
+					<select name="position" id="pos" formControlName="position" (change)="showDiv($event)">
+						<option value="placeholder" [selected]="true" [hidden]="true">Odaberi ulogu...</option>
                         <option value="voditeljPostaje">Voditelj postaje</option>
                         <option value="strazivac">Istraživač</option>
                         <option value="tragac">Tragač</option>
                     </select>
 				</div>
+				<div class="group" id="abilities">
+                    <label for="pass" class="label">Odaberite sposobnosi</label>
+					
+				</div>
+				<div class="group" id="stations">
+                    <label for="pass" class="label">Odaberite postaju</label>
+					<span>Karta</span>
+				</div>
                 <div class="group">
-					<label for="pass" class="label">Photo</label>
-					<input type="file" id="myFile" name="filename">
+					<label for="pass" class="label">Osobna fotografija</label>
+					<input type="file" id="myFile" name="filename" formControlName="photo"
+					accept="image/png, image/jpeg, image/jpg">
 				</div>
 				<div class="group">
-					<label for="user" class="label">Name</label>
-					<input id="user" type="text" class="input" required >
+					<label for="user" class="label">Ime</label>
+					<input id="user" type="text" class="input" required formControlName="name">
 				</div>
 				<div class="group">
-					<label for="user" class="label">Surname</label>
-					<input id="user" type="text" class="input">
+					<label for="user" class="label">Prezime</label>
+					<input id="user" type="text" class="input" formControlName="surname">
 				</div>
 				<div class="group">
-					<label for="user" class="label">Username</label>
-					<input id="user" type="text" class="input">
+					<label for="user" class="label">Korisničko ime</label>
+					<input id="user" type="text" class="input" formControlName="username">
 				</div>
 				<div class="group">
-					<label for="pass" class="label">Password</label>
-					<input id="pass" type="password" class="input" data-type="password">
+					<label for="pass" class="label">Lozinka</label>
+					<input id="pass" type="password" class="input" data-type="password" formControlName="password">
 				</div>
 				<div class="group">
-					<label for="pass" class="label">Email Address</label>
-					<input id="pass" type="email" class="input">
+					<label for="pass" class="label">Email adresa</label>
+					<input id="pass" type="email" class="input" formControlName="email">
 				</div>
 				<div class="group">
-					<input type="submit" class="button" value="Sign Up">
+					<input type="submit" class="button" value="Sign Up" >
 				</div>
-			</div>
+			</form>
 		</div>
 	</div>
 </div>
