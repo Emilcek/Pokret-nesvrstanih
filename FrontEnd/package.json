@@ -19,8 +19,11 @@
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
     "@ng-select/ng-select": "^11.2.0",
+    "json": "^11.0.0",
+    "json-serve": "^0.1.0",
     "ng-multiselect-dropdown": "^1.0.0",
     "rxjs": "~7.8.0",
+    "server": "^1.0.38",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
   },
