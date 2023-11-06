@@ -679,11 +679,28 @@
 				
 			\subsection{Sekvencijski dijagrami}
 				
-				\textbf{\textit{dio 1. revizije}}\\
+				\textbf{\textit{Obrazac uporabe UC19-Kreiranje akcije}}\\
 				
-				\textit{Nacrtati sekvencijske dijagrame koji modeliraju najvažnije dijelove sustava (max. 4 dijagrama). Ukoliko postoji nedoumica oko odabira, razjasniti s asistentom. Uz svaki dijagram napisati detaljni opis dijagrama.}
+				\textit{Istraživač zahtjeva kreiranje akcije te se otvara ekran za kreiranje akcije. Istraživač upisuje naslov i odabire postaju kojoj će poslati akciju iz liste postaja koju mu vraća poslužitelj. Istraživač zatražuje dodavanje zadatka te odabire koji zadatak treba obaviti iz liste koju mu vraća poslužitelj. Također, odabire kompetencije koje tragač mora imati za pripadajući zadatak iz liste koju mu vraća poslužitelj. Označuje poziciju na karti gdje treba izvršiti zadatak. Ako istraživač želi dodati detaljan opis upisuje opis u odgovarajući kvadrat. Nakon unesenih svih obveznih podataka, istraživač dodaje zadatak u akciju. Ponavlja proces dodavanja zadataka dok nije upisan željeni broj zadataka. Nakon toga poslužitelju šalje zahtjev za spremanjem akcije. Ako je zahtjev uspješno proveden poslužitelj ispisuje poruku: Akcija poslana.}
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{slike/UC19-KreiranjeAkcije} %veličina u odnosu na širinu linije
+					\caption{Sekvencijski dijagram za UC19}
+					\label{fig:promjene2} %label mora biti drugaciji za svaku sliku
+				\end{figure}
 				\eject
+				
 	
+				\textbf{\textit{Obrazac uporabe UC25-Postavljanje komentara na karti}}\\
+				
+				\textit{Tragač ili istraživač zatražuje dodavanje komentara na kartu te mu se omogućuje odabir pozicije na karti. Nakon što označi poziciju, upisuje komentar. Potvrđuje upis komentara čime se poslužitelju javlja da spremi komentar na zadanu poziciju. Ako je komentar uspješno spremljen, šalje poruku korisniku (tragaču ili istraživaču): Komentar dodan.}
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{slike/UC25-PostavljanjeKomentaraNaKarti} %veličina u odnosu na širinu linije
+					\caption{Sekvencijski dijagram za UC25}
+					\label{fig:promjene2} %label mora biti drugaciji za svaku sliku
+				\end{figure}
+				\eject
+				
+				
 		\section{Ostali zahtjevi}
 		
 			\textbf{\textit{dio 1. revizije}}\\
