@@ -678,10 +678,24 @@
 				\eject		
 				
 			\subsection{Sekvencijski dijagrami}
+			
+			\subsubsection{Obraza uporabe UC8 - Prikazivanje pozicije životinje}
+			
+			Web aplikacija šalje svakih 30 sekundi upit za vrijednosti koordinata GPS-uređaju. Sa GPS-uređaja
+			šalju se koordinate. Web aplikacija uz pomoć dobivenih koordinata zabilježuje
+			poziciju životinje na karti. Nakon određenog vremena (npr. 30 min), podaci
+			mjerenja spremaju se u bazu podataka kako bi se moglo pristupiti povijesti
+			kretanja životinja.
+			
+			\begin{figure}[H]
+				\includegraphics[width=\textwidth]{slike/Sekvencijski_dijagram_za_UC8.PNG} %veličina u odnosu na širinu linije
+				\caption{Sekvencijski dijagram za UC8}
+				\label{fig:Sekvencijski_dijagram_za_UC8} %label mora biti drugaciji za svaku sliku
+			\end{figure}
 				
-				\textbf{\textit{Obrazac uporabe UC19-Kreiranje akcije}}\\
+				\subsubsection{Obrazac uporabe UC19-Kreiranje akcije}
 				
-				\textit{Istraživač zahtjeva kreiranje akcije te se otvara ekran za kreiranje akcije. Istraživač upisuje naslov i odabire postaju kojoj će poslati akciju iz liste postaja koju mu vraća poslužitelj. Istraživač zatražuje dodavanje zadatka te odabire koji zadatak treba obaviti iz liste koju mu vraća poslužitelj. Također, odabire kompetencije koje tragač mora imati za pripadajući zadatak iz liste koju mu vraća poslužitelj. Označuje poziciju na karti gdje treba izvršiti zadatak. Ako istraživač želi dodati detaljan opis upisuje opis u odgovarajući kvadrat. Nakon unesenih svih obveznih podataka, istraživač dodaje zadatak u akciju. Ponavlja proces dodavanja zadataka dok nije upisan željeni broj zadataka. Nakon toga poslužitelju šalje zahtjev za spremanjem akcije. Ako je zahtjev uspješno proveden poslužitelj ispisuje poruku: Akcija poslana.}
+				{Istraživač zahtjeva kreiranje akcije te se otvara ekran za kreiranje akcije. Istraživač upisuje naslov i odabire postaju kojoj će poslati akciju iz liste postaja koju mu vraća poslužitelj. Istraživač zatražuje dodavanje zadatka te odabire koji zadatak treba obaviti iz liste koju mu vraća poslužitelj. Također, odabire kompetencije koje tragač mora imati za pripadajući zadatak iz liste koju mu vraća poslužitelj. Označuje poziciju na karti gdje treba izvršiti zadatak. Ako istraživač želi dodati detaljan opis upisuje opis u odgovarajući kvadrat. Nakon unesenih svih obveznih podataka, istraživač dodaje zadatak u akciju. Ponavlja proces dodavanja zadataka dok nije upisan željeni broj zadataka. Nakon toga poslužitelju šalje zahtjev za spremanjem akcije. Ako je zahtjev uspješno proveden poslužitelj ispisuje poruku: Akcija poslana.}
 				\begin{figure}[H]
 					\includegraphics[width=\textwidth]{slike/UC19-KreiranjeAkcije} %veličina u odnosu na širinu linije
 					\caption{Sekvencijski dijagram za UC19}
@@ -690,9 +704,9 @@
 				\eject
 				
 	
-				\textbf{\textit{Obrazac uporabe UC25-Postavljanje komentara na karti}}\\
+				\subsubsection{Obrazac uporabe UC25-Postavljanje komentara na karti}
 				
-				\textit{Tragač ili istraživač zatražuje dodavanje komentara na kartu te mu se omogućuje odabir pozicije na karti. Nakon što označi poziciju, upisuje komentar. Potvrđuje upis komentara čime se poslužitelju javlja da spremi komentar na zadanu poziciju. Ako je komentar uspješno spremljen, šalje poruku korisniku (tragaču ili istraživaču): Komentar dodan.}
+				{Tragač ili istraživač zatražuje dodavanje komentara na kartu te mu se omogućuje odabir pozicije na karti. Nakon što označi poziciju, upisuje komentar. Potvrđuje upis komentara čime se poslužitelju javlja da spremi komentar na zadanu poziciju. Ako je komentar uspješno spremljen, šalje poruku korisniku (tragaču ili istraživaču): Komentar dodan.}
 				\begin{figure}[H]
 					\includegraphics[width=\textwidth]{slike/UC25-PostavljanjeKomentaraNaKarti} %veličina u odnosu na širinu linije
 					\caption{Sekvencijski dijagram za UC25}
