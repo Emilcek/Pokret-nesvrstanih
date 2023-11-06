@@ -54,8 +54,244 @@
 			\subsection{Opis tablica}
 			
 
-				\textit{Svaku tablicu je potrebno opisati po zadanom predlošku. Lijevo se nalazi točno ime varijable u bazi podataka, u sredini se nalazi tip podataka, a desno se nalazi opis varijable. Svjetlozelenom bojom označite primarni ključ. Svjetlo plavom označite strani ključ}
+				\textit{Svaku tablicu je potrebno opisati po zadanom predlošku. Lijevo se nalazi točno ime varijable u bazi podataka, u sredini se nalazi tip podataka, a desno se nalazi opis varijable. Svjetlozelenom bojom označite primarni ključ. Svjetlo plavom označite strani ključ}\\
 				
+				\textbf{Status} Ovaj entitet sadržava opis statusa korisnika. Sadrži atribute: statusId i description. Ovaj entitet u vezi je \textit{Many-to-One} s entitetom User preko atributa username.
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{Status}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}StatusId & INT	&  	Jedinstveni identifikator statusa korisnika	\\ \hline
+					Description	& VARCHAR &   Opis značenja određenog identifikatora	\\ \hline
+				\end{longtblr}
+				
+				\textbf{User} Ovaj entitet sadržava korisne informacije o korisniku. Sadrži atribute: username, password, photoURL, firstName, lastName, email i statusId. Ovaj entitet u vezi je \textit{One-to-Many} s entitetom Status preko atributa statusId, u vezi \textit{One-to-One} s entitetom Researcher preko atributa username, u vezi \textit{One-to-Many} s entitetom ActionComment preko atributa username, u vezi \textit{One-to-One} s entitetom StationLead preko atributa username, u vezi \textit{One-to-One} s entitetom Explorer preko atributa username.
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{User}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}Username & VARCHAR	&  Jedinstveno korisničko ime korisnika  	\\ \hline
+					Password	& VARCHAR &   Šifra profila korisnika	\\ \hline 
+					PhotoURL & VARCHAR &  URL link slike korisnika \\ \hline 
+					FirstName & VARCHAR	&  	Ime korisnika	\\ \hline 
+					LastName & VARCHAR	&  	Prezime korisnika	\\ \hline
+					Email & VARCHAR	&  	Jedinstveni Email korisnika	\\ \hline
+					\SetCell{LightBlue} StatusId	& VARCHAR &   Identifikator statusa profila korisnika	\\ \hline 
+				\end{longtblr}
+				
+				\textbf{StationLead} Ovaj entitet je razdvojeni entitet entiteta User koji sadrži atribut poseban za voditelja koji govori koju stanicu vodi (stationId), također sadrži i atribut username koji označuje jedinstveno korisničko ime korisnika. Ovaj entitet u vezi je \textit{One-to-One} s entitetom User preko atributa username, u vezi \textit{One-to-One} s entitetom Station preko atributa stationId.
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{StationLead}}	 \\ \hline[3pt]
+					\SetCell{LightBlue} Username	& VARCHAR &   korisničko ime voditelja, (user.username)	\\ \hline 
+					\SetCell{LightBlue} StationId	& INT &   Identifikator postaje koju voditelj vodi	\\ \hline 
+				\end{longtblr}
+				
+				\textbf{Station} Ovaj entitet sadržava sve važne informacije o postaji. Sadrži atribute: stationId, radius, stationName, stationStatus, centerLocation. U vezi je \textit{One-to-One} s entitetom StationLead preko atributa stationId, u vezi \textit{One-to-Many} s entitetom Explorer preko atributa stationId.
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{Station}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}StationId & INT	&  	Jedinstveni identifikator stanice\\ \hline
+					Radius	& INT &   Polumjer kruga koji označava stanicu izražen u metrima	\\ \hline 
+					StationName & VARCHAR &  Naziv stanice \\ \hline 
+					StationStatus & VARCHAR	&  	Status stanice, može biti zauzeta (ima voditelja) ili slobodna (nema voditelja)	\\ \hline 
+					CenterLocation	& VARCHAR &   Lokacija središta stanice	\\ \hline 
+				\end{longtblr}
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
+					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline
+					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+				\end{longtblr}
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
+					korisnickoIme	& VARCHAR &   	\\ \hline 
+					email & VARCHAR &   \\ \hline 
+					ime & VARCHAR	&  		\\ \hline 
+					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+				\end{longtblr}
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
+					korisnickoIme	& VARCHAR &   	\\ \hline 
+					email & VARCHAR &   \\ \hline 
+					ime & VARCHAR	&  		\\ \hline 
+					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+				\end{longtblr}
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
+					korisnickoIme	& VARCHAR &   	\\ \hline 
+					email & VARCHAR &   \\ \hline 
+					ime & VARCHAR	&  		\\ \hline 
+					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+				\end{longtblr}
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
+					korisnickoIme	& VARCHAR &   	\\ \hline 
+					email & VARCHAR &   \\ \hline 
+					ime & VARCHAR	&  		\\ \hline 
+					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+				\end{longtblr}
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
+					korisnickoIme	& VARCHAR &   	\\ \hline 
+					email & VARCHAR &   \\ \hline 
+					ime & VARCHAR	&  		\\ \hline 
+					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+				\end{longtblr}
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
+					korisnickoIme	& VARCHAR &   	\\ \hline 
+					email & VARCHAR &   \\ \hline 
+					ime & VARCHAR	&  		\\ \hline 
+					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+				\end{longtblr}
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
+					korisnickoIme	& VARCHAR &   	\\ \hline 
+					email & VARCHAR &   \\ \hline 
+					ime & VARCHAR	&  		\\ \hline 
+					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+				\end{longtblr}
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
+					korisnickoIme	& VARCHAR &   	\\ \hline 
+					email & VARCHAR &   \\ \hline 
+					ime & VARCHAR	&  		\\ \hline 
+					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+				\end{longtblr}
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
+					korisnickoIme	& VARCHAR &   	\\ \hline 
+					email & VARCHAR &   \\ \hline 
+					ime & VARCHAR	&  		\\ \hline 
+					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+				\end{longtblr}
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
+					korisnickoIme	& VARCHAR &   	\\ \hline 
+					email & VARCHAR &   \\ \hline 
+					ime & VARCHAR	&  		\\ \hline 
+					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+				\end{longtblr}
 				
 				\begin{longtblr}[
 					label=none,
