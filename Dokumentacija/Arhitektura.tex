@@ -49,14 +49,34 @@
 			
 			\textbf{\textit{dio 1. revizije}}\\
 			
-		\textit{Potrebno je opisati koju vrstu i implementaciju baze podataka ste odabrali, glavne komponente od kojih se sastoji i slično.}
+		Za potrebe našeg sustava koristit ćemo relacijsku bazu podataka koja svojom strukturom olakšava modeliranje stvarnog svijeta. Gradivna jedinka baze je relacija, odnosno tablica koja je definirana svojim imenom i skupom atributa. Zadaća baze podataka je brza i jednostavna pohrana, izmjena i dohvat podataka za daljnju obradu.
+		Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
+		\begin{itemize}
+			\item Status
+			\item User
+			\item StationLead
+			\item Station
+			\item Request
+			\item Researcher
+			\item ActionComment
+			\item Action
+			\item ExplorerAction
+			\item Explorer
+			\item ExplorerLocation
+			\item AnimalComment
+			\item Animal
+			\item AnimalLocation
+			\item Vehicle
+			\item EducatedFor
+			\item Task
+		\end{itemize}
 		
 			\subsection{Opis tablica}
 			
 
 				\textit{Svaku tablicu je potrebno opisati po zadanom predlošku. Lijevo se nalazi točno ime varijable u bazi podataka, u sredini se nalazi tip podataka, a desno se nalazi opis varijable. Svjetlozelenom bojom označite primarni ključ. Svjetlo plavom označite strani ključ}\\
 				
-				\textbf{Status} Ovaj entitet sadržava opis statusa korisnika. Sadrži atribute: statusId i description. Ovaj entitet u vezi je \textit{Many-to-One} s entitetom User preko atributa username.
+				\textbf{Status} Ovaj entitet sadržava opis statusa korisnika. Sadrži atribute: statusId i description. Ovaj entitet u vezi je \textit{One-to-Many} s entitetom Researcher preko atributa statusId, u vezi \textit{One-to-Many} s entitetom StationLead preko atributa statusId.
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -70,7 +90,7 @@
 					Description	& VARCHAR &   Opis značenja određenog identifikatora	\\ \hline
 				\end{longtblr}
 				
-				\textbf{User} Ovaj entitet sadržava korisne informacije o korisniku. Sadrži atribute: username, password, photoURL, firstName, lastName, email i statusId. Ovaj entitet u vezi je \textit{One-to-Many} s entitetom Status preko atributa statusId, u vezi \textit{One-to-One} s entitetom Researcher preko atributa username, u vezi \textit{One-to-Many} s entitetom ActionComment preko atributa username, u vezi \textit{One-to-One} s entitetom StationLead preko atributa username, u vezi \textit{One-to-One} s entitetom Explorer preko atributa username.
+				\textbf{User} Ovaj entitet sadržava korisne informacije o korisniku. Sadrži atribute: username, password, photoURL, firstName, lastName, email. Ovaj entitet u vezi je \textit{One-to-One} s entitetom Researcher preko atributa username, u vezi \textit{One-to-Many} s entitetom ActionComment preko atributa username, u vezi \textit{One-to-One} s entitetom StationLead preko atributa username, u vezi \textit{One-to-One} s entitetom Explorer preko atributa username.
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -86,10 +106,9 @@
 					FirstName & VARCHAR	&  	Ime korisnika	\\ \hline 
 					LastName & VARCHAR	&  	Prezime korisnika	\\ \hline
 					Email & VARCHAR	&  	Jedinstveni Email korisnika	\\ \hline
-					\SetCell{LightBlue} StatusId	& VARCHAR &   Identifikator statusa profila korisnika	\\ \hline 
 				\end{longtblr}
 				
-				\textbf{StationLead} Ovaj entitet je razdvojeni entitet entiteta User koji sadrži atribut poseban za voditelja koji govori koju stanicu vodi (stationId), također sadrži i atribut username koji označuje jedinstveno korisničko ime korisnika. Ovaj entitet u vezi je \textit{One-to-One} s entitetom User preko atributa username, u vezi \textit{One-to-One} s entitetom Station preko atributa stationId.
+				\textbf{StationLead} Ovaj entitet je razdvojeni entitet entiteta User koji sadrži atribut poseban za voditelja koji govori koju stanicu vodi (stationId), također sadrži i atribute username i statusId. Ovaj entitet u vezi je \textit{One-to-One} s entitetom User preko atributa username, u vezi \textit{One-to-One} s entitetom Station preko atributa stationId, u vezi \textit{Many-to-One} s entitetom Status preko atributa statusId, u vezi \textit{One-to-Many} s entitetom Request preko atributa username.
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -100,10 +119,11 @@
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \SetCell[c=3]{c}{\textbf{StationLead}}	 \\ \hline[3pt]
 					\SetCell{LightBlue} Username	& VARCHAR &   korisničko ime voditelja, (user.username)	\\ \hline 
-					\SetCell{LightBlue} StationId	& INT &   Identifikator postaje koju voditelj vodi	\\ \hline 
+					\SetCell{LightBlue} StationId	& INT &   Identifikator postaje koju voditelj vodi, (station.stationId)\\ \hline 
+					\SetCell{LightBlue} StatusId	& INT &   Identifikator statusa profila korisnika (verified, declined, pending), (status.statusId)	\\ \hline 
 				\end{longtblr}
 				
-				\textbf{Station} Ovaj entitet sadržava sve važne informacije o postaji. Sadrži atribute: stationId, radius, stationName, stationStatus, centerLocation. U vezi je \textit{One-to-One} s entitetom StationLead preko atributa stationId, u vezi \textit{One-to-Many} s entitetom Explorer preko atributa stationId.
+				\textbf{Station} Ovaj entitet sadržava sve važne informacije o postaji. Sadrži atribute: stationId, radius, stationName, stationStatus, Location. U vezi je \textit{One-to-One} s entitetom StationLead preko atributa stationId, u vezi \textit{One-to-Many} s entitetom Explorer preko atributa stationId.
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -117,9 +137,10 @@
 					Radius	& INT &   Polumjer kruga koji označava stanicu izražen u metrima	\\ \hline 
 					StationName & VARCHAR &  Naziv stanice \\ \hline 
 					StationStatus & VARCHAR	&  	Status stanice, može biti zauzeta (ima voditelja) ili slobodna (nema voditelja)	\\ \hline 
-					CenterLocation	& VARCHAR &   Lokacija središta stanice	\\ \hline 
+					Center	& VARCHAR &   Lokacija središta stanice	\\ \hline	 
 				\end{longtblr}
 				
+				\textbf{Request} Ovaj entitet sadržava informacije o zahtjevu koji istraživač šalje voditelju postaje. Sadrži atribute: requestId, status zahtjeva, numOfPeople, researcher i stationLead. U vezi je \textit{Many-to-One} s entitetom Researcher preko atributa researcher, u vezi \textit{Many-to-One} s entitetom StationLead preko atributa stationLead.
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -128,11 +149,15 @@
 						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
-					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline
-					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+					\hline \SetCell[c=3]{c}{\textbf{Request}}	 \\ \hline[3pt]
+					\SetCell{LightGreen} RequestId	& INT &   Jedinstveni identifikator zahtjeva	\\ \hline
+					Status	& VARCHAR &   Status zahtjeva, može biti odobren, odbijen ili u obradi.	\\ \hline
+					NumOfPeople & INT &   Broj ljudi koji istraživač zahtjeva od voditelja	\\ \hline
+					\SetCell{LightBlue} Researcher	& VARCHAR &   Identifikator istraživača koji šalje zahtjev, (researcher.username)	\\ \hline
+					\SetCell{LightBlue} StationLead	& VARCHAR &   Identifikator voditelja koji prima zahtjev, (stationLead.username)	\\ \hline 
 				\end{longtblr}
 				
+				\textbf{Researcher} Ovaj entitet je razdvojeni entitet entiteta User koji sadrži atribute: username istraživača i statusId. U vezi je \textit{One-to-One} s entitetom User preko atributa username, u vezi \textit{Many-to-One} s entitetom Status preko atributa statusId, u vezi \textit{One-to-Many} s entitetom Request preko atributa username, u vezi \textit{One-to-Many} s entitetom Action preko atributa username.
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -141,14 +166,12 @@
 						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
-					korisnickoIme	& VARCHAR &   	\\ \hline 
-					email & VARCHAR &   \\ \hline 
-					ime & VARCHAR	&  		\\ \hline 
-					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+					\hline \SetCell[c=3]{c}{\textbf{Researcher}}	 \\ \hline[3pt]
+					\SetCell{LightBlue}Username & VARCHAR	&  korisničko ime istraživača, (user.username)\\ \hline
+					\SetCell{LightBlue} StatusId	& INT &   identifikator statusa istraživača (verified, declined, pending), (status.statusId)	\\ \hline 
 				\end{longtblr}
 				
+				\textbf{ActionComment} Ovaj entitet sadrži informacije o komentarima ostavljenima na određenoj akciji. Sadrži atribute: CommentId, description, CommentTS, username i actionId akcije kojoj pripada. U vezi je \textit{Many-to-One} s entitetom User preko atributa username, u vezi \textit{Many-to-One} s entitetom Action preko atributa actionId.
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -157,14 +180,15 @@
 						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
-					korisnickoIme	& VARCHAR &   	\\ \hline 
-					email & VARCHAR &   \\ \hline 
-					ime & VARCHAR	&  		\\ \hline 
-					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+					\hline \SetCell[c=3]{c}{\textbf{ActionComment}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}CommentId & INT	&  	Jedinstveni identifikator komentara	\\ \hline
+					Description	& VARCHAR & Sadržaj komentara	\\ \hline 
+					CommentTS & TIMESTAMP &  Vrijeme postavljanja komentara \\ \hline 
+					\SetCell{LightBlue} Username	& VARCHAR &  Identifikator korisnika koji je postavio komentar, (user.username)	\\ \hline
+					\SetCell{LightBlue} ActionId	& INT &   Identifikator akcije na koju je postavljen komentar, (action.actionId)	\\ \hline 
 				\end{longtblr}
 				
+				\textbf{Action} Ovaj entitet opisuje koji istraživač je pokrenuo određenu akciju. Ima atribute: actionId i researcher. U vezi je \textit{Many-to-One} s entitetom Researcher preko atributa researcher. U vezi \textit{One-to-Many} s entitetom ActionComment preko atributa actionId, u vezi \textit{One-to-Many} s entitetom ExplorerAction preko atributa actionId, u vezi \textit{One-to-Many} s entitetom Task preko atributa actionId.
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -173,14 +197,12 @@
 						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
-					korisnickoIme	& VARCHAR &   	\\ \hline 
-					email & VARCHAR &   \\ \hline 
-					ime & VARCHAR	&  		\\ \hline 
-					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+					\hline \SetCell[c=3]{c}{\textbf{Action}}	 \\ \hline[3pt]
+					\SetCell{LightGreen} ActionId & INT	&  	Jedinstveni identifikator akcije  	\\ \hline
+					\SetCell{LightBlue} Researcher	& VARCHAR &   identifikator istraživača koji je započeo akciju, (researcher.username)	\\ \hline 
 				\end{longtblr}
 				
+				\textbf{ExplorerAction} Ovaj entitet opisuje tragača i akciju na kojoj se nalazio. Ima atribute: explorer i actionId. U vezi je \textit{Many-to-One} s entitetom Explorer preko atributa username, u vezi \textit{Many-to-One} s entitetom Action preko atributa actionId.
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -189,14 +211,12 @@
 						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
-					korisnickoIme	& VARCHAR &   	\\ \hline 
-					email & VARCHAR &   \\ \hline 
-					ime & VARCHAR	&  		\\ \hline 
-					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+					\hline \SetCell[c=3]{c}{\textbf{ExplorerAction}}	 \\ \hline[3pt]
+					\SetCell{LightBlue} Explorer	& VARCHAR &   Korisničko ime tragača, (explorer.username)	\\ \hline 
+					\SetCell{LightBlue} ActionId	& INT &   Identifikator akcije tragača, (action.actionId)	\\ \hline
 				\end{longtblr}
 				
+				\textbf{Explorer} Ovaj entitet je razdvojeni entitet entiteta User koji sadrži atribute: username i stationId. U vezi je \textit{One-to-One} s entitetom User preko atributa username, u vezi \textit{One-to-Many} s entitetom ExplorerAction preko atributa username, u vezi \textit{One-to-Many} s entitetom EducatedFor preko atributa username, u vezi \textit{One-to-Many} s entitetom Task preko atributa username, u vezi \textit{One-to-Many} s entitetom AnimalComment preko atributa username, u vezi \textit{One-to-Many} s entitetom ExplorerLocation preko atributa username, u vezi \textit{Many-to-One} s entitetom Station preko atributa stationId.
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -205,14 +225,12 @@
 						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
-					korisnickoIme	& VARCHAR &   	\\ \hline 
-					email & VARCHAR &   \\ \hline 
-					ime & VARCHAR	&  		\\ \hline 
-					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+					\hline \SetCell[c=3]{c}{\textbf{Explorer}}	 \\ \hline[3pt]
+					\SetCell{LightBlue}Username & VARCHAR	&  Korisničko ime tragača, (user.username)	\\ \hline
+					\SetCell{LightBlue} StationId	& INT &   Identifikator postaje kojoj pripada, (station.stationId)	\\ \hline 
 				\end{longtblr}
 				
+				\textbf{ExplorerLocation} Ovaj entitet sadrži lokaciju tragača u određenom vremenu. Ima atribute: LocationTS, explorer i Location. U vezi je \textit{Many-to-One} s entitetom Explorer preko atributa username.
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -221,14 +239,13 @@
 						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
-					korisnickoIme	& VARCHAR &   	\\ \hline 
-					email & VARCHAR &   \\ \hline 
-					ime & VARCHAR	&  		\\ \hline 
-					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+					\hline \SetCell[c=3]{c}{\textbf{ExplorerLocation}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}LocationTS & TIMESTAMP	&  Vrijeme očitanja lokacije tragača\\ \hline
+					\SetCell{LightBlue} Explorer	& VARCHAR &   Korisničko ime tragača, (explorer.username)	\\ \hline 
+					Location	& VARCHAR &   Lokacija tragača	\\ \hline 
 				\end{longtblr}
 				
+				\textbf{AnimalComment} Ovaj entitet sadrži sve komentare o očitanim životinjama. Ima atribute: commentId, commentTS, comment, explorer, animalId. U vezi je \textit{Many-to-One} s entitetom Explorer preko atributa explorer, u vezi \textit{Many-to-One} s entitetom Animal preko atributa animalId.
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -237,14 +254,15 @@
 						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
-					korisnickoIme	& VARCHAR &   	\\ \hline 
-					email & VARCHAR &   \\ \hline 
-					ime & VARCHAR	&  		\\ \hline 
-					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+					\hline \SetCell[c=3]{c}{\textbf{AnimalComment}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}CommentId & INT	&  Jedinstveni identifikator komentara	\\ \hline
+					CommentTS	& TIMESTAMP &   Vrijeme objave komentara	\\ \hline 
+					Comment & VARCHAR & sadržaj komentara  \\ \hline 
+					\SetCell{LightBlue} Explorer	& VARCHAR &   Korisničko ime tragača koji je komentirao, (explorer.username)	\\ \hline 
+					\SetCell{LightBlue} AnimalId	& INT &   Identifikator komentirane životinje, (animal.animalId)	\\ \hline 
 				\end{longtblr}
 				
+				\textbf{Animal} Ovaj entitet sadrži sve bitne informacije o očitanoj životinji. Ima atribute: animalId, species, description, photoURL. U vezi je \textit{One-to-Many} s entitetom AnimalComment preko atributa animalId, u vezi \textit{One-to-Many} s entitetom AnimalLocation preko atributa animalId.
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -253,14 +271,14 @@
 						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
-					korisnickoIme	& VARCHAR &   	\\ \hline 
-					email & VARCHAR &   \\ \hline 
-					ime & VARCHAR	&  		\\ \hline 
-					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+					\hline \SetCell[c=3]{c}{\textbf{Animal}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}AnimalId & INT	&  	Jedinstveni identifikator očitane životinje  	\\ \hline
+					Species	& VARCHAR &   Vrsta životinje	\\ \hline 
+					Description & VARCHAR & Opis životinje  \\ \hline 
+					PhotoURL & VARCHAR	&  	URL slike životinje	\\ \hline
 				\end{longtblr}
 				
+				\textbf{AnimalLocation} Ovaj entitet sadrži lokaciju životinje u određenom vremenu. Ima atribute: LocationTS, Location, AnimalId. U vezi je \textit{Many-to-One} s entitetom Animal preko atributa animalId.
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -269,14 +287,13 @@
 						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
-					korisnickoIme	& VARCHAR &   	\\ \hline 
-					email & VARCHAR &   \\ \hline 
-					ime & VARCHAR	&  		\\ \hline 
-					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+					\hline \SetCell[c=3]{c}{\textbf{AnimalLocation}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}LocationTS & TIMESTAMP	&  Vrijeme zapisa lokacije životinje	\\ \hline
+					Location	& VARCHAR &   Lokacija životinje	\\ \hline
+					\SetCell{LightBlue} AnimalId	& INT &   Identifikator očitane životinje, (animal.animalId)	\\ \hline 
 				\end{longtblr}
 				
+				\textbf{EducatedFor} Ovaj entitet opisuje koji tragači znaju upravljati kojim vozilima. Ima atribute: vehicleId i explorer. U vezi je \textit{Many-to-One} s entitetom Explorer preko atributa username, u vezi \textit{Many-to-One} s entitetom Vehicle preko atributa vehicleId.
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -285,14 +302,12 @@
 						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
-					korisnickoIme	& VARCHAR &   	\\ \hline 
-					email & VARCHAR &   \\ \hline 
-					ime & VARCHAR	&  		\\ \hline 
-					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+					\hline \SetCell[c=3]{c}{\textbf{EducatedFor}}	 \\ \hline[3pt] 
+					\SetCell{LightBlue} VehicleId	& INT &   Identifikator vozila kojeg tragač zna voziti, (vehicle.vehicleId)	\\ \hline 
+					\SetCell{LightBlue} Explorer	& VARCHAR &   Korisničko ime tragača, (explorer.username)	\\ \hline 
 				\end{longtblr}
 				
+				\textbf{Vehicle} Ovaj entitet sadrži nazive vozila. Ima atribute: vehicleId, vehicleType. U vezi je \textit{One-to-Many} s entitetom Task preko atributa vehicleId, u vezi \textit{One-to-Many} s entitetom EducatedFor preko atributa vehicleId.
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -301,12 +316,29 @@
 						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
-					korisnickoIme	& VARCHAR &   	\\ \hline 
-					email & VARCHAR &   \\ \hline 
-					ime & VARCHAR	&  		\\ \hline 
-					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+					\hline \SetCell[c=3]{c}{\textbf{Vehicle}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}VehicleId & INT	&  Jedinstveni identifikator vozila	\\ \hline
+					VehicleType	& VARCHAR &   Naziv vozila	\\ \hline 
+				\end{longtblr}
+				
+				\textbf{Task} Ovaj entitet sadrži sve bitne informacije o zadatku. Ima atribute: taskId, description, startLocation, endLocation, taskTS, actionId, explorer, vehicleId. U vezi je \textit{Many-to-One} s entitetom Action preko atributa actionId, u vezi \textit{Many-to-One} s entitetom Explorer preko atributa username, u vezi \textit{Many-to-One} s entitetom Vehicle preko atributa vehicleId.
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{Task}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}TaskId & INT	&  	Jedinstveni identifikator zadatka\\ \hline
+					Description	& VARCHAR &   Opis zadatka	\\ \hline 
+					StartLocation & VARCHAR &  Lokacija početka zadatka \\ \hline 
+					EndLocation & VARCHAR	&  	Lokacija završetka zadatka	\\ \hline 
+					TaskTS & TIMESTAMP	&  	Vrijeme početka zadatka	\\ \hline 
+					\SetCell{LightBlue} ActionId	& INT &   Identifikator akcije kojoj pripada zadatak, (action.actionId)	\\ \hline
+					\SetCell{LightBlue} Explorer	& VARCHAR &   Korisničko ime tragača koji izvršava zadatak	\\ \hline 
+					\SetCell{LightBlue} VehicleId	& INT &   Identifikator vozila s kojim se obavlja zadatak, (vehicle.vehicleId)	\\ \hline
 				\end{longtblr}
 				
 				
