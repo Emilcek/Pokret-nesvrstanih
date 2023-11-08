@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import {FormGroup,FormControl,Validators} from '@angular/forms'
 import { Router } from '@angular/router';
+//import { AuthService } from '../service/auth.service';
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
@@ -9,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class FormComponent {
   constructor(private http:HttpClient, private router:Router){}
+  result:any
   signInForm = new FormGroup({
     username:new FormControl(''),
     password:new FormControl('')
@@ -20,53 +22,66 @@ export class FormComponent {
     photo:new FormControl(''),
     name:new FormControl(''),
     surname:new FormControl(''),
-    username:new FormControl(''),
-    password:new FormControl(''),
-    email:new FormControl(''),
+    username:new FormControl('',Validators.pattern('[a-zA-z]+$')),
+    password:new FormControl('',Validators.minLength(8)),
+    email:new FormControl('',Validators.email),
   })
-  signIn(){
-    this.http.post<any>("http://localhost:3000/comments",this.signInForm.value)
-    .subscribe((res)=>{
-      const user=res.find((a:any)=>{
+  signIn(){ //PRIJAVI SE
+    if(this.signInForm.valid){
+      this.http.get("http://localhost:3000/users").subscribe((res)=>{
+      let response:any=res
+      const user=response.find((a:any)=>{
         return a.username===this.signInForm.value.username && a.password===this.signInForm.value.password
       });
       if(user){
         alert("Login Success")
         this.signInForm.reset()
-        //this.router.navigate([''])
+        console.log(response.get("Username"))
       }else{
-        alert("user not found")
+        alert("User not found")
       }
-      this.signUpForm.reset()
-    })
+      })
+    }else{
+      alert("Upisite sve podatke")
+    }
     
   }
 
-  signUp(){
-    this.http.post<any>("http://localhost:3000/comments",this.signUpForm.value)
-    .subscribe(res=> {
-      const user=res.find((a:any)=>{
-        return a.username!=this.signUpForm.value.username && a.email!=this.signUpForm.value.email
-      })
-      if(user){
-      alert("Success")
-      this.signUpForm.reset()
+  signUp(){ //REGISTRIRAJ SE
+    console.log(this.signUpForm.valid)
+    if(this.signUpForm.valid){
+      if(this.signUpForm.value.position=="tragac" && this.signUpForm.value.ability?.length==0){
+        alert("Nisu uneseni svi podaci ili su pogrešno uneseni")
       }else{
-        alert("Username or email already in use")
-        this.signUpForm.reset()
+        this.http.get("http://localhost:3000/users").subscribe((res)=>{
+        let response:any=res
+        const user=response.find((a:any)=>{
+          console.log(a)
+          return a.username===this.signUpForm.value.username && a.email===this.signUpForm.value.email
+        });
+        if(user==false){
+          alert("Korisničko ime ili email se već koriste.")
+        }else{
+          this.http.post("http://localhost:3000/users",this.signUpForm.value)
+          this.signUpForm.reset()
+        }
+        })
       }
-    })
+    }else{
+      alert("Nisu uneseni svi podaci ili su pogrešno uneseni")
+    }
+    
   }
   showDiv(event:any){
     if(event.target.value=="tragac"){
-      document.getElementById("stations")!.style.display="none"
+      // document.getElementById("stations")!.style.display="none"
       document.getElementById("abilities")!.style.display="block"
-    } else if(event.target.value=="voditeljPostaje"){
-      document.getElementById("stations")!.style.display="block"
-      document.getElementById("abilities")!.style.display="none"
+    // } else if(event.target.value=="voditeljPostaje"){
+    //   document.getElementById("stations")!.style.display="block"
+    //   document.getElementById("abilities")!.style.display="none"
     }else{
       document.getElementById("abilities")!.style.display="none"
-      document.getElementById("stations")!.style.display="none"
+      // document.getElementById("stations")!.style.display="none"
     }
   }
 

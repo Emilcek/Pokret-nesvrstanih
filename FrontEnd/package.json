@@ -22,6 +22,7 @@
     "json": "^11.0.0",
     "json-serve": "^0.1.0",
     "ng-multiselect-dropdown": "^1.0.0",
+    "ngx-toastr": "^17.0.2",
     "rxjs": "~7.8.0",
     "server": "^1.0.38",
     "tslib": "^2.3.0",
