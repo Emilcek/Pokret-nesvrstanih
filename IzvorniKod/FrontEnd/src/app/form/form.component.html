@@ -1,6 +1,5 @@
 <div class="login-wrap">
-	<div class="login-html">
-		<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Prijava</label>
+	<div class="login-html"><input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Prijava</label>
 		<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Registracija</label>
 		<div class="login-form">
 			<form [formGroup]="signInForm" class="sign-in-htm" (ngSubmit)="signIn()">
@@ -47,13 +46,18 @@
 					<input type="file" id="myFile" name="filename" formControlName="photo"
 					accept="image/png, image/jpeg, image/jpg" >
 				</div>
-				<div class="group">
-					<label for="user" class="label">Ime</label>
-					<input id="user" type="text" class="input" required formControlName="name" placeholder="Unesi ime">
+				<div class="group" id="nameSurname">
+					<div class="group" id="ime">
+						<label for="user" class="label">Ime</label>
+						<input id="user" type="text" class="input" required formControlName="name" placeholder="Unesi ime">
+					</div>
+					<div class="group" id="prezime">
+						<label for="user" class="label">Prezime</label>
+						<input id="user" type="text" class="input" formControlName="surname" placeholder="Unesi prezime" required>
+					</div>
 				</div>
 				<div class="group">
-					<label for="user" class="label">Prezime</label>
-					<input id="user" type="text" class="input" formControlName="surname" placeholder="Unesi prezime" required>
+					
 				</div>
 				<div class="group">
 					<label for="user" class="label">Korisničko ime</label>
@@ -65,7 +69,7 @@
 				</div>
 				<div class="group">
 					<label for="pass" class="label">Email adresa</label>
-					<input id="pass" type="email" class="input" formControlName="email" placeholder="Unesi email adresu (npr.  ___@___.com)" required>
+					<input id="pass" type="email" class="input" formControlName="email" placeholder="Unesi email adresu (npr.  filip.vitkovic@gmail.com)" required>
 				</div>
 				<div class="group">
 					<input type="submit" class="button" value="Registriraj se" >
