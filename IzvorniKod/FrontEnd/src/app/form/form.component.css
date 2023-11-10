@@ -7,7 +7,6 @@ a{color:inherit;text-decoration:none}
 	display: flex;
 	justify-content: center;
 	font-size: 3rem;
-	background-image: url("../../assets/img/animalTraces.jpg");
 	background-size: 100%;
 	background-repeat: no-repeat;
 	color:white;
@@ -149,6 +148,7 @@ a{color:inherit;text-decoration:none}
 .login-form .group .check:checked + label .icon:after{
 	transform:scale(1) rotate(-45deg);
 }
+
 .login-html .sign-in:checked + .tab + .sign-up + .tab 
 + .login-form .sign-in-htm{
 	transform:rotate(0);
@@ -188,6 +188,7 @@ app-root {
 	cursor: pointer;
 } 
 
+
 #abilities{
 	display: none;
 }
@@ -218,3 +219,4 @@ app-root {
 #prezime{
 	margin-left:20px;
 }
+

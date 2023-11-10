@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import {FormGroup,FormControl,Validators} from '@angular/forms'
 import { Router } from '@angular/router';
 //import { AuthService } from '../service/auth.service';
+
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
@@ -10,7 +11,6 @@ import { Router } from '@angular/router';
 })
 export class FormComponent {
   constructor(private http:HttpClient, private router:Router){}
-  result:any
   signInForm = new FormGroup({
     username:new FormControl(''),
     password:new FormControl('')
@@ -74,14 +74,9 @@ export class FormComponent {
   }
   showDiv(event:any){
     if(event.target.value=="tragac"){
-      // document.getElementById("stations")!.style.display="none"
       document.getElementById("abilities")!.style.display="block"
-    // } else if(event.target.value=="voditeljPostaje"){
-    //   document.getElementById("stations")!.style.display="block"
-    //   document.getElementById("abilities")!.style.display="none"
     }else{
       document.getElementById("abilities")!.style.display="none"
-      // document.getElementById("stations")!.style.display="none"
     }
   }
 

@@ -8,7 +8,7 @@ import { FormComponent } from './form/form.component';
 import{ FormsModule, ReactiveFormsModule }from '@angular/forms'
 import { NgSelectModule } from '@ng-select/ng-select';
 import { HttpClientModule } from '@angular/common/http';
-import { ToastrModule } from 'ngx-toastr';
+
 
 @NgModule({
   declarations: [
@@ -22,8 +22,7 @@ import { ToastrModule } from 'ngx-toastr';
     ReactiveFormsModule,
     NgSelectModule,
     HttpClientModule,
-    FormsModule,
-    ToastrModule.forRoot()
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
