@@ -2,19 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import {FormGroup,FormControl,Validators} from '@angular/forms'
 import { Router } from '@angular/router';
-//import { AuthService } from '../service/auth.service';
 @Component({
-  selector: 'app-form',
-  templateUrl: './form.component.html',
-  styleUrls: ['./form.component.css']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
-export class FormComponent {
+export class RegisterComponent {
   constructor(private http:HttpClient, private router:Router){}
-  result:any
-  signInForm = new FormGroup({
-    username:new FormControl(''),
-    password:new FormControl('')
-  })
+
   signUpForm=new FormGroup({
     position:new FormControl(''),
     ability:new FormControl(''),
@@ -26,26 +21,6 @@ export class FormComponent {
     password:new FormControl('',Validators.minLength(8)),
     email:new FormControl('',Validators.email),
   })
-  signIn(){ //PRIJAVI SE
-    if(this.signInForm.valid){
-      this.http.get("http://localhost:3000/users").subscribe((res)=>{
-      let response:any=res
-      const user=response.find((a:any)=>{
-        return a.username===this.signInForm.value.username && a.password===this.signInForm.value.password
-      });
-      if(user){
-        alert("Login Success")
-        this.signInForm.reset()
-        console.log(response.get("Username"))
-      }else{
-        alert("User not found")
-      }
-      })
-    }else{
-      alert("Upisite sve podatke")
-    }
-    
-  }
 
   signUp(){ //REGISTRIRAJ SE
     console.log(this.signUpForm.valid)
