@@ -1,10 +1,10 @@
-<div class="login-wrap">
+<div class="login-wrap main-container">
 	<div class="login-html">
 		<div class="login-form">
 			<form [formGroup]="signInForm" class="sign-in-htm" (ngSubmit)="signIn()">
 				<div class="group">
 					<label for="user" class="label">Korisničko ime</label>
-					<input uniqe id="user" type="text" class="input" placeholder="Unesite korisničko ime" formControlName="username" required>
+					<input id="user" type="text" class="input" placeholder="Unesite korisničko ime" formControlName="username" required>
 				</div>
 				<div class="group">
 					<label for="pass" class="label">Lozinka</label>

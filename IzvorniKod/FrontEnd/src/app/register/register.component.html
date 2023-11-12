@@ -1,4 +1,4 @@
-<div class="login-wrap">
+<div class="login-wrap main-container">
     <div class="login-html">
         <div class="login-form">
             <form class="sign-up-htm" [formGroup]="signUpForm" (ngSubmit)="signUp()">
@@ -13,7 +13,7 @@
                 </div>
                 <div class="group" id="abilities">
                     <label for="pass" class="label">Kompetencije</label>
-                    <ng-select [items]="abilities" bindLabel="name" 
+                    <ng-select [items]="abilities" bindLabel="name"
                     bindValue="id" [multiple]="true" [closeOnSelect]="false"
                     [appendTo]="'body'"
                     formControlName="ability" placeholder="Odaberite kompetencije" >
@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div class="group">
-                    
+
                 </div>
                 <div class="group">
                     <label for="user" class="label">Korisničko ime</label>

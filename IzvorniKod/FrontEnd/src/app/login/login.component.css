@@ -10,7 +10,6 @@
 	color:white;
 }
 :host {
-	position: absolute;
 	left: 0;
 	right: 0;
 	bottom: 0;
@@ -21,19 +20,14 @@
 	justify-content: center;
 	width:100vw;
 	margin:auto;
-	margin-top: 8rem;
 	max-width:525px;
-	min-height:600px;
 	min-width: 358px;
 	position:relative;
-	box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
 }
 .login-html{
 	width:100%;
 	height:100%;
-	position:absolute;
 	padding:50px 70px 50px 70px;
-	background:white;
 }
 
 .login-html .tab,
@@ -118,7 +112,7 @@ body{
 }
 :hover .tab{
 	cursor: pointer;
-} 
+}
 
 #abilities{
 	display: none;
