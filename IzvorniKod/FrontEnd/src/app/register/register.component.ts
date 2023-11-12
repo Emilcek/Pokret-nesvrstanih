@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import {FormGroup,FormControl,Validators} from '@angular/forms'
+import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-register',
@@ -22,7 +22,7 @@ export class RegisterComponent {
     email:new FormControl('',Validators.email),
   })
 
-  signUp(){ //REGISTRIRAJ SE
+  signUp(){ 
     console.log(this.signUpForm.valid)
     if(this.signUpForm.valid){
       if(this.signUpForm.value.position=="tragac" && this.signUpForm.value.ability?.length==0){

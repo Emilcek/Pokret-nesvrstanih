@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {FormGroup,FormControl,Validators} from '@angular/forms'
+import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
@@ -14,7 +14,7 @@ export class LoginComponent {
     password:new FormControl('')
   })
 
-  signIn(){ //PRIJAVI SE
+  signIn(){ 
     if(this.signInForm.valid){
       this.http.get("http://localhost:3000/users").subscribe((res)=>{
       let response:any=res
