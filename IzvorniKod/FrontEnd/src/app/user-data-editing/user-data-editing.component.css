@@ -9,12 +9,11 @@
 .grid-container2 {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    /* 3 columns */
     gap: 5px;
     border: saddlebrown;
     align-items: center;
     justify-content: center;
-    /* Adjust the gap between cells */
+    background-color: white;
 }
 
 .grid-cell {
@@ -31,9 +30,9 @@ hr {
 }
 
 .hole-div {
-    border: solid;
     margin-right: 2.4%;
     margin-left: 2.4%;
+    background-color: white;
 }
 
 .button-div1 {
