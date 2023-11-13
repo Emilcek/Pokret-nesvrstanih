@@ -1,4 +1,4 @@
-package com.progi.WildTrack.models;
+package com.progi.WildTrack.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -28,6 +28,6 @@ public class Token {
     public boolean expired;
 
     @ManyToOne()
-    @JoinColumn(name = "client_name")
+    @JoinColumn(name = "clientName")
     public Client client;
 }

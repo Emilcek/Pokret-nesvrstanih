@@ -1,11 +1,9 @@
 package com.progi.WildTrack.security;
 
-import com.progi.WildTrack.repository.ClientRepository;
-import jakarta.persistence.criteria.CriteriaBuilder;
+import com.progi.WildTrack.dao.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -23,7 +21,7 @@ public class ApplicationConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> repository.findByUsername(username)
+        return username -> repository.findByClientName(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 

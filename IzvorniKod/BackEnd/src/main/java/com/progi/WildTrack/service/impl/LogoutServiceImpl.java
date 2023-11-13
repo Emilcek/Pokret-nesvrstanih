@@ -1,6 +1,6 @@
-package com.progi.WildTrack.service;
+package com.progi.WildTrack.service.impl;
 
-import com.progi.WildTrack.repository.TokenRepository;
+import com.progi.WildTrack.dao.TokenRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class LogoutService implements LogoutHandler {
+public class LogoutServiceImpl implements LogoutHandler {
 
     private final TokenRepository tokenRepository;
 

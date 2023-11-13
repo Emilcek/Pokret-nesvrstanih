@@ -1,4 +1,4 @@
-package com.progi.WildTrack.models;
+package com.progi.WildTrack.domain;
 
 public enum TokenType {
     BEARER

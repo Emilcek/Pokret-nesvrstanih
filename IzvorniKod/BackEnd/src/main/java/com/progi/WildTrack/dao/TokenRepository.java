@@ -1,20 +1,20 @@
-package com.progi.WildTrack.repository;
+package com.progi.WildTrack.dao;
+
+import com.progi.WildTrack.domain.Token;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
-
-import com.progi.WildTrack.models.Token;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 public interface TokenRepository extends JpaRepository<Token, Integer> {
 
     @Query(value = """
       select t from Token t inner join Client u\s
-      on t.client.client_name = u.client_name\s
-      where u.client_name = :username and (t.expired = false or t.revoked = false)\s
+      on t.client.clientName = u.clientName\s
+      where u.clientName = :name and (t.expired = false or t.revoked = false)\s
       """)
-    List<Token> findAllValidTokenByClient(String username);
+    List<Token> findAllValidTokenByClient(String name);
 
     Optional<Token> findByToken(String token);
 }
