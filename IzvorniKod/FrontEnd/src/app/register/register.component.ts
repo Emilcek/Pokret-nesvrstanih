@@ -23,10 +23,11 @@ export class RegisterComponent {
 
   signUp(){
     if(this.signUpForm.valid){
+      console.log(this.signUpForm.value)
       if(this.signUpForm.value.role=="tragac" && this.signUpForm.value.educatedFor?.length==0){
         alert("Nisu uneseni svi podaci ili su pogrešno uneseni")
       }else{
-        this.http.post("http://localhost:8008/auth/register",this.signUpForm.value,{ observe: 'response' }).subscribe((res)=>{
+        this.http.post("http://localhost:8080/auth/register",this.signUpForm.value,{ observe: 'response' }).subscribe((res)=>{
         console.log(res.status)
         },error=>{
           alert("Korisničko ime ili email se već koriste.")
@@ -45,12 +46,12 @@ export class RegisterComponent {
   }
 
   abilities=[
-    {id:1,name:'hodanje'},
-    {id:2,name:'dron'},
-    {id:3,name:'auto'},
-    {id:4,name:'brod'},
-    {id:5,name:'cross motor'},
-    {id:6,name:'helikopter'}
+    {id:"hodanje",name:'hodanje'},
+    {id:"dron",name:'dron'},
+    {id:"auto",name:'auto'},
+    {id:"brod",name:'brod'},
+    {id:'cross motor',name:'cross motor'},
+    {id:"helikopter",name:'helikopter'}
   ]
 
 }

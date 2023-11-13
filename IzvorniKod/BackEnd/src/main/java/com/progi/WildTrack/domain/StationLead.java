@@ -1,11 +1,17 @@
 package com.progi.WildTrack.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
 @Table(name = "StationLead")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class StationLead {
     @Id
     @Column(name = "StationLeadname" ,length = 30, nullable = false)
@@ -25,9 +31,6 @@ public class StationLead {
     @OneToMany(mappedBy = "stationLead", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Request> Requests;
 
-
-    public StationLead() {
-    }
 
 
 }

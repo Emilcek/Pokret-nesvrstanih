@@ -1,10 +1,16 @@
 package com.progi.WildTrack.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "Explorer")
 public class Explorer {
     @Id
@@ -13,8 +19,6 @@ public class Explorer {
     @Column(name = "StationId", nullable = false)
     private int stationId;
 
-    public Explorer() {
-    }
    @OneToOne(cascade = CascadeType.ALL)
    @JoinColumn(name = "Explorername" ,referencedColumnName = "Clientname")
    @MapsId

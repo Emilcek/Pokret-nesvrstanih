@@ -24,12 +24,14 @@ public class AuthenticationController {
     public ResponseEntity<Void>register(
             @RequestBody RegisterDto request
     ) {
+        System.out.println("controller " + request);
         return ResponseEntity.ok(service.register(request));
     }
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponseDto> authenticate(
             @RequestBody LoginDto request
     ) {
+        System.out.println("controller " + request);
         return ResponseEntity.ok(service.authenticate(request));
     }
 

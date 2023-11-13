@@ -13,11 +13,19 @@
                 </div>
                 <div class="group" id="abilities">
                     <label for="pass" class="label">Kompetencije</label>
-                    <ng-select [items]="abilities" bindLabel="name"
-                    bindValue="id" [multiple]="true" [closeOnSelect]="false"
-                    [appendTo]="'body'"
-                    formControlName="educatedFor" placeholder="Odaberite kompetencije" >
-                    </ng-select>
+<!--                    <ng-select [items]="abilities" bindLabel="name"-->
+<!--                    bindValue="id" [multiple]="true" [closeOnSelect]="false"-->
+<!--                    [appendTo]="'body'"-->
+<!--                    formControlName="educatedFor" placeholder="Odaberite kompetencije" >-->
+<!--                    </ng-select>-->
+                    <select name="cars" id="cars" multiple formControlName="educatedFor">
+                      <option value="Hodanje">Hodanje</option>
+                      <option value="Dron">Dron</option>
+                      <option value="Helikopter">Helikopter</option>
+                      <option value="Cross motor">Cross motor</option>
+                      <option value="Brod">Brod</option>
+                      <option value="Auto">Auto</option>
+                    </select>
                 </div>
                 <div class="group">
                     <label for="pass" class="label">Osobna fotografija</label>

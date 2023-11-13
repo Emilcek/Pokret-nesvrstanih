@@ -2,12 +2,8 @@ package com.progi.WildTrack.service.impl;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.progi.WildTrack.dao.ClientRepository;
-import com.progi.WildTrack.dao.ExplorerRepository;
-import com.progi.WildTrack.dao.TokenRepository;
-import com.progi.WildTrack.domain.Client;
-import com.progi.WildTrack.domain.Token;
-import com.progi.WildTrack.domain.TokenType;
+import com.progi.WildTrack.dao.*;
+import com.progi.WildTrack.domain.*;
 import com.progi.WildTrack.dto.AuthenticationResponseDto;
 import com.progi.WildTrack.dto.LoginDto;
 import com.progi.WildTrack.dto.RegisterDto;
@@ -31,6 +27,11 @@ import java.util.SimpleTimeZone;
 public class AuthenticationServiceImpl implements AuthenticationService {
   private final ClientRepository repository;
   private final ExplorerRepository explorerRepository;
+  private final StationLeadRepository stationLeadRepository;
+  private final VehicleRepository vehicleRepository;
+  private final EducatedForRepository educatedForRepository;
+  private final StatusRepository statusRepository;
+  private final ResearcherRepository researcherRepository;
   private final TokenRepository tokenRepository;
   private final PasswordEncoder passwordEncoder;
   private final JwtService jwtService;
@@ -42,22 +43,43 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
     var client = Client.builder()
         .clientName(request.getClientName())
-        .firstName(request.getFirstname())
-        .lastName(request.getLastname())
+        .firstName(request.getFirstName())
+        .lastName(request.getLastName())
         .email(request.getEmail())
         .clientPassword(passwordEncoder.encode(request.getPassword()))
         .role(request.getRole())
         .clientPhotoURL(request.getClientPhotoURL())
         .build();
     System.out.println(client);
-    repository.save(client);
-//    if (request.getRole().equals("tragač")) {
-//      var explorer = Explorer.builder()
-//              .client(savedClient)
-//              .build();
-//      explorerRepository.save(explorer);
-//      savedClient.setExplorer(explorer);
-//    }
+    var savedClient = repository.save(client);
+    if (request.getRole().equals("voditeljPostaje")) {
+      var stationLead = StationLead.builder()
+              .client(savedClient)
+              .status((Status) statusRepository.findByDescription(Description.PENDING).orElseThrow())
+              .build();
+      stationLeadRepository.save(stationLead);
+    }
+    else if (request.getRole().equals("tragac")) {
+      var explorer = Explorer.builder()
+              .client(savedClient)
+              .build();
+      explorerRepository.save(explorer);
+      for (String i : request.getEducatedFor()) {
+        System.out.println(i);
+        var educatedfor = EducatedFor.builder()
+                .explorer(explorer)
+                .vehicle((Vehicle) vehicleRepository.findByVehicleType(i).orElseThrow())
+                .build();
+        educatedForRepository.save(educatedfor);
+      }
+    }
+    else if (request.getRole().equals("istrazivac")) {
+      var researcher = Researcher.builder()
+              .client(savedClient)
+              .status((Status) statusRepository.findByDescription(Description.PENDING).orElseThrow())
+              .build();
+        researcherRepository.save(researcher);
+    }
     return null;
   }
 
