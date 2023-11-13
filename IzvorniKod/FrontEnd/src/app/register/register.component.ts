@@ -22,30 +22,19 @@ export class RegisterComponent {
   })
 
   signUp(){
-    console.log(this.signUpForm.valid)
-    console.log(this.signUpForm.value)
     if(this.signUpForm.valid){
       if(this.signUpForm.value.role=="tragac" && this.signUpForm.value.educatedFor?.length==0){
         alert("Nisu uneseni svi podaci ili su pogrešno uneseni")
       }else{
-        this.http.get("http://localhost:3000/users").subscribe((res)=>{
-        let response:any=res
-        const user=response.find((a:any)=>{
-          console.log(a)
-          return a.clientname===this.signUpForm.value.clientname && a.email===this.signUpForm.value.email
-        });
-        if(user==false){
+        this.http.post("http://localhost:8008/auth/register",this.signUpForm.value,{ observe: 'response' }).subscribe((res)=>{
+        console.log(res.status)
+        },error=>{
           alert("Korisničko ime ili email se već koriste.")
-        }else{
-          this.http.post("http://localhost:3000/users",this.signUpForm.value)
-          this.signUpForm.reset()
-        }
         })
       }
     }else{
       alert("Nisu uneseni svi podaci ili su pogrešno uneseni")
     }
-
   }
   showDiv(event:any){
     if(event.target.value=="tragac"){

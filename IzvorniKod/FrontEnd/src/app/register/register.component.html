@@ -4,7 +4,7 @@
             <form class="sign-up-htm" [formGroup]="signUpForm" (ngSubmit)="signUp()">
                 <div class="group">
                     <label for="pass" class="label">Uloga</label>
-                    <select name="position" id="pos" formControlName="position" (change)="showDiv($event)" required>
+                    <select name="position" id="pos" formControlName="role" (change)="showDiv($event)" required>
                         <option value="placeholder" [selected]="true" [hidden]="true">Odaberi ulogu...</option>
                         <option value="voditeljPostaje">Voditelj postaje</option>
                         <option value="istrazivac">Istraživač</option>
