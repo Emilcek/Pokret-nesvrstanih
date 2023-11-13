@@ -12,10 +12,11 @@ import lombok.NoArgsConstructor;
 public class RegisterDto {
 
 
-    private String client_name;
+    private String clientName;
     private String firstname;
     private String lastname;
     private String email;
     private String password;
     private String role;
+    private String clientPhotoURL;
 }
