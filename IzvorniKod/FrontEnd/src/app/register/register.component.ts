@@ -22,8 +22,9 @@ export class RegisterComponent {
     email:new FormControl('',Validators.email),
   })
 
-  signUp(){ 
+  signUp(){
     console.log(this.signUpForm.valid)
+    console.log(this.signUpForm.value)
     if(this.signUpForm.valid){
       if(this.signUpForm.value.position=="tragac" && this.signUpForm.value.ability?.length==0){
         alert("Nisu uneseni svi podaci ili su pogrešno uneseni")
@@ -45,7 +46,7 @@ export class RegisterComponent {
     }else{
       alert("Nisu uneseni svi podaci ili su pogrešno uneseni")
     }
-    
+
   }
   showDiv(event:any){
     if(event.target.value=="tragac"){
@@ -73,5 +74,5 @@ export class RegisterComponent {
     {id:1,name:'Biokovo'},
     {id:2,name:'Lonjsko polje'}
   ]
-  
+
 }

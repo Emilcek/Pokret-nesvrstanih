@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -19,4 +21,6 @@ public class RegisterDto {
     private String password;
     private String role;
     private String clientPhotoURL;
+    private String stationName;
+    private List<String> educatedFor;
 }

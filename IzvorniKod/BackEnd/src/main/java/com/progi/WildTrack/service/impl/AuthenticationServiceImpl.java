@@ -65,6 +65,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   }
 
   public AuthenticationResponseDto authenticate(LoginDto request) {
+    System.out.println(request.getClientName());
     var client = repository.findByClientName(request.getClientName())
             .orElseThrow(() -> new RuntimeException("Client not found"));
     authenticationManager.authenticate(
