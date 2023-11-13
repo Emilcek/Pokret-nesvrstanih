@@ -2,12 +2,6 @@
 		
 	\section{Funkcionalni zahtjevi}
 			
-			\textbf{\textit{dio 1. revizije}}\\
-			
-			\textit{Navesti \textbf{dionike} koji imaju \textbf{interes u ovom sustavu} ili  \textbf{su nositelji odgovornosti}. To su prije svega korisnici, ali i administratori sustava, naručitelji, razvojni tim.}\\
-				
-			\textit{Navesti \textbf{aktore} koji izravno \textbf{koriste} ili \textbf{komuniciraju sa sustavom}. Oni mogu imati inicijatorsku ulogu, tj. započinju određene procese u sustavu ili samo sudioničku ulogu, tj. obavljaju određeni posao. Za svakog aktora navesti funkcionalne zahtjeve koji se na njega odnose.}\\
-			
 			
 			\noindent \textbf{Dionici:}
 			
@@ -48,6 +42,8 @@
 					\item ostaviti komentar tragačima na akciji
 					
 				\end{packed_enum}
+			
+				
 				
 				\item  \underbar{Tragač može:}
 				
@@ -56,6 +52,16 @@
 					\item na karti vidjeti svoje zadatke, životinje te ostale tragače na istoj akciji
 					\item Obavljati zadatke koje mu je dodijelio istraživač
 					\item Prilikom obavljanja akcije ostaviti komentar za ostale tragače
+					
+				\end{packed_enum}
+				
+				\item  \underbar{Administrator može:}
+				
+				\begin{packed_enum}
+					
+					\item Pregledati popis svih registriranih korisnika i njihovih podataka
+					\item Mijenjati osobne podatke i dodijeljena prava svim korisnicima
+					\item Potvrditi ili odbiti registraciju istraživača i voditelja postaje
 					
 				\end{packed_enum}
 				
@@ -68,10 +74,9 @@
 				
 			\subsection{Obrasci uporabe}
 				
-				\textbf{\textit{dio 1. revizije}}
 				
 				\subsubsection{Opis obrazaca uporabe}
-					\textit{Funkcionalne zahtjeve razraditi u obliku obrazaca uporabe. Svaki obrazac je potrebno razraditi prema donjem predlošku. Ukoliko u nekom koraku može doći do odstupanja, potrebno je to odstupanje opisati i po mogućnosti ponuditi rješenje kojim bi se tijek obrasca vratio na osnovni tijek.}\\
+				
 					
 
 					\noindent \underbar{\textbf{UC1 - Registracija}}
@@ -265,6 +270,11 @@
 						\end{packed_enum}
 						
 					\end{packed_item}
+					\vspace{12pt}
+					\vspace{12pt}
+					\vspace{12pt}
+					\vspace{12pt}
+					\vspace{12pt}
 					
 					\noindent \underbar{\textbf{UC8 - Prikazivanje pozicije životinje}}
 					\begin{packed_item}
@@ -399,6 +409,10 @@
 						\end{packed_item}
 					\end{packed_item}
 					
+					\vspace{12pt}
+					\vspace{12pt}
+					\vspace{12pt}
+					
 					\noindent \underbar{\textbf{UC14 - Uređivanje kompetencija tragača}}
 					\begin{packed_item}
 						
@@ -452,6 +466,12 @@
 							\item Voditelj ima mogućnost brisati i uređivati podatke svojih tragača
 						\end{packed_enum}
 					\end{packed_item}
+					
+					\vspace{12pt}
+					\vspace{12pt}
+					\vspace{12pt}
+					\vspace{12pt}
+					\vspace{12pt}
 					
 					\noindent \underbar{\textbf{UC17 - Pregled zahtjeva}}
 					\begin{packed_item}
@@ -552,6 +572,9 @@
 						\end{packed_enum}
 					\end{packed_item}
 					
+					\vspace{36pt}
+					\vspace{36pt}
+					\vspace{36pt}
 					\noindent \underbar{\textbf{UC23 - Dodjela zadataka}}
 					\begin{packed_item}
 						
@@ -674,8 +697,7 @@
 
 				\subsubsection{Dijagrami obrazaca uporabe}
 					
-					\textit{Prikazati odnos aktora i obrazaca uporabe odgovarajućim UML dijagramom. Nije nužno nacrtati sve na jednom dijagramu. Modelirati po razinama apstrakcije i skupovima srodnih funkcionalnosti.}
-				\eject
+					
 				
 				\begin{figure}[H]
 					\includegraphics[width=\textwidth]{slike/Dijagram_obrasca_uporabe_funkcionalnost_admina_i_korisnika_aplikacije.PNG} %veličina u odnosu na širinu linije
@@ -697,6 +719,8 @@
 					\label{fig:Dijagram_obrasca_uporabe_funkcionalnost_istrazivaca_tragaca_i_administratora} %label mora biti drugaciji za svaku sliku
 				\end{figure}		
 				
+				\vspace{360pt}
+				
 			\subsection{Sekvencijski dijagrami}
 			
 				\textbf{Obrazac uporabe UC8 - Prikazivanje pozicije životinje}\\
@@ -712,6 +736,9 @@
 					\caption{Sekvencijski dijagram za UC8}
 					\label{fig:UC8-PrikazivanjePozicijeZivotinje} %label mora biti drugaciji za svaku sliku
 				\end{figure}
+				
+				\vspace{60pt}
+				\vspace{48pt}
 				
 				\textbf{Obrazac uporabe UC19-Kreiranje akcije}\\
 				
@@ -736,10 +763,7 @@
 				
 				
 		\section{Ostali zahtjevi}
-		
-			\textbf{\textit{dio 1. revizije}}\\
-		 
-			 \textit{Nefunkcionalni zahtjevi i zahtjevi domene primjene dopunjuju funkcionalne zahtjeve. Oni opisuju \textbf{kako se sustav treba ponašati} i koja \textbf{ograničenja} treba poštivati (performanse, korisničko iskustvo, pouzdanost, standardi kvalitete, sigurnost...). Primjeri takvih zahtjeva u Vašem projektu mogu biti: podržani jezici korisničkog sučelja, vrijeme odziva, najveći mogući podržani broj korisnika, podržane web/mobilne platforme, razina zaštite (protokoli komunikacije, kriptiranje...)... Svaki takav zahtjev potrebno je navesti u jednoj ili dvije rečenice.}
+			 
 			 \begin{packed_item}
 			 	\item Sustav treba omogućiti rad više korisnika u stvarnom vremenu
 			 	\item Korisničko sučelje i sustav moraju podržavati hrvatsku abecedu (dijakritičke znakove) pri unosu i prikazu tekstualnog sadržaja
