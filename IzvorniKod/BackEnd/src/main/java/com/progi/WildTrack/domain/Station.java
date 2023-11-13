@@ -2,6 +2,8 @@ package com.progi.WildTrack.domain;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "Station")
 public class Station {
@@ -20,8 +22,8 @@ public class Station {
 
     @OneToOne(mappedBy = "station", cascade = CascadeType.ALL)
     private StationLead stationLead;
-    @OneToOne(mappedBy = "station", cascade = CascadeType.ALL)
-    private Explorer explorer;
+    @OneToMany(mappedBy = "station", cascade = CascadeType.ALL)
+    private List<Explorer> explorer;
 
 
     public Station() {
