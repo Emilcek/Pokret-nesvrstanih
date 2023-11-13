@@ -22,21 +22,10 @@ export class LoginComponent {
       this.http.post("http://localhost:8080/auth/login", this.signInForm.value, { observe: 'response' }).subscribe((response: any) => {
         console.log(response.status)
       }, error => {
-        console.log(error)
-      })
-      //     if(user){
-      //       alert("Login Success")
-      //       this.signInForm.reset()
-      //       console.log(response.get("Username"))
-      //     }else{
-      //       alert("User not found")
-      //     }
-      //     })
-      //   }else{
-      //     alert("Upisite sve podatke")
-      //   }
-      //
-      // }
+        alert("User not found")
+      }) 
+    }else{
+       alert("Upisite sve podatke")
     }
   }
 }

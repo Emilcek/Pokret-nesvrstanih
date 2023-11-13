@@ -16,22 +16,22 @@
                     <ng-select [items]="abilities" bindLabel="name"
                     bindValue="id" [multiple]="true" [closeOnSelect]="false"
                     [appendTo]="'body'"
-                    formControlName="ability" placeholder="Odaberite kompetencije" >
+                    formControlName="educatedFor" placeholder="Odaberite kompetencije" >
                     </ng-select>
                 </div>
                 <div class="group">
                     <label for="pass" class="label">Osobna fotografija</label>
-                    <input type="file" id="myFile" name="filename" formControlName="photo"
+                    <input type="file" id="myFile" name="filename" formControlName="clientPhotoURL"
                     accept="image/png, image/jpeg, image/jpg" >
                 </div>
                 <div class="group" id="nameSurname">
                     <div class="group" id="name">
                         <label for="user" class="label">Ime</label>
-                        <input id="user" type="text" class="input" required formControlName="name" placeholder="Unesite ime">
+                        <input id="user" type="text" class="input" required formControlName="firstname" placeholder="Unesite ime">
                     </div>
                     <div class="group" id="surname">
                         <label for="user" class="label">Prezime</label>
-                        <input id="user" type="text" class="input" formControlName="surname" placeholder="Unesite prezime" required>
+                        <input id="user" type="text" class="input" formControlName="lastname" placeholder="Unesite prezime" required>
                     </div>
                 </div>
                 <div class="group">
@@ -39,7 +39,7 @@
                 </div>
                 <div class="group">
                     <label for="user" class="label">Korisničko ime</label>
-                    <input id="user" type="text" class="input"  formControlName="username" placeholder="Unesite korisničko ime (započinje slovom)" required>
+                    <input id="user" type="text" class="input"  formControlName="clientName" placeholder="Unesite korisničko ime (započinje slovom)" required>
                 </div>
                 <div class="group">
                     <label for="pass" class="label">Lozinka</label>
