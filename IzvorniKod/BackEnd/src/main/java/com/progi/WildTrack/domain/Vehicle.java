@@ -9,8 +9,8 @@ public class Vehicle {
     @Id
     @Column(name = "VehicleId", nullable = false)
     private Long vehicleId;
-    @Column(name="VechicleType",length = 30, nullable = false)
-    private String vechicleType;
+    @Column(name="VehicleType",length = 30, nullable = false)
+    private String vehicleType;
 
     @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<EducatedFor> educatedForList;

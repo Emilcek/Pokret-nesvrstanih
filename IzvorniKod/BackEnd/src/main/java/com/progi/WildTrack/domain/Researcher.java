@@ -1,10 +1,16 @@
 package com.progi.WildTrack.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "Researcher")
 public class Researcher {
     @Id
@@ -23,9 +29,6 @@ public class Researcher {
     @OneToMany(mappedBy = "researcher", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Action> actions;
 
-
-    public Researcher() {
-    }
 
 
 }

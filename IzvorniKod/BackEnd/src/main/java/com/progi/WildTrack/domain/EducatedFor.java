@@ -1,9 +1,15 @@
 package com.progi.WildTrack.domain;
 
 import jakarta.persistence.*;
-@Entity
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
+@Entity
 @Table(name = "EducatedFor")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class EducatedFor {
     @EmbeddedId
     private EducatedForId educatedForId;
@@ -17,8 +23,6 @@ public class EducatedFor {
     @MapsId
     private Vehicle vehicle;
 
-    public EducatedFor() {
-    }
 
 
 }
