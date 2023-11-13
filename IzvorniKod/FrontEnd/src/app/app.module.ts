@@ -6,6 +6,7 @@ import { HeaderComponent } from './header/header.component';
 import{ FormsModule, ReactiveFormsModule }from '@angular/forms'
 import { NgSelectModule } from '@ng-select/ng-select';
 import { HttpClientModule } from '@angular/common/http';
+import { UserDataEditingComponent } from './user-data-editing/user-data-editing.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 
@@ -13,6 +14,7 @@ import { RegisterComponent } from './register/register.component';
   declarations: [
     AppComponent,
     HeaderComponent,
+    UserDataEditingComponent,
     LoginComponent,
     RegisterComponent
   ],
@@ -22,7 +24,7 @@ import { RegisterComponent } from './register/register.component';
     ReactiveFormsModule,
     NgSelectModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
