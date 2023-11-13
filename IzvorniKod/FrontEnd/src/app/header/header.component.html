@@ -6,4 +6,8 @@
         </svg>
         <span class="header-subtitle">za praćenje životinja</span>
     </div>
+    <div class="header-links" *ngIf="activePage === '/login' || activePage === '/register' || activePage === '/'">
+      <a class="header-link" routerLink="login" [ngClass]="{ 'active': activePage === '/login' || activePage === '/' }"  (click)="changeActivePage('/login')">Login</a>
+      <a class="header-link" routerLink="register" [ngClass]="{ 'active': activePage === '/register' }" (click)="changeActivePage('/register')">Register</a>
+    </div>
 </div>
