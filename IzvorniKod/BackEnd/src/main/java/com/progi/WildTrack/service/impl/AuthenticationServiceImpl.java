@@ -17,12 +17,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.SimpleTimeZone;
 
 @Service
 @RequiredArgsConstructor
@@ -34,8 +36,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
 
-  public AuthenticationResponseDto register(RegisterDto request) {
-    if (repository.existsByClientName(request.getClientName())) {
+  public Void register(RegisterDto request) {
+    if (repository.existsByClientName(request.getClientName()) || repository.existsByEmail(request.getEmail())) {
         throw new RuntimeException("Client already exists");
     }
     var client = Client.builder()
@@ -47,21 +49,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         .role(request.getRole())
         .clientPhotoURL(request.getClientPhotoURL())
         .build();
-    var savedClient = repository.save(client);
-    var jwtToken = jwtService.generateToken(client);
-    var refreshToken = jwtService.generateRefreshToken(client);
-    saveClientToken(savedClient, jwtToken);
-//    if (request.getRole().equals("EXPLORER")) {
+    System.out.println(client);
+    repository.save(client);
+//    if (request.getRole().equals("tragač")) {
 //      var explorer = Explorer.builder()
 //              .client(savedClient)
 //              .build();
 //      explorerRepository.save(explorer);
 //      savedClient.setExplorer(explorer);
 //    }
-    return AuthenticationResponseDto.builder()
-        .accessToken(jwtToken)
-            .refreshToken(refreshToken)
-        .build();
+    return null;
   }
 
   public AuthenticationResponseDto authenticate(LoginDto request) {

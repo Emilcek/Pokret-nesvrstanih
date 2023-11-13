@@ -14,9 +14,9 @@ export class RegisterComponent {
     role:new FormControl(''),
     educatedFor:new FormControl(''),
     clientPhotoURL:new FormControl(''),
-    firstname:new FormControl(''),
-    lastname:new FormControl(''),
-    clientname:new FormControl('',Validators.pattern('[a-zA-z]+$')),
+    firstName:new FormControl(''),
+    lastName:new FormControl(''),
+    clientName:new FormControl('',Validators.pattern('[a-zA-z]+$')),
     password:new FormControl('',Validators.minLength(8)),
     email:new FormControl('',Validators.email),
   })
