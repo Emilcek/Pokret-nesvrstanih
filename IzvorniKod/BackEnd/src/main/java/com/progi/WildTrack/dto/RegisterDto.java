@@ -21,6 +21,5 @@ public class RegisterDto {
     private String password;
     private String role;
     private String clientPhotoURL;
-    private String stationName;
     private List<String> educatedFor;
 }

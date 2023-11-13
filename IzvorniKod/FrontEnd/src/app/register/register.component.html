@@ -4,7 +4,7 @@
             <form class="sign-up-htm" [formGroup]="signUpForm" (ngSubmit)="signUp()">
                 <div class="group">
                     <label for="pass" class="label">Uloga</label>
-                    <select name="position" id="pos" formControlName="position" (change)="showDiv($event)" required>
+                    <select name="position" id="pos" formControlName="role" (change)="showDiv($event)" required>
                         <option value="placeholder" [selected]="true" [hidden]="true">Odaberi ulogu...</option>
                         <option value="voditeljPostaje">Voditelj postaje</option>
                         <option value="istrazivac">Istraživač</option>
@@ -27,11 +27,11 @@
                 <div class="group" id="nameSurname">
                     <div class="group" id="name">
                         <label for="user" class="label">Ime</label>
-                        <input id="user" type="text" class="input" required formControlName="firstname" placeholder="Unesite ime">
+                        <input id="user" type="text" class="input" required formControlName="firstName" placeholder="Unesite ime">
                     </div>
                     <div class="group" id="surname">
                         <label for="user" class="label">Prezime</label>
-                        <input id="user" type="text" class="input" formControlName="lastname" placeholder="Unesite prezime" required>
+                        <input id="user" type="text" class="input" formControlName="lastName" placeholder="Unesite prezime" required>
                     </div>
                 </div>
                 <div class="group">

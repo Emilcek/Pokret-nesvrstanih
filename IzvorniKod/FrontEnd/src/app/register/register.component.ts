@@ -14,9 +14,9 @@ export class RegisterComponent {
     role:new FormControl(''),
     educatedFor:new FormControl(''),
     clientPhotoURL:new FormControl(''),
-    firstname:new FormControl(''),
-    lastname:new FormControl(''),
-    clientname:new FormControl('',Validators.pattern('[a-zA-z]+$')),
+    firstName:new FormControl(''),
+    lastName:new FormControl(''),
+    clientName:new FormControl('',Validators.pattern('[a-zA-z]+$')),
     password:new FormControl('',Validators.minLength(8)),
     email:new FormControl('',Validators.email),
   })
@@ -32,7 +32,7 @@ export class RegisterComponent {
         let response:any=res
         const user=response.find((a:any)=>{
           console.log(a)
-          return a.clientname===this.signUpForm.value.clientname && a.email===this.signUpForm.value.email
+          return a.clientname===this.signUpForm.value.clientName && a.email===this.signUpForm.value.email
         });
         if(user==false){
           alert("Korisničko ime ili email se već koriste.")
