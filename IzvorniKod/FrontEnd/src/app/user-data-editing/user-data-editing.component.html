@@ -6,35 +6,35 @@
     <div style="width: 100%; height: 350px" class="grid-container2">
         <div class="grid-container">
             <div class="grid-cell">
-                <div class="form-input-container" *ngIf="userData">
+                <div class="form-input-container">
                     <input type="text" class="form-input" placeholder=" " [(ngModel)]="userData.name">
                     <label class="form-input-label">Ime</label>
                     <div *ngIf="!userData.name" class="error-message">Ime je potrebno</div>
                 </div>
             </div>
             <div class="grid-cell">
-                <div class="form-input-container" *ngIf="userData">
+                <div class="form-input-container">
                     <input type="text" class="form-input" placeholder=" " [(ngModel)]="userData.surname">
                     <label class="form-input-label">Prezime</label>
                     <div *ngIf="!userData.surname" class="error-message">Prezime je potrebno</div>
                 </div>
             </div>
             <div class="grid-cell">
-                <div class="form-input-container" *ngIf="userData">
+                <div class="form-input-container">
                     <input type="text" class="form-input" placeholder=" " [(ngModel)]="userData.username"
                         style="pointer-events: none;">
                     <label class="form-input-label">Korisničko ime</label>
                 </div>
             </div>
             <div class="grid-cell">
-                <div class="form-input-container" *ngIf="userData">
+                <div class="form-input-container">
                     <input type="text" class="form-input" placeholder=" " [(ngModel)]="userData.lozinka">
                     <label class="form-input-label">Lozinka</label>
                     <div *ngIf="!userData.lozinka" class="error-message">Lozinka je potrebno</div>
                 </div>
             </div>
             <div class="grid-cell">
-                <div class="form-input-container" *ngIf="userData">
+                <div class="form-input-container">
                     <input type="text" class="form-input" placeholder=" " [(ngModel)]="userData.email"
                         (input)="validateEmail()">
                     <label class="form-input-label">E-mail</label>
