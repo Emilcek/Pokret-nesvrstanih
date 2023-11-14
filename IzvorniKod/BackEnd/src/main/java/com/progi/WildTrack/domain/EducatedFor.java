@@ -16,11 +16,11 @@ public class EducatedFor {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Explorername")
-    @MapsId
+    @MapsId("explorerName")
     private Explorer explorer;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "VehicleId", columnDefinition = "bigint")
-    @MapsId
+    @MapsId("vehicleId")
     private Vehicle vehicle;
 
 

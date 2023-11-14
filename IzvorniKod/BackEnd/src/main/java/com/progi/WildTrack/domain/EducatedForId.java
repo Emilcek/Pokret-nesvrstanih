@@ -8,6 +8,7 @@ import java.util.Objects;
 
 
 @Embeddable
+@Getter
 public class EducatedForId implements Serializable {
     private Long vehicleId;
     private String explorerName;

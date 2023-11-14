@@ -16,12 +16,12 @@ export class RegisterComponent {
     clientPhotoURL:new FormControl(''),
     firstName:new FormControl(''),
     lastName:new FormControl(''),
-    clientName:new FormControl('',Validators.pattern('[a-zA-z]+$')),
+    clientName:new FormControl('',Validators.pattern(/^[a-zA-Z0-9]*$/)),
     password:new FormControl('',Validators.minLength(8)),
     email:new FormControl('',Validators.email),
   })
 
-  signUp(){
+    signUp(){
     if(this.signUpForm.valid){
       if(this.signUpForm.value.role=="tragac" && this.signUpForm.value.educatedFor?.length==0){
         alert("Nisu uneseni svi podaci ili su pogrešno uneseni")
@@ -36,7 +36,7 @@ export class RegisterComponent {
         }
         this.signUpForm.value.educatedFor=this.selectedOptions
         console.log(this.signUpForm.value)
-        this.http.post("http://localhost:8008/auth/register",this.signUpForm.value,{ observe: 'response' }).subscribe((res)=>{
+        this.http.post("http://localhost:8080/auth/register",this.signUpForm.value,{ observe: 'response' }).subscribe((res)=>{
         console.log(res.status)
         },error=>{
           alert("Korisničko ime ili email se već koriste.")

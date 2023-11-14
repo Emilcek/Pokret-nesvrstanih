@@ -32,10 +32,13 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
                         req
                                 .requestMatchers("/auth/**").permitAll()
-                                .requestMatchers("/explorer/**").hasAuthority("EXPLORER")
+                                .requestMatchers("/explorer/**").hasAuthority("tragac")
+                                .requestMatchers("/stationLead/**").hasAuthority("voditeljPostaje")
+                                .requestMatchers("/researcher/**").hasAuthority("istrazivac")
                                 .anyRequest()
                                 .authenticated()
                 )
