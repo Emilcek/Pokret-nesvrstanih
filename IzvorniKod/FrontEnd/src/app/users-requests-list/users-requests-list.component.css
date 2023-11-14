@@ -1,6 +1,5 @@
 .hole-div {
-    margin-right: 2.4%;
-    margin-left: 2.4%;
+    margin: 30px;
     background-color: #F5F5F5;
     justify-content: space-evenly;
 }
@@ -48,10 +47,9 @@ h2 {
     align-items: center;
     justify-content: space-between;
     text-align: center;
-    margin-right: 2.4%;
-    margin-left: 2.4%;
     background-color: #F5F5F5;
     justify-content: space-evenly;
+    margin: 30px;
 }
 
 p {
