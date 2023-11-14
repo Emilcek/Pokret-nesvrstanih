@@ -8,4 +8,6 @@ import java.util.Optional;
 
 public interface StatusRepository extends JpaRepository<Status, Long> {
     Optional<Object> findByDescription(Description description);
+
+    Status findByStatusId(Integer status);
 }
