@@ -1,0 +1,22 @@
+<ng-container *ngIf="dataSource.length === 0; else hasRequests">
+    <div class="noReq">
+        <h1>Nema zahtjeva!</h1>
+    </div>
+</ng-container>
+<ng-template #hasRequests>
+    <div class="hole-div">
+        <div class="upper-div">
+            <h2>Zahtjevi korisnika za registraciju</h2>
+        </div>
+        <hr style="width:90%;text-align:left;margin-left:5%">
+        <div *ngFor="let user of dataSource; let i = index" class="request">
+            <div class="zahtjev">
+                <p>Zahtjev za ulogu {{user.role}} - {{user.name}} {{user.surname}}</p>
+                <div class="buttons">
+                    <button class="btn2" (click)="acceptUser(user, i)" type="submit">Prihvati</button>
+                    <button class="btn1" (click)="deleteUserRequset(user.id, i)" type="button">Odbaci</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
