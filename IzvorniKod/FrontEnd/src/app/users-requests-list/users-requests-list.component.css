@@ -1,0 +1,92 @@
+.hole-div {
+    margin: 30px;
+    background-color: #F5F5F5;
+    justify-content: space-evenly;
+}
+
+hr {
+    border-color: gray;
+}
+
+.upper-div {
+    display: flex;
+    margin-left: 70px;
+    margin-top: 2%;
+    padding: 30px;
+}
+
+h2 {
+    color: #333;
+}
+
+.zahtjev {
+    background-color: rgba(149, 196, 231, 0.41);
+    margin-top: 1.5%;
+    margin-left: 15%;
+    margin-bottom: 2%;
+    width: 70%;
+    height: 15%;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    border: 1px solid #ddd;
+}
+
+.request {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.noReq {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    background-color: #F5F5F5;
+    justify-content: space-evenly;
+    margin: 30px;
+}
+
+p {
+    margin-left: 2%;
+}
+
+.buttons {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 4%;
+}
+
+.buttons button {
+    margin-right: 15%;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 15px;
+}
+
+.btn1 {
+    background-color: rgb(198, 192, 192);
+    padding: 10px;
+}
+
+.btn2 {
+    background-color: rgb(122, 187, 204);
+    padding: 10px;
+}
+
+.btn1:hover {
+    background-color: rgb(136, 119, 119);
+}
+
+.btn2:hover {
+    background-color: rgb(88, 141, 156);
+}
