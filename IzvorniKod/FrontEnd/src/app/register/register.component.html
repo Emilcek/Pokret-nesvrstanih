@@ -13,19 +13,9 @@
                 </div>
                 <div class="group" id="abilities">
                     <label for="pass" class="label">Kompetencije</label>
-<!--                    <ng-select [items]="abilities" bindLabel="name"-->
-<!--                    bindValue="id" [multiple]="true" [closeOnSelect]="false"-->
-<!--                    [appendTo]="'body'"-->
-<!--                    formControlName="educatedFor" placeholder="Odaberite kompetencije" >-->
-<!--                    </ng-select>-->
-                    <select name="cars" id="cars" multiple formControlName="educatedFor">
-                      <option value="Hodanje">Hodanje</option>
-                      <option value="Dron">Dron</option>
-                      <option value="Helikopter">Helikopter</option>
-                      <option value="Cross motor">Cross motor</option>
-                      <option value="Brod">Brod</option>
-                      <option value="Auto">Auto</option>
-                    </select>
+                    <tr *ngFor="let n of abilities">
+                        <input type="checkbox" formControlName="educatedFor" checked="false" [value]="n.id" (change)="onChangeAbility($event)"> {{n.name}}
+                    </tr>
                 </div>
                 <div class="group">
                     <label for="pass" class="label">Osobna fotografija</label>
@@ -35,11 +25,11 @@
                 <div class="group" id="nameSurname">
                     <div class="group" id="name">
                         <label for="user" class="label">Ime</label>
-                        <input id="user" type="text" class="input" required formControlName="firstName" placeholder="Unesite ime">
+                        <input type="text" class="input" required formControlName="firstName" placeholder="Unesite ime">
                     </div>
                     <div class="group" id="surname">
                         <label for="user" class="label">Prezime</label>
-                        <input id="user" type="text" class="input" formControlName="lastName" placeholder="Unesite prezime" required>
+                        <input type="text" class="input" formControlName="lastName" placeholder="Unesite prezime" required>
                     </div>
                 </div>
                 <div class="group">
@@ -47,15 +37,15 @@
                 </div>
                 <div class="group">
                     <label for="user" class="label">Korisničko ime</label>
-                    <input id="user" type="text" class="input"  formControlName="clientName" placeholder="Unesite korisničko ime (započinje slovom)" required>
+                    <input type="text" class="input"  formControlName="clientName" placeholder="Unesite korisničko ime (započinje slovom)" required>
                 </div>
                 <div class="group">
                     <label for="pass" class="label">Lozinka</label>
-                    <input id="pass" type="password" class="input" data-type="password" formControlName="password" placeholder="Unesite lozinku  (min 8 znakova)" required>
+                    <input type="password" class="input" data-type="password" formControlName="password" placeholder="Unesite lozinku  (min 8 znakova)" required>
                 </div>
                 <div class="group">
                     <label for="pass" class="label">Email adresa</label>
-                    <input id="pass" type="email" class="input" formControlName="email" placeholder="Unesite email adresu (npr.  filip.vitkovic@gmail.com)" required>
+                    <input type="email" class="input" formControlName="email" placeholder="Unesite email adresu (npr.  filip.vitkovic@gmail.com)" required>
                 </div>
                 <div class="group">
                     <input type="submit" class="button" value="Registriraj se" >

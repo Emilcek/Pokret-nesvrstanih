@@ -22,7 +22,7 @@ export class LoginComponent {
       this.http.post("http://localhost:8080/auth/login", this.signInForm.value, { observe: 'response' }).subscribe((response: any) => {
         console.log(response.status)
       }, error => {
-        alert("User not found")
+        alert("Korisnik nije pronađen")
       }) 
     }else{
        alert("Upisite sve podatke")

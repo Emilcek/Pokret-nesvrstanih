@@ -9,10 +9,10 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent {
   constructor(private http:HttpClient, private router:Router){}
-
+  selectedOptions:string[]=[]
   signUpForm=new FormGroup({
     role:new FormControl(''),
-    educatedFor:new FormControl(''),
+    educatedFor:new FormControl(),
     clientPhotoURL:new FormControl(''),
     firstName:new FormControl(''),
     lastName:new FormControl(''),
@@ -23,11 +23,20 @@ export class RegisterComponent {
 
   signUp(){
     if(this.signUpForm.valid){
-      console.log(this.signUpForm.value)
       if(this.signUpForm.value.role=="tragac" && this.signUpForm.value.educatedFor?.length==0){
         alert("Nisu uneseni svi podaci ili su pogrešno uneseni")
       }else{
-        this.http.post("http://localhost:8080/auth/register",this.signUpForm.value,{ observe: 'response' }).subscribe((res)=>{
+        for ( var a of this.abilities ){
+          if(a.select==true){
+            this.selectedOptions.push(a.name)
+          }
+        }
+        if(this.signUpForm.value.role!="tragac"){
+          this.selectedOptions=[]
+        }
+        this.signUpForm.value.educatedFor=this.selectedOptions
+        console.log(this.signUpForm.value)
+        this.http.post("http://localhost:8008/auth/register",this.signUpForm.value,{ observe: 'response' }).subscribe((res)=>{
         console.log(res.status)
         },error=>{
           alert("Korisničko ime ili email se već koriste.")
@@ -37,6 +46,7 @@ export class RegisterComponent {
       alert("Nisu uneseni svi podaci ili su pogrešno uneseni")
     }
   }
+
   showDiv(event:any){
     if(event.target.value=="tragac"){
       document.getElementById("abilities")!.style.display="block"
@@ -45,13 +55,25 @@ export class RegisterComponent {
     }
   }
 
+  onChangeAbility(event: any){
+    const id = event.target.value
+    const isChecked = event.target.checked
+    this.abilities = this.abilities.map(d=>{
+      if(d.id == id){
+        d.select=isChecked
+        return d
+      }
+      return d
+    })
+  }
+
   abilities=[
-    {id:"hodanje",name:'hodanje'},
-    {id:"dron",name:'dron'},
-    {id:"auto",name:'auto'},
-    {id:"brod",name:'brod'},
-    {id:'cross motor',name:'cross motor'},
-    {id:"helikopter",name:'helikopter'}
+    {id:"hodanje",select:false,name:'hodanje'},
+    {id:"dron",select:false,name:'dron'},
+    {id:"auto",select:false,name:'auto'},
+    {id:"brod",select:false,name:'brod'},
+    {id:'cross motor',select:false,name:'cross motor'},
+    {id:"helikopter",select:false,name:'helikopter'}
   ]
 
 }
