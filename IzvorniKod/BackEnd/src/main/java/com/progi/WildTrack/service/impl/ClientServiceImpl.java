@@ -12,6 +12,7 @@ import com.progi.WildTrack.dto.ClientUpdateDTO;
 import com.progi.WildTrack.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,6 +20,9 @@ import java.util.List;
 
 @Service
 public class ClientServiceImpl implements ClientService {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @Autowired
     private ClientRepository clientRepo;
 
@@ -30,9 +34,14 @@ public class ClientServiceImpl implements ClientService {
 
     @Autowired
     private StatusRepository statusRepo;
+
+    public ClientServiceImpl() {
+    }
+
     @Override
     public List<Client> getAllClients() {
-        return clientRepo.findAll();
+        List<Client> clients = clientRepo.findAll();
+        return clients;
     }
 
     @Override
@@ -89,7 +98,7 @@ public class ClientServiceImpl implements ClientService {
                 .clientName("admin")
                 .firstName("admin")
                 .lastName("admin")
-                .clientPassword("admin123")
+                .clientPassword(passwordEncoder.encode("admin123"))
                 .clientPhotoURL("")
                 .email("admin@admin")
                 .isVerified(true)

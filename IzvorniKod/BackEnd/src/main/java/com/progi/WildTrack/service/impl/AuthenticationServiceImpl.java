@@ -38,7 +38,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
 
-  public Void register(RegisterDto request) {
+  public AuthenticationResponseDto register(RegisterDto request) {
     if (repository.existsByClientName(request.getClientName()) || repository.existsByEmail(request.getEmail())) {
         throw new RuntimeException("Client already exists");
     }
@@ -88,7 +88,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
               .build();
         researcherRepository.save(researcher);
     }
-    return null;
+    var jwtToken = jwtService.generateToken(client);
+    var refreshToken = jwtService.generateRefreshToken(client);
+    revokeAllClientTokens(client);
+    saveClientToken(client, jwtToken);
+    return AuthenticationResponseDto.builder()
+            .accessToken(jwtToken)
+            .refreshToken(refreshToken)
+            .build();
   }
 
   public AuthenticationResponseDto authenticate(LoginDto request) {
@@ -126,11 +133,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     var validClientTokens = tokenRepository.findAllValidTokenByClient(client.getClientName());
     if (validClientTokens.isEmpty())
       return;
-    validClientTokens.forEach(token -> {
-      token.setExpired(true);
-      token.setRevoked(true);
-    });
-    tokenRepository.saveAll(validClientTokens);
+    tokenRepository.deleteAll(validClientTokens);
   }
 
   public void refreshToken(

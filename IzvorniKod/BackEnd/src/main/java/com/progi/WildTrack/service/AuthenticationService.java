@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public interface AuthenticationService {
 
-    Void register(RegisterDto request);
+    AuthenticationResponseDto register(RegisterDto request);
 
     AuthenticationResponseDto authenticate(LoginDto request);
 
