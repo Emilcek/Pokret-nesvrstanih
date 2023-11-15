@@ -19,7 +19,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class JwtService {
 
-    private String secretKey = "80B4E40DE850036852A6BD3C769EBFCD6DB4E67B17FFFEA163D1B36CE2E8DEAF";
+    @Value("${application.security.jwt.secret-key}")
+    private String secretKey;
     @Value("${application.security.jwt.expiration}")
     private long jwtExpiration;
     @Value("${application.security.jwt.refresh-token.expiration}")
