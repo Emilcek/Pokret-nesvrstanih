@@ -38,6 +38,7 @@ export class RegisterComponent {
         console.log(this.signUpForm.value)
         this.http.post("http://localhost:8008/auth/register",this.signUpForm.value,{ observe: 'response' }).subscribe((res)=>{
         console.log(res.status)
+        alert("Poslan vam je verifikacijski mail na vašu email adresu")
         },error=>{
           alert("Korisničko ime ili email se već koriste.")
         })

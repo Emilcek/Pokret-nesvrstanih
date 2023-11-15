@@ -9,6 +9,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserDataEditingComponent } from './user-data-editing/user-data-editing.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { ExplorerProfileComponent } from './explorer-profile/explorer-profile.component';
+import { StationLeaderProfileComponent } from './station-leader-profile/station-leader-profile.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { RegisterComponent } from './register/register.component';
     HeaderComponent,
     UserDataEditingComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ExplorerProfileComponent,
+    StationLeaderProfileComponent
   ],
   imports: [
     BrowserModule,
