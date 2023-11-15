@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    BASE_API_URL: process.env["BASE_API_URL"]
+    BASE_API_URL: "https://wildtrack-backend.onrender.com/api"
   };
