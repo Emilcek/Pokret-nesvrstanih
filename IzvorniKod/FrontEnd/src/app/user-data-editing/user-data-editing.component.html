@@ -4,7 +4,6 @@
     </div>
     <hr style="width:90%;text-align:left;margin-left:5%">
     <div style="width: 100%; height: 350px" class="grid-container2">
-        <div class="grid-container">
             <div class="grid-cell">
                 <div class="form-input-container">
                     <input type="text" class="form-input" placeholder=" " [(ngModel)]="userData.name">
@@ -18,6 +17,9 @@
                     <label class="form-input-label">Prezime</label>
                     <div *ngIf="!userData.surname" class="error-message">Prezime je potrebno</div>
                 </div>
+            </div>
+            <div class="text">
+                <p>Još niste odabrani ni za jednu postaju!</p>
             </div>
             <div class="grid-cell">
                 <div class="form-input-container">
@@ -33,7 +35,7 @@
                     <div *ngIf="!userData.lozinka" class="error-message">Lozinka je potrebno</div>
                 </div>
             </div>
-            <div class="grid-cell">
+            <div class="grid-cell-email">
                 <div class="form-input-container">
                     <input type="text" class="form-input" placeholder=" " [(ngModel)]="userData.email"
                         (input)="validateEmail()">
@@ -42,11 +44,6 @@
                     <div *ngIf="!userData.email" class="error-message">Email je potreban</div>
                 </div>
             </div>
-            
-        </div>
-        <div class="text">
-            <p>Još niste odabrani ni za jednu postaju!</p>
-        </div>
         <div class="buttons">
             <div class="button-div1">
                 <button class="btn2" (click)="saveUserData()" type="submit">Spremi</button>

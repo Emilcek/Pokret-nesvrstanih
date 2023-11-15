@@ -1,0 +1,15 @@
+.main {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    background-color:white;
+    padding: 350px;
+    margin: 80px;
+}
+
+.main p {
+    color:black;
+    text-align: center;
+    font-size: 30px;
+}
+
