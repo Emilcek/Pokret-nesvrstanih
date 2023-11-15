@@ -9,8 +9,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserDataEditingComponent } from './user-data-editing/user-data-editing.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { ExplorerProfileComponent } from './explorer-profile/explorer-profile.component';
 import { StationLeaderProfileComponent } from './station-leader-profile/station-leader-profile.component';
+import { ExplorerTasksComponent } from './explorer-tasks/explorer-tasks.component';
+import { ExplorerProfileComponent } from './explorer-profile/explorer-profile.component';
+import { UsersRequestsListComponent } from './users-requests-list/users-requests-list.component';
+import { UsersListComponent } from './users-list/users-list.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,11 @@ import { StationLeaderProfileComponent } from './station-leader-profile/station-
     LoginComponent,
     RegisterComponent,
     ExplorerProfileComponent,
-    StationLeaderProfileComponent
+    StationLeaderProfileComponent,
+    ExplorerTasksComponent,
+    ExplorerProfileComponent,
+    UsersRequestsListComponent,
+    UsersListComponent
   ],
   imports: [
     BrowserModule,

@@ -3,6 +3,7 @@ package com.progi.WildTrack.domain;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Data
 @Table(name = "Researcher")
 public class Researcher {
     @Id
@@ -21,7 +23,7 @@ public class Researcher {
     @JoinColumn(name = "StatusId")
     private Status status;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Resarchername" ,referencedColumnName = "CLientname")
+    @JoinColumn(name = "Resarchername" ,referencedColumnName = "Clientname")
     @MapsId
     private Client client;
     @OneToMany(mappedBy = "researcher", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

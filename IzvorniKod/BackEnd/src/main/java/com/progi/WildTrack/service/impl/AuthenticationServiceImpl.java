@@ -9,6 +9,7 @@ import com.progi.WildTrack.dto.LoginDto;
 import com.progi.WildTrack.dto.RegisterDto;
 import com.progi.WildTrack.security.JwtService;
 import com.progi.WildTrack.service.AuthenticationService;
+import com.progi.WildTrack.service.VehicleService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   private final ExplorerRepository explorerRepository;
   private final StationLeadRepository stationLeadRepository;
   private final VehicleRepository vehicleRepository;
-  private final EducatedForRepository educatedForRepository;
+  private final VehicleService vehicleService;
   private final StatusRepository statusRepository;
   private final ResearcherRepository researcherRepository;
   private final TokenRepository tokenRepository;
@@ -65,12 +66,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
               .build();
       explorerRepository.save(explorer);
       for (String i : request.getEducatedFor()) {
-        System.out.println(i);
-        var educatedfor = EducatedFor.builder()
-                .explorer(explorer)
-                .vehicle((Vehicle) vehicleRepository.findByVehicleType(i).orElseThrow())
-                .build();
-        educatedForRepository.save(educatedfor);
+//        System.out.println(i);
+        Vehicle vehicle = (Vehicle) vehicleRepository.findByVehicleType(i).orElseThrow();
+        System.out.println(vehicle);
+        System.out.println(vehicle.getVehicleId().getClass());
+        System.out.println(vehicle.getClass());
+        vehicleService.addExplorerToVehicle(vehicle.getVehicleId(), explorer);
+
+//        EducatedForId educatedForId = new EducatedForId(vehicle.getVehicleId(), savedClient.getClientName());
+//        System.out.println(educatedForId.getVehicleId() + " " + educatedForId.getExplorerName());
+//        var educatedfor = EducatedFor.builder()
+//                .educatedForId(educatedForId)
+//                .build();
+//        educatedForRepository.save(educatedfor);
       }
     }
     else if (request.getRole().equals("istrazivac")) {

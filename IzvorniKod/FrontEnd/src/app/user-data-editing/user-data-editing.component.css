@@ -1,19 +1,12 @@
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 40px;
-    align-items: center;
-    justify-content: center;
-}
-
 .grid-container2 {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 5px;
-    border: saddlebrown;
     align-items: center;
     justify-content: center;
     background-color: white;
+    margin-top: 3%;
+    height: 100%;
 }
 
 .grid-cell {
@@ -22,6 +15,20 @@
     text-align: center;
     align-items: center;
     justify-content: center;
+    grid-column: span 1;
+    width: 50%;
+    margin-left: 10%;
+}
+
+.grid-cell-email {
+    padding: 10px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    grid-column: span 2;
+    width: 25%;
+    margin-left: 5%;
 }
 
 hr {
@@ -30,9 +37,11 @@ hr {
 }
 
 .hole-div {
-    margin-right: 2.4%;
-    margin-left: 2.4%;
+    margin: 30px;
     background-color: white;
+    border: solid;
+    border-color: white;
+    height: 85%;
 }
 
 .button-div1 {
@@ -40,6 +49,7 @@ hr {
     text-align: center;
     align-items: center;
     justify-content: right;
+    margin-left: 20%;
 }
 
 .text {
@@ -48,6 +58,7 @@ hr {
     align-items: center;
     justify-content: center;
     margin-bottom: 15%;
+    grid-row: span 3;
 }
 
 .buttons {
@@ -55,6 +66,8 @@ hr {
     text-align: center;
     align-items: center;
     justify-content: space-evenly;
+    grid-column: span 2;
+    margin-top: 5%;
 }
 
 .button-div2 {
@@ -62,6 +75,7 @@ hr {
     text-align: center;
     align-items: center;
     justify-content: left;
+    margin-right: 40%;
 }
 
 h2 {
@@ -70,8 +84,9 @@ h2 {
 
 .upper-div {
     display: flex;
-    margin-left: 70px;
+    margin-left: 7%;
     margin-top: 2%;
+    margin-bottom: 1%;
 }
 
 button {
@@ -80,8 +95,8 @@ button {
     border: none;
     border-radius: 20px;
     cursor: pointer;
-    transition: background-color 0.3s;
-    font-size: 15px;
+    transition: 0.3s;
+    font-size: 20px;
 }
 
 .btn1 {
@@ -93,7 +108,7 @@ button {
 }
 
 .btn1:hover {
-    background-color: rgb(58, 52, 52);
+    background-color: rgb(136, 119, 119);
 }
 
 .btn2:hover {
@@ -109,8 +124,9 @@ button {
     .form-input {
         border: 1px solid #5b5656;
         border-radius: 10px;
-        padding: 9px;
+        padding: 15px;
         width: 100%;
+        font-size: large;
     }
 
     .form-input-username {
@@ -127,8 +143,8 @@ button {
         left: 14px;
         transition: .3s;
         padding: 0 2px;
-        line-height: 15px;
-        font-size: 15px;
+        line-height: 20px;
+        font-size: 20px;
     }
 
     .form-input:focus+.form-input-label,

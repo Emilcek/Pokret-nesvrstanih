@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -16,8 +18,6 @@ public class Explorer {
     @Id
     @Column(name = "Explorername" ,length = 30, nullable = false)
     private String explorerName;
-    @Column(name = "StationId", nullable = false)
-    private int stationId;
 
    @OneToOne(cascade = CascadeType.ALL)
    @JoinColumn(name = "Explorername" ,referencedColumnName = "Clientname")
@@ -36,8 +36,8 @@ public class Explorer {
     private List<Task> task;
     @OneToMany(mappedBy = "explorer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ExplorerLocation> explorerLocations;
-    @OneToMany(mappedBy = "explorer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<EducatedFor> educatedFors;
+    @ManyToMany(mappedBy = "explorers", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Vehicle> vehicles = new HashSet<>();
 
 
 }
