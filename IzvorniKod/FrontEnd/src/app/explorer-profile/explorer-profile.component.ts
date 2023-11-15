@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 @Component({
   selector: 'app-explorer-profile',
   templateUrl: './explorer-profile.component.html',
