@@ -2,7 +2,7 @@
   "name": "wildtrack",
   "version": "1.0.0",
   "engines": {
-    "node": "18.1.0"
+    "node": "16.14.2"
   },
   "scripts": {
     "ng": "ng",
