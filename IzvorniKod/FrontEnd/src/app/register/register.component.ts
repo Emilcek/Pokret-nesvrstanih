@@ -37,7 +37,7 @@ export class RegisterComponent {
         }
         this.signUpForm.value.educatedFor=this.selectedOptions
         console.log(this.signUpForm.value)
-        this.http.post(environment.BASE_API_URL+"/auth/login",this.signUpForm.value,{ observe: 'response' }).subscribe((res)=>{
+        this.http.post(environment.BASE_API_URL+"/auth/register",this.signUpForm.value,{ observe: 'response' }).subscribe((res)=>{
         console.log(res.status)
         alert("Poslan vam je verifikacijski mail na vašu email adresu")
         },error=>{

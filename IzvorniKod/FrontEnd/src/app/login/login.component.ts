@@ -20,11 +20,11 @@ export class LoginComponent {
   signIn() {
     if (this.signInForm.valid) {
       console.log(this.signInForm.value)
-      this.http.post(environment.BASE_API_URL+"/auth/register", this.signInForm.value, { observe: 'response' }).subscribe((response: any) => {
+      this.http.post(environment.BASE_API_URL+"/auth/login", this.signInForm.value, { observe: 'response' }).subscribe((response: any) => {
         console.log(response.status)
       }, error => {
         alert("Korisnik nije pronađen")
-      }) 
+      })
     }else{
        alert("Upisite sve podatke")
     }
