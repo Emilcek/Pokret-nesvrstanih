@@ -63,5 +63,4 @@ jobs:
       
       - name: 'Start Node.js app'
         run: |
-          cd path/to/your/app  # Replace with your app directory
           npm start  # Replace with the command to start your Node.js app
