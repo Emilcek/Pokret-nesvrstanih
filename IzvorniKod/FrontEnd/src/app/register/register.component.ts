@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
+import { environment } from 'src/environment/environment';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -36,7 +37,7 @@ export class RegisterComponent {
         }
         this.signUpForm.value.educatedFor=this.selectedOptions
         console.log(this.signUpForm.value)
-        this.http.post("http://localhost:8080/auth/register",this.signUpForm.value,{ observe: 'response' }).subscribe((res)=>{
+        this.http.post(environment.BASE_API_URL+"/auth/login",this.signUpForm.value,{ observe: 'response' }).subscribe((res)=>{
         console.log(res.status)
         alert("Poslan vam je verifikacijski mail na vašu email adresu")
         },error=>{

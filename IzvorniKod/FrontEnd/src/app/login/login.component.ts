@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
+import * as dotenv from 'dotenv';
+import { environment } from 'src/environment/environment';
+dotenv.config();
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -19,7 +22,7 @@ export class LoginComponent {
   signIn() {
     if (this.signInForm.valid) {
       console.log(this.signInForm.value)
-      this.http.post("http://localhost:8080/auth/login", this.signInForm.value, { observe: 'response' }).subscribe((response: any) => {
+      this.http.post(environment.BASE_API_URL+"/auth/register", this.signInForm.value, { observe: 'response' }).subscribe((response: any) => {
         console.log(response.status)
       }, error => {
         alert("Korisnik nije pronađen")
