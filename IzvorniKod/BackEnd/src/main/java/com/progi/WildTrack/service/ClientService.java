@@ -1,6 +1,7 @@
 package com.progi.WildTrack.service;
 
 import com.progi.WildTrack.domain.Client;
+import com.progi.WildTrack.dto.ClientDetailsDTO;
 import com.progi.WildTrack.dto.ClientUpdateDTO;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface ClientService {
     Client getClient();
 
     void createAdmin();
+
+    ClientDetailsDTO getClientDetails();
 }

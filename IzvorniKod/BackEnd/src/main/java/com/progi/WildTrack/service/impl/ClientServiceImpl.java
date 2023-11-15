@@ -8,6 +8,7 @@ import com.progi.WildTrack.domain.Client;
 import com.progi.WildTrack.domain.Researcher;
 import com.progi.WildTrack.domain.StationLead;
 import com.progi.WildTrack.domain.Status;
+import com.progi.WildTrack.dto.ClientDetailsDTO;
 import com.progi.WildTrack.dto.ClientUpdateDTO;
 import com.progi.WildTrack.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,6 +90,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client getClient() {
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
@@ -105,5 +107,11 @@ public class ClientServiceImpl implements ClientService {
                 .role("admin")
                 .build();
         clientRepo.save(admin);
+    }
+
+    @Override
+    public ClientDetailsDTO getClientDetails() {
+        Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return new ClientDetailsDTO(client.getClientName(), client.getFirstName(), client.getLastName(), client.getEmail(), client.getRole(), client.getClientPhotoURL());
     }
 }
