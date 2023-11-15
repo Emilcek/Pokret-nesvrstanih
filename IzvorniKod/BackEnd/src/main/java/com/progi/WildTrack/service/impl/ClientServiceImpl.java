@@ -82,4 +82,19 @@ public class ClientServiceImpl implements ClientService {
     public Client getClient() {
         return (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
+
+    @Override
+    public void createAdmin() {
+        Client admin = Client.builder()
+                .clientName("admin")
+                .firstName("admin")
+                .lastName("admin")
+                .clientPassword("admin123")
+                .clientPhotoURL("")
+                .email("admin@admin")
+                .isVerified(true)
+                .role("admin")
+                .build();
+        clientRepo.save(admin);
+    }
 }

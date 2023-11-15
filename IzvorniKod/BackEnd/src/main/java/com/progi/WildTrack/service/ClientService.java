@@ -17,4 +17,6 @@ public interface ClientService {
     Client updateClientByClientName(String clientName, Integer status);
 
     Client getClient();
+
+    void createAdmin();
 }

@@ -1,6 +1,7 @@
 package com.progi.WildTrack;
 
 import com.progi.WildTrack.domain.Description;
+import com.progi.WildTrack.service.ClientService;
 import com.progi.WildTrack.service.StatusService;
 import com.progi.WildTrack.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class DataInitializer {
 
     @Autowired
     private StatusService statusService;
+
+    @Autowired
+    private ClientService clientService;
     private final List<String> vehicleTypes = Arrays.asList("hodanje", "dron", "auto", "brod", "cross motor", "helikopter");
     private final List<Description> statusTypes = Arrays.asList(Description.PENDING, Description.ACCEPTED, Description.REJECTED);
 
@@ -30,6 +34,10 @@ public class DataInitializer {
         for (Description statusType : statusTypes) {
             statusService.createStatus(statusType);
         }
+        clientService.createAdmin();
+
+
+
 
     }
 }

@@ -31,7 +31,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   private final StationLeadRepository stationLeadRepository;
   private final VehicleRepository vehicleRepository;
   private final VehicleService vehicleService;
-  private final EducatedForRepository educatedForRepository;
   private final StatusRepository statusRepository;
   private final ResearcherRepository researcherRepository;
   private final TokenRepository tokenRepository;
