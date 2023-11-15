@@ -1,64 +1,13 @@
-EXPLORERCONTROLLER
-- explorer: Explorer
-
-+ GetData(): ExplorerDTO
-+ UpdateData(explorer: ExplorerDTO): ResponseEntity
-+ Delete(): ResponseEntity
-+ GetAction(): ActionDTO
-+ GetTask(): TaskDTO
-+ UpdateTask(task: TaskDTO): ResponseEntity
-+ PutComment(comment: String): ResponseEntity
-+ PostLocation(ts:TimeStamp, location: String): ResponseEntity
-
-
-ADMINCONTROLLER
-- admin: Administrator
-
-+ GetClients(): List<ClientDTO>
-  + DeleteClient(clientname: String): ResponseEntity
-  + GetStations(): List<StationDTO>
-  + PostStation(station: StationDTO): ResponseEntity
-  + DeleteStation(stationId: String): ResponseEntity
-  + VerifyClient(clientname: String): ResponseEntity
-  + UpdateClient(updatedClient: ClientDTO): ResponseEntity
-
-
-
-  RESEARCHERCONTROLLER
-  - researcher: Researcher
-
-  + GetData(): List<ResearcherDTO>
-  + UpdateData(researcher: ResearcherDTO): ResponseEntity
-  + Delete(): ResponseEntity
-  + GetActions(actionIds: List<String>): List<ActionDTO>
-  + PostAction(action: ActionDTO): ResponseEntity
-  + GetTask(): List<TaskDTO>
-  + PostTask(task: TaskDTO): ResponseEntity
-  + GetRequest(): List<RequestDTO>
-  + PostRequest(request: RequestDTO): ResponseEntity
-  + PutComment(comment: String): ResponseEntity
-
-
-  STATIONLEADCONTROLLER
-  - stationLead: StationLead
-
-  + GetData(): List<StationLeadDTO>
-  + UpdateData(stationLead: StationLeadDTO): ResponseEntity
-  + Delete(): ResponseEntity
-  + GetRequests(requestIds: List<String>): List<RequestDTO>
-  + UpdateRequest(requestId: String): ResponseEntity
-  + GetStations(stationIds: List<String>): List<StationDTO>
-  + UpdateStation(stationId: String): ResponseEntity
-  + GetExplorers(explorerIds: List<String>): List<ExplorerDTO>
-  + PostExplorer(explorerId: String): ResponseEntity
-  + DeleteExplorer(): ResponseEntity
-  + UpdateExplorerCompetencies(competencies: CompetencyDTO): ResponseEntity
-
-
-  HOMECONTROLLER
-  - database: WildTrackContext
-  - client: Client
-
-  + Register(newClient: Client): Void
-  + Login(clientLogin: ClientDTO): Void
-  + GetAuthToken(): String
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>MyApp</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>
