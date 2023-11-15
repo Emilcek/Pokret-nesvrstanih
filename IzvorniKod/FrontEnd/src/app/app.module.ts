@@ -9,6 +9,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserDataEditingComponent } from './user-data-editing/user-data-editing.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { ExplorerTasksComponent } from './explorer-tasks/explorer-tasks.component';
+import { ExplorerProfileComponent } from './explorer-profile/explorer-profile.component';
 import { UsersRequestsListComponent } from './users-requests-list/users-requests-list.component';
 import { UsersListComponent } from './users-list/users-list.component';
 
@@ -19,6 +21,8 @@ import { UsersListComponent } from './users-list/users-list.component';
     UserDataEditingComponent,
     LoginComponent,
     RegisterComponent,
+    ExplorerTasksComponent,
+    ExplorerProfileComponent,
     UsersRequestsListComponent,
     UsersListComponent
   ],
