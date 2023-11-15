@@ -10,6 +10,7 @@ import { UserDataEditingComponent } from './user-data-editing/user-data-editing.
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { UsersRequestsListComponent } from './users-requests-list/users-requests-list.component';
+import { UsersListComponent } from './users-list/users-list.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { UsersRequestsListComponent } from './users-requests-list/users-requests
     UserDataEditingComponent,
     LoginComponent,
     RegisterComponent,
-    UsersRequestsListComponent
+    UsersRequestsListComponent,
+    UsersListComponent
   ],
   imports: [
     BrowserModule,
