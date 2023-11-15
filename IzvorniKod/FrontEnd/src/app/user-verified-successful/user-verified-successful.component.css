@@ -1,0 +1,31 @@
+#mainDiv{
+    background-color: white;
+    color: #008000;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: "1" "2";
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-size: 3em;
+    margin: 30px;
+}
+
+#first{
+    display: flex;
+    justify-content: center;
+}
+
+#second{
+    display: flex;
+    justify-content: center;
+}
+
+.button{
+    padding:10px 20px;
+	border-radius:10px;
+	background:#95C4E7;
+	border-color: rgb(117, 110, 110);
+    cursor: pointer;
+}

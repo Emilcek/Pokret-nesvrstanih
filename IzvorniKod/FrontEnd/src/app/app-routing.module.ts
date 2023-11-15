@@ -8,7 +8,7 @@ import { ExplorerTasksComponent } from './explorer-tasks/explorer-tasks.componen
 import { ExplorerProfileComponent } from './explorer-profile/explorer-profile.component';
 import { UsersRequestsListComponent } from './users-requests-list/users-requests-list.component';
 import { UsersListComponent } from './users-list/users-list.component';
-
+import { UserVerifiedSuccessfulComponent } from './user-verified-successful/user-verified-successful.component';
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -19,6 +19,7 @@ const routes: Routes = [
   { path: 'explorer-profile', component: ExplorerProfileComponent },
   { path: 'requests', component: UsersRequestsListComponent },
   { path: 'userslist', component: UsersListComponent },
+  { path: 'verified' , component: UserVerifiedSuccessfulComponent}
 ];
 
 @NgModule({

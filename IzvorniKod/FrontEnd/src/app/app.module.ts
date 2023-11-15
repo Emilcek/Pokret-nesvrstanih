@@ -14,6 +14,7 @@ import { ExplorerTasksComponent } from './explorer-tasks/explorer-tasks.componen
 import { ExplorerProfileComponent } from './explorer-profile/explorer-profile.component';
 import { UsersRequestsListComponent } from './users-requests-list/users-requests-list.component';
 import { UsersListComponent } from './users-list/users-list.component';
+import { UserVerifiedSuccessfulComponent } from './user-verified-successful/user-verified-successful.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { UsersListComponent } from './users-list/users-list.component';
     ExplorerTasksComponent,
     ExplorerProfileComponent,
     UsersRequestsListComponent,
-    UsersListComponent
+    UsersListComponent,
+    UserVerifiedSuccessfulComponent
   ],
   imports: [
     BrowserModule,

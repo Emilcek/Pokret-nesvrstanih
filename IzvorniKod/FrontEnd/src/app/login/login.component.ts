@@ -2,9 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
-import * as dotenv from 'dotenv';
 import { environment } from 'src/environment/environment';
-dotenv.config();
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
