@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register' , component: RegisterComponent },
   { path: 'edit/:id', component: UserDataEditingComponent },
-  { path: 'stationLeader', component: StationLeaderProfileComponent}
+  { path: 'stationLeader', component: StationLeaderProfileComponent},
   { path: 'explorer-tasks', component: ExplorerTasksComponent },
   { path: 'explorer-profile', component: ExplorerProfileComponent },
   { path: 'requests', component: UsersRequestsListComponent },
