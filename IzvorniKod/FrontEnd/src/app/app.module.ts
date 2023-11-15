@@ -12,6 +12,7 @@ import { RegisterComponent } from './register/register.component';
 import { ExplorerTasksComponent } from './explorer-tasks/explorer-tasks.component';
 import { ExplorerProfileComponent } from './explorer-profile/explorer-profile.component';
 import { UsersRequestsListComponent } from './users-requests-list/users-requests-list.component';
+import { UsersListComponent } from './users-list/users-list.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { UsersRequestsListComponent } from './users-requests-list/users-requests
     ExplorerTasksComponent,
     ExplorerProfileComponent,
     UsersRequestsListComponent,
+    UsersListComponent
   ],
   imports: [
     BrowserModule,
