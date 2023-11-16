@@ -2,14 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
-import { environment } from 'src/environment/environment';
+import { environment } from 'src/environments/environment';
+import {HeaderService} from "../header/header.service";
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  constructor(private http:HttpClient, private router:Router){}
+  constructor(private http:HttpClient, private router:Router, private headerService: HeaderService){}
   selectedOptions:string[]=[]
   signUpForm=new FormGroup({
     role:new FormControl(''),
@@ -24,11 +25,11 @@ export class RegisterComponent {
 
     signUp(){
     if(this.signUpForm.valid){
-      if(this.signUpForm.value.role=="tragac" && this.signUpForm.value.educatedFor?.length==0){
+      if(this.signUpForm.value.role==="tragac" && this.signUpForm.value.educatedFor?.length===0){
         alert("Nisu uneseni svi podaci ili su pogrešno uneseni")
       }else{
-        for ( var a of this.abilities ){
-          if(a.select==true){
+        for ( let a of this.abilities ){
+          if(a.select){
             this.selectedOptions.push(a.name)
           }
         }
@@ -36,12 +37,15 @@ export class RegisterComponent {
           this.selectedOptions=[]
         }
         this.signUpForm.value.educatedFor=this.selectedOptions
-        console.log(this.signUpForm.value)
-        this.http.post(environment.BASE_API_URL+"/auth/register",this.signUpForm.value,{ observe: 'response' }).subscribe((res)=>{
-        console.log(res.status)
-        alert("Poslan vam je verifikacijski mail na vašu email adresu")
-        },error=>{
-          alert("Korisničko ime ili email se već koriste.")
+        this.http.post(environment.BASE_API_URL+"/auth/register",this.signUpForm.value).subscribe({
+          next: data => {
+            let response: any = data;
+            alert("Poslan vam je verifikacijski mail na vašu email adresu");
+            this.headerService.changeActivePage('/login');
+            this.router.navigate(['/login']);
+          }, error: error => {
+            alert("Korisničko ime ili email se već koriste.")
+          }
         })
       }
     }else{

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { NgModel } from '@angular/forms';
+import {Explorer} from "../explorer-profile/explorer-profile.component";
 
 
 @Component({
@@ -11,7 +12,9 @@ import { NgModel } from '@angular/forms';
   styleUrls: ['./user-data-editing.component.css']
 })
 export class UserDataEditingComponent implements OnInit {
-
+  @Input() currentUser!: Explorer;
+  keys: any;
+  role: any;
   constructor(private http: HttpClient, private route: ActivatedRoute) {
 
   }
@@ -23,12 +26,15 @@ export class UserDataEditingComponent implements OnInit {
   emailError: boolean = false;
   nameError: boolean = false;
 
-
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
+    /*this.route.paramMap.subscribe((params) => {
       this.userId = params.get('id');
       this.getUserData();
-    });
+    });*/
+    this.role = localStorage.getItem("user");
+    this.userData = this.currentUser;
+    this.keys = Object.keys(this.userData)
+    console.log(this.currentUser, "userdata")
   }
 
   getUserData() {

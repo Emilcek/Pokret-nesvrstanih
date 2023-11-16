@@ -21,8 +21,6 @@ th {
 }
 
 .table-container {
-    background-color: white;
-    margin-bottom: 20px;
     margin: 29px;
 }
 
@@ -37,9 +35,7 @@ hr {
 .upper-div {
     display: flex;
     margin-left: 30px;
-    margin-top: 3%;
     width: 97%;
-    background-color: white;
     padding: 30px;
     text-align: center;
 }

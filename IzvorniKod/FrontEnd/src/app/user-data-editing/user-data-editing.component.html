@@ -1,21 +1,43 @@
-<div class="hole-div">
-    <div class="upper-div">
-        <h2>Podaci o profilu</h2>
-    </div>
+  <div class="hole-div main-container" *ngIf="currentUser">
+    <div class="upper-div"><h2>Podaci o profilu</h2></div>
     <hr style="width:90%;text-align:left;margin-left:5%">
-    <div style="width: 100%; height: 350px" class="grid-container2">
-            <div class="grid-cell">
+    <div class="flex">
+      <div class="flex-column form-container">
+        <div class="form-inputs flex">
+          <div *ngFor="let key of keys" class="form-input-container">
+            <input type="text" class="form-input" placeholder=" " [(ngModel)]="userData[key]">
+            <label class="form-input-label">{{key}}</label>
+            <div *ngIf="!userData.Ime && key==='Ime'" class="error-message">Ime je potrebno</div>
+          </div>
+        </div>
+        <div class="buttons">
+          <div class="button-div1">
+            <button class="btn2" (click)="saveUserData()" type="submit">Spremi</button>
+          </div>
+          <div class="button-div2">
+            <button class="btn1" (click)="this.getUserData();" type="button">Odustani</button>
+          </div>
+        </div>
+      </div>
+      <p *ngIf="role==='tragac'" class="text">Još niste odabrani ni za jednu postaju!</p>
+    </div>
+
+
+  </div>
+
+
+           <!-- <div class="grid-cell">
                 <div class="form-input-container">
-                    <input type="text" class="form-input" placeholder=" " [(ngModel)]="userData.name">
+                    <input type="text" class="form-input" placeholder=" " [(ngModel)]="userData.firstName">
                     <label class="form-input-label">Ime</label>
-                    <div *ngIf="!userData.name" class="error-message">Ime je potrebno</div>
+                    <div *ngIf="!userData.firstName" class="error-message">Ime je potrebno</div>
                 </div>
             </div>
             <div class="grid-cell">
                 <div class="form-input-container">
-                    <input type="text" class="form-input" placeholder=" " [(ngModel)]="userData.surname">
+                    <input type="text" class="form-input" placeholder=" " [(ngModel)]="userData.lastName">
                     <label class="form-input-label">Prezime</label>
-                    <div *ngIf="!userData.surname" class="error-message">Prezime je potrebno</div>
+                    <div *ngIf="!userData.lastName" class="error-message">Prezime je potrebno</div>
                 </div>
             </div>
             <div class="text">
@@ -30,9 +52,9 @@
             </div>
             <div class="grid-cell">
                 <div class="form-input-container">
-                    <input type="text" class="form-input" placeholder=" " [(ngModel)]="userData.lozinka">
+                    <input type="text" class="form-input" placeholder=" " [(ngModel)]="userData.password">
                     <label class="form-input-label">Lozinka</label>
-                    <div *ngIf="!userData.lozinka" class="error-message">Lozinka je potrebno</div>
+                    <div *ngIf="!userData.password" class="error-message">Lozinka je potrebno</div>
                 </div>
             </div>
             <div class="grid-cell-email">
@@ -43,14 +65,6 @@
                     <div *ngIf="emailError" class="error-message">Neispravan email</div>
                     <div *ngIf="!userData.email" class="error-message">Email je potreban</div>
                 </div>
-            </div>
-        <div class="buttons">
-            <div class="button-div1">
-                <button class="btn2" (click)="saveUserData()" type="submit">Spremi</button>
-            </div>
-            <div class="button-div2">
-                <button class="btn1" (click)="this.getUserData();" type="button">Odustani</button>
-            </div>
-        </div>
-    </div>
-</div>
+            </div> -->
+
+
