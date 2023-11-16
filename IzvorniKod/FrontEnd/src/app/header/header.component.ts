@@ -9,9 +9,11 @@ import {Subscription} from "rxjs";
 })
 export class HeaderComponent implements OnInit{
   @Input() activePage!: string;
+  @Input() user!: string;
   @Input() isLoggedIn!: boolean;
   pageChange: Subscription = new Subscription();
   loggingChange: Subscription = new Subscription();
+  roleChange: Subscription = new Subscription();
 
   constructor(public headerService: HeaderService) {
   }
@@ -30,6 +32,12 @@ export class HeaderComponent implements OnInit{
               console.log(this.isLoggedIn, "log")
             }
         )
+    this.roleChange = this.headerService.roleS
+      .subscribe(
+        (role: string) => {
+          this.user = role;
+        }
+      )
   }
 
     changeActivePage(activePage: any) {

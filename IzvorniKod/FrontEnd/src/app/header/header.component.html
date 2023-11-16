@@ -11,12 +11,34 @@
       <a class="header-link" routerLink="register" [ngClass]="{ 'active': activePage === '/register' }" (click)="changeActivePage('/register')">Register</a>
     </div>
 
-    <div class="header-links" *ngIf="isLoggedIn">
+    <div class="header-links" *ngIf="isLoggedIn && user==='tragac'">
         <a class="header-link" routerLink="explorer-profile" [ngClass]="{ 'active': activePage === '/explorer-profile' }" (click)="changeActivePage('/explorer-profile')">Profil</a>
         <a class="header-link" routerLink="explorer-tasks" [ngClass]="{ 'active': activePage === '/explorer-tasks' }" (click)="changeActivePage('/explorer-tasks')">Zadaci</a>
         <button (click)="logout()" type="button" class="header-link sign-out-button">
             <img src="assets/img/poweroff-icon.png" alt="Odjava">
         </button>
     </div>
+
+  <div class="header-links" *ngIf="isLoggedIn && user==='istrazivac'">
+    <a class="header-link" routerLink="researcher-profile" [ngClass]="{ 'active': activePage === '/researcher-profile' }" (click)="changeActivePage('/researcher-profile')">Profil</a>
+    <button (click)="logout()" type="button" class="header-link sign-out-button">
+      <img src="assets/img/poweroff-icon.png" alt="Odjava">
+    </button>
+  </div>
+
+  <div class="header-links" *ngIf="isLoggedIn && user==='voditeljPostaje'">
+    <a class="header-link" routerLink="station-leader-profile" [ngClass]="{ 'active': activePage === '/station-leader-profile' }" (click)="changeActivePage('/station-leader-profile')">Profil</a>
+    <button (click)="logout()" type="button" class="header-link sign-out-button">
+      <img src="assets/img/poweroff-icon.png" alt="Odjava">
+    </button>
+  </div>
+
+  <div class="header-links" *ngIf="isLoggedIn && user==='admin'">
+    <a class="header-link" routerLink="users-list" [ngClass]="{ 'active': activePage === '/users-list' }" (click)="changeActivePage('/users-list')">Korisnici</a>
+    <a class="header-link" routerLink="users-request-list" [ngClass]="{ 'active': activePage === '/users-request-list' }" (click)="changeActivePage('/users-request-list')">Zahtjevi</a>
+    <button (click)="logout()" type="button" class="header-link sign-out-button">
+      <img src="assets/img/poweroff-icon.png" alt="Odjava">
+    </button>
+  </div>
 
 </div>

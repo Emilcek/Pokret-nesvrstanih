@@ -14,13 +14,15 @@ const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register' , component: RegisterComponent },
-  { path: 'edit/:id', component: UserDataEditingComponent },
-  { path: 'stationLeader', component: StationLeaderProfileComponent},
-  { path: 'explorer-tasks', component: ExplorerTasksComponent, canActivate:[AuthGuard], data: { requiredRole: 'admin' }},
-  { path: 'explorer-profile', component: ExplorerProfileComponent },
-  { path: 'requests', component: UsersRequestsListComponent },
-  { path: 'userslist', component: UsersListComponent },
-  { path: 'verified' , component: UserVerifiedSuccessfulComponent}
+  //{ path: 'edit/:id', component: UserDataEditingComponent },
+  //{ path: 'stationLeader', component: StationLeaderProfileComponent},
+  { path: 'explorer-tasks', component: ExplorerTasksComponent, canActivate:[AuthGuard], data: { requiredRole: 'tragac' }},
+  { path: 'explorer-profile', component: ExplorerProfileComponent, canActivate:[AuthGuard], data: { requiredRole: 'tragac' } },
+  { path: 'users-list', component: UsersListComponent, canActivate:[AuthGuard], data: { requiredRole: 'admin' }},
+  { path: 'users-request-list', component: UsersRequestsListComponent, canActivate:[AuthGuard], data: { requiredRole: 'admin' }},
+  { path: 'verified' , component: UserVerifiedSuccessfulComponent},
+  { path: 'researcher-profile', component: ExplorerProfileComponent, canActivate:[AuthGuard], data: { requiredRole: 'istrazivac' } },
+  { path: 'station-leader-profile', component: ExplorerProfileComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' } },
 ];
 
 @NgModule({

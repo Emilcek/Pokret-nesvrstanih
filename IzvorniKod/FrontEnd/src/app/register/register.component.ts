@@ -3,13 +3,14 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { environment } from 'src/environment/environment';
+import {HeaderService} from "../header/header.service";
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  constructor(private http:HttpClient, private router:Router){}
+  constructor(private http:HttpClient, private router:Router, private headerService: HeaderService){}
   selectedOptions:string[]=[]
   signUpForm=new FormGroup({
     role:new FormControl(''),
@@ -40,7 +41,8 @@ export class RegisterComponent {
           next: data => {
             let response: any = data;
             alert("Poslan vam je verifikacijski mail na vašu email adresu");
-            this.router.navigate(['/login'])
+            this.headerService.changeActivePage('/login');
+            this.router.navigate(['/login']);
           }, error: error => {
             alert("Korisničko ime ili email se već koriste.")
           }

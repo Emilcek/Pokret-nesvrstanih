@@ -25,7 +25,6 @@ export class LoginComponent {
         next: data => {
           let response: any = data;
           localStorage.setItem("token", response.access_token);
-          localStorage.setItem("user", "admin");
           let header = new HttpHeaders({
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -36,9 +35,23 @@ export class LoginComponent {
           this.http.get<any>(environment.BASE_API_URL + "/client", headersObj).subscribe({
             next: data => {
               console.log(data)
-              this.headerService.changeActivePage("/explorer-tasks");
-              this.router.navigate(['/explorer-tasks'])
+              let res: any = data;
+              localStorage.setItem("user", data.role);
               this.headerService.userLoggedIn()
+              this.headerService.roleChanged(data.role);
+              if(data.role === "tragac") {
+                this.headerService.changeActivePage("/explorer-tasks");
+                this.router.navigate(['/explorer-tasks'])
+              } else if(data.role === "istrazivac") {
+                this.headerService.changeActivePage("/researcher-profile");
+                this.router.navigate(['/researcher-profile'])
+              } else if(data.role === "voditeljPostaje") {
+                this.headerService.changeActivePage("/station-leader-profile");
+                this.router.navigate(['/station-leader-profile'])
+              } else if(data.role === "admin") {
+                this.headerService.changeActivePage("/users-list");
+                this.router.navigate(['/users-list'])
+              }
             }
           })
 

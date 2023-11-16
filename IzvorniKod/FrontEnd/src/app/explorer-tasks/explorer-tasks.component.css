@@ -2,8 +2,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 250px;
     margin: 30px;
+    height: 100%;
 }
 
 .main p {

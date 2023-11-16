@@ -1,9 +1,9 @@
 .navbar-container {
   justify-content: space-between;
-  height: 93px;
   align-items: center;
   min-width: 83vw;
   margin: 30px;
+  padding: 20px;
 
   .header-subtitle {
     align-self: flex-end;
@@ -37,3 +37,11 @@
 }
 
 }
+
+@media only screen and (max-width: 576px) {
+  .navbar-container {
+    flex-direction: column;
+    margin: 10px;
+  }
+}
+
