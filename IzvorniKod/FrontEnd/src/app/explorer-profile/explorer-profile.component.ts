@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {environment} from "../../environment/environment";
+import {environment} from "../../environments/environment";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {UserDataEditingComponent} from "../user-data-editing/user-data-editing.component";
 
