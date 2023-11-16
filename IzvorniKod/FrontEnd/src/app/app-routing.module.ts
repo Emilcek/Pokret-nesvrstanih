@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: 'register' , component: RegisterComponent },
   { path: 'edit/:id', component: UserDataEditingComponent },
   { path: 'stationLeader', component: StationLeaderProfileComponent},
-  { path: 'explorer-tasks', component: ExplorerTasksComponent, canActivate:[AuthGuard]},
+  { path: 'explorer-tasks', component: ExplorerTasksComponent, canActivate:[AuthGuard], data: { requiredRole: 'admin' }},
   { path: 'explorer-profile', component: ExplorerProfileComponent },
   { path: 'requests', component: UsersRequestsListComponent },
   { path: 'userslist', component: UsersListComponent },

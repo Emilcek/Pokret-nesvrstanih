@@ -9,11 +9,15 @@ export class AuthService {
     ngOnInit() {
     }
 
-    async isUserLoggedIn() {
-        if(localStorage.getItem('token')) {
-            return true;
-        } else {
-            return false;
-        }
+    getUserRole() {
+      const user = localStorage.getItem('user');
+      if (user) {
+        return user;
+      }
+      return null;
     }
+
+  isUserLoggedIn() {
+    return !!localStorage.getItem('token');
+  }
 }
