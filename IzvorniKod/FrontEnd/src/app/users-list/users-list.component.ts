@@ -33,5 +33,4 @@ export class UsersListComponent {
   redirectToEditPage(userId: string) {
     this.router.navigate([`admin/userdata/edit/${userId}`]);
   }
-
 }
