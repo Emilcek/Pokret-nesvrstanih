@@ -106,4 +106,9 @@ public class ClientServiceImpl implements ClientService {
                 .build();
         clientRepo.save(admin);
     }
+
+    @Override
+    public void save(Client client) {
+        clientRepo.save(client);
+    }
 }

@@ -19,4 +19,6 @@ public interface ClientService {
     Client getClient();
 
     void createAdmin();
+
+    void save(Client client);
 }
