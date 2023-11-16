@@ -13,12 +13,17 @@ import com.progi.WildTrack.service.VehicleService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
 import java.util.SimpleTimeZone;
@@ -37,6 +42,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   private final PasswordEncoder passwordEncoder;
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
+  private final JavaMailSender javaMailSender;
+
+  @Value("${FRONTEND_API_URL}")
+  private String frontendApiUrl;
 
   public AuthenticationResponseDto register(RegisterDto request) {
     if (repository.existsByClientName(request.getClientName()) || repository.existsByEmail(request.getEmail())) {
@@ -66,19 +75,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
               .build();
       explorerRepository.save(explorer);
       for (String i : request.getEducatedFor()) {
-//        System.out.println(i);
         Vehicle vehicle = (Vehicle) vehicleRepository.findByVehicleType(i).orElseThrow();
         System.out.println(vehicle);
         System.out.println(vehicle.getVehicleId().getClass());
         System.out.println(vehicle.getClass());
         vehicleService.addExplorerToVehicle(vehicle.getVehicleId(), explorer);
-
-//        EducatedForId educatedForId = new EducatedForId(vehicle.getVehicleId(), savedClient.getClientName());
-//        System.out.println(educatedForId.getVehicleId() + " " + educatedForId.getExplorerName());
-//        var educatedfor = EducatedFor.builder()
-//                .educatedForId(educatedForId)
-//                .build();
-//        educatedForRepository.save(educatedfor);
       }
     }
     else if (request.getRole().equals("istrazivac")) {
@@ -90,6 +91,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
     var jwtToken = jwtService.generateToken(client);
     var refreshToken = jwtService.generateRefreshToken(client);
+    sendEmail(request.getEmail(), request.getFirstName(), frontendApiUrl + "/verified?url=" + jwtToken);
     revokeAllClientTokens(client);
     saveClientToken(client, jwtToken);
     return AuthenticationResponseDto.builder()
@@ -162,5 +164,26 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
       }
     }
+  }
+
+  @Override
+  public ResponseEntity<String> verify(String url) {
+    String clientName = jwtService.extractUsername(url);
+    Client client = repository.findByClientName(clientName).orElse(null);
+    client.setVerified(true);
+    repository.save(client);
+    System.out.println("verified " + frontendApiUrl);
+    return ResponseEntity.ok("client verified successfully");
+  }
+
+  private void sendEmail(String to, String firstname, String url) {
+    SimpleMailMessage message = new SimpleMailMessage();
+    String text = "Pozdrav " + firstname + " stisni link za verfikaciju maila " + url;
+    message.setTo(to);
+    message.setSubject("WildTrack-Verifikacija");
+    message.setText(text);
+
+    javaMailSender.send(message);
+    System.out.println("Email sent..") ;
   }
 }

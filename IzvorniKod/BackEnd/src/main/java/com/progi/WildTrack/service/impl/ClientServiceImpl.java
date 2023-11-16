@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,10 +112,5 @@ public class ClientServiceImpl implements ClientService {
                 .role("admin")
                 .build();
         clientRepo.save(admin);
-    }
-
-    @Override
-    public void save(Client client) {
-        clientRepo.save(client);
     }
 }
