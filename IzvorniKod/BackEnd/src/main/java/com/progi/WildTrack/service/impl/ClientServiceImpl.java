@@ -1,12 +1,10 @@
 package com.progi.WildTrack.service.impl;
 
-import com.progi.WildTrack.dao.ClientRepository;
-import com.progi.WildTrack.dao.ResearcherRepository;
-import com.progi.WildTrack.dao.StationLeadRepository;
-import com.progi.WildTrack.dao.StatusRepository;
+import com.progi.WildTrack.dao.*;
 import com.progi.WildTrack.domain.Client;
 import com.progi.WildTrack.domain.Researcher;
 import com.progi.WildTrack.domain.StationLead;
+import com.progi.WildTrack.domain.Explorer;
 import com.progi.WildTrack.domain.Status;
 import com.progi.WildTrack.dto.ClientDetailsDTO;
 import com.progi.WildTrack.dto.ClientUpdateDTO;
@@ -34,64 +32,70 @@ public class ClientServiceImpl implements ClientService {
     private ResearcherRepository researcherRepo;
 
     @Autowired
+    private ExplorerRepository explorerRepo;
+
+    @Autowired
     private StatusRepository statusRepo;
 
     public ClientServiceImpl() {
     }
 
     @Override
-    public List<Client> getAllClients() {
-        List<Client> clients = clientRepo.findAll();
-        return clients;
+    public List<ClientDetailsDTO> getAllClients() {
+        List<Client> stationLeads = stationLeadRepo.findAll().stream().filter(stationLead -> stationLead.getStatus().getStatusId().equals(2L)).map(StationLead::getClient).toList();
+        List<Client> researchers = researcherRepo.findAll().stream().filter(researcher -> researcher.getStatus().getStatusId().equals(2L)).map(Researcher::getClient).toList();
+        List<Client> explorers = new ArrayList<>(explorerRepo.findAll().stream().map(Explorer::getClient).toList());
+        explorers.addAll(stationLeads);
+        explorers.addAll(researchers);
+        return explorers.stream().filter(client -> !client.getRole().equals("admin")).map(client -> new ClientDetailsDTO(client.getClientName(), client.getFirstName(), client.getLastName(), client.getEmail(), client.getRole(), client.getClientPhotoURL())).toList();
     }
 
     @Override
-    public Client getClientByClientName(String clientName) {
-        return clientRepo.findByClientName(clientName).orElse(null);
+    public ClientDetailsDTO getClientByClientName(String clientName) {
+        Client client = clientRepo.findByClientName(clientName).orElse(null);
+        return new ClientDetailsDTO(client.getClientName(), client.getFirstName(), client.getLastName(), client.getEmail(), client.getRole(), client.getClientPhotoURL());
     }
 
     @Override
-    public List<Client> getAllRequests() {
+    public List<ClientDetailsDTO> getAllRequests() {
         List<StationLead> StationLeads = stationLeadRepo.findAllByStatusStatusId(1L);
         List<Researcher> Researchers = researcherRepo.findAllByStatusStatusId(1L);
         List<Client> requestStationLeads = new ArrayList<>(StationLeads.stream().map(StationLead::getClient).toList());
         List<Client> requestResearchers = Researchers.stream().map(Researcher::getClient).toList();
         requestStationLeads.addAll(requestResearchers);
-        return requestStationLeads;
+        return requestStationLeads.stream().map(client -> new ClientDetailsDTO(client.getClientName(), client.getFirstName(), client.getLastName(), client.getEmail(), client.getRole(), client.getClientPhotoURL())).toList();
     }
 
     @Override
-    public Client updateClient(ClientUpdateDTO client) {
+    public ClientDetailsDTO updateClient(ClientUpdateDTO client) {
         Client clientToUpdate = clientRepo.findByClientName(client.getClientName()).orElse(null);
         clientToUpdate.setFirstName(client.getFirstName());
         clientToUpdate.setLastName(client.getLastName());
-        return clientRepo.save(clientToUpdate);
+        clientRepo.save(clientToUpdate);
+        return new ClientDetailsDTO(clientToUpdate.getClientName(), clientToUpdate.getFirstName(), clientToUpdate.getLastName(), clientToUpdate.getEmail(), clientToUpdate.getRole(), clientToUpdate.getClientPhotoURL());
     }
 
     @Override
-    public Client updateClientByClientName(String clientName, Integer status) {
+    public ClientDetailsDTO updateClientByClientName(String clientName, Integer status) {
         Client client = clientRepo.findByClientName(clientName).orElse(null);
         Status clientStatus = statusRepo.findByStatusId(status);
         if (client.getRole().equals("voditeljPostaje")) {
             StationLead stationLead = stationLeadRepo.findByStationLeadName(clientName);
             stationLead.setStatus(clientStatus);
             stationLeadRepo.save(stationLead);
-            return clientRepo.save(client);
         } else if (client.getRole().equals("istrazivac")) {
             Researcher researcher = researcherRepo.findByResearcherName(clientName);
             researcher.setStatus(clientStatus);
             researcherRepo.save(researcher);
-            return clientRepo.save(client);
-        } else {
-            return null;
         }
-
+        clientRepo.save(client);
+        return new ClientDetailsDTO(client.getClientName(), client.getFirstName(), client.getLastName(), client.getEmail(), client.getRole(), client.getClientPhotoURL());
     }
 
     @Override
-    public Client getClient() {
-        System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        return (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public ClientDetailsDTO getClient() {
+        Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return new ClientDetailsDTO(client.getClientName(), client.getFirstName(), client.getLastName(), client.getEmail(), client.getRole(), client.getClientPhotoURL());
     }
 
     @Override
@@ -107,11 +111,5 @@ public class ClientServiceImpl implements ClientService {
                 .role("admin")
                 .build();
         clientRepo.save(admin);
-    }
-
-    @Override
-    public ClientDetailsDTO getClientDetails() {
-        Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return new ClientDetailsDTO(client.getClientName(), client.getFirstName(), client.getLastName(), client.getEmail(), client.getRole(), client.getClientPhotoURL());
     }
 }

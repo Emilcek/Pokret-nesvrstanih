@@ -20,6 +20,6 @@ public class ClientController {
 
     @GetMapping
     public ResponseEntity<ClientDetailsDTO> getClient() {
-        return ResponseEntity.ok(service.getClientDetails());
+        return ResponseEntity.ok(service.getClient());
     }
 }
