@@ -1,6 +1,7 @@
 package com.progi.WildTrack.security;
 
 import com.progi.WildTrack.dao.TokenRepository;
+import com.progi.WildTrack.domain.Client;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,17 +37,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String jwt;
         final String username;
         if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
+            System.out.println("authHeader: " + authHeader);
             filterChain.doFilter(request, response);
             return;
         }
+        System.out.println("authHeader proso: " + authHeader);
         jwt = authHeader.substring(7);
         username = jwtService.extractUsername(jwt);
+        System.out.println("username: " + username);
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-            var isTokenValid = tokenRepository.findByToken(jwt)
-                    .map(t -> !t.isExpired() && !t.isRevoked())
-                    .orElse(false);
-            if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            System.out.println("userDetails: " + userDetails.getAuthorities());
+            if (jwtService.isTokenValid(jwt, userDetails)) {
+                System.out.println("token is valid");
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
@@ -56,6 +59,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         new WebAuthenticationDetailsSource().buildDetails(request)
                 );
                 SecurityContextHolder.getContext().setAuthentication(authToken);
+                Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                System.out.println(client.getClientName());
+            }
+            else {
+                System.out.println("token is not valid");
             }
         }
         filterChain.doFilter(request, response);

@@ -2,6 +2,7 @@ package com.progi.WildTrack.controllers;
 
 import com.progi.WildTrack.domain.Client;
 import com.progi.WildTrack.domain.Task;
+import com.progi.WildTrack.dto.ClientDetailsDTO;
 import com.progi.WildTrack.dto.ClientUpdateDTO;
 import com.progi.WildTrack.service.ClientService;
 import lombok.RequiredArgsConstructor;
@@ -16,12 +17,12 @@ public class ExplorerController {
 
     private final ClientService clientService;
     @GetMapping
-    public ResponseEntity<Client> getExplorer() {
+    public ResponseEntity<ClientDetailsDTO> getExplorer() {
         return ResponseEntity.ok(clientService.getClient());
     }
 
     @PostMapping
-    public ResponseEntity<Client> updateExplorer(@RequestBody ClientUpdateDTO client) {
+    public ResponseEntity<ClientDetailsDTO> updateExplorer(@RequestBody ClientUpdateDTO client) {
         return ResponseEntity.ok(clientService.updateClient(client));
     }
 
