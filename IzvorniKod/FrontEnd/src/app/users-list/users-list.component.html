@@ -1,4 +1,4 @@
-<div class="table-container">
+<div class="table-container main-container">
     <div class="upper-div">
         <h2>Popis korisnika</h2>
     </div>
@@ -11,18 +11,16 @@
                 <th class="center">Prezime</th>
                 <th class="center">Email</th>
                 <th class="center">Uloga</th>
-                <th class="center">Lozinka</th>
                 <th class="center">Uredi podatke</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let data of dataSource">
-                <td class="center">{{ data.username }}</td>
-                <td class="center">{{ data.name }}</td>
-                <td class="center">{{ data.surname }}</td>
+                <td class="center">{{ data.clientName }}</td>
+                <td class="center">{{ data.firstName }}</td>
+                <td class="center">{{ data.lastName }}</td>
                 <td class="center">{{ data.email }}</td>
                 <td class="center">{{ data.role }}</td>
-                <td class="center">{{ data.lozinka }}</td>
                 <td class="center">
                     <button class="custom-button" (click)="redirectToEditPage(data.id)">
                         <img src="assets/img/arrow.png" alt="Arrow" class="custom-image" />

@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
+@CrossOrigin(origins = "${FRONTEND_API_URL}")
 @RequiredArgsConstructor
 public class AdminController {
 
