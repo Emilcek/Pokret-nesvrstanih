@@ -24,11 +24,11 @@ export class RegisterComponent {
 
     signUp(){
     if(this.signUpForm.valid){
-      if(this.signUpForm.value.role=="tragac" && this.signUpForm.value.educatedFor?.length==0){
+      if(this.signUpForm.value.role==="tragac" && this.signUpForm.value.educatedFor?.length===0){
         alert("Nisu uneseni svi podaci ili su pogrešno uneseni")
       }else{
-        for ( var a of this.abilities ){
-          if(a.select==true){
+        for ( let a of this.abilities ){
+          if(a.select){
             this.selectedOptions.push(a.name)
           }
         }
@@ -36,12 +36,14 @@ export class RegisterComponent {
           this.selectedOptions=[]
         }
         this.signUpForm.value.educatedFor=this.selectedOptions
-        console.log(this.signUpForm.value)
-        this.http.post(environment.BASE_API_URL+"/auth/register",this.signUpForm.value,{ observe: 'response' }).subscribe((res)=>{
-        console.log(res.status)
-        alert("Poslan vam je verifikacijski mail na vašu email adresu")
-        },error=>{
-          alert("Korisničko ime ili email se već koriste.")
+        this.http.post(environment.BASE_API_URL+"/auth/register",this.signUpForm.value).subscribe({
+          next: data => {
+            let response: any = data;
+            alert("Poslan vam je verifikacijski mail na vašu email adresu");
+            this.router.navigate(['/login'])
+          }, error: error => {
+            alert("Korisničko ime ili email se već koriste.")
+          }
         })
       }
     }else{

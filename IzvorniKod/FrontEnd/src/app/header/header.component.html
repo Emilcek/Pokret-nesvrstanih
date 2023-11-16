@@ -6,8 +6,17 @@
         </svg>
         <span class="header-subtitle">za praćenje životinja</span>
     </div>
-    <div class="header-links" *ngIf="activePage === '/login' || activePage === '/register' || activePage === '/'">
+    <div class="header-links" *ngIf="!isLoggedIn">
       <a class="header-link" routerLink="login" [ngClass]="{ 'active': activePage === '/login' || activePage === '/' }"  (click)="changeActivePage('/login')">Login</a>
       <a class="header-link" routerLink="register" [ngClass]="{ 'active': activePage === '/register' }" (click)="changeActivePage('/register')">Register</a>
     </div>
+
+    <div class="header-links" *ngIf="isLoggedIn">
+        <a class="header-link" routerLink="explorer-profile" [ngClass]="{ 'active': activePage === '/explorer-profile' }" (click)="changeActivePage('/explorer-profile')">Profil</a>
+        <a class="header-link" routerLink="explorer-tasks" [ngClass]="{ 'active': activePage === '/explorer-tasks' }" (click)="changeActivePage('/explorer-tasks')">Zadaci</a>
+        <button (click)="logout()" type="button" class="header-link sign-out-button">
+            <img src="assets/img/poweroff-icon.png" alt="Odjava">
+        </button>
+    </div>
+
 </div>

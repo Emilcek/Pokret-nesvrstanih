@@ -31,4 +31,9 @@
     }
   }
 
+.sign-out-button {
+  background: none;
+  border: none;
+}
+
 }

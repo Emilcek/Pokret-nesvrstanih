@@ -9,9 +9,14 @@ import { environment } from '../environment/environment';
 export class AppComponent implements OnInit{
   activePage: string = "";
   title = 'myApp';
+  isLoggedIn: boolean;
 
+  constructor() {
+    this.isLoggedIn = localStorage.getItem("token") !== null;
+  }
   ngOnInit() {
     this.activePage = window.location.pathname;
-    console.log(this.activePage)
+    console.log(this.activePage);
+    this.isLoggedIn = localStorage.getItem("token") !== null;
   }
 }

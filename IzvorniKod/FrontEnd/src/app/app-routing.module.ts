@@ -9,13 +9,14 @@ import { ExplorerProfileComponent } from './explorer-profile/explorer-profile.co
 import { UsersRequestsListComponent } from './users-requests-list/users-requests-list.component';
 import { UsersListComponent } from './users-list/users-list.component';
 import { UserVerifiedSuccessfulComponent } from './user-verified-successful/user-verified-successful.component';
+import {AuthGuard} from "./auth/auth.guard";
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register' , component: RegisterComponent },
   { path: 'edit/:id', component: UserDataEditingComponent },
   { path: 'stationLeader', component: StationLeaderProfileComponent},
-  { path: 'explorer-tasks', component: ExplorerTasksComponent },
+  { path: 'explorer-tasks', component: ExplorerTasksComponent, canActivate:[AuthGuard]},
   { path: 'explorer-profile', component: ExplorerProfileComponent },
   { path: 'requests', component: UsersRequestsListComponent },
   { path: 'userslist', component: UsersListComponent },

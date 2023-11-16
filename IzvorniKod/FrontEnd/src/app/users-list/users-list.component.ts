@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import {environment} from "../../environment/environment";
 
 @Component({
   selector: 'app-users-list',
@@ -14,7 +15,7 @@ export class UsersListComponent {
     this.LoadUser();
   }
 
-  apiurl = 'http://localhost:3000/user';
+  apiurl = environment.BASE_API_URL + '/explorer';
 
   userlist: any
   dataSource: any
