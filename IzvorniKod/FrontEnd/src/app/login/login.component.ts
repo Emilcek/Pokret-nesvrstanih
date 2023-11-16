@@ -24,11 +24,17 @@ export class LoginComponent {
       this.http.post(environment.BASE_API_URL+"/auth/login", this.signInForm.value).subscribe({
         next: data => {
           let response: any = data;
-          localStorage.setItem("token", response.access_token);
-          localStorage.setItem("user", "ex")
-          this.headerService.changeActivePage("/explorer-tasks");
-          this.router.navigate(['/explorer-tasks'])
-          this.headerService.userLoggedIn();
+          this.http.get(environment.BASE_API_URL + "/client").subscribe({
+            next: data => {
+              console.log(data)
+              localStorage.setItem("token", response.access_token);
+              localStorage.setItem("user", "admin")
+              this.headerService.changeActivePage("/explorer-tasks");
+              this.router.navigate(['/explorer-tasks'])
+              this.headerService.userLoggedIn()
+            }
+          })
+
         }, error: error => {
           alert("Korisnik nije pronađen.")
         }
