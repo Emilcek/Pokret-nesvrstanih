@@ -342,14 +342,30 @@
 			
 		\section{Dijagram razreda}
 		
-			\
-			\textbf{\textit{dio 2. revizije}}\\			
+			Na slikama 4.2, 4.3 predstavljeni su razredi koji se odnose na backend komponentu MVC arhitekture. Razredi na slici 4.2 nasljeđuju Controller razred. U tim razredima, metode rukuju s Data Transfer Object (DTO), a podaci se dohvaćaju kroz metode definirane u Model razredima. Funkcije implementirane u Controller razredima generiraju JSON datoteke s HTML status kodovima.S ciljem olakšane organizacije, razredi su strukturirani prema ovlastima određenih korisnika, a unutar dijagrama su predstavljene isključivo povezanosti između razreda unutar istog dijela dijagrama. Iz naziva i tipova atributa u razredima može se zaključiti vrsta povezanosti između različitih razreda.
 			
-			\textit{Prilikom druge predaje projekta dijagram razreda i opisi moraju odgovarati stvarnom stanju implementacije}
-			
+			\vspace{90pt}
 			
 			
-			\eject
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\textwidth]{slike/Controlleri.PNG}
+				\caption{Dijagram razreda - dio Controllers}
+				\label{fig:dijagram_baze}
+			\end{figure}
+			
+			
+			\begin{figure}[H]
+				\includegraphics[width=\textwidth]{slike/Class_Diagram0.PNG} %veličina u odnosu na širinu linije
+				\caption{Dijagram razreda - dio Data transfer objects}
+				\label{fig:dijagram_baze} %label mora biti drugaciji za svaku sliku
+			\end{figure}
+			
+			\vspace{36pt}
+			
+			Model razredi preslikavaju strukturu baze podataka u aplikaciji. Implementirane metode direktno komuniciraju s bazom podataka te vraćaju tražene podatke. Razred User predstavlja neregistriranog korisnika koji se može registrirati u sustav unoseći osnovne informacije. Razred UserLogin predstavlja već registriranog korisnika koji se može prijaviti u sustav unoseći korisničko ime i lozinku. Razred Reasearcher predstavlja istraživača koji ima ovlasti kreiranja novih akcija i slanja zahtjeva za tragačima voditelju postaje. Razred StationLead predstavlja voditelja postaje koji ima ovlasti odabrati postaju i tragače svoje vlastite postaje. Razred Explorer predstavlja tragača koji obavlja zadatke koje mu je dodijelio istraživač. Razred Administrator predstavlja administratora sustava koji ima najveće ovlasti.
+			
+			\vspace{36pt}
 		
 		\section{Dijagram stanja}
 			
