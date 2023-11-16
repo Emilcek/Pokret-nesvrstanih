@@ -47,13 +47,13 @@ public class ClientServiceImpl implements ClientService {
         List<Client> explorers = new ArrayList<>(explorerRepo.findAll().stream().map(Explorer::getClient).toList());
         explorers.addAll(stationLeads);
         explorers.addAll(researchers);
-        return explorers.stream().filter(client -> !client.getRole().equals("admin")).map(client -> new ClientDetailsDTO(client.getClientName(), client.getFirstName(), client.getLastName(), client.getEmail(), client.getRole(), client.getClientPhotoURL())).toList();
+        return explorers.stream().filter(client -> !client.getRole().equals("admin")).map(ClientDetailsDTO::new).toList();
     }
 
     @Override
     public ClientDetailsDTO getClientByClientName(String clientName) {
         Client client = clientRepo.findByClientName(clientName).orElse(null);
-        return new ClientDetailsDTO(client.getClientName(), client.getFirstName(), client.getLastName(), client.getEmail(), client.getRole(), client.getClientPhotoURL());
+        return new ClientDetailsDTO(client);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class ClientServiceImpl implements ClientService {
         List<Client> requestStationLeads = new ArrayList<>(StationLeads.stream().map(StationLead::getClient).toList());
         List<Client> requestResearchers = Researchers.stream().map(Researcher::getClient).toList();
         requestStationLeads.addAll(requestResearchers);
-        return requestStationLeads.stream().map(client -> new ClientDetailsDTO(client.getClientName(), client.getFirstName(), client.getLastName(), client.getEmail(), client.getRole(), client.getClientPhotoURL())).toList();
+        return requestStationLeads.stream().map(ClientDetailsDTO::new).toList();
     }
 
     @Override
@@ -72,7 +72,7 @@ public class ClientServiceImpl implements ClientService {
         clientToUpdate.setFirstName(client.getFirstName());
         clientToUpdate.setLastName(client.getLastName());
         clientRepo.save(clientToUpdate);
-        return new ClientDetailsDTO(clientToUpdate.getClientName(), clientToUpdate.getFirstName(), clientToUpdate.getLastName(), clientToUpdate.getEmail(), clientToUpdate.getRole(), clientToUpdate.getClientPhotoURL());
+        return new ClientDetailsDTO(clientToUpdate);
     }
 
     @Override
@@ -89,13 +89,13 @@ public class ClientServiceImpl implements ClientService {
             researcherRepo.save(researcher);
         }
         clientRepo.save(client);
-        return new ClientDetailsDTO(client.getClientName(), client.getFirstName(), client.getLastName(), client.getEmail(), client.getRole(), client.getClientPhotoURL());
+        return new ClientDetailsDTO(client);
     }
 
     @Override
     public ClientDetailsDTO getClient() {
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return new ClientDetailsDTO(client.getClientName(), client.getFirstName(), client.getLastName(), client.getEmail(), client.getRole(), client.getClientPhotoURL());
+        return new ClientDetailsDTO(client);
     }
 
     @Override
