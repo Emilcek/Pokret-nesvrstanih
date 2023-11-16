@@ -1,22 +1,24 @@
 package com.progi.WildTrack.service;
 
 import com.progi.WildTrack.domain.Client;
+import com.progi.WildTrack.dto.ClientDetailsDTO;
 import com.progi.WildTrack.dto.ClientUpdateDTO;
 
 import java.util.List;
 
 public interface ClientService {
-    List<Client> getAllClients();
+    List<ClientDetailsDTO> getAllClients();
 
-    Client getClientByClientName(String clientName);
+    ClientDetailsDTO getClientByClientName(String clientName);
 
-    List<Client> getAllRequests();
+    List<ClientDetailsDTO> getAllRequests();
 
-    Client updateClient(ClientUpdateDTO client);
+    ClientDetailsDTO updateClient(ClientUpdateDTO client);
 
-    Client updateClientByClientName(String clientName, Integer status);
+    ClientDetailsDTO updateClientByClientName(String clientName, Integer status);
 
-    Client getClient();
+    ClientDetailsDTO getClient();
 
     void createAdmin();
+
 }
