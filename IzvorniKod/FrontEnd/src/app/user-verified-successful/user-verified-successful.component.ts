@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { environment } from 'src/environment/environment';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-user-verified-successful',
