@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/explorer")
+@CrossOrigin(origins = "${FRONTEND_API_URL}")
 @RequiredArgsConstructor
 public class ExplorerController {
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { environment } from 'src/environment/environment';
@@ -24,11 +24,18 @@ export class LoginComponent {
       this.http.post(environment.BASE_API_URL+"/auth/login", this.signInForm.value).subscribe({
         next: data => {
           let response: any = data;
-          this.http.get(environment.BASE_API_URL + "/client").subscribe({
+          localStorage.setItem("token", response.access_token);
+          localStorage.setItem("user", "admin");
+          let header = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+          });
+          let headersObj = {
+            headers: header
+          };
+          this.http.get<any>(environment.BASE_API_URL + "/client", headersObj).subscribe({
             next: data => {
               console.log(data)
-              localStorage.setItem("token", response.access_token);
-              localStorage.setItem("user", "admin")
               this.headerService.changeActivePage("/explorer-tasks");
               this.router.navigate(['/explorer-tasks'])
               this.headerService.userLoggedIn()
@@ -40,7 +47,8 @@ export class LoginComponent {
         }
       })
     } else {
-       alert("Upisite sve podatke")
+      alert("Upisite sve podatke")
     }
   }
+
 }

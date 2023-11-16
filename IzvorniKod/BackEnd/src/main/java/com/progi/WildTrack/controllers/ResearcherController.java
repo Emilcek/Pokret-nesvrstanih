@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/researcher")
+@CrossOrigin(origins = "${FRONTEND_API_URL}")
 @RequiredArgsConstructor
 public class ResearcherController {
 
