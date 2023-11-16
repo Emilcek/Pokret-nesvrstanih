@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/stationLead")
+@CrossOrigin(origins = "${FRONTEND_API_URL}")
 @RequiredArgsConstructor
 public class StationLeadController {
 

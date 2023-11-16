@@ -1,10 +1,9 @@
 .main {
     display: flex;
-    justify-content: center; 
-    align-items: center; 
-    background-color:white;
-    padding: 350px;
-    margin: 80px;
+    justify-content: center;
+    align-items: center;
+    margin: 30px;
+    height: 100%;
 }
 
 .main p {

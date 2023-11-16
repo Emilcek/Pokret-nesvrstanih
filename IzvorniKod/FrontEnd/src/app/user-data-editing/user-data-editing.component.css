@@ -4,9 +4,13 @@
     gap: 5px;
     align-items: center;
     justify-content: center;
-    background-color: white;
     margin-top: 3%;
     height: 100%;
+}
+
+.form-container {
+  width: 70%;
+  margin: 20px;
 }
 
 .grid-cell {
@@ -38,10 +42,6 @@ hr {
 
 .hole-div {
     margin: 30px;
-    background-color: white;
-    border: solid;
-    border-color: white;
-    height: 85%;
 }
 
 .button-div1 {
@@ -53,12 +53,13 @@ hr {
 }
 
 .text {
+    font-size: 30px;
     display: flex;
     text-align: center;
     align-items: center;
     justify-content: center;
-    margin-bottom: 15%;
     grid-row: span 3;
+    margin-right: 20px;
 }
 
 .buttons {
@@ -115,18 +116,25 @@ button {
     background-color: rgb(88, 141, 156);
 }
 
+.form-inputs {
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
 
 .form-input-container {
     position: relative;
     align-items: center;
-    width: 70%;
+    margin: 20px;
+
 
     .form-input {
         border: 1px solid #5b5656;
         border-radius: 10px;
         padding: 15px;
-        width: 100%;
+        width: 300px;
         font-size: large;
+        margin: 10px;
+        background-color: #F5F5F5;
     }
 
     .form-input-username {
@@ -139,18 +147,18 @@ button {
 
     .form-input-label {
         position: absolute;
-        top: 7px;
+        top: 29px;
         left: 14px;
         transition: .3s;
         padding: 0 2px;
         line-height: 20px;
         font-size: 20px;
+        background-color: #F5F5F5;
     }
 
     .form-input:focus+.form-input-label,
     .form-input:not(:placeholder-shown)+.form-input-label {
-        top: -8px;
-        background-color: #fff;
+        top: -1px;
     }
 
     .dataProfil {
