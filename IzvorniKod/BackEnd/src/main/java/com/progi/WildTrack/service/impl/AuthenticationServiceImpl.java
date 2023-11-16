@@ -104,6 +104,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     System.out.println(request.getClientName());
     var client = repository.findByClientName(request.getClientName())
             .orElseThrow(() -> new RuntimeException("Client not found"));
+    if (!client.isVerified()) {
+        throw new RuntimeException("Client not verified");
+    }
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(
             request.getClientName(),
