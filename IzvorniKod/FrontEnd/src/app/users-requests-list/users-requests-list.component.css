@@ -56,6 +56,11 @@ p {
     margin-left: 2%;
 }
 
+.zahtjev p {
+    font-size: 19px;
+    font-weight: bold;
+}
+
 .buttons {
     display: flex;
     text-align: center;
@@ -89,4 +94,39 @@ p {
 
 .btn2:hover {
     background-color: rgb(88, 141, 156);
+}
+
+@media screen and (max-width: 768px) {
+    .buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .buttons button {
+        margin: 5px 0;
+        margin-left: 40%;
+    }
+
+    .zahtjev p {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .upper-div {
+        display: flex;
+        margin-left: 10px;
+        margin-top: 2%;
+        padding: 1px;
+        text-align: center;
+    }
+
+    .hole-div {
+        margin: 10px;
+        background-color: #F5F5F5;
+        justify-content: space-evenly;
+    }
+    
+    .zahtjev {
+        margin-top: 3.5%;
+    }
 }
