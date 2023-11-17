@@ -28,8 +28,7 @@
 		\end{itemize}
 		
 		 
-		Aplikacija ima slojeve frontend i backend, te bazu podataka. Baza podataka zadužena za pohranu podataka naše web aplikacije je PostgreSQL. Iz nje backend sloj dohvaća podatke koristeći Spring Boot tehnologiju. Za frontend sloj koji korisniku prikazuje podatke koje dobiva iz backenda putem API-a koristimo Angular.
-		
+		Aplikacija ima slojeve frontend i backend, te bazu podataka. Baza podataka zadužena za pohranu podataka naše web aplikacije je PostgreSQL s kojom smo se upoznali na predmetu Baze podataka. To je moćna relacijska baza podataka koja podržava kompleksne SQL upite i omogućuje efikasno pohranjivanje podataka u tablicama. Osim toga, osigurava konzistentnost i pouzdanost podataka. Iz nje backend sloj dohvaca podatke koristeći Spring Boot tehnologiju. Ona olakšava brzi razvoj backenda jer Spring Data JPA omogućuje jednostavno rukovanje podacima putem Java objekata, čime se smanjuje količina potrebnog SQL koda. Također omogućuje lak prijenos podataka između frontend i backend slojeva koristeći razne formate poput JSON-a, XML-a i drugih. Za frontend sloj koji korisnicima prikazuje podatke koje dobiva iz backenda putem API-a koristimo Angular. U kombinaciji sa Spring Boot-om i PostgreSQL-om, Angular je moćna frontend tehnologija koja olakšava izradu modernih, skalabilnih, i korisnički prijateljskih web aplikacija. Temelji se na komponentnoj arhitekturi, što olakšava razdvajanje funkcionalnosti i ponovnu upotrebu koda. Komponente su samostalne i mogu se lako integrirati. Najveća prednost Angulara je što koristi HTML, CSS, te Typescript, jezike koji su poznati svim članovima tima.
 
 		
 
@@ -246,7 +245,7 @@
 					\hline \SetCell[c=3]{c}{\textbf{AnimalComment}}	 \\ \hline[3pt]
 					\SetCell{LightGreen}CommentId & INT	&  Jedinstveni identifikator komentara	\\ \hline
 					CommentTS	& TIMESTAMP &   Vrijeme objave komentara	\\ \hline 
-					Comment & VARCHAR & sadržaj komentara  \\ \hline 
+					Comment & VARCHAR & Sadržaj komentara  \\ \hline 
 					\SetCell{LightBlue} Explorer	& VARCHAR &   Korisničko ime tragača koji je komentirao, (explorer.clientname)	\\ \hline 
 					\SetCell{LightBlue} AnimalId	& INT &   Identifikator komentirane životinje, (animal.animalId)	\\ \hline 
 				\end{longtblr}
@@ -330,7 +329,7 @@
 					\SetCell{LightBlue} VehicleId	& INT &   Identifikator vozila s kojim se obavlja zadatak, (vehicle.vehicleId)	\\ \hline
 				\end{longtblr}
 				
-				\textbf{Token} Ovaj entitet sve podatke o tokenu koji se generira pri registraciji ili prijavi korisnika u sustav. Ima atreibute: tokenId, tokenType, revoked, expired, clientname. U vezi je \textit{Many-to-One} s entitetom Client preko atributa clientname.
+				\textbf{Token} Ovaj entitet sve podatke o tokenu koji se generira pri registraciji ili prijavi korisnika u sustav. Ima atribute: tokenId, tokenType, revoked, expired, clientname. U vezi je \textit{Many-to-One} s entitetom Client preko atributa clientname.
 			     \begin{longtblr}[
 					label=none,
 					entry=none
@@ -345,7 +344,7 @@
 					Token & VARCHAR & Generirani token \\ \hline
 					Revoked & BOOLEAN & Zastavica koja daje informaciju o tome je li token opozvan \\ \hline
 					Expired & BOOLEAN & Zastavica koja daje informaciju o tome je li token istekao \\ \hline
-					\SetCell{LightBlue} Client	& VARCHAR &   Korisničko ime klijenta koji koristi token (client.clientname)	\\ \hline
+					\SetCell{LightBlue} Client	& VARCHAR &   Korisničko ime klijenta koji koristi token, (client.clientname)	\\ \hline
 					
 				\end{longtblr}
 				
@@ -354,7 +353,7 @@
 			\subsection{Dijagram baze podataka}
 				\begin{figure}[H]
 					\includegraphics[width=\textwidth]{slike/dijagram_baze.PNG} %veličina u odnosu na širinu linije
-					\caption{Dijagram baze podatatka}
+					\caption{Dijagram baze podataka}
 					\label{fig:dijagram_baze} %label mora biti drugaciji za svaku sliku
 				\end{figure}
 			
