@@ -1,4 +1,4 @@
-<ng-container *ngIf="!dataSource; else hasRequests">
+<ng-container *ngIf="dataSource === undefined || dataSource.length === 0; else hasRequests">
     <div class="noReq">
         <h1>Nema zahtjeva!</h1>
     </div>
@@ -13,7 +13,7 @@
             <div class="zahtjev">
                 <p>Zahtjev za ulogu {{user.role}} - {{user.firstName}} {{user.lastName}}</p>
                 <div class="buttons">
-                    <button class="btn2" (click)="acceptUser(user.clientName)" type="submit">Prihvati</button>
+                    <button class="btn2" (click)="acceptUser(user.clientName)" type="button">Prihvati</button>
                     <button class="btn1" (click)="deleteUserRequset(user.clientName)" type="button">Odbaci</button>
                 </div>
             </div>

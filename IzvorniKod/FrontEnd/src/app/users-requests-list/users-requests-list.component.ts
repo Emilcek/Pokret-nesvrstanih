@@ -11,7 +11,7 @@ export class UsersRequestsListComponent implements OnInit {
   userlist: any
   dataSource: any
 
-  ngOnInit() {
+  LoadData() {
     let header = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -28,19 +28,16 @@ export class UsersRequestsListComponent implements OnInit {
       }
     })
   }
+
+  ngOnInit() {
+    this.LoadData();
+  }
+  
   constructor(private http: HttpClient) {
   }
 
   apiurl = 'http://localhost:3000/requests';
 
-
-
-  LoadUser() {
-    this.GetAll().subscribe(res => {
-      this.dataSource = res;
-      console.log(this.dataSource);
-    });
-  }
 
   GetAll() {
     return this.http.get(this.apiurl)
@@ -57,6 +54,7 @@ export class UsersRequestsListComponent implements OnInit {
     this.http.get(environment.BASE_API_URL + '/admin/requests/' + clientName + '/accepted', headersObj).subscribe(
       (response) => {
         console.log('User saved successfully:', response);
+        this.LoadData();
       }
     );
   }
@@ -72,6 +70,7 @@ export class UsersRequestsListComponent implements OnInit {
     this.http.get(environment.BASE_API_URL + '/admin/requests/' + clientName + '/rejected', headersObj).subscribe(
       (response) => {
         console.log('User rejected successfully:', response);
+        this.LoadData();
       }
     );
   }
