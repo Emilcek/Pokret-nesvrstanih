@@ -106,4 +106,27 @@ p {
         margin: 5px 0;
         margin-left: 40%;
     }
+
+    .zahtjev p {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .upper-div {
+        display: flex;
+        margin-left: 10px;
+        margin-top: 2%;
+        padding: 1px;
+        text-align: center;
+    }
+
+    .hole-div {
+        margin: 10px;
+        background-color: #F5F5F5;
+        justify-content: space-evenly;
+    }
+    
+    .zahtjev {
+        margin-top: 3.5%;
+    }
 }

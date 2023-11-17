@@ -110,7 +110,6 @@ img {
     }
 
     .upper-div {
-        overflow-x: scroll;
         display: block;
         margin: 0;
         padding: 10px;
@@ -118,7 +117,7 @@ img {
     }
 
     h2 {
-        margin-bottom: 10px;
+        margin-bottom: 1px;
     }
 
     .custom-image {
@@ -130,8 +129,13 @@ img {
         width: 100%;
     }
 
-    td:not(:first-child):not(:nth-child(7)),
-    th:not(:first-child):not(:nth-child(7)) {
+    .table-container {
+        margin: 10px;
+    }
+
+
+    td:not(:first-child):not(:nth-child(6)),
+    th:not(:first-child):not(:nth-child(6)) {
         display: none;
     }
 }
