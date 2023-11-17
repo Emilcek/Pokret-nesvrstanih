@@ -3,6 +3,7 @@ package com.progi.WildTrack.service;
 import com.progi.WildTrack.domain.Client;
 import com.progi.WildTrack.dto.ClientDetailsDTO;
 import com.progi.WildTrack.dto.ClientUpdateDTO;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 

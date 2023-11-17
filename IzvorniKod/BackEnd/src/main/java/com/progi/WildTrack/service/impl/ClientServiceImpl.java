@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,12 +48,15 @@ public class ClientServiceImpl implements ClientService {
         List<Client> explorers = new ArrayList<>(explorerRepo.findAll().stream().map(Explorer::getClient).toList());
         explorers.addAll(stationLeads);
         explorers.addAll(researchers);
-        return explorers.stream().filter(client -> !client.getRole().equals("admin")).map(ClientDetailsDTO::new).toList();
+        return explorers.stream().filter(client -> !client.getRole().equals("admin") && client.isVerified()).map(ClientDetailsDTO::new).toList();
     }
 
     @Override
     public ClientDetailsDTO getClientByClientName(String clientName) {
         Client client = clientRepo.findByClientName(clientName).orElse(null);
+        if (!client.isVerified()) {
+            throw new RuntimeException("Client is not verified");
+        }
         return new ClientDetailsDTO(client);
     }
 
@@ -63,7 +67,7 @@ public class ClientServiceImpl implements ClientService {
         List<Client> requestStationLeads = new ArrayList<>(StationLeads.stream().map(StationLead::getClient).toList());
         List<Client> requestResearchers = Researchers.stream().map(Researcher::getClient).toList();
         requestStationLeads.addAll(requestResearchers);
-        return requestStationLeads.stream().map(ClientDetailsDTO::new).toList();
+        return requestStationLeads.stream().filter(Client::isVerified).map(ClientDetailsDTO::new).toList();
     }
 
     @Override

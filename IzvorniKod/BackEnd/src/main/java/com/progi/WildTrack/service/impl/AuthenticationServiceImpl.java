@@ -5,20 +5,29 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.progi.WildTrack.dao.*;
 import com.progi.WildTrack.domain.*;
 import com.progi.WildTrack.dto.AuthenticationResponseDto;
+import com.progi.WildTrack.dto.ClientDetailsDTO;
 import com.progi.WildTrack.dto.LoginDto;
 import com.progi.WildTrack.dto.RegisterDto;
 import com.progi.WildTrack.security.JwtService;
 import com.progi.WildTrack.service.AuthenticationService;
 import com.progi.WildTrack.service.VehicleService;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
 import java.util.SimpleTimeZone;
@@ -37,6 +46,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   private final PasswordEncoder passwordEncoder;
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
+  private final JavaMailSender javaMailSender;
+
+  @Value("${FRONTEND_API_URL}")
+  private String frontendApiUrl;
+
+  @Value("${MAIL_USER}")
+  private String mailUser;
 
   public AuthenticationResponseDto register(RegisterDto request) {
     if (repository.existsByClientName(request.getClientName()) || repository.existsByEmail(request.getEmail())) {
@@ -66,19 +82,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
               .build();
       explorerRepository.save(explorer);
       for (String i : request.getEducatedFor()) {
-//        System.out.println(i);
         Vehicle vehicle = (Vehicle) vehicleRepository.findByVehicleType(i).orElseThrow();
         System.out.println(vehicle);
         System.out.println(vehicle.getVehicleId().getClass());
         System.out.println(vehicle.getClass());
         vehicleService.addExplorerToVehicle(vehicle.getVehicleId(), explorer);
-
-//        EducatedForId educatedForId = new EducatedForId(vehicle.getVehicleId(), savedClient.getClientName());
-//        System.out.println(educatedForId.getVehicleId() + " " + educatedForId.getExplorerName());
-//        var educatedfor = EducatedFor.builder()
-//                .educatedForId(educatedForId)
-//                .build();
-//        educatedForRepository.save(educatedfor);
       }
     }
     else if (request.getRole().equals("istrazivac")) {
@@ -90,6 +98,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
     var jwtToken = jwtService.generateToken(client);
     var refreshToken = jwtService.generateRefreshToken(client);
+    try {
+      sendEmail(request.getEmail(), request.getFirstName(), frontendApiUrl + "/verified?url=" + jwtToken);
+    } catch (MessagingException e) {
+      e.printStackTrace();
+    }
     revokeAllClientTokens(client);
     saveClientToken(client, jwtToken);
     return AuthenticationResponseDto.builder()
@@ -102,6 +115,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     System.out.println(request.getClientName());
     var client = repository.findByClientName(request.getClientName())
             .orElseThrow(() -> new RuntimeException("Client not found"));
+    if (!client.isVerified()) {
+        throw new RuntimeException("Client not verified");
+    }
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(
             request.getClientName(),
@@ -162,5 +178,36 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
       }
     }
+  }
+
+  @Override
+  public ResponseEntity<ClientDetailsDTO> verify(String url) {
+    String clientName = jwtService.extractUsername(url);
+    Client client = repository.findByClientName(clientName).orElse(null);
+    client.setVerified(true);
+    repository.save(client);
+    System.out.println("verified " + frontendApiUrl);
+    return ResponseEntity.ok(new ClientDetailsDTO(client));
+  }
+
+  private void sendEmail(String to, String firstname, String url) throws MessagingException {
+    MimeMessage message = javaMailSender.createMimeMessage();
+    MimeMessageHelper helper = new MimeMessageHelper(message, true);
+    helper.setFrom(mailUser);
+    helper.setTo(to);
+    helper.setSubject("WildTrack-Verifikacija");
+    String htmlContent = "<p>Poštovani/a,</p>"
+            + "<p>Hvala vam što ste se registrirali na našoj web stranici. Kako biste dovršili proces registracije i aktivirali svoj račun, molimo vas da kliknete na gumb ispod:</p>"
+            + "<p><a href='" + url + "' style='"
+            + "background-color: #4CAF50; color: white; padding: 10px 15px; text-decoration: none; display: inline-block; border-radius: 5px;'>"
+            + "Verificirajte svoj račun</a></p>"
+            + "<p>Ako niste vi registrirali ovaj račun, ignorirajte ovu poruku.</p>"
+            + "<p>Hvala vam na povjerenju!</p>"
+            + "<p>Srdačan pozdrav,<br/>Vaša WildTrack ekipa</p>";
+
+    helper.setText(htmlContent, true);;
+
+    javaMailSender.send(message);
+    System.out.println("Email sent to " + to);
   }
 }
