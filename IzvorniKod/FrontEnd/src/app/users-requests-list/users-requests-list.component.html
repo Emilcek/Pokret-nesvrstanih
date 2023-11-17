@@ -13,8 +13,8 @@
             <div class="zahtjev">
                 <p>Zahtjev za ulogu {{user.role}} - {{user.firstName}} {{user.lastName}}</p>
                 <div class="buttons">
-                    <button class="btn2" (click)="acceptUser(user, i)" type="submit">Prihvati</button>
-                    <button class="btn1" (click)="deleteUserRequset(user.id, i)" type="button">Odbaci</button>
+                    <button class="btn2" (click)="acceptUser(user.clientName)" type="button">Prihvati</button>
+                    <button class="btn1" (click)="deleteUserRequset(user.clientName)" type="button">Odbaci</button>
                 </div>
             </div>
         </div>

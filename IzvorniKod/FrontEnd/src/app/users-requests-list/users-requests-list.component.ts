@@ -11,7 +11,7 @@ export class UsersRequestsListComponent implements OnInit {
   userlist: any
   dataSource: any
 
-  ngOnInit() {
+  LoadData() {
     let header = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -28,40 +28,50 @@ export class UsersRequestsListComponent implements OnInit {
       }
     })
   }
+
+  ngOnInit() {
+    this.LoadData();
+  }
+  
   constructor(private http: HttpClient) {
   }
 
   apiurl = 'http://localhost:3000/requests';
 
 
-
-  LoadUser() {
-    this.GetAll().subscribe(res => {
-      this.dataSource = res;
-      console.log(this.dataSource);
-    });
-  }
-
   GetAll() {
     return this.http.get(this.apiurl)
   }
 
-  acceptUser(user: any, index: number) {
-    /*this.http.post('http://localhost:3000/user', user).subscribe(
+  acceptUser(clientName: any) {
+    let header = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    });
+    let headersObj = {
+      headers: header
+    };
+    this.http.get(environment.BASE_API_URL + '/admin/requests/' + clientName + '/accepted', headersObj).subscribe(
       (response) => {
         console.log('User saved successfully:', response);
-        this.deleteUserRequset(user.id, index);
+        this.LoadData();
       }
-    );*/
+    );
   }
 
-  deleteUserRequset(userId: string, index: number) {
-    /*this.dataSource.splice(index, 1);
-    const deleteUserUrl = `${this.apiurl}/${userId}`;
-    this.http.delete(deleteUserUrl).subscribe(
+  deleteUserRequset(clientName: any) {
+    let header = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    });
+    let headersObj = {
+      headers: header
+    };
+    this.http.get(environment.BASE_API_URL + '/admin/requests/' + clientName + '/rejected', headersObj).subscribe(
       (response) => {
-        console.log('User deleted from server successfully:', response);
+        console.log('User rejected successfully:', response);
+        this.LoadData();
       }
-    );*/
+    );
   }
 }
