@@ -10,10 +10,11 @@ import { UsersRequestsListComponent } from './users-requests-list/users-requests
 import { UsersListComponent } from './users-list/users-list.component';
 import { UserVerifiedSuccessfulComponent } from './user-verified-successful/user-verified-successful.component';
 import {AuthGuard} from "./auth/auth.guard";
+import {AuthLoginGuard} from "./auth/auth.loginguard";
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'register' , component: RegisterComponent },
+  { path: 'login', component: LoginComponent, canActivate:[AuthLoginGuard]},
+  { path: 'register' , component: RegisterComponent, canActivate:[AuthLoginGuard]},
   //{ path: 'edit/:id', component: UserDataEditingComponent },
   //{ path: 'stationLeader', component: StationLeaderProfileComponent},
   { path: 'explorer-tasks', component: ExplorerTasksComponent, canActivate:[AuthGuard], data: { requiredRole: 'tragac' }},
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'verified' , component: UserVerifiedSuccessfulComponent},
   { path: 'researcher-profile', component: ExplorerProfileComponent, canActivate:[AuthGuard], data: { requiredRole: 'istrazivac' } },
   { path: 'station-leader-profile', component: ExplorerProfileComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' } },
+  { path: '**', component: LoginComponent, canActivate:[AuthLoginGuard]}
 ];
 
 @NgModule({
