@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.progi.WildTrack.dao.*;
 import com.progi.WildTrack.domain.*;
 import com.progi.WildTrack.dto.AuthenticationResponseDto;
+import com.progi.WildTrack.dto.ClientDetailsDTO;
 import com.progi.WildTrack.dto.LoginDto;
 import com.progi.WildTrack.dto.RegisterDto;
 import com.progi.WildTrack.security.JwtService;
@@ -170,13 +171,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   }
 
   @Override
-  public ResponseEntity<String> verify(String url) {
+  public ResponseEntity<ClientDetailsDTO> verify(String url) {
     String clientName = jwtService.extractUsername(url);
     Client client = repository.findByClientName(clientName).orElse(null);
     client.setVerified(true);
     repository.save(client);
     System.out.println("verified " + frontendApiUrl);
-    return ResponseEntity.ok("client verified successfully");
+    return ResponseEntity.ok(new ClientDetailsDTO(client));
   }
 
   private void sendEmail(String to, String firstname, String url) {

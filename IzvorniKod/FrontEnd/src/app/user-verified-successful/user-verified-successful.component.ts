@@ -14,7 +14,9 @@ export class UserVerifiedSuccessfulComponent implements OnInit{
   }
 
   ngOnInit(){
-    const token = this.route.snapshot.paramMap.get("url")
-    this.http.get(environment.BASE_API_URL+"/auth?url="+token)
+    const token = this.route.snapshot.queryParamMap.get("url")
+    let route = environment.BASE_API_URL+"/auth/verified"
+    console.log(route)
+    this.http.post(route, token).subscribe()
   }
 }

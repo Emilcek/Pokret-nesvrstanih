@@ -2,11 +2,11 @@ package com.progi.WildTrack.controllers;
 
 import com.progi.WildTrack.domain.Client;
 import com.progi.WildTrack.dto.AuthenticationResponseDto;
+import com.progi.WildTrack.dto.ClientDetailsDTO;
 import com.progi.WildTrack.dto.LoginDto;
 import com.progi.WildTrack.dto.RegisterDto;
 import com.progi.WildTrack.service.AuthenticationService;
 import com.progi.WildTrack.service.ClientService;
-import com.progi.WildTrack.service.impl.EmailSenderServisImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -32,8 +32,8 @@ public class AuthenticationController {
         System.out.println("controller " + request);
         return ResponseEntity.ok(service.register(request));
     }
-    @GetMapping("/verified")
-    public ResponseEntity<String> verified(@RequestParam(name = "url") String url) {
+    @PostMapping("/verified")
+    public ResponseEntity<ClientDetailsDTO> verified(@RequestBody String url) {
         System.out.println("verified controller " + url);
         return service.verify(url);
     }

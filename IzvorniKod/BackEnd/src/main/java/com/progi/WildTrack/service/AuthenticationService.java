@@ -1,6 +1,7 @@
 package com.progi.WildTrack.service;
 
 import com.progi.WildTrack.dto.AuthenticationResponseDto;
+import com.progi.WildTrack.dto.ClientDetailsDTO;
 import com.progi.WildTrack.dto.LoginDto;
 import com.progi.WildTrack.dto.RegisterDto;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,5 +22,5 @@ public interface AuthenticationService {
             HttpServletResponse response
     ) throws IOException;
 
-    ResponseEntity<String> verify(String url);
+    ResponseEntity<ClientDetailsDTO> verify(String url);
 }
