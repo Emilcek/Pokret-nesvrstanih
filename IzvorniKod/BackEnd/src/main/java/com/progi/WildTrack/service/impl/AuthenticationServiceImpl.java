@@ -81,13 +81,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
               .client(savedClient)
               .build();
       explorerRepository.save(explorer);
-      for (String i : request.getEducatedFor()) {
-        Vehicle vehicle = (Vehicle) vehicleRepository.findByVehicleType(i).orElseThrow();
-        System.out.println(vehicle);
-        System.out.println(vehicle.getVehicleId().getClass());
-        System.out.println(vehicle.getClass());
-        vehicleService.addExplorerToVehicle(vehicle.getVehicleId(), explorer);
-      }
     }
     else if (request.getRole().equals("istrazivac")) {
       var researcher = Researcher.builder()
