@@ -11,6 +11,8 @@ import com.progi.WildTrack.dto.RegisterDto;
 import com.progi.WildTrack.security.JwtService;
 import com.progi.WildTrack.service.AuthenticationService;
 import com.progi.WildTrack.service.VehicleService;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -47,6 +50,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
   @Value("${FRONTEND_API_URL}")
   private String frontendApiUrl;
+
+  @Value("${MAIL_USER}")
+  private String mailUser;
 
   public AuthenticationResponseDto register(RegisterDto request) {
     if (repository.existsByClientName(request.getClientName()) || repository.existsByEmail(request.getEmail())) {
@@ -92,7 +98,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
     var jwtToken = jwtService.generateToken(client);
     var refreshToken = jwtService.generateRefreshToken(client);
-    sendEmail(request.getEmail(), request.getFirstName(), frontendApiUrl + "/verified?url=" + jwtToken);
+    try {
+      sendEmail(request.getEmail(), request.getFirstName(), frontendApiUrl + "/verified?url=" + jwtToken);
+    } catch (MessagingException e) {
+      e.printStackTrace();
+    }
     revokeAllClientTokens(client);
     saveClientToken(client, jwtToken);
     return AuthenticationResponseDto.builder()
@@ -180,14 +190,24 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     return ResponseEntity.ok(new ClientDetailsDTO(client));
   }
 
-  private void sendEmail(String to, String firstname, String url) {
-    SimpleMailMessage message = new SimpleMailMessage();
-    String text = "Pozdrav " + firstname + " stisni link za verfikaciju maila " + url;
-    message.setTo(to);
-    message.setSubject("WildTrack-Verifikacija");
-    message.setText(text);
+  private void sendEmail(String to, String firstname, String url) throws MessagingException {
+    MimeMessage message = javaMailSender.createMimeMessage();
+    MimeMessageHelper helper = new MimeMessageHelper(message, true);
+    helper.setFrom(mailUser);
+    helper.setTo(to);
+    helper.setSubject("WildTrack-Verifikacija");
+    String htmlContent = "<p>Poštovani/a,</p>"
+            + "<p>Hvala vam što ste se registrirali na našoj web stranici. Kako biste dovršili proces registracije i aktivirali svoj račun, molimo vas da kliknete na gumb ispod:</p>"
+            + "<p><a href='" + url + "' style='"
+            + "background-color: #4CAF50; color: white; padding: 10px 15px; text-decoration: none; display: inline-block; border-radius: 5px;'>"
+            + "Verificirajte svoj račun</a></p>"
+            + "<p>Ako niste vi registrirali ovaj račun, ignorirajte ovu poruku.</p>"
+            + "<p>Hvala vam na povjerenju!</p>"
+            + "<p>Srdačan pozdrav,<br/>Vaša WildTrack ekipa</p>";
+
+    helper.setText(htmlContent, true);;
 
     javaMailSender.send(message);
-    System.out.println("Email sent..") ;
+    System.out.println("Email sent to " + to);
   }
 }
