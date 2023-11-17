@@ -19,6 +19,11 @@ export class HeaderComponent implements OnInit{
   }
 
   ngOnInit() {
+    let url = window.location.href;
+    let page = url.substring(url.lastIndexOf('/'));
+
+    this.headerService.changeActivePage(page);
+
     this.pageChange = this.headerService.active
         .subscribe(
             (active: string) => {

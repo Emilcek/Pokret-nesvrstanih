@@ -14,6 +14,7 @@ export class HeaderService {
     user: boolean = localStorage.getItem("token") !== null;
     role: string;
     roleS: Subject<string> = new Subject<string>();
+    alert: boolean = false;
 
   constructor(private router: Router) {
       if(localStorage.getItem("user") !== null) {
