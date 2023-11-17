@@ -1,4 +1,4 @@
-<ng-container *ngIf="!dataSource; else hasRequests">
+<ng-container *ngIf="dataSource === undefined || dataSource.length === 0; else hasRequests">
     <div class="noReq">
         <h1>Nema zahtjeva!</h1>
     </div>

@@ -79,3 +79,63 @@ img {
 .custom-button:hover {
     transform: scale(1.2);
 }
+
+
+@media screen and (max-width: 768px) {
+    table {
+        width: 100%;
+        text-align: center;
+        overflow-x: scroll;
+    }
+
+    th,
+    td {
+        width: auto;
+        text-align: center;
+        box-sizing: border-box;
+        padding: 5px;
+    }
+
+    th,
+    td {
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .center {
+        text-align: center;
+    }
+
+    .upper-div {
+        display: block;
+        margin: 0;
+        padding: 10px;
+        width: 100%;
+    }
+
+    h2 {
+        margin-bottom: 1px;
+    }
+
+    .custom-image {
+        width: 8%;
+        height: auto;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    .table-container {
+        margin: 10px;
+    }
+
+
+    td:not(:first-child):not(:nth-child(6)),
+    th:not(:first-child):not(:nth-child(6)) {
+        display: none;
+    }
+}

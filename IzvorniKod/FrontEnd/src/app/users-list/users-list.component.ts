@@ -50,5 +50,4 @@ export class UsersListComponent implements OnInit {
   redirectToEditPage(userId: string) {
     //this.router.navigate([`admin/userdata/edit/${userId}`]);
   }
-
 }
