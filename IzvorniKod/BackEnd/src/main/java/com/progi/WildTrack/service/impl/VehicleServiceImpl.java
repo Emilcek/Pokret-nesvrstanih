@@ -16,6 +16,9 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public void createVehicle(String vehicleType) {
+        if (vehicleRepo.findByVehicleType(vehicleType).isPresent()) {
+            return;
+        }
         Vehicle vehicle = Vehicle.builder()
                 .vehicleType(vehicleType)
                 .build();

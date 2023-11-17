@@ -104,6 +104,9 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void createAdmin() {
+        if (clientRepo.findByClientName("admin").isPresent()) {
+            return;
+        }
         Client admin = Client.builder()
                 .clientName("admin")
                 .firstName("admin")

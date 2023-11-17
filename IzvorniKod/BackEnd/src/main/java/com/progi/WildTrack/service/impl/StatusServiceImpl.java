@@ -14,6 +14,9 @@ public class StatusServiceImpl implements StatusService {
 
     @Override
     public void createStatus(Description statusDescription) {
+        if (statusRepo.findByDescription(statusDescription).isPresent()) {
+            return;
+        }
         Status status = Status.builder()
                 .description(statusDescription)
                 .build();
