@@ -15,6 +15,7 @@ import { ExplorerProfileComponent } from './explorer-profile/explorer-profile.co
 import { UsersRequestsListComponent } from './users-requests-list/users-requests-list.component';
 import { UsersListComponent } from './users-list/users-list.component';
 import { UserVerifiedSuccessfulComponent } from './user-verified-successful/user-verified-successful.component';
+import { MapComponent } from './map/map.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { UserVerifiedSuccessfulComponent } from './user-verified-successful/user
     ExplorerProfileComponent,
     UsersRequestsListComponent,
     UsersListComponent,
-    UserVerifiedSuccessfulComponent
+    UserVerifiedSuccessfulComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,

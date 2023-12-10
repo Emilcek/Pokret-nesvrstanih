@@ -12,3 +12,42 @@
     font-size: 30px;
 }
 
+.tasks {
+  text-align: center;
+
+  .title {
+    font-size: 22px;
+    margin-top: 20px;
+    color: #756E6E;
+    border-bottom: 2px solid #927979;
+    padding-bottom: 20px;
+  }
+
+  .tasks-list {
+    margin-top: 30px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+
+    .task {
+      margin: 20px 0;
+      font-size: 20px;
+    }
+  }
+
+  .button {
+    background-color: #95C4E7;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-size: 18px;
+    margin-top: 20px;
+    transition: 0.3s;
+    color: #756E6E;
+
+    &:hover {
+      cursor: pointer;
+      background-color: #548ca9;
+    }
+  }
+}
