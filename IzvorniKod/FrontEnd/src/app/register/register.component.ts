@@ -3,7 +3,8 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import {HeaderService} from "../header/header.service";
+import { HeaderService } from "../header/header.service";
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -13,16 +14,15 @@ export class RegisterComponent {
   constructor(private http:HttpClient, private router:Router, private headerService: HeaderService){}
   selectedOptions:string[]=[]
   signUpForm=new FormGroup({
-    role:new FormControl(''),
+    role:new FormControl('',),
     educatedFor:new FormControl(),
-    clientPhotoURL:new FormControl(''),
-    firstName:new FormControl(''),
-    lastName:new FormControl(''),
-    clientName:new FormControl('',Validators.pattern(/^[a-zA-Z0-9]*$/)),
-    password:new FormControl('',Validators.minLength(8)),
-    email:new FormControl('',Validators.email),
+    clientPhotoURL:new FormControl('',Validators.required),
+    firstName:new FormControl('',Validators.required),
+    lastName:new FormControl('',Validators.required),
+    clientName:new FormControl('',[Validators.pattern("^[a-zA-Z]+[a-zA-Z0-9]*"),Validators.required]),
+    password:new FormControl('',[Validators.minLength(8),Validators.required]),
+    email:new FormControl('',[Validators.email,Validators.required]),
   })
-
     signUp(){
     if(this.signUpForm.valid){
       if(this.signUpForm.value.role==="tragac" && this.signUpForm.value.educatedFor?.length===0){
