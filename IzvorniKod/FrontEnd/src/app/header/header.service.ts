@@ -15,6 +15,9 @@ export class HeaderService {
     role: string;
     roleS: Subject<string> = new Subject<string>();
     alert: boolean = false;
+    isNavOpen = new Subject<boolean>();
+    isOpen: boolean = false;
+
 
   constructor(private router: Router) {
       if(localStorage.getItem("user") !== null) {
@@ -46,4 +49,9 @@ export class HeaderService {
         localStorage.removeItem("user");
         this.router.navigate(['/login'])
     }
+
+  toggleSidebar() {
+    this.isOpen = !this.isOpen;
+    this.isNavOpen.next(this.isOpen);
+  }
 }
