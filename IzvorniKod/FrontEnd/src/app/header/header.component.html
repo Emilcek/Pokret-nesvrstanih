@@ -22,7 +22,8 @@
         <a class="header-link" routerLink="explorer-profile" [ngClass]="{ 'active': activePage === '/explorer-profile' }" (click)="changeActivePage('/explorer-profile')">Profil</a>
         <a class="header-link" routerLink="explorer-tasks" [ngClass]="{ 'active': activePage === '/explorer-tasks' }" (click)="changeActivePage('/explorer-tasks')">Zadaci</a>
         <button (click)="logout()" type="button" class="header-link sign-out-button">
-            <img src="assets/img/poweroff-icon.png" alt="Odjava">
+            <img class="sign-out-icon" src="assets/img/poweroff-icon.png" alt="Odjava">
+            <span class="sign-out-text">ODJAVA</span>
         </button>
     </div>
 

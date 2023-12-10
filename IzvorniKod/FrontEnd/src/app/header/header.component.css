@@ -21,6 +21,10 @@
       text-transform: uppercase;
       text-decoration: none;
 
+      .sign-out-text {
+        display: none;
+      }
+
       &.active {
         border-bottom: 3px solid #95C4E7;
       }
@@ -44,7 +48,8 @@
 
 @media only screen and (max-width: 576px) {
   .navbar-container {
-    margin: 0;
+    margin: 10px;
+    justify-content: center;
 
     &.is-mobile-open {
       flex-direction: column;
@@ -56,12 +61,23 @@
       &.is-mobile-open {
         display: flex;
         flex-direction: column;
+        margin-top: 20px;
+
+        .header-link {
+          margin: 10px;
+          text-align: center;
+
+          .sign-out-icon {
+            display: none;
+          }
+
+          .sign-out-text {
+            display: block;
+          }
+        }
       }
     }
   }
-
-
-
 
   .navbar-container .menu-btn {
     display: block;
@@ -70,6 +86,7 @@
     cursor: pointer;
     margin-top: 26px;
     margin-right: 10px;
+    margin-left: 18px;
   }
 
   .navbar-container .menu-btn span {

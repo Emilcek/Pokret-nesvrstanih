@@ -34,8 +34,9 @@ export class HeaderService {
         this.active.next(activePage);
     }
 
-    userLoggedIn() {
-        this.user = !this.user;
+    userLoggedIn(data: boolean) {
+        this.user = data;
+        console.log(this.user, "log")
         this.logged.next(this.user);
     }
 
@@ -47,6 +48,8 @@ export class HeaderService {
     logout() {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
+        this.isOpen = false;
+        this.isNavOpen.next(this.isOpen);
         this.router.navigate(['/login'])
     }
 
