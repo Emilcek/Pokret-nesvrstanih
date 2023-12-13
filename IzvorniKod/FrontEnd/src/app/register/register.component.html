@@ -19,6 +19,7 @@
                       <input type="checkbox" formControlName="educatedFor" checked="false" [value]="n.id" (change)="onChangeAbility($event)"> {{n.name}}
                     </tr>
                   </div>
+                  <div *ngIf="!signUpForm.controls.educatedFor.touched" class="ErrorMessage" id="abilitiesError">Morate označiti barem jednu kompetenciju</div>
                 </div>
 
                 <div class="group">

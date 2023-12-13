@@ -16,7 +16,7 @@ export class RegisterComponent {
   signUpForm=new FormGroup({
     role:new FormControl('',Validators.required),
     educatedFor:new FormControl(),
-    clientPhotoURL:new FormControl('',Validators.required),
+    clientPhotoURL:new FormControl(''),
     firstName:new FormControl('',Validators.required),
     lastName:new FormControl('',Validators.required),
     clientName:new FormControl('',[Validators.pattern("^[a-zA-Z]+[a-zA-Z0-9]*"),Validators.required]),
@@ -24,10 +24,10 @@ export class RegisterComponent {
     email:new FormControl('',[Validators.email,Validators.required]),
   })
     signUp(){
-    if(this.signUpForm.valid){
       if(this.signUpForm.value.role==="tragac" && this.signUpForm.value.educatedFor?.length===0){
-        alert("Nisu uneseni svi podaci ili su pogrešno uneseni")
+          document.getElementById("abilitiesError")!.style.display="flex"
       }else{
+        document.getElementById("abilitiesError")!.style.display="none"
         for ( let a of this.abilities ){
           if(a.select){
             this.selectedOptions.push(a.name)
@@ -48,9 +48,6 @@ export class RegisterComponent {
           }
         })
       }
-    }else{
-      alert("Nisu uneseni svi podaci ili su pogrešno uneseni")
-    }
   }
 
   showDiv(event:any){

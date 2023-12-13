@@ -188,3 +188,7 @@ select {
   color: #1ea230;
   font-size:0.8rem;
 }
+
+#abilitiesError{
+  display: none;
+}
