@@ -10,6 +10,7 @@
                         <option value="istrazivac">Istraživač</option>
                         <option value="tragac">Tragač</option>
                     </select>
+                  <div *ngIf="signUpForm.controls.role.pristine && signUpForm.controls.role.touched && signUpForm.controls.role.invalid" class="ErrorMessage">Obvezan odabir uloge</div>
                 </div>
                 <div class="group" id="abilities">
                     <label for="pass" class="label">Kompetencije</label>

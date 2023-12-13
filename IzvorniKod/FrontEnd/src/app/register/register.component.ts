@@ -14,7 +14,7 @@ export class RegisterComponent {
   constructor(private http:HttpClient, private router:Router, private headerService: HeaderService){}
   selectedOptions:string[]=[]
   signUpForm=new FormGroup({
-    role:new FormControl('',),
+    role:new FormControl('',Validators.required),
     educatedFor:new FormControl(),
     clientPhotoURL:new FormControl('',Validators.required),
     firstName:new FormControl('',Validators.required),
