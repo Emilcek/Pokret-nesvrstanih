@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
 
   constructor() {
     this.isLoggedIn = localStorage.getItem("token") !== null;
+    console.log(this.isLoggedIn)
     if(localStorage.getItem("user") !== null) {
       // @ts-ignore
       this.user = localStorage.getItem("user");
