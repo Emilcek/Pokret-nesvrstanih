@@ -19,7 +19,7 @@
                       <input type="checkbox" formControlName="educatedFor" checked="false" [value]="n.id" (change)="onChangeAbility($event)"> {{n.name}}
                     </tr>
                   </div>
-                  <div *ngIf="!signUpForm.controls.educatedFor.touched" class="ErrorMessage" id="abilitiesError">Morate označiti barem jednu kompetenciju</div>
+                  <div *ngIf="signUpForm.controls.educatedFor.touched" class="ErrorMessage" id="abilitiesError">Morate označiti barem jednu kompetenciju</div>
                 </div>
 
                 <div class="group">
@@ -31,12 +31,14 @@
                     <div class="group" id="name">
                         <label for="user" class="label">Ime</label>
                         <input type="text" class="input" formControlName="firstName" placeholder="Unesite ime">
-                      <div *ngIf="signUpForm.controls.firstName.invalid && signUpForm.controls.firstName.touched" class="ErrorMessage">Obvezan unos imena</div>
+                      <div *ngIf="signUpForm.controls.firstName.invalid && signUpForm.controls.firstName.touched && signUpForm.controls.firstName.pristine" class="ErrorMessage">Obvezan unos imena</div>
+                      <div *ngIf="signUpForm.controls.firstName.dirty && signUpForm.controls.firstName.invalid && signUpForm.controls.firstName.touched" class="WarningMessage">Ime se mora sastojati od slova</div>
                     </div>
                     <div class="group" id="surname">
                         <label for="user" class="label">Prezime</label>
                         <input type="text" class="input" formControlName="lastName" placeholder="Unesite prezime" >
-                       <div *ngIf="signUpForm.controls.lastName.invalid && signUpForm.controls.lastName.touched" class="ErrorMessage">Obvezan unos prezimena</div>
+                       <div *ngIf="signUpForm.controls.lastName.invalid && signUpForm.controls.lastName.touched && signUpForm.controls.lastName.pristine" class="ErrorMessage">Obvezan unos prezimena</div>
+                      <div *ngIf="signUpForm.controls.lastName.dirty && signUpForm.controls.lastName.invalid && signUpForm.controls.lastName.touched" class="WarningMessage">Prezime se mora sastojati od slova</div>
                     </div>
                 </div>
                 <div class="group">
@@ -56,11 +58,11 @@
                 <div class="group">
                     <label for="pass" class="label">Email adresa</label>
                     <input type="email" class="input" formControlName="email" placeholder="npr.  filip.vitkovic@gmail.com" >
-                  <div *ngIf="signUpForm.controls.email.dirty && signUpForm.controls.email.invalid && signUpForm.controls.email.touched" class="WarningMessage">Email adresa nije ispravan</div>
+                  <div *ngIf="signUpForm.controls.email.dirty && signUpForm.controls.email.invalid && signUpForm.controls.email.touched" class="WarningMessage">Email adresa nije ispravna</div>
                   <div *ngIf="signUpForm.controls.email.pristine && signUpForm.controls.email.touched && signUpForm.controls.email.invalid" class="ErrorMessage">Obvezan unos emaila</div>
                 </div>
                 <div class="group">
-                    <input type="submit" class="button" value="Registriraj se" [disabled]="!signUpForm.valid" >
+                    <input type="submit" class="button" value="Registriraj se" >
                 </div>
             </form>
         </div>

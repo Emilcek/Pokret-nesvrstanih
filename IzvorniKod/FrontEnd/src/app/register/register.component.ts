@@ -17,15 +17,22 @@ export class RegisterComponent {
     role:new FormControl('',Validators.required),
     educatedFor:new FormControl(),
     clientPhotoURL:new FormControl(''),
-    firstName:new FormControl('',Validators.required),
-    lastName:new FormControl('',Validators.required),
+    firstName:new FormControl('',[Validators.required,Validators.pattern("^[a-zA-Z]+[a-zA-Z]*")]),
+    lastName:new FormControl('',[Validators.required,Validators.pattern("^[a-zA-Z]+[a-zA-Z]*")]),
     clientName:new FormControl('',[Validators.pattern("^[a-zA-Z]+[a-zA-Z0-9]*"),Validators.required]),
     password:new FormControl('',[Validators.minLength(8),Validators.required]),
     email:new FormControl('',[Validators.email,Validators.required]),
   })
     signUp(){
-      if(this.signUpForm.value.role==="tragac" && this.signUpForm.value.educatedFor?.length===0){
-          document.getElementById("abilitiesError")!.style.display="flex"
+    if(!this.signUpForm.valid){
+      this.signUpForm.markAllAsTouched()
+      if(this.signUpForm.value.role==="tragac" && this.signUpForm.controls.educatedFor.pristine){
+        document.getElementById("abilitiesError")!.style.display="flex"
+      }
+    }else{
+      if(this.signUpForm.value.role==="tragac" && this.signUpForm.controls.educatedFor.pristine){
+        console.log("BRO")
+        document.getElementById("abilitiesError")!.style.display="flex"
       }else{
         document.getElementById("abilitiesError")!.style.display="none"
         for ( let a of this.abilities ){
@@ -48,6 +55,8 @@ export class RegisterComponent {
           }
         })
       }
+    }
+
   }
 
   showDiv(event:any){
