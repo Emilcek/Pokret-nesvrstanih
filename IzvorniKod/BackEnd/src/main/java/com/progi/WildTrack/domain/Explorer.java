@@ -21,9 +21,9 @@ public class Explorer {
     @Column(name = "Explorername" ,length = 30, nullable = false)
     private String explorerName;
 
-   @OneToOne(cascade = CascadeType.ALL)
-   @JoinColumn(name = "Explorername" ,referencedColumnName = "Clientname")
-   @MapsId
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "Explorername" ,referencedColumnName = "Clientname")
+    @MapsId
     private Client client;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -41,5 +41,8 @@ public class Explorer {
     @ManyToMany(mappedBy = "explorers", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Vehicle> vehicles = new HashSet<>();
 
+    public Explorer(Client client) {
+        this.client = client;
+    }
 
 }

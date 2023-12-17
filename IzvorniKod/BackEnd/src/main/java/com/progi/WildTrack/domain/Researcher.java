@@ -32,5 +32,8 @@ public class Researcher {
     private List<Action> actions;
 
 
-
+    public Researcher(Client savedClient, Status status) {
+        this.client = savedClient;
+        this.status = status;
+    }
 }

@@ -79,4 +79,13 @@ public class Client implements UserDetails {
         return true;
     }
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        // include only the fields that uniquely identify a Client
+        result = prime * result + ((clientName == null) ? 0 : clientName.hashCode());
+        result = prime * result + ((email == null) ? 0 : email.hashCode());
+        return result;
+    }
 }

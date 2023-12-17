@@ -54,6 +54,10 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public ClientDetailsDTO getClientByClientName(String clientName) {
         Client client = clientRepo.findByClientName(clientName).orElse(null);
+        if (client == null) {
+            // TODO error handling
+            return null;
+        }
         if (!client.isVerified()) {
             throw new RuntimeException("Client is not verified");
         }
@@ -73,6 +77,10 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public ClientDetailsDTO updateClient(ClientUpdateDTO client) {
         Client clientToUpdate = clientRepo.findByClientName(client.getClientName()).orElse(null);
+        if (clientToUpdate == null) {
+            // TODO error handling
+            return null;
+        }
         clientToUpdate.setFirstName(client.getFirstName());
         clientToUpdate.setLastName(client.getLastName());
         clientRepo.save(clientToUpdate);
@@ -83,6 +91,10 @@ public class ClientServiceImpl implements ClientService {
     public ClientDetailsDTO updateClientByClientName(String clientName, Integer status) {
         Client client = clientRepo.findByClientName(clientName).orElse(null);
         Status clientStatus = statusRepo.findByStatusId(status);
+        if (client == null) {
+            // TODO error handling
+            return null;
+        }
         if (client.getRole().equals("voditeljPostaje")) {
             StationLead stationLead = stationLeadRepo.findByStationLeadName(clientName);
             stationLead.setStatus(clientStatus);

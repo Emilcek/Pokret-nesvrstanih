@@ -34,5 +34,8 @@ public class StationLead {
     private List<Request> Requests;
 
 
-
+    public StationLead(Client savedClient, Status status) {
+        this.client = savedClient;
+        this.status = status;
+    }
 }
