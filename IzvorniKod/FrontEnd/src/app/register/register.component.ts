@@ -69,7 +69,7 @@ export class RegisterComponent {
 
       reader.onload = function (e) {
         // Set the preview image source
-        imagePreview!.innerHTML = `<img src="${e.target!.result}" alt="Image Preview">`;
+        imagePreview!.innerHTML = `<img src="${e.target!.result}" alt="Image Preview" height="150px" width="auto">`;
       };
 
       // Read the selected file as a data URL

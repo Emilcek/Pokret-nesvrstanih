@@ -24,13 +24,18 @@
 
                 <div class="group">
                     <label for="pass" class="label">Osobna fotografija</label>
-                    <label class="custom-file-input">
-                      Odaberite fotografiju
-                      <input type="file" id="myFile" name="filename" formControlName="clientPhotoURL"
-                             accept="image/png, image/jpeg, image/jpg" (change)="handleFileInput($event)">
-                    </label>
-                  <div id="imagepreview"></div>
+                  <div id="grid">
+                    <div>
+                      <label class="custom-file-input">
+                        Odaberite fotografiju
+                        <input type="file" id="myFile" name="filename" formControlName="clientPhotoURL"
+                               accept="image/png, image/jpeg, image/jpg" (change)="handleFileInput($event)">
+                      </label>
+                    </div>
+                    <div id="imagepreview"></div>
+                  </div>
                 </div>
+
                 <div class="group" id="nameSurnameDiv">
                     <div class="group" id="name">
                         <label for="user" class="label">Ime</label>

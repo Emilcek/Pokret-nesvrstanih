@@ -194,12 +194,15 @@ select {
   background:#95C4E7;
   border-radius: 10px;
   color: rgb(117, 110, 110);
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 input[type="file"]{
   display: none;
 }
-
-#imagepreview img{
-  max-height: 100px;
+#grid{
+  display: grid;
+  grid-template-columns: repeat(2,1.5fr);
+  gap:10px;
 }
+
+
