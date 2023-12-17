@@ -1,6 +1,6 @@
 <div class="login-wrap main-container">
-    <div class="login-html">
-        <div class="login-form">
+  <div class="login-html">
+    <div class="login-form">
             <form class="sign-up-htm" [formGroup]="signUpForm" (ngSubmit)="signUp()">
                 <div class="group">
                     <label for="pass" class="label">Uloga</label>
@@ -24,8 +24,12 @@
 
                 <div class="group">
                     <label for="pass" class="label">Osobna fotografija</label>
-                    <input type="file" id="myFile" name="filename" formControlName="clientPhotoURL"
-                    accept="image/png, image/jpeg, image/jpg" >
+                    <label class="custom-file-input">
+                      Odaberite fotografiju
+                      <input type="file" id="myFile" name="filename" formControlName="clientPhotoURL"
+                             accept="image/png, image/jpeg, image/jpg" (change)="handleFileInput($event)">
+                    </label>
+                  <div id="imagepreview"></div>
                 </div>
                 <div class="group" id="nameSurnameDiv">
                     <div class="group" id="name">

@@ -11,6 +11,7 @@ import { HeaderService } from "../header/header.service";
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
+
   constructor(private http:HttpClient, private router:Router, private headerService: HeaderService){}
   selectedOptions:string[]=[]
   signUpForm=new FormGroup({
@@ -48,8 +49,8 @@ export class RegisterComponent {
           next: data => {
             let response: any = data;
             alert("Poslan vam je verifikacijski mail na vašu email adresu");
-            this.headerService.changeActivePage('/login');
-            this.router.navigate(['/login']);
+            this.headerService.changeActivePage('/emailSent');
+            this.router.navigate(['/emailSent']);
           }, error: error => {
             alert("Korisničko ime ili email se već koriste.")
           }
@@ -57,6 +58,26 @@ export class RegisterComponent {
       }
     }
 
+  }
+  handleFileInput(event: any): void {
+    const fileInput = event.target;
+    const imagePreview = document.getElementById('imagepreview');
+
+    // Check if a file is selected
+    if (fileInput.files && fileInput.files[0]) {
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        // Set the preview image source
+        imagePreview!.innerHTML = `<img src="${e.target!.result}" alt="Image Preview">`;
+      };
+
+      // Read the selected file as a data URL
+      reader.readAsDataURL(fileInput.files[0]);
+    } else {
+      // Clear the preview if no file is selected
+      imagePreview!.innerHTML = '';
+    }
   }
 
   showDiv(event:any){

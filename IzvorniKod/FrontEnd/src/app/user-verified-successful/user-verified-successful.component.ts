@@ -6,6 +6,7 @@ import {HeaderService} from "../header/header.service";
 @Component({
   selector: 'app-user-verified-successful',
   templateUrl: './user-verified-successful.component.html',
+  standalone: true,
   styleUrls: ['./user-verified-successful.component.css']
 })
 export class UserVerifiedSuccessfulComponent implements OnInit{

@@ -91,16 +91,6 @@
 .sign-in-htm{
     padding-top: 1rem;
 }
-input[type=file]::file-selector-button{
-  margin-right: 20px;
-  background:#95C4E7;
-  padding: 8px 20px;
-  border-radius: 10px;
-  color: rgb(117, 110, 110);
-  cursor: pointer;
-  transition: background .2s ease-in-out;
-  border:2px solid rgb(117, 110, 110);
-}
 body{
 	font:600 16px/18px;
   font-family: Arial, Helvetica, sans-serif;
@@ -191,4 +181,25 @@ select {
 
 #abilitiesError{
   display: none;
+}
+
+.custom-file-input {
+  display: inline-block;
+  padding: 6px 10px;
+  cursor: pointer;
+  border: 1px solid #927979;
+  width: fit-content;
+  transition: 0.2s;
+  margin: 10px 0;
+  background:#95C4E7;
+  border-radius: 10px;
+  color: rgb(117, 110, 110);
+  font-size: 0.9rem;
+}
+input[type="file"]{
+  display: none;
+}
+
+#imagepreview img{
+  max-height: 100px;
 }
