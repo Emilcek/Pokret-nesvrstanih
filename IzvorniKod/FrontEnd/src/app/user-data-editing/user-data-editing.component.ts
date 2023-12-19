@@ -15,8 +15,15 @@ export class UserDataEditingComponent implements OnInit {
   @Input() currentUser!: Explorer;
   keys: any;
   role: any;
-  constructor(private http: HttpClient, private route: ActivatedRoute) {
 
+  // "Name":"Ime","Surname":"Prezime","Username":"Korisničko ime","Password":"Lozinka",
+  constructor(private http: HttpClient, private route: ActivatedRoute) {
+    localStorage["Name"]="Ime";
+    localStorage["Surname"]="Prezime";
+    localStorage["Username"]="Korisničko ime";
+    localStorage["Password"]="Lozinka";
+    localStorage["Email"]="Email adresa";
+    localStorage["Role"]="Uloga";
   }
 
   apiurl = 'http://localhost:3000/user';
@@ -36,6 +43,7 @@ export class UserDataEditingComponent implements OnInit {
     this.keys = Object.keys(this.userData)
     console.log(this.currentUser, "userdata")
   }
+
 
   getUserData() {
     this.GetUserbyCode(this.userId).subscribe((data) => {
@@ -74,4 +82,6 @@ export class UserDataEditingComponent implements OnInit {
       this.emailError = false;
     }
   }
+
+  protected readonly localStorage = localStorage;
 }

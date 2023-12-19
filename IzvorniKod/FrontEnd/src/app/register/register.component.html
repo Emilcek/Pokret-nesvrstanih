@@ -41,26 +41,26 @@
                         <label for="user" class="label">Ime</label>
                         <input type="text" class="input" formControlName="firstName" placeholder="Unesite ime">
                       <div *ngIf="signUpForm.controls.firstName.invalid && signUpForm.controls.firstName.touched && signUpForm.controls.firstName.pristine" class="ErrorMessage">Obvezan unos imena</div>
-                      <div *ngIf="signUpForm.controls.firstName.dirty && signUpForm.controls.firstName.invalid && signUpForm.controls.firstName.touched" class="WarningMessage">Ime se mora sastojati od slova</div>
+                      <div *ngIf="signUpForm.controls.firstName.dirty && signUpForm.controls.firstName.invalid " class="WarningMessage">Ime se mora sastojati od slova</div>
                     </div>
                     <div class="group" id="surname">
                         <label for="user" class="label">Prezime</label>
                         <input type="text" class="input" formControlName="lastName" placeholder="Unesite prezime" >
                        <div *ngIf="signUpForm.controls.lastName.invalid && signUpForm.controls.lastName.touched && signUpForm.controls.lastName.pristine" class="ErrorMessage">Obvezan unos prezimena</div>
-                      <div *ngIf="signUpForm.controls.lastName.dirty && signUpForm.controls.lastName.invalid && signUpForm.controls.lastName.touched" class="WarningMessage">Prezime se mora sastojati od slova</div>
+                      <div *ngIf="signUpForm.controls.lastName.dirty && signUpForm.controls.lastName.invalid" class="WarningMessage">Prezime se mora sastojati od slova</div>
                     </div>
                 </div>
                 <div class="group">
                     <label for="user" class="label">Korisničko ime</label>
                     <input type="text" class="input"  formControlName="clientName" placeholder="Unesite korisničko ime (započinje slovom)" >
                   <div *ngIf="signUpForm.controls.clientName.pristine && signUpForm.controls.clientName.touched && signUpForm.controls.clientName.invalid" class="ErrorMessage">Obvezan unos korisničkog imena</div>
-                  <div *ngIf="signUpForm.controls.clientName.dirty && signUpForm.controls.clientName.invalid && signUpForm.controls.clientName.touched" class="WarningMessage">Korisničko se sastoji od kombinacije slova i brojeva s tim da mora započinjati slovom</div>
+                  <div *ngIf="signUpForm.controls.clientName.dirty && signUpForm.controls.clientName.invalid " class="WarningMessage">Korisničko ime treba sadržavati kombinaciju slova i brojeva, bez korištenja dijakritičkih znakova.</div>
 
                 </div>
                 <div class="group">
                     <label for="pass" class="label">Lozinka</label>
                     <input type="password" class="input" data-type="password" formControlName="password" placeholder="Unesite lozinku  (min 8 znakova)" >
-                  <div *ngIf="signUpForm.controls.password.dirty && signUpForm.controls.password.invalid && signUpForm.controls.password.touched" class="WarningMessage">Lozinka je prekratka</div>
+                  <div *ngIf="signUpForm.controls.password.dirty && signUpForm.controls.password.invalid" class="WarningMessage">Lozinka je prekratka</div>
                   <div *ngIf="signUpForm.controls.password.pristine && signUpForm.controls.password.touched && signUpForm.controls.password.invalid" class="ErrorMessage">Obvezan unos lozinke</div>
                   <div *ngIf="signUpForm.controls.password.valid" class="ValidMessage">Jaka lozinka</div>
                 </div>

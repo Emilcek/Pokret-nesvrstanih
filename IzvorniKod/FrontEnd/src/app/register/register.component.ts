@@ -18,9 +18,9 @@ export class RegisterComponent {
     role:new FormControl('',Validators.required),
     educatedFor:new FormControl(),
     clientPhotoURL:new FormControl(''),
-    firstName:new FormControl('',[Validators.required,Validators.pattern("^[a-zA-Z]+[a-zA-Z]*")]),
-    lastName:new FormControl('',[Validators.required,Validators.pattern("^[a-zA-Z]+[a-zA-Z]*")]),
-    clientName:new FormControl('',[Validators.pattern("^[a-zA-Z]+[a-zA-Z0-9]*"),Validators.required]),
+    firstName:new FormControl('',[Validators.required,Validators.pattern("^[a-zA-ZčČĆćŽžŠšĐđ]+")]),
+    lastName:new FormControl('',[Validators.required,Validators.pattern("^[a-zA-ZčČĆćŽžŠšĐđ]+")]),
+    clientName:new FormControl('',[Validators.pattern("^[a-zA-Z0-9]+[a-zA-Z0-9]*"),Validators.required]),
     password:new FormControl('',[Validators.minLength(8),Validators.required]),
     email:new FormControl('',[Validators.email,Validators.required]),
   })

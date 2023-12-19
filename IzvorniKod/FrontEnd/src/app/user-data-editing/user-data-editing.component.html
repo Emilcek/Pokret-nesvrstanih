@@ -1,3 +1,4 @@
+
   <div class="hole-div main-container" *ngIf="currentUser">
     <div class="upper-div"><h2>Podaci o profilu</h2></div>
     <hr style="width:90%;text-align:left;margin-left:5%">
@@ -5,8 +6,8 @@
       <div class="flex-column form-container">
         <div class="form-inputs flex">
           <div *ngFor="let key of keys" class="form-input-container">
-            <input type="text" class="form-input" placeholder=" " [(ngModel)]="userData[key]">
-            <label class="form-input-label">{{key}}</label>
+            <input type="text" class="form-input" placeholder=" " [(ngModel)]="userData[key]" [disabled]="key=='Role'">
+            <label class="form-input-label">{{localStorage[key]}}</label>
             <div *ngIf="!userData.Ime && key==='Ime'" class="error-message">Ime je potrebno</div>
           </div>
         </div>
