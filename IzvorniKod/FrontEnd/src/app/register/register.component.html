@@ -19,9 +19,8 @@
                       <input type="checkbox" formControlName="educatedFor" checked="false" [value]="n.id" (change)="onChangeAbility($event)"> {{n.name}}
                     </tr>
                   </div>
-                  <div *ngIf="signUpForm.controls.educatedFor.touched" class="ErrorMessage" id="abilitiesError">Morate označiti barem jednu kompetenciju</div>
+                  <div *ngIf="signUpForm.controls.educatedFor.invalid" class="ErrorMessage" id="abilitiesError">Morate označiti barem jednu kompetenciju</div>
                 </div>
-
                 <div class="group">
                     <label for="pass" class="label">Osobna fotografija</label>
                   <div id="grid">
@@ -55,7 +54,7 @@
                     <input type="text" class="input"  formControlName="clientName" placeholder="Unesite korisničko ime (započinje slovom)" >
                   <div *ngIf="signUpForm.controls.clientName.pristine && signUpForm.controls.clientName.touched && signUpForm.controls.clientName.invalid" class="ErrorMessage">Obvezan unos korisničkog imena</div>
                   <div *ngIf="signUpForm.controls.clientName.dirty && signUpForm.controls.clientName.invalid " class="WarningMessage">Korisničko ime treba sadržavati kombinaciju slova i brojeva, bez korištenja dijakritičkih znakova.</div>
-
+                  <div class="ErrorMessage" id = "UsedUserName" >Odabrali ste korisničko ime koje se već koristi</div>
                 </div>
                 <div class="group">
                     <label for="pass" class="label">Lozinka</label>
@@ -69,6 +68,7 @@
                     <input type="email" class="input" formControlName="email" placeholder="npr.  filip.vitkovic@gmail.com" >
                   <div *ngIf="signUpForm.controls.email.dirty && signUpForm.controls.email.invalid && signUpForm.controls.email.touched" class="WarningMessage">Email adresa nije ispravna</div>
                   <div *ngIf="signUpForm.controls.email.pristine && signUpForm.controls.email.touched && signUpForm.controls.email.invalid" class="ErrorMessage">Obvezan unos emaila</div>
+                  <div class="ErrorMessage" id = "UsedEmail" >Odabrali ste email adresu koja se već koristi</div>
                 </div>
                 <div class="group">
                     <input type="submit" class="button" value="Registriraj se" >

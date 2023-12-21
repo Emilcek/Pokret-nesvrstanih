@@ -179,10 +179,6 @@ select {
   font-size:0.8rem;
 }
 
-#abilitiesError{
-  display: none;
-}
-
 .custom-file-input {
   display: inline-block;
   padding: 6px 10px;
@@ -204,5 +200,9 @@ input[type="file"]{
   grid-template-columns: repeat(2,1.5fr);
   gap:10px;
 }
-
-
+#UsedUserName{
+  display:none;
+}
+#UsedEmail{
+  display: none;
+}

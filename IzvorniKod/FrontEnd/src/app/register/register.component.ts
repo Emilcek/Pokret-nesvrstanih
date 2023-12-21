@@ -24,18 +24,18 @@ export class RegisterComponent {
     password:new FormControl('',[Validators.minLength(8),Validators.required]),
     email:new FormControl('',[Validators.email,Validators.required]),
   })
+
     signUp(){
+      if (this.signUpForm.value.role==="tragac") {
+        this.signUpForm.get('educatedFor')!.setValidators([Validators.required]);
+      } else {
+        this.signUpForm.get('educatedFor')!.setValidators([Validators.nullValidator]);
+      }
+      this.signUpForm.get('educatedFor')!.updateValueAndValidity();
+
     if(!this.signUpForm.valid){
       this.signUpForm.markAllAsTouched()
-      if(this.signUpForm.value.role==="tragac" && this.signUpForm.controls.educatedFor.pristine){
-        document.getElementById("abilitiesError")!.style.display="flex"
-      }
     }else{
-      if(this.signUpForm.value.role==="tragac" && this.signUpForm.controls.educatedFor.pristine){
-        console.log("BRO")
-        document.getElementById("abilitiesError")!.style.display="flex"
-      }else{
-        document.getElementById("abilitiesError")!.style.display="none"
         for ( let a of this.abilities ){
           if(a.select){
             this.selectedOptions.push(a.name)
@@ -51,11 +51,17 @@ export class RegisterComponent {
             alert("Poslan vam je verifikacijski mail na vašu email adresu");
             this.headerService.changeActivePage('/emailSent');
             this.router.navigate(['/emailSent']);
-          }, error: error => {
-            alert("Korisničko ime ili email se već koriste.")
+            document.getElementById("UsedUserName")!.style.display="none"
+            document.getElementById("UsedEmail")!.style.display="none"
+          }, error: (error) => {
+            if(error.error==="Invalid client name"){
+              document.getElementById("UsedUserName")!.style.display="block"
+            }else if(error.error==="Invalid email"){
+              document.getElementById("UsedEmail")!.style.display="block"
+            }
           }
         })
-      }
+
     }
 
   }
