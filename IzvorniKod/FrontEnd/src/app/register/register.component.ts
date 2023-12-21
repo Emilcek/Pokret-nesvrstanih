@@ -11,13 +11,12 @@ import { HeaderService } from "../header/header.service";
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-
+files: any=[]
   constructor(private http:HttpClient, private router:Router, private headerService: HeaderService){}
   selectedOptions:string[]=[]
   signUpForm=new FormGroup({
     role:new FormControl('',Validators.required),
     educatedFor:new FormControl(),
-    clientPhotoURL:new FormControl(''),
     firstName:new FormControl('',[Validators.required,Validators.pattern("^[a-zA-ZčČĆćŽžŠšĐđ]+")]),
     lastName:new FormControl('',[Validators.required,Validators.pattern("^[a-zA-ZčČĆćŽžŠšĐđ]+")]),
     clientName:new FormControl('',[Validators.pattern("^[a-zA-Z0-9]+[a-zA-Z0-9]*"),Validators.required]),
@@ -45,7 +44,19 @@ export class RegisterComponent {
           this.selectedOptions=[]
         }
         this.signUpForm.value.educatedFor=this.selectedOptions
-        this.http.post(environment.BASE_API_URL+"/auth/register",this.signUpForm.value).subscribe({
+        let formData = new FormData()
+        formData.append('role',this.signUpForm.value.role!)
+        formData.append('clienPhotoURL',this.files[0])
+        formData.append('educatedFor',this.signUpForm.value.educatedFor)
+        formData.append('firstName',this.signUpForm.value.firstName!)
+        formData.append('lastName',this.signUpForm.value.lastName!)
+        formData.append('clientName',this.signUpForm.value.clientName!)
+        formData.append('password',this.signUpForm.value.password!)
+        formData.append('email',this.signUpForm.value.email!)
+      formData.forEach((value, key) => {
+        console.log(key, value);
+      });
+        this.http.post(environment.BASE_API_URL+"/auth/register",formData).subscribe({
           next: data => {
             let response: any = data;
             alert("Poslan vam je verifikacijski mail na vašu email adresu");
@@ -80,6 +91,7 @@ export class RegisterComponent {
 
       // Read the selected file as a data URL
       reader.readAsDataURL(fileInput.files[0]);
+      this.files.push(fileInput.files[0]);
     } else {
       // Clear the preview if no file is selected
       imagePreview!.innerHTML = '';
