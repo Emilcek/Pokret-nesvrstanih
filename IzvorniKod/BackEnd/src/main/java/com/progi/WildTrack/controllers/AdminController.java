@@ -25,10 +25,10 @@ public class AdminController {
 
     @GetMapping("/clients/{clientName}")
     public ResponseEntity<ClientDetailsDTO> getClientByClientName(@PathVariable String clientName) {
-        return ResponseEntity.ok(service.getClientByClientName(clientName));
+        return service.getClientByClientName(clientName);
     }
     @PostMapping("/clients/update")
-    public ResponseEntity UpdateClient(@RequestBody ClientUpdateDTO client) {
+    public ResponseEntity UpdateClient(@ModelAttribute ClientUpdateDTO client) {
         return service.updateClient(client);
     }
 

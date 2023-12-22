@@ -1,24 +1,19 @@
 package com.progi.WildTrack.service.impl;
 
 import com.progi.WildTrack.dao.*;
-import com.progi.WildTrack.domain.Client;
-import com.progi.WildTrack.domain.Researcher;
-import com.progi.WildTrack.domain.StationLead;
-import com.progi.WildTrack.domain.Explorer;
-import com.progi.WildTrack.domain.Status;
+import com.progi.WildTrack.domain.*;
 import com.progi.WildTrack.dto.ClientDetailsDTO;
 import com.progi.WildTrack.dto.ClientUpdateDTO;
 import com.progi.WildTrack.service.ClientService;
+import com.progi.WildTrack.service.VehicleService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static com.progi.WildTrack.service.impl.AuthenticationServiceImpl.compressPhoto;
 
@@ -42,10 +37,23 @@ public class ClientServiceImpl implements ClientService {
     @Autowired
     private StatusRepository statusRepo;
 
+    @Autowired
+    private StationRepository stationRepo;
+
+    @Autowired
+    private VehicleRepository vehicleRepository;
+
+    @Autowired
+    private VehicleService vehicleService;
+
+    @Autowired
+    private TokenRepository tokenRepository;
+
     public ClientServiceImpl() {
     }
 
     @Override
+    @Transactional
     public List<ClientDetailsDTO> getAllClients() {
         List<Client> stationLeads = stationLeadRepo.findAll().stream().filter(stationLead -> stationLead.getStatus().getStatusId().equals(2L)).map(StationLead::getClient).toList();
         List<Client> researchers = researcherRepo.findAll().stream().filter(researcher -> researcher.getStatus().getStatusId().equals(2L)).map(Researcher::getClient).toList();
@@ -56,19 +64,33 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ClientDetailsDTO getClientByClientName(String clientName) {
+    @Transactional
+    public ResponseEntity<ClientDetailsDTO> getClientByClientName(String clientName) {
         Client client = clientRepo.findByClientName(clientName).orElse(null);
+        ClientDetailsDTO clientDetailsDTO;
         if (client == null) {
-            // TODO error handling
-            return null;
+            System.out.println("Client not found");
+            return ResponseEntity.badRequest().build();
         }
         if (!client.isVerified()) {
-            throw new RuntimeException("Client is not verified");
+            System.out.println("Client not verified");
+            return ResponseEntity.badRequest().build();
         }
-        return new ClientDetailsDTO(client);
+        switch (client.getRole()) {
+            case "voditeljPostaje" -> {
+                clientDetailsDTO = new ClientDetailsDTO(client, client.getStationLead());
+            }
+            case "tragac" -> {
+                System.out.println("Client is explorer");
+                clientDetailsDTO = new ClientDetailsDTO(client, client.getExplorer().getVehicles());
+            }
+            default -> clientDetailsDTO = new ClientDetailsDTO(client);
+        };
+        return ResponseEntity.ok(clientDetailsDTO);
     }
 
     @Override
+    @Transactional
     public List<ClientDetailsDTO> getAllRequests() {
         List<StationLead> StationLeads = stationLeadRepo.findAllByStatusStatusId(1L);
         List<Researcher> Researchers = researcherRepo.findAllByStatusStatusId(1L);
@@ -79,11 +101,14 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    @Transactional
     public ResponseEntity updateClient(ClientUpdateDTO client) {
+        System.out.println(client);
         Client clientToUpdate = clientRepo.findByClientName(client.getClientName()).orElse(null);
         if (clientToUpdate == null) {
             return ResponseEntity.badRequest().build();
         }
+        String oldRole = clientToUpdate.getRole();
         clientToUpdate.setFirstName(client.getFirstName());
         clientToUpdate.setLastName(client.getLastName());
         clientToUpdate.setRole(client.getRole());
@@ -93,10 +118,70 @@ public class ClientServiceImpl implements ClientService {
             clientToUpdate.setClientPhoto(compressedPhoto);
         }
         clientRepo.save(clientToUpdate);
-        return ResponseEntity.ok(new ClientDetailsDTO(clientToUpdate));
+        System.out.println("old role " + oldRole);
+        System.out.println("new role " + client.getRole());
+        if (client.getRole() != null && !client.getRole().equals(oldRole)) {
+            List<Token> tokens = tokenRepository.findAllValidTokenByClient(client.getClientName());
+            if (!tokens.isEmpty()) {
+                tokenRepository.deleteAll(tokens);
+            }
+            switch (oldRole) {
+                case "voditeljPostaje" -> {
+                    StationLead stationLead = stationLeadRepo.findByStationLeadName(clientToUpdate.getClientName());
+                    stationLeadRepo.delete(stationLead);
+                }
+                case "istrazivac" -> {
+                    Researcher researcher = researcherRepo.findByResearcherName(clientToUpdate.getClientName());
+                    researcherRepo.delete(researcher);
+                }
+                case "tragac" -> {
+                    Explorer explorer = explorerRepo.findByExplorerName(clientToUpdate.getClientName());
+                    explorerRepo.delete(explorer);
+                }
+            }
+            switch (client.getRole()) {
+                case "voditeljPostaje" -> {
+                    StationLead stationLead = new StationLead(clientToUpdate, statusRepo.findByStatusId(2));
+                    stationLeadRepo.save(stationLead);
+                }
+                case "istrazivac" -> {
+                    Researcher researcher = new Researcher(clientToUpdate, statusRepo.findByStatusId(2));
+                    researcherRepo.save(researcher);
+                }
+                case "tragac" -> {
+                    System.out.println("dodavanje tragac");
+                    Explorer explorer = new Explorer(clientToUpdate);
+                    explorerRepo.save(explorer);
+                    for (String i : client.getExplorerVehicles()) {
+                        Vehicle vehicle = (Vehicle) vehicleRepository.findByVehicleType(i).orElseThrow();
+                        vehicleService.addExplorerToVehicle(vehicle, explorer);
+                    }
+                }
+            }
+        }
+//        slucaj kad je admin samo promijenio kompetencije tragaca
+        else if (client.getRole().equals("tragac")) {
+            Explorer explorer = explorerRepo.findByExplorerName(clientToUpdate.getClientName());
+            List<Vehicle> vehiclesToRemove = new ArrayList<>();
+            for (Vehicle vehicle : explorer.getVehicles()) {
+                if (!client.getExplorerVehicles().contains(vehicle.getVehicleType())) {
+                    vehiclesToRemove.add(vehicle);
+                }
+            }
+            for (Vehicle vehicle : vehiclesToRemove) {
+                vehicleService.removeExplorerFromVehicle(vehicle, explorer);
+            }
+            for (String i : client.getExplorerVehicles()) {
+                Vehicle vehicle = (Vehicle) vehicleRepository.findByVehicleType(i).orElseThrow();
+                vehicleService.addExplorerToVehicle(vehicle, explorer);
+            }
+
+        }
+        return ResponseEntity.ok().build();
     }
 
     @Override
+    @Transactional
     public ClientDetailsDTO updateClientByClientName(String clientName, Integer status) {
         Client client = clientRepo.findByClientName(clientName).orElse(null);
         Status clientStatus = statusRepo.findByStatusId(status);
