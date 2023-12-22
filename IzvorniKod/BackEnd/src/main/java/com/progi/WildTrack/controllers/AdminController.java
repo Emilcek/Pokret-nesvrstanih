@@ -28,8 +28,8 @@ public class AdminController {
         return ResponseEntity.ok(service.getClientByClientName(clientName));
     }
     @PostMapping("/clients/update")
-    public ResponseEntity<ClientDetailsDTO> UpdateClient(@RequestBody ClientUpdateDTO client) {
-        return ResponseEntity.ok(service.updateClient(client));
+    public ResponseEntity UpdateClient(@RequestBody ClientUpdateDTO client) {
+        return service.updateClient(client);
     }
 
     @GetMapping("/requests")

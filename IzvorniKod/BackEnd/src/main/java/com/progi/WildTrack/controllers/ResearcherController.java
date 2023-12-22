@@ -22,7 +22,7 @@ public class ResearcherController {
     }
 
     @PostMapping
-    public ResponseEntity<ClientDetailsDTO> updateResearcher(@RequestBody ClientUpdateDTO client) {
-        return ResponseEntity.ok(clientService.updateClient(client));
+    public ResponseEntity updateResearcher(@RequestBody ClientUpdateDTO client) {
+        return clientService.updateClient(client);
     }
 }
