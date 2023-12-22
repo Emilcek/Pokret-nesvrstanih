@@ -23,8 +23,8 @@ public class ExplorerController {
     }
 
     @PostMapping
-    public ResponseEntity<ClientDetailsDTO> updateExplorer(@RequestBody ClientUpdateDTO client) {
-        return ResponseEntity.ok(clientService.updateClient(client));
+    public ResponseEntity updateExplorer(@RequestBody ClientUpdateDTO client) {
+        return clientService.updateClient(client);
     }
 
     @GetMapping("/tasks")

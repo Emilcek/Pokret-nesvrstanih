@@ -10,13 +10,17 @@ import com.progi.WildTrack.dto.ClientDetailsDTO;
 import com.progi.WildTrack.dto.ClientUpdateDTO;
 import com.progi.WildTrack.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static com.progi.WildTrack.service.impl.AuthenticationServiceImpl.compressPhoto;
 
 @Service
 public class ClientServiceImpl implements ClientService {
@@ -75,16 +79,21 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ClientDetailsDTO updateClient(ClientUpdateDTO client) {
+    public ResponseEntity updateClient(ClientUpdateDTO client) {
         Client clientToUpdate = clientRepo.findByClientName(client.getClientName()).orElse(null);
         if (clientToUpdate == null) {
-            // TODO error handling
-            return null;
+            return ResponseEntity.badRequest().build();
         }
         clientToUpdate.setFirstName(client.getFirstName());
         clientToUpdate.setLastName(client.getLastName());
+        clientToUpdate.setRole(client.getRole());
+        byte[] compressedPhoto = compressPhoto(client.getClientPhoto());
+        if (!Arrays.equals(compressedPhoto, clientToUpdate.getClientPhoto())) {
+            System.out.println("Photo changed");
+            clientToUpdate.setClientPhoto(compressedPhoto);
+        }
         clientRepo.save(clientToUpdate);
-        return new ClientDetailsDTO(clientToUpdate);
+        return ResponseEntity.ok(new ClientDetailsDTO(clientToUpdate));
     }
 
     @Override
@@ -92,7 +101,6 @@ public class ClientServiceImpl implements ClientService {
         Client client = clientRepo.findByClientName(clientName).orElse(null);
         Status clientStatus = statusRepo.findByStatusId(status);
         if (client == null) {
-            // TODO error handling
             return null;
         }
         if (client.getRole().equals("voditeljPostaje")) {

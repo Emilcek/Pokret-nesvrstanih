@@ -195,7 +195,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     String clientName = jwtService.extractUsername(url);
     Client client = repository.findByClientName(clientName).orElse(null);
     if (client == null) {
-      // TODO error handling
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
     client.setVerified(true);
@@ -226,7 +225,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   }
 
   @SneakyThrows
-  private static byte[] compressPhoto(MultipartFile photo) {
+  public static byte[] compressPhoto(MultipartFile photo) {
     final long MAX_SIZE = 5 * 1024 * 1024; // 5 MB
     float compressionQuality = photo.getSize() > MAX_SIZE ? 0.5f : 0.75f; // More compression if larger than 5MB
 
