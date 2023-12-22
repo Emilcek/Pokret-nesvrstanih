@@ -1,22 +1,25 @@
-
-  <div class="hole-div main-container" *ngIf="currentUser">
+ <div class="hole-div main-container" *ngIf="currentUser">
     <div class="upper-div"><h2>Podaci o profilu</h2></div>
     <hr style="width:90%;text-align:left;margin-left:5%">
     <div class="flex">
       <div class="flex-column form-container">
+        <div> <div id="imagePreview" ></div></div>
         <div class="form-inputs flex">
           <div *ngFor="let key of keys" class="form-input-container">
-            <input type="text" class="form-input" placeholder=" " [(ngModel)]="userData[key]" [disabled]="key=='Role'">
-            <label class="form-input-label">{{localStorage[key]}}</label>
+            <div>
+              <input type="text" class="form-input" placeholder=" " [(ngModel)]="userData[key]" [disabled]="key=='Role' || key=='Username' || key=='Email' " >
+              <label class="form-input-label">{{localStorage[key]}}</label>
+            </div>
             <div *ngIf="!userData.Ime && key==='Ime'" class="error-message">Ime je potrebno</div>
           </div>
+
         </div>
         <div class="buttons">
           <div class="button-div1">
             <button class="btn2" (click)="saveUserData()" type="submit">Spremi</button>
           </div>
           <div class="button-div2">
-            <button class="btn1" (click)="this.getUserData();" type="button">Odustani</button>
+            <button class="btn1" (click)="this.getUserData()" type="button">Odustani</button>
           </div>
         </div>
       </div>

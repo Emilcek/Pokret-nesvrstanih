@@ -124,7 +124,8 @@ button {
 .form-input-container {
     position: relative;
     align-items: center;
-    margin: 20px;
+    width: 30rem;
+
 
 
     .form-input {
@@ -196,4 +197,20 @@ button {
         color: #666;
     }
 
+}
+.form-inputs.flex{
+  display: grid;
+  grid-template-columns: repeat(2, 0.2fr);
+  grid-column-start: auto;
+  grid-gap: 0;
+  padding:0;
+}
+
+#imagePreview {
+    display: flex;
+}
+
+.flex{
+  padding-left: 5rem;
+  padding-right: 5rem;
 }

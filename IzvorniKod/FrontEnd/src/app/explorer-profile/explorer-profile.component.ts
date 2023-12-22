@@ -10,6 +10,7 @@ export interface Explorer {
   Password: string;
   Email: string;
   Role: string;
+  ClientPhoto: any;
 }
 
 
@@ -45,6 +46,7 @@ export class ExplorerProfileComponent implements OnInit{
           Username: data.clientName,
           Password: data.password, //zbog toga ne mogu pristupiti lozinci
           Email: data.email,
+          ClientPhoto: data.clientPhoto,
           Role: data.role==="tragac" ? "tragač":(data.role==="voditeljPostaje" ? "voditelj postaje" : "istraživač")
         }
         console.log(this.currentUser, "user")

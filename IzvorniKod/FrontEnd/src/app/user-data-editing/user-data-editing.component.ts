@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, Input, AfterViewInit,Renderer2,ElementRef,OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -11,17 +11,16 @@ import {Explorer} from "../explorer-profile/explorer-profile.component";
   templateUrl: './user-data-editing.component.html',
   styleUrls: ['./user-data-editing.component.css']
 })
-export class UserDataEditingComponent implements OnInit {
+export class UserDataEditingComponent implements AfterViewInit,OnInit{
   @Input() currentUser!: Explorer;
   keys: any;
   role: any;
 
   // "Name":"Ime","Surname":"Prezime","Username":"Korisničko ime","Password":"Lozinka",
-  constructor(private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private http: HttpClient, private route: ActivatedRoute,private renderer: Renderer2, private el: ElementRef) {
     localStorage["Name"]="Ime";
     localStorage["Surname"]="Prezime";
     localStorage["Username"]="Korisničko ime";
-    localStorage["Password"]="Lozinka";
     localStorage["Email"]="Email adresa";
     localStorage["Role"]="Uloga";
   }
@@ -33,16 +32,43 @@ export class UserDataEditingComponent implements OnInit {
   emailError: boolean = false;
   nameError: boolean = false;
 
-  ngOnInit(): void {
+  imageInput: any;
+  files: any = [];
+  imageURL: any;
+
+  ngOnInit() {
+    console.log(this.currentUser, "current user")
+    this.role = localStorage.getItem("user");
+    this.userData = this.currentUser;
+    this.keys = ["Name","Surname","Username","Email","Role"];
+    console.log(this.currentUser, "userdata")
+
+
+    const base64String=this.userData["ClientPhoto"]; // Your Base64 image data
+
+    const binaryImageData = atob(base64String);
+
+    const arrayBuffer = new ArrayBuffer(binaryImageData.length);
+    const uint8Array = new Uint8Array(arrayBuffer);
+
+    for (let i = 0; i < binaryImageData.length; i++) {
+      uint8Array[i] = binaryImageData.charCodeAt(i);
+    }
+
+    const blob = new Blob([uint8Array], { type: "image/jpeg" }); // Adjust the MIME type accordingly
+    this.imageURL = URL.createObjectURL(blob);
+  }
+
+  ngAfterViewInit(): void {
     /*this.route.paramMap.subscribe((params) => {
       this.userId = params.get('id');
       this.getUserData();
     });*/
-    this.role = localStorage.getItem("user");
-    this.userData = this.currentUser;
-    this.keys = Object.keys(this.userData)
-    console.log(this.currentUser, "userdata")
-  }
+
+    const imgElement= this.el.nativeElement.querySelector('#imagePreview');
+    imgElement!.innerHTML=`<img src="${this.imageURL}" alt="Image Preview" height="200px" width="auto">`
+    }
+
 
 
   getUserData() {
@@ -52,7 +78,7 @@ export class UserDataEditingComponent implements OnInit {
   }
 
   saveUserData() {
-    if (!this.userData.email || this.emailError || !this.userData.name || this.nameError || !this.userData.surname || !this.userData.lozinka) {
+    if (!this.userData.email || this.emailError || !this.userData.name || this.nameError || !this.userData.lastName || !this.userData.password) {
       // Show error message or handle the error as needed
       console.log('Invalid form input or form input is empty');
       return;
