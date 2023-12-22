@@ -15,7 +15,6 @@ import { ExplorerProfileComponent } from './explorer-profile/explorer-profile.co
 import { UsersRequestsListComponent } from './users-requests-list/users-requests-list.component';
 import { UsersListComponent } from './users-list/users-list.component';
 import { UserVerifiedSuccessfulComponent } from './user-verified-successful/user-verified-successful.component';
-import { VerificationEmailSentComponent } from './verification-email-sent/verification-email-sent.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,8 +27,7 @@ import { VerificationEmailSentComponent } from './verification-email-sent/verifi
     ExplorerTasksComponent,
     ExplorerProfileComponent,
     UsersRequestsListComponent,
-    UsersListComponent,
-    VerificationEmailSentComponent
+    UsersListComponent
   ],
   imports: [
     BrowserModule,
