@@ -27,6 +27,7 @@ files: any=[]
     signUp(){
       document.getElementById("UsedUserName")!.style.display="none"
       document.getElementById("UsedEmail")!.style.display="none"
+      document.getElementById("verifyLink")!.style.display = "none";
       if (this.signUpForm.value.role==="tragac") {
         this.signUpForm.get('educatedFor')!.setValidators([Validators.required]);
       } else {
@@ -61,11 +62,7 @@ files: any=[]
         this.http.post(environment.BASE_API_URL+"/auth/register",formData).subscribe({
           next: data => {
             let response: any = data;
-            alert("Poslan vam je verifikacijski mail na vašu email adresu");
-            this.headerService.changeActivePage('/emailSent');
-            this.router.navigate(['/emailSent']);
-            document.getElementById("UsedUserName")!.style.display="none"
-            document.getElementById("UsedEmail")!.style.display="none"
+            document.getElementById("verifyLink")!.style.display = "block";
           }, error: (error) => {
             console.log(error)
             console.log("to je bio error")
