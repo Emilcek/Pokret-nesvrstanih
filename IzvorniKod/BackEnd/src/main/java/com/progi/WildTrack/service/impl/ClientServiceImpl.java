@@ -124,7 +124,7 @@ public class ClientServiceImpl implements ClientService {
                 .firstName("admin")
                 .lastName("admin")
                 .clientPassword(passwordEncoder.encode("admin123"))
-                .clientPhotoURL("")
+                .clientPhoto(new byte[0])
                 .email("admin@admin")
                 .isVerified(true)
                 .role("admin")

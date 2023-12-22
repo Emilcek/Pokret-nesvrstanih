@@ -15,24 +15,32 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.ImageOutputStream;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.List;
-import java.util.SimpleTimeZone;
+import java.io.InputStream;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -56,10 +64,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   @Value("${MAIL_USER}")
   private String mailUser;
 
-  public AuthenticationResponseDto register(RegisterDto request) {
-    if (repository.existsByClientName(request.getClientName()) || repository.existsByEmail(request.getEmail())) {
-        throw new RuntimeException("Client already exists");
+  @Transactional
+  public ResponseEntity register(RegisterDto request) {
+    if (repository.existsByClientName(request.getClientName())) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid client name");
     }
+    else if (repository.existsByEmail(request.getEmail())) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid email");
+    }
+    byte[] compressedPhoto = compressPhoto(request.getClientPhoto());
     Client client = Client.builder()
         .clientName(request.getClientName())
         .firstName(request.getFirstName())
@@ -67,7 +80,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         .email(request.getEmail())
         .clientPassword(passwordEncoder.encode(request.getPassword()))
         .role(request.getRole())
-        .clientPhotoURL(request.getClientPhotoURL())
+        .clientPhoto(compressedPhoto)
         .build();
     System.out.println(client);
     Client savedClient = repository.save(client);
@@ -99,18 +112,21 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
     revokeAllClientTokens(client);
     saveClientToken(client, jwtToken);
-    return AuthenticationResponseDto.builder()
+    return ResponseEntity.ok(AuthenticationResponseDto.builder()
             .accessToken(jwtToken)
             .refreshToken(refreshToken)
-            .build();
+            .build());
   }
 
-  public AuthenticationResponseDto authenticate(LoginDto request) {
+  @Transactional
+  public ResponseEntity authenticate(LoginDto request) {
     System.out.println(request.getClientName());
-    Client client = repository.findByClientName(request.getClientName())
-            .orElseThrow(() -> new RuntimeException("Client not found"));
+    Client client = repository.findByClientName(request.getClientName()).orElse(null);
+    if (client == null) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid client name");
+    }
     if (!client.isVerified()) {
-        throw new RuntimeException("Client not verified");
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Client not verified");
     }
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(
@@ -122,10 +138,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     String refreshToken = jwtService.generateRefreshToken(client);
     revokeAllClientTokens(client);
     saveClientToken(client, jwtToken);
-    return AuthenticationResponseDto.builder()
+    return ResponseEntity.ok(AuthenticationResponseDto.builder()
         .accessToken(jwtToken)
             .refreshToken(refreshToken)
-        .build();
+        .build());
   }
 
   private void saveClientToken(Client client, String jwtToken) {
@@ -207,5 +223,31 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     javaMailSender.send(message);
     System.out.println("Email sent to " + to);
+  }
+
+  @SneakyThrows
+  private static byte[] compressPhoto(MultipartFile photo) {
+    final long MAX_SIZE = 5 * 1024 * 1024; // 5 MB
+    float compressionQuality = photo.getSize() > MAX_SIZE ? 0.5f : 0.75f; // More compression if larger than 5MB
+
+    // Read the MultipartFile into a BufferedImage
+    InputStream inputFileStream = photo.getInputStream();
+    BufferedImage inputImage = ImageIO.read(inputFileStream);
+
+    // Compress the image
+    ByteArrayOutputStream compressedOutputStream = new ByteArrayOutputStream();
+    Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName(Objects.requireNonNull(photo.getContentType()).split("/")[1]);
+    ImageWriter writer = writers.next();
+    ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(compressedOutputStream);
+    writer.setOutput(imageOutputStream);
+    ImageWriteParam params = writer.getDefaultWriteParam();
+    params.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+    params.setCompressionQuality(compressionQuality); // Adjust the compression quality
+    writer.write(null, new IIOImage(inputImage, null, null), params);
+    writer.dispose();
+    imageOutputStream.close();
+
+    // Convert the compressed image to a byte array
+    return compressedOutputStream.toByteArray();
   }
 }

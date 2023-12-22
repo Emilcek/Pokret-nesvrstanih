@@ -25,6 +25,8 @@ files: any=[]
   })
 
     signUp(){
+      document.getElementById("UsedUserName")!.style.display="none"
+      document.getElementById("UsedEmail")!.style.display="none"
       if (this.signUpForm.value.role==="tragac") {
         this.signUpForm.get('educatedFor')!.setValidators([Validators.required]);
       } else {
@@ -46,7 +48,7 @@ files: any=[]
         this.signUpForm.value.educatedFor=this.selectedOptions
         let formData = new FormData()
         formData.append('role',this.signUpForm.value.role!)
-        formData.append('clienPhotoURL',this.files[0])
+        formData.append('clientPhoto',this.files[0])
         formData.append('educatedFor',this.signUpForm.value.educatedFor)
         formData.append('firstName',this.signUpForm.value.firstName!)
         formData.append('lastName',this.signUpForm.value.lastName!)
@@ -65,6 +67,8 @@ files: any=[]
             document.getElementById("UsedUserName")!.style.display="none"
             document.getElementById("UsedEmail")!.style.display="none"
           }, error: (error) => {
+            console.log(error)
+            console.log("to je bio error")
             if(error.error==="Invalid client name"){
               document.getElementById("UsedUserName")!.style.display="block"
             }else if(error.error==="Invalid email"){

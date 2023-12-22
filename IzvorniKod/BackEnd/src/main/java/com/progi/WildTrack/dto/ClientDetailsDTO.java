@@ -19,7 +19,7 @@ public class ClientDetailsDTO {
     private String lastName;
     private String email;
     private String role;
-    private String clientPhotoURL;
+    private byte[] clientPhoto;
 
     public ClientDetailsDTO(Client client) {
         this.clientName = client.getClientName();
@@ -27,7 +27,7 @@ public class ClientDetailsDTO {
         this.lastName = client.getLastName();
         this.email = client.getEmail();
         this.role = client.getRole();
-        this.clientPhotoURL = client.getClientPhotoURL();
+        this.clientPhoto = client.getClientPhoto();
     }
 }
 
