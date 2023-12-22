@@ -10,9 +10,11 @@
 					<label for="pass" class="label">Lozinka</label>
 					<input id="pass" type="password" class="input" data-type="password" placeholder="Unesite lozinku" formControlName="password" required>
 				</div>
-				<div class="group">
+        <div class="group">
 					<input type="submit" class="button" value="Prijavi se">
 				</div>
+        <div class="ErrorMessage" id="notVerified" >Korisnik nije verificiran. Verificirajte svoju prijavu putem maila koji je poslan na Vašu email adresu.</div>
+        <div class="ErrorMessage" id="doesntExist" >Korisničko ime ili lozinka nisu pravilno uneseni</div>
 			</form>
         </div>
     </div>

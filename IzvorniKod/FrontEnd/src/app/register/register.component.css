@@ -206,3 +206,11 @@ input[type="file"]{
 #UsedEmail{
   display: none;
 }
+
+.ValidMessage.big{
+  font-size: 1rem;
+}
+
+#verifyLink{
+  display: none;
+}

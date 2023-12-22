@@ -14,11 +14,13 @@ export class LoginComponent {
   }
 
   signInForm = new FormGroup({
-    clientName: new FormControl(''),
-    password: new FormControl('')
+    clientName: new FormControl('',[Validators.pattern("^[a-zA-Z0-9]+[a-zA-Z0-9]*"),Validators.required]),
+    password: new FormControl('',[Validators.minLength(8),Validators.required])
   })
 
   signIn() {
+    document.getElementById("notVerified")!.style.display = "none";
+    document.getElementById("doesntExist")!.style.display = "none";
     if (this.signInForm.valid) {
       console.log(this.signInForm.value)
       this.http.post(environment.BASE_API_URL+"/auth/login", this.signInForm.value).subscribe({
@@ -56,8 +58,11 @@ export class LoginComponent {
           })
 
         }, error: error => {
-          console.log(error)
-          alert("Korisnik nije pronađen.")
+          if(error.error==="Client not verified"){
+          document.getElementById("notVerified")!.style.display = "block";
+          }else{
+            document.getElementById("doesntExist")!.style.display = "block";
+          }
         }
       })
     } else {

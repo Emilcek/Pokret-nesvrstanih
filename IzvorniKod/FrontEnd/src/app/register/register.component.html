@@ -1,7 +1,8 @@
 <div class="login-wrap main-container">
   <div class="login-html">
     <div class="login-form">
-            <form class="sign-up-htm" [formGroup]="signUpForm" (ngSubmit)="signUp()">
+      <form class="sign-up-htm" [formGroup]="signUpForm" (ngSubmit)="signUp()">
+        <div class="ValidMessage big" id="verifyLink">Verifikacijski link poslan je na Vaš email!</div>
                 <div class="group">
                     <label for="pass" class="label">Uloga</label>
                     <select name="position" id="pos" formControlName="role" (change)="showDiv($event)" >

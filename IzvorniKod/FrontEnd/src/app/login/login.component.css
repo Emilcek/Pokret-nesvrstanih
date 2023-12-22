@@ -37,7 +37,6 @@
 }
 .login-html .tab{
 	font-size:22px;
-	margin-right:15px;
 	padding-bottom:5px;
 	margin:0 15px 10px 0;
 	display:inline-block;
@@ -129,4 +128,17 @@ body{
 #nameSurname{
 	display: flex;
 	justify-content: space-evenly;
+}
+
+.ErrorMessage{
+  color: red;
+  font-size:0.8rem;
+}
+
+#doesntExist{
+  display: none;
+}
+
+#notVerified{
+  display: none;
 }
