@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -30,6 +31,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.SimpleTimeZone;
 
 @Service
@@ -58,7 +60,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     if (repository.existsByClientName(request.getClientName()) || repository.existsByEmail(request.getEmail())) {
         throw new RuntimeException("Client already exists");
     }
-    var client = Client.builder()
+    Client client = Client.builder()
         .clientName(request.getClientName())
         .firstName(request.getFirstName())
         .lastName(request.getLastName())
@@ -68,29 +70,28 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         .clientPhotoURL(request.getClientPhotoURL())
         .build();
     System.out.println(client);
-    var savedClient = repository.save(client);
-    if (request.getRole().equals("voditeljPostaje")) {
-      var stationLead = StationLead.builder()
-              .client(savedClient)
-              .status((Status) statusRepository.findByDescription(Description.PENDING).orElseThrow())
-              .build();
-      stationLeadRepository.save(stationLead);
-    }
-    else if (request.getRole().equals("tragac")) {
-      var explorer = Explorer.builder()
-              .client(savedClient)
-              .build();
-      explorerRepository.save(explorer);
-    }
-    else if (request.getRole().equals("istrazivac")) {
-      var researcher = Researcher.builder()
-              .client(savedClient)
-              .status((Status) statusRepository.findByDescription(Description.PENDING).orElseThrow())
-              .build();
-        researcherRepository.save(researcher);
-    }
-    var jwtToken = jwtService.generateToken(client);
-    var refreshToken = jwtService.generateRefreshToken(client);
+    Client savedClient = repository.save(client);
+    Status status = (Status) statusRepository.findByDescription(Description.PENDING).orElseThrow();
+      switch (request.getRole()) {
+          case "voditeljPostaje" -> {
+              StationLead stationLead = new StationLead(savedClient, status);
+              stationLeadRepository.save(stationLead);
+          }
+          case "tragac" -> {
+              Explorer explorer = new Explorer(savedClient);
+              explorerRepository.save(explorer);
+              for (String i : request.getEducatedFor()) {
+                  Vehicle vehicle = (Vehicle) vehicleRepository.findByVehicleType(i).orElseThrow();
+                  vehicleService.addExplorerToVehicle(vehicle, explorer);
+              }
+          }
+          case "istrazivac" -> {
+              Researcher researcher = new Researcher(savedClient, status);
+              researcherRepository.save(researcher);
+          }
+      }
+    String jwtToken = jwtService.generateToken(client);
+    String refreshToken = jwtService.generateRefreshToken(client);
     try {
       sendEmail(request.getEmail(), request.getFirstName(), frontendApiUrl + "/verified?url=" + jwtToken);
     } catch (MessagingException e) {
@@ -106,7 +107,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
   public AuthenticationResponseDto authenticate(LoginDto request) {
     System.out.println(request.getClientName());
-    var client = repository.findByClientName(request.getClientName())
+    Client client = repository.findByClientName(request.getClientName())
             .orElseThrow(() -> new RuntimeException("Client not found"));
     if (!client.isVerified()) {
         throw new RuntimeException("Client not verified");
@@ -117,8 +118,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             request.getPassword()
         )
     );
-    var jwtToken = jwtService.generateToken(client);
-    var refreshToken = jwtService.generateRefreshToken(client);
+    String jwtToken = jwtService.generateToken(client);
+    String refreshToken = jwtService.generateRefreshToken(client);
     revokeAllClientTokens(client);
     saveClientToken(client, jwtToken);
     return AuthenticationResponseDto.builder()
@@ -128,7 +129,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   }
 
   private void saveClientToken(Client client, String jwtToken) {
-    var token = Token.builder()
+    Token token = Token.builder()
         .client(client)
         .token(jwtToken)
         .tokenType(TokenType.BEARER)
@@ -139,7 +140,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   }
 
   private void revokeAllClientTokens(Client client) {
-    var validClientTokens = tokenRepository.findAllValidTokenByClient(client.getClientName());
+    List<Token> validClientTokens = tokenRepository.findAllValidTokenByClient(client.getClientName());
     if (validClientTokens.isEmpty())
       return;
     tokenRepository.deleteAll(validClientTokens);
@@ -158,13 +159,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     refreshToken = authHeader.substring(7);
     clientName = jwtService.extractUsername(refreshToken);
     if (clientName != null) {
-      var client = this.repository.findByClientName(clientName)
+      Client client = this.repository.findByClientName(clientName)
               .orElseThrow();
       if (jwtService.isTokenValid(refreshToken, client)) {
-        var accessToken = jwtService.generateToken(client);
+        String accessToken = jwtService.generateToken(client);
         revokeAllClientTokens(client);
         saveClientToken(client, accessToken);
-        var authResponse = AuthenticationResponseDto.builder()
+        AuthenticationResponseDto authResponse = AuthenticationResponseDto.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
@@ -177,6 +178,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   public ResponseEntity<ClientDetailsDTO> verify(String url) {
     String clientName = jwtService.extractUsername(url);
     Client client = repository.findByClientName(clientName).orElse(null);
+    if (client == null) {
+      // TODO error handling
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
     client.setVerified(true);
     repository.save(client);
     System.out.println("verified " + frontendApiUrl);
