@@ -117,9 +117,9 @@ public class ClientServiceImpl implements ClientService {
             System.out.println("Photo changed");
             clientToUpdate.setClientPhoto(compressedPhoto);
         }
-        clientRepo.save(clientToUpdate);
         System.out.println("old role " + oldRole);
         System.out.println("new role " + client.getRole());
+        // slucaj kad je admin promijenio ulogu korisnika, brise se stari objekt i dodaje novi
         if (client.getRole() != null && !client.getRole().equals(oldRole)) {
             List<Token> tokens = tokenRepository.findAllValidTokenByClient(client.getClientName());
             if (!tokens.isEmpty()) {
@@ -129,14 +129,17 @@ public class ClientServiceImpl implements ClientService {
                 case "voditeljPostaje" -> {
                     StationLead stationLead = stationLeadRepo.findByStationLeadName(clientToUpdate.getClientName());
                     stationLeadRepo.delete(stationLead);
+                    clientToUpdate.setStationLead(null);
                 }
                 case "istrazivac" -> {
                     Researcher researcher = researcherRepo.findByResearcherName(clientToUpdate.getClientName());
                     researcherRepo.delete(researcher);
+                    clientToUpdate.setResearcher(null);
                 }
                 case "tragac" -> {
                     Explorer explorer = explorerRepo.findByExplorerName(clientToUpdate.getClientName());
                     explorerRepo.delete(explorer);
+                    clientToUpdate.setExplorer(null);
                 }
             }
             switch (client.getRole()) {
@@ -158,6 +161,7 @@ public class ClientServiceImpl implements ClientService {
                     }
                 }
             }
+            clientRepo.save(clientToUpdate);
         }
 //        slucaj kad je admin samo promijenio kompetencije tragaca
         else if (client.getRole().equals("tragac")) {
