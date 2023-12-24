@@ -60,22 +60,11 @@ export class UserDataEditingComponent implements AfterViewInit,OnInit{
   }
 
   ngAfterViewInit(): void {
-    /*this.route.paramMap.subscribe((params) => {
-      this.userId = params.get('id');
-      this.getUserData();
-    });*/
 
     const imgElement= this.el.nativeElement.querySelector('#imagePreview');
-    imgElement!.innerHTML=`<img src="${this.imageURL}" alt="Image Preview" height="200px" width="auto">`
+    imgElement!.innerHTML=`<img src="${this.imageURL}" alt="Image Preview" height="300rem" width="auto">`
     }
 
-
-
-  getUserData() {
-    this.GetUserbyCode(this.userId).subscribe((data) => {
-      this.userData = data;
-    });
-  }
 
   saveUserData() {
     if (!this.userData.email || this.emailError || !this.userData.name || this.nameError || !this.userData.lastName || !this.userData.password) {
@@ -92,21 +81,12 @@ export class UserDataEditingComponent implements AfterViewInit,OnInit{
     },);
   }
 
-  GetUserbyCode(id: any): Observable<any> {
-    return this.http.get(this.apiurl + '/' + id);
-  }
-
   UpdateUser(id: any, userData: any): Observable<any> {
     return this.http.put(this.apiurl + '/' + id, userData);
   }
 
-  validateEmail() {
-    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    if (!emailPattern.test(this.userData.email)) {
-      this.emailError = true;
-    } else {
-      this.emailError = false;
-    }
+  refreshPage() {
+    window.location.reload();
   }
 
   protected readonly localStorage = localStorage;

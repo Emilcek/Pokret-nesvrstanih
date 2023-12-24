@@ -13,31 +13,8 @@
   margin: 20px;
 }
 
-.grid-cell {
-    padding: 10px;
-    display: flex;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    grid-column: span 1;
-    width: 50%;
-    margin-left: 10%;
-}
-
-.grid-cell-email {
-    padding: 10px;
-    display: flex;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    grid-column: span 2;
-    width: 25%;
-    margin-left: 5%;
-}
-
 hr {
     border-color: gray;
-    ;
 }
 
 .hole-div {
@@ -200,17 +177,18 @@ button {
 }
 .form-inputs.flex{
   display: grid;
-  grid-template-columns: repeat(2, 0.2fr);
-  grid-column-start: auto;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
   grid-gap: 0;
   padding:0;
 }
 
 #imagePreview {
     display: flex;
+    padding-left: 1rem;
 }
 
 .flex{
+  display: flex;
   padding-left: 5rem;
   padding-right: 5rem;
 }
