@@ -25,18 +25,18 @@ public class ClientDetailsDTO {
     private String email;
     private String role;
     private byte[] clientPhoto;
-    private Set<String> explorerVehicles = new HashSet<>();
+    private Set<String> educatedFor = new HashSet<>();
     private String stationName;
 
     public ClientDetailsDTO(Client client) {
         SetBaseAttributes(client);
     }
 
-    public ClientDetailsDTO(Client client, Set<Vehicle> explorerVehicles) {
+    public ClientDetailsDTO(Client client, Set<Vehicle> educatedFor) {
         System.out.println("ClientDetailsDTO");
         SetBaseAttributes(client);
-        for (Vehicle vehicle : explorerVehicles) {
-            this.explorerVehicles.add(vehicle.getVehicleType());
+        for (Vehicle vehicle : educatedFor) {
+            this.educatedFor.add(vehicle.getVehicleType());
         }
     }
 
