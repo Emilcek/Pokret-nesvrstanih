@@ -2,27 +2,27 @@
     <div class="upper-div"><h2>Podaci o profilu</h2></div>
     <hr style="width:90%;text-align:left;margin-left:5%">
     <div class="flex">
-      <div class="flex-column form-container">
+      <div class="flex-column form-container" [formGroup]="profileForm">
         <div> <div id="imagePreview" ></div></div>
         <div class="form-inputs flex">
           <div *ngFor="let key of keys" class="form-input-container">
             <div>
-              <input type="text" class="form-input" placeholder=" " [(ngModel)]="userData[key]" [disabled]="key=='Role' || key=='Username' || key=='Email' " >
+              <input type="text" class="form-input" [formControlName]="turnToRightFormat[key]" placeholder=" ">
               <label class="form-input-label">{{localStorage[key]}}</label>
             </div>
           </div>
-          <div>
+          <div *ngIf="role==='tragac'">
             <label class="form-input-label" id="labelEducatedFor">Kompetencije</label>
-            <div id="abilityGrid" class="checkbox-container">
+            <div id="abilityGrid" class="checkbox-container" >
               <tr *ngFor="let n of abilities">
-                <input type="checkbox" [checked]="isChecked(n.id)" [value]="n.id" > {{n.name}}
+                <input type="checkbox" [checked]="Checked(n.name)" [value]="n.id" (change)="onChangeAbility($event)"> {{n.name}}
               </tr>
             </div>
           </div>
         </div>
         <div class="buttons">
           <div class="button-div1">
-            <button class="btn2" (click)="saveUserData()" type="submit">Spremi</button>
+            <button class="btn2" type="submit" (click)="saveUserData()">Spremi</button>
           </div>
           <div class="button-div2">
             <button class="btn1" (click)="refreshPage()" type="button">Odustani</button>

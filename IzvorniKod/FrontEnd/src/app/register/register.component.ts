@@ -21,7 +21,7 @@ files: any=[]
     lastName:new FormControl('',[Validators.required,Validators.pattern("^[a-zA-ZčČĆćŽžŠšĐđ]+")]),
     clientName:new FormControl('',[Validators.pattern("^[a-zA-Z0-9]+[a-zA-Z0-9]*"),Validators.required]),
     password:new FormControl('',[Validators.minLength(8),Validators.required]),
-    email:new FormControl('',[Validators.email,Validators.required]),
+    email:new FormControl('',[Validators.email,Validators.required])
   })
 
     signUp(){
@@ -56,9 +56,9 @@ files: any=[]
         formData.append('clientName',this.signUpForm.value.clientName!)
         formData.append('password',this.signUpForm.value.password!)
         formData.append('email',this.signUpForm.value.email!)
-      formData.forEach((value, key) => {
-        console.log(key, value);
-      });
+      //formData.forEach((value, key) => {
+      //  console.log(key, value);
+      //});
         this.http.post(environment.BASE_API_URL+"/auth/register",formData).subscribe({
           next: data => {
             let response: any = data;
