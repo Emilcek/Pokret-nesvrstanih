@@ -10,7 +10,14 @@
               <input type="text" class="form-input" placeholder=" " [(ngModel)]="userData[key]" [disabled]="key=='Role' || key=='Username' || key=='Email' " >
               <label class="form-input-label">{{localStorage[key]}}</label>
             </div>
-            <div *ngIf="!userData.Ime && key==='Ime'" class="error-message">Ime je potrebno</div>
+          </div>
+          <div>
+            <label class="form-input-label" id="labelEducatedFor">Kompetencije</label>
+            <div id="abilityGrid" class="checkbox-container">
+              <tr *ngFor="let n of abilities">
+                <input type="checkbox" [checked]="isChecked(n.id)" [value]="n.id" > {{n.name}}
+              </tr>
+            </div>
           </div>
         </div>
         <div class="buttons">

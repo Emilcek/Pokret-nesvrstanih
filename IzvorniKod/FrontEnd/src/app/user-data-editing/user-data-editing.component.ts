@@ -2,7 +2,7 @@ import {Component, Input, AfterViewInit,Renderer2,ElementRef,OnInit} from '@angu
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { NgModel } from '@angular/forms';
+import {FormControl, FormGroup, NgModel, Validators} from '@angular/forms';
 import {Explorer} from "../explorer-profile/explorer-profile.component";
 
 
@@ -23,8 +23,14 @@ export class UserDataEditingComponent implements AfterViewInit,OnInit{
     localStorage["Username"]="Korisničko ime";
     localStorage["Email"]="Email adresa";
     localStorage["Role"]="Uloga";
+    localStorage["EducatedFor"]="Kompetencije";
   }
-
+  profileForm=new FormGroup({
+    role:new FormControl('',Validators.required),
+    educatedFor:new FormControl(),
+    firstName:new FormControl('',[Validators.required,Validators.pattern("^[a-zA-ZčČĆćŽžŠšĐđ]+")]),
+    lastName:new FormControl('',[Validators.required,Validators.pattern("^[a-zA-ZčČĆćŽžŠšĐđ]+")])
+  })
   apiurl = 'http://localhost:3000/user';
 
   userData: any;
@@ -35,12 +41,12 @@ export class UserDataEditingComponent implements AfterViewInit,OnInit{
   imageInput: any;
   files: any = [];
   imageURL: any;
+  ablilities: any = [];
 
   ngOnInit() {
-    console.log(this.currentUser, "current user")
     this.role = localStorage.getItem("user");
     this.userData = this.currentUser;
-    this.keys = ["Name","Surname","Username","Email","Role"];
+    this.keys = ["Name","Surname","Email","Username","Role"]
     console.log(this.currentUser, "userdata")
 
 
@@ -62,7 +68,7 @@ export class UserDataEditingComponent implements AfterViewInit,OnInit{
   ngAfterViewInit(): void {
 
     const imgElement= this.el.nativeElement.querySelector('#imagePreview');
-    imgElement!.innerHTML=`<img src="${this.imageURL}" alt="Image Preview" height="300rem" width="auto">`
+    imgElement!.innerHTML=`<img src="${this.imageURL}" alt="Image Preview" height="270rem" width="auto">`
     }
 
 
@@ -85,9 +91,20 @@ export class UserDataEditingComponent implements AfterViewInit,OnInit{
     return this.http.put(this.apiurl + '/' + id, userData);
   }
 
+  isChecked(id: any) {
+    return this.userData.EducatedFor.includes(id);
+  }
+
   refreshPage() {
     window.location.reload();
   }
-
+  abilities=[
+    {id:"hodanje",select:false,name:'hodanje'},
+    {id:"dron",select:false,name:'dron'},
+    {id:"auto",select:false,name:'auto'},
+    {id:"brod",select:false,name:'brod'},
+    {id:"helikopter",select:false,name:'helikopter'},
+    {id:'motor',select:false,name:'motor'}
+  ]
   protected readonly localStorage = localStorage;
 }

@@ -38,7 +38,7 @@ export class ExplorerProfileComponent implements OnInit{
     //backend mi ne vraća loziku
     this.http.get<any>(environment.BASE_API_URL + "/client", headersObj).subscribe({
       next: data => {
-        console.log("This is data:",data) //ispisuje se sve osim lozinke
+        //console.log("This is data:",data) //ispisuje se sve osim lozinke
         let res: any = data;
         this.currentUser = {
           Name: data.firstName,
@@ -47,7 +47,8 @@ export class ExplorerProfileComponent implements OnInit{
           Password: data.password, //zbog toga ne mogu pristupiti lozinci
           Email: data.email,
           ClientPhoto: data.clientPhoto,
-          Role: data.role==="tragac" ? "tragač":(data.role==="voditeljPostaje" ? "voditelj postaje" : "istraživač")
+          Role: data.role==="tragac" ? "tragač":(data.role==="voditeljPostaje" ? "voditelj postaje" : "istraživač"),
+          EducatedFor: data.educatedFor
         }
         console.log(this.currentUser, "user")
       }

@@ -124,7 +124,7 @@ files: any=[]
     {id:"dron",select:false,name:'dron'},
     {id:"auto",select:false,name:'auto'},
     {id:"brod",select:false,name:'brod'},
-    {id:'cross motor',select:false,name:'cross motor'},
+    {id:'motor',select:false,name:'motor'},
     {id:"helikopter",select:false,name:'helikopter'}
   ]
 
