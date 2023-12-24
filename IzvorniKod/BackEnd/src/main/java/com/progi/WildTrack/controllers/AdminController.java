@@ -39,11 +39,11 @@ public class AdminController {
 
     @GetMapping("/requests/{clientName}/accepted")
     public ResponseEntity<ClientDetailsDTO> acceptRequest(@PathVariable String clientName) {
-        return ResponseEntity.ok(service.updateClientByClientName(clientName, 2));
+        return ResponseEntity.ok(service.updateClientStatusByClientName(clientName, 2));
     }
 
     @GetMapping("/requests/{clientName}/rejected")
     public ResponseEntity<ClientDetailsDTO> rejectRequest(@PathVariable String clientName) {
-        return ResponseEntity.ok(service.updateClientByClientName(clientName, 3));
+        return ResponseEntity.ok(service.updateClientStatusByClientName(clientName, 3));
     }
 }

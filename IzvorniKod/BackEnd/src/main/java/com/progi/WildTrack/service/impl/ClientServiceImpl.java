@@ -67,7 +67,6 @@ public class ClientServiceImpl implements ClientService {
     @Transactional
     public ResponseEntity<ClientDetailsDTO> getClientByClientName(String clientName) {
         Client client = clientRepo.findByClientName(clientName).orElse(null);
-        ClientDetailsDTO clientDetailsDTO;
         if (client == null) {
             System.out.println("Client not found");
             return ResponseEntity.badRequest().build();
@@ -76,17 +75,7 @@ public class ClientServiceImpl implements ClientService {
             System.out.println("Client not verified");
             return ResponseEntity.badRequest().build();
         }
-        switch (client.getRole()) {
-            case "voditeljPostaje" -> {
-                clientDetailsDTO = new ClientDetailsDTO(client, client.getStationLead());
-            }
-            case "tragac" -> {
-                System.out.println("Client is explorer");
-                clientDetailsDTO = new ClientDetailsDTO(client, client.getExplorer().getVehicles());
-            }
-            default -> clientDetailsDTO = new ClientDetailsDTO(client);
-        };
-        return ResponseEntity.ok(clientDetailsDTO);
+        return ResponseEntity.ok(clientDetailsDTObyRole(client));
     }
 
     @Override
@@ -155,7 +144,7 @@ public class ClientServiceImpl implements ClientService {
                     System.out.println("dodavanje tragac");
                     Explorer explorer = new Explorer(clientToUpdate);
                     explorerRepo.save(explorer);
-                    for (String i : client.getExplorerVehicles()) {
+                    for (String i : client.getEducatedFor()) {
                         Vehicle vehicle = (Vehicle) vehicleRepository.findByVehicleType(i).orElseThrow();
                         vehicleService.addExplorerToVehicle(vehicle, explorer);
                     }
@@ -168,14 +157,14 @@ public class ClientServiceImpl implements ClientService {
             Explorer explorer = explorerRepo.findByExplorerName(clientToUpdate.getClientName());
             List<Vehicle> vehiclesToRemove = new ArrayList<>();
             for (Vehicle vehicle : explorer.getVehicles()) {
-                if (!client.getExplorerVehicles().contains(vehicle.getVehicleType())) {
+                if (!client.getEducatedFor().contains(vehicle.getVehicleType())) {
                     vehiclesToRemove.add(vehicle);
                 }
             }
             for (Vehicle vehicle : vehiclesToRemove) {
                 vehicleService.removeExplorerFromVehicle(vehicle, explorer);
             }
-            for (String i : client.getExplorerVehicles()) {
+            for (String i : client.getEducatedFor()) {
                 Vehicle vehicle = (Vehicle) vehicleRepository.findByVehicleType(i).orElseThrow();
                 vehicleService.addExplorerToVehicle(vehicle, explorer);
             }
@@ -186,7 +175,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     @Transactional
-    public ClientDetailsDTO updateClientByClientName(String clientName, Integer status) {
+    public ClientDetailsDTO updateClientStatusByClientName(String clientName, Integer status) {
         Client client = clientRepo.findByClientName(clientName).orElse(null);
         Status clientStatus = statusRepo.findByStatusId(status);
         if (client == null) {
@@ -208,7 +197,21 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public ClientDetailsDTO getClient() {
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return new ClientDetailsDTO(client);
+        return clientDetailsDTObyRole(client);
+    }
+
+    private ClientDetailsDTO clientDetailsDTObyRole(Client client) {
+        ClientDetailsDTO clientDetailsDTO;
+        switch (client.getRole()) {
+            case "voditeljPostaje" -> {
+                clientDetailsDTO = new ClientDetailsDTO(client, client.getStationLead());
+            }
+            case "tragac" -> {
+                clientDetailsDTO = new ClientDetailsDTO(client, client.getExplorer().getVehicles());
+            }
+            default -> clientDetailsDTO = new ClientDetailsDTO(client);
+        };
+        return clientDetailsDTO;
     }
 
     @Override

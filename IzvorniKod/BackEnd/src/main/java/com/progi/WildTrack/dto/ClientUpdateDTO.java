@@ -20,5 +20,5 @@ public class ClientUpdateDTO {
     public String role;
     public MultipartFile clientPhoto;
     public String stationName;
-    public List<String> explorerVehicles;
+    public List<String> educatedFor;
 }
