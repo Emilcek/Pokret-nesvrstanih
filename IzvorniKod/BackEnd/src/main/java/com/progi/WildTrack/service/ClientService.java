@@ -11,7 +11,7 @@ import java.util.List;
 public interface ClientService {
     List<ClientDetailsDTO> getAllClients();
 
-    ClientDetailsDTO getClientByClientName(String clientName);
+    ResponseEntity<ClientDetailsDTO> getClientByClientName(String clientName);
 
     List<ClientDetailsDTO> getAllRequests();
 

@@ -8,4 +8,6 @@ public interface VehicleService {
     void createVehicle(String vehicleType);
 
     void addExplorerToVehicle(Vehicle vehicle, Explorer explorer);
+
+    void removeExplorerFromVehicle(Vehicle vehicle, Explorer explorer);
 }
