@@ -24,17 +24,22 @@ files: any=[]
     email:new FormControl('',[Validators.email,Validators.required])
   })
 
+  checkEducatedFor() {
+    return !this.abilities.some(d => d.select) && this.signUpForm.value.role === "tragac"
+      && this.signUpForm.get('educatedFor')!.touched;
+  }
+
+  checkPhoto(){
+  return this.files[0]==undefined || this.files[0]==null
+  }
     signUp(){
       document.getElementById("UsedUserName")!.style.display="none"
       document.getElementById("UsedEmail")!.style.display="none"
       document.getElementById("verifyLink")!.style.display = "none";
-      if (this.signUpForm.value.role==="tragac") {
-        this.signUpForm.get('educatedFor')!.setValidators([Validators.required]);
-      } else {
-        this.signUpForm.get('educatedFor')!.setValidators([Validators.nullValidator]);
+      if(this.files[0]==undefined){
+        document.getElementById("noPhotoError")!.style.display= "block";
       }
-      this.signUpForm.get('educatedFor')!.updateValueAndValidity();
-
+      console.log(this.files[0])
     if(!this.signUpForm.valid){
       this.signUpForm.markAllAsTouched()
     }else{
@@ -63,9 +68,10 @@ files: any=[]
           next: data => {
             let response: any = data;
             document.getElementById("verifyLink")!.style.display = "block";
-          }, error: (error) => {
-            console.log(error)
-            console.log("to je bio error")
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, error: (error) => {
+            console.log(error,"error")
+            console.log(this.files[0])
             if(error.error==="Invalid client name"){
               document.getElementById("UsedUserName")!.style.display="block"
             }else if(error.error==="Invalid email"){
@@ -93,7 +99,7 @@ files: any=[]
       // Read the selected file as a data URL
       reader.readAsDataURL(fileInput.files[0]);
       this.files.push(fileInput.files[0]);
-    } else {
+    } else if(this.files[0]==undefined){
       // Clear the preview if no file is selected
       imagePreview!.innerHTML = '';
     }

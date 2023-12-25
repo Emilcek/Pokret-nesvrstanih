@@ -214,3 +214,7 @@ input[type="file"]{
 #verifyLink{
   display: none;
 }
+
+#noPhotoError{
+  display: none;
+}

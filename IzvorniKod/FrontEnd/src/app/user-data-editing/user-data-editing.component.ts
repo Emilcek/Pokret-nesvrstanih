@@ -128,9 +128,7 @@ export class UserDataEditingComponent implements AfterViewInit,OnInit{
       formData.append('clientName',this.userData['Username'])
       formData.append('email',this.userData['Email'])
       formData.append('role',this.userData['Role'])
-      formData.forEach((value, key) => {
-        console.log(key, value);
-      });
+      console.log(formData.get('clientName'))
       this.http.post(environment.BASE_API_URL+"/auth/register",formData).subscribe({
         next: data => {
           let response: any = data;
@@ -142,10 +140,6 @@ export class UserDataEditingComponent implements AfterViewInit,OnInit{
 
     }
 
-  }
-
-  UpdateUser(id: any, userData: any): Observable<any> {
-    return this.http.put(this.apiurl + '/' + id, userData);
   }
 
   Checked(id: any) {
