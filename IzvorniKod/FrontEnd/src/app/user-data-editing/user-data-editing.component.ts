@@ -1,5 +1,5 @@
 import {Component, Input, AfterViewInit,Renderer2,ElementRef,OnInit} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import {FormControl, FormGroup, NgModel, Validators} from '@angular/forms';
@@ -102,6 +102,13 @@ export class UserDataEditingComponent implements AfterViewInit,OnInit{
     return !this.abilities.some(d => d.select);
   }
   saveUserData() {
+    let header = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    });
+    let headersObj = {
+      headers: header
+    };
     this.selectedOptions=[]
     if (this.profileForm.value.role==="tragac") {
       this.profileForm.get('educatedFor')!.setValidators([Validators.required]);
@@ -123,15 +130,18 @@ export class UserDataEditingComponent implements AfterViewInit,OnInit{
         this.selectedOptions=[]
       }
       let formData = new FormData()
-      //formData.append('clientPhoto',this.files[0])
+      formData.append('clientPhoto',this.files[0])
       formData.append('educatedFor',this.selectedOptions)
       formData.append('firstName',this.profileForm.value.firstName!)
       formData.append('lastName',this.profileForm.value.lastName!)
       formData.append('clientName',this.userData['Username'])
-      formData.append('email',this.userData['Email'])
       formData.append('role',this.userData['Role'])
+      formData.append('stationName','')
+      formData.forEach((value, key) => {
+        console.log(key, value);
+      });
       console.log(formData.get('clientName'))
-      this.http.post(environment.BASE_API_URL+"/auth/register",formData).subscribe({
+      this.http.post(environment.BASE_API_URL+"/explorer",formData,headersObj).subscribe({
         next: data => {
           let response: any = data;
           console.log("poslano")
@@ -144,6 +154,7 @@ export class UserDataEditingComponent implements AfterViewInit,OnInit{
 
   }
   handleFileInput(event: any): void {
+    this.files=[]
     const fileInput = event.target;
     const imagePreview = document.getElementById('imagePreview');
 
