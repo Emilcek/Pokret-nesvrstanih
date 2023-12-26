@@ -143,7 +143,27 @@ export class UserDataEditingComponent implements AfterViewInit,OnInit{
     }
 
   }
+  handleFileInput(event: any): void {
+    const fileInput = event.target;
+    const imagePreview = document.getElementById('imagePreview');
 
+    // Check if a file is selected
+    if (fileInput.files && fileInput.files[0]) {
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        // Set the preview image source
+        imagePreview!.innerHTML = `<img src="${e.target!.result}" alt="Image Preview" height="270rem" width="auto">`;
+      };
+
+      // Read the selected file as a data URL
+      reader.readAsDataURL(fileInput.files[0]);
+      this.files.push(fileInput.files[0]);
+    } else if(this.files[0]==undefined){
+      // Clear the preview if no file is selected
+      imagePreview!.innerHTML = '';
+    }
+  }
   Checked(id: any) {
     return this.userData.EducatedFor.includes(id);
   }

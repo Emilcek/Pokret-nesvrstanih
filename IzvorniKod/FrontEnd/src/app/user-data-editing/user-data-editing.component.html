@@ -4,6 +4,11 @@
     <div class="flex">
       <div class="flex-column form-container" [formGroup]="profileForm">
         <div> <div id="imagePreview" ></div></div>
+        <label class="custom-file-input">
+          Promijenite fotografiju
+          <input type="file" id="myFile" name="filename"
+                 accept="image/png, image/jpeg, image/jpg" (change)="handleFileInput($event)">
+        </label>
         <div class="form-inputs flex">
           <div *ngFor="let key of keys" class="form-input-container">
             <div>

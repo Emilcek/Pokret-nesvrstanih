@@ -211,3 +211,21 @@ button {
   padding-bottom: 1rem;
 }
 
+.custom-file-input {
+  display: inline-block;
+  padding: 6px 10px;
+  cursor: pointer;
+  border: 1px solid #927979;
+  width: fit-content;
+  transition: 0.2s;
+  background:#95C4E7;
+  border-radius: 10px;
+  color: rgb(117, 110, 110);
+  font-size: 0.8rem;
+  margin-left: 1rem;
+  margin-top: 1rem;
+}
+
+input[type="file"]{
+  display: none;
+}
