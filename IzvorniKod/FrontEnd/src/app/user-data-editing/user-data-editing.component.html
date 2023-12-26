@@ -9,6 +9,10 @@
             <div>
               <input type="text" class="form-input" [formControlName]="turnToRightFormat[key]" placeholder=" ">
               <label class="form-input-label">{{localStorage[key]}}</label>
+              <div *ngIf="key=='Name' && this.profileForm.controls.firstName.invalid" class="ErrorMessage">Unos imena je obvezan <br>i ono
+                se mora sastojati samo od slova.</div>
+              <div *ngIf="key=='Surname' && this.profileForm.controls.lastName.invalid" class="ErrorMessage">Unos prezimena je obvezan <br>i ono
+                se mora sastojati samo od slova.</div>
             </div>
           </div>
           <div *ngIf="role==='tragac'">
@@ -18,11 +22,12 @@
                 <input type="checkbox" [checked]="Checked(n.name)" [value]="n.id" (change)="onChangeAbility($event)"> {{n.name}}
               </tr>
             </div>
+            <div *ngIf="checkEducatedFor()" class="ErrorMessage">Morate odabrati barem jednu kompetenciju</div>
           </div>
         </div>
         <div class="buttons">
           <div class="button-div1">
-            <button class="btn2" type="submit" (click)="saveUserData()">Spremi</button>
+            <button class="btn2" type="submit" (click)="saveUserData()" [disabled]="checkEducatedFor() || this.profileForm.invalid">Spremi</button>
           </div>
           <div class="button-div2">
             <button class="btn1" (click)="refreshPage()" type="button">Odustani</button>

@@ -98,7 +98,9 @@ export class UserDataEditingComponent implements AfterViewInit,OnInit{
     imgElement!.innerHTML=`<img src="${this.imageURL}" alt="Image Preview" height="270rem" width="auto">`
     }
 
-
+  checkEducatedFor() {
+    return !this.abilities.some(d => d.select);
+  }
   saveUserData() {
     this.selectedOptions=[]
     if (this.profileForm.value.role==="tragac") {
@@ -147,10 +149,9 @@ export class UserDataEditingComponent implements AfterViewInit,OnInit{
   }
   onChangeAbility(event: any){
     const id = event.target.value
-    const isChecked = event.target.checked
     this.abilities = this.abilities.map(d=>{
       if(d.id == id){
-        d.select=isChecked
+        d.select=event.target.checked
         return d
       }
       return d
