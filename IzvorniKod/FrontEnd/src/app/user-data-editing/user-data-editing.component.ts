@@ -103,7 +103,6 @@ export class UserDataEditingComponent implements AfterViewInit,OnInit{
   }
   saveUserData() {
     let header = new HttpHeaders({
-      'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('token'),
     });
     let headersObj = {
@@ -130,18 +129,16 @@ export class UserDataEditingComponent implements AfterViewInit,OnInit{
         this.selectedOptions=[]
       }
       let formData = new FormData()
-      formData.append('clientPhoto',this.files[0])
-      formData.append('educatedFor',this.selectedOptions)
+      formData.append('clientName',this.userData['Username'])
       formData.append('firstName',this.profileForm.value.firstName!)
       formData.append('lastName',this.profileForm.value.lastName!)
-      formData.append('clientName',this.userData['Username'])
       formData.append('role',this.userData['Role'])
-      formData.append('stationName','')
+      formData.append('clientPhoto',this.files[0])
+      formData.append('educatedFor',this.selectedOptions)
       formData.forEach((value, key) => {
         console.log(key, value);
       });
-      console.log(formData.get('clientName'))
-      this.http.post(environment.BASE_API_URL+"/explorer",formData,headersObj).subscribe({
+      this.http.put(environment.BASE_API_URL+"/client",formData,headersObj).subscribe({
         next: data => {
           let response: any = data;
           console.log("poslano")

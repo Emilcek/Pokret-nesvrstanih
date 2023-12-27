@@ -22,11 +22,6 @@ public class ExplorerController {
         return ResponseEntity.ok(clientService.getClient());
     }
 
-    @PostMapping
-    public ResponseEntity updateExplorer(@RequestBody ClientUpdateDTO client) {
-        return clientService.updateClient(client);
-    }
-
     @GetMapping("/tasks")
     public ResponseEntity<Task> getTasks() {
         //todo

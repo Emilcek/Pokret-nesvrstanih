@@ -14,11 +14,11 @@ import java.util.List;
 @NoArgsConstructor
 public class ClientUpdateDTO {
 
-    public String clientName;
-    public String firstName;
-    public String lastName;
-    public String role;
-    public MultipartFile clientPhoto;
-    public String stationName;
-    public List<String> educatedFor;
+    private String clientName;
+    private String firstName;
+    private String lastName;
+    private String role;
+    private MultipartFile clientPhoto;
+    private String stationName;
+    private List<String> educatedFor;
 }
