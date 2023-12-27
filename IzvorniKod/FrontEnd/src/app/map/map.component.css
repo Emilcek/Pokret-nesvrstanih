@@ -13,3 +13,10 @@
   height: 100%;
   width: 100%;
 }
+
+.custom-tooltip {
+  background-color: white;
+  border: 1px solid red;
+  padding: 8px;
+  font-size: 14px;
+}
