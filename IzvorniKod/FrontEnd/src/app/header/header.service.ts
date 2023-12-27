@@ -15,6 +15,9 @@ export class HeaderService {
     role: string;
     roleS: Subject<string> = new Subject<string>();
     alert: boolean = false;
+    isNavOpen = new Subject<boolean>();
+    isOpen: boolean = false;
+
 
   constructor(private router: Router) {
       if(localStorage.getItem("user") !== null) {
@@ -31,8 +34,9 @@ export class HeaderService {
         this.active.next(activePage);
     }
 
-    userLoggedIn() {
-        this.user = !this.user;
+    userLoggedIn(data: boolean) {
+        this.user = data;
+        console.log(this.user, "log")
         this.logged.next(this.user);
     }
 
@@ -44,6 +48,13 @@ export class HeaderService {
     logout() {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
+        this.isOpen = false;
+        this.isNavOpen.next(this.isOpen);
         this.router.navigate(['/login'])
     }
+
+  toggleSidebar() {
+    this.isOpen = !this.isOpen;
+    this.isNavOpen.next(this.isOpen);
+  }
 }
