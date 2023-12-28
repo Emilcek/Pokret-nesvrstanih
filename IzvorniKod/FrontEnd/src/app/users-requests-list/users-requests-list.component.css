@@ -17,6 +17,7 @@ hr {
 
 h2 {
     color: #333;
+    font-size: 35px;
 }
 
 .zahtjev {
@@ -57,8 +58,7 @@ p {
 }
 
 .zahtjev p {
-    font-size: 19px;
-    font-weight: bold;
+    font-size: 25px;
 }
 
 .buttons {
@@ -69,18 +69,18 @@ p {
     margin-right: 4%;
 }
 
-.buttons button {
-    margin-right: 15%;
+button {
     border-radius: 20px;
     border: none;
     cursor: pointer;
     transition: 0.3s;
-    font-size: 15px;
+    font-size: 19px;
 }
 
 .btn1 {
     background-color: rgb(198, 192, 192);
     padding: 10px;
+    width: 30%;
 }
 
 .btn2 {
@@ -129,4 +129,6 @@ p {
     .zahtjev {
         margin-top: 3.5%;
     }
+
+
 }

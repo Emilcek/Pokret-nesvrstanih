@@ -15,6 +15,9 @@ import { ExplorerProfileComponent } from './explorer-profile/explorer-profile.co
 import { UsersRequestsListComponent } from './users-requests-list/users-requests-list.component';
 import { UsersListComponent } from './users-list/users-list.component';
 import { UserVerifiedSuccessfulComponent } from './user-verified-successful/user-verified-successful.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatDialogModule} from '@angular/material/dialog';
+import { UserRequestDialogComponent } from './user-request-dialog/user-request-dialog.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,8 @@ import { UserVerifiedSuccessfulComponent } from './user-verified-successful/user
     ExplorerProfileComponent,
     UsersRequestsListComponent,
     UsersListComponent,
-    UserVerifiedSuccessfulComponent
+    UserVerifiedSuccessfulComponent,
+    UserRequestDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +42,8 @@ import { UserVerifiedSuccessfulComponent } from './user-verified-successful/user
     NgSelectModule,
     HttpClientModule,
     FormsModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

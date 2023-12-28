@@ -1,18 +1,18 @@
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Component, OnInit} from '@angular/core';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {environment} from "../../environments/environment";
-import {MatDialog, MatDialogModule} from '@angular/material/dialog';
-import {MatButtonModule} from '@angular/material/button';
-import { UserRequestDialogComponent } from '../user-request-dialog/user-request-dialog.component';
 
 @Component({
-  selector: 'app-users-requests-list',
-  templateUrl: './users-requests-list.component.html',
-  styleUrls: ['./users-requests-list.component.css']
+  selector: 'app-user-request-dialog',
+  templateUrl: './user-request-dialog.component.html',
+  styleUrls: ['./user-request-dialog.component.css']
 })
-export class UsersRequestsListComponent implements OnInit {
+export class UserRequestDialogComponent {
   userlist: any
   dataSource: any
+
+  constructor(@Inject(MAT_DIALOG_DATA) public datas: any, private http: HttpClient) {}
 
   LoadData() {
     let header = new HttpHeaders({
@@ -27,23 +27,9 @@ export class UsersRequestsListComponent implements OnInit {
         console.log(data)
         let res: any = data;
         this.dataSource = res;
-        console.log(data, "data")
+        console.log(res, "Data u load: data")
       }
     })
-  }
-
-  ngOnInit() {
-    this.LoadData();
-  }
-  
-  constructor(private http: HttpClient, private dialog: MatDialog) {
-  }
-
-  apiurl = 'http://localhost:3000/requests';
-
-
-  GetAll() {
-    return this.http.get(this.apiurl)
   }
 
   acceptUser(clientName: any) {
@@ -78,13 +64,8 @@ export class UsersRequestsListComponent implements OnInit {
     );
   }
 
-
-  openDialog(user:any) {
-    this.dialog.open(UserRequestDialogComponent, {
-      width:'80%',
-      height:'80%',
-      data: user,
-    });
-    console.log(user)
+  ngOnInit() {
+    console.log('User data in dialog:', this.datas);
   }
+
 }
