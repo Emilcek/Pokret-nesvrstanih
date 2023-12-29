@@ -37,7 +37,7 @@ export class LoginComponent {
               console.log(data)
               let res: any = data;
               localStorage.setItem("user", data.role);
-              this.headerService.userLoggedIn()
+              this.headerService.userLoggedIn(true)
               this.headerService.roleChanged(data.role);
               if(data.role === "tragac") {
                 this.headerService.changeActivePage("/explorer-tasks");

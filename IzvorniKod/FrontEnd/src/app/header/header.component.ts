@@ -14,6 +14,7 @@ export class HeaderComponent implements OnInit{
   pageChange: Subscription = new Subscription();
   loggingChange: Subscription = new Subscription();
   roleChange: Subscription = new Subscription();
+  isNavOpen: boolean = false;
 
   constructor(public headerService: HeaderService) {
   }
@@ -46,6 +47,9 @@ export class HeaderComponent implements OnInit{
   }
 
     changeActivePage(activePage: any) {
+        if(this.isNavOpen) {
+          this.toggleNav()
+        }
         this.headerService.changeActivePage(activePage);
         this.activePage = this.headerService.page;
     }
@@ -53,6 +57,12 @@ export class HeaderComponent implements OnInit{
     logout() {
         this.activePage = "/login";
         this.headerService.logout();
-        this.headerService.userLoggedIn();
+        this.isNavOpen = false;
+        this.headerService.userLoggedIn(false);
     }
+
+  toggleNav() {
+    this.headerService.toggleSidebar();
+    this.isNavOpen = this.headerService.isOpen;
+  }
 }
