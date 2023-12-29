@@ -17,10 +17,6 @@ import org.springframework.web.bind.annotation.*;
 public class ExplorerController {
 
     private final ClientService clientService;
-    @GetMapping
-    public ResponseEntity<ClientDetailsDTO> getExplorer() {
-        return ResponseEntity.ok(clientService.getClient());
-    }
 
     @PostMapping
     public ResponseEntity updateExplorer(@ModelAttribute ClientUpdateDTO client) {
