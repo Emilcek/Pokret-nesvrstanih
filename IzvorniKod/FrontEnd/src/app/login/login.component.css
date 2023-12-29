@@ -18,10 +18,8 @@
 .login-wrap{
 	display: flex;
 	justify-content: center;
-	width:100vw;
 	margin:auto;
 	max-width:525px;
-	min-width: 358px;
 	position:relative;
 }
 .login-html{
@@ -141,4 +139,11 @@ body{
 
 #notVerified{
   display: none;
-}
+ }
+
+@media only screen and (max-width: 576px) {
+  .login-wrap{
+    margin: 10px;
+  }
+
+
