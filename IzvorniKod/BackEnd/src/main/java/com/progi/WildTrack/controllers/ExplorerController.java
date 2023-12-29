@@ -23,7 +23,7 @@ public class ExplorerController {
     }
 
     @PostMapping
-    public ResponseEntity updateExplorer(@RequestBody ClientUpdateDTO client) {
+    public ResponseEntity updateExplorer(@ModelAttribute ClientUpdateDTO client) {
         return clientService.updateClient(client);
     }
 
