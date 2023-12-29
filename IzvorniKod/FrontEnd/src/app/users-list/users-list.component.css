@@ -191,7 +191,6 @@ mat-paginator {
 
     .mat-elevation-z8 {
         margin: 29px;
-        background-color: white;
     }
 
     .custom-image {
@@ -209,4 +208,11 @@ mat-paginator {
         width: 18px;
     }
 
+}
+
+@media only screen and (max-width: 576px) {
+    .mat-elevation-z8 {
+        margin: 10px;
+        background-color: white;
+    }
 }
