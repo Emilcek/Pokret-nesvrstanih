@@ -21,7 +21,6 @@ export class LoginComponent {
   signIn() {
     document.getElementById("notVerified")!.style.display = "none";
     document.getElementById("doesntExist")!.style.display = "none";
-    if (this.signInForm.valid) {
       console.log(this.signInForm.value)
       this.http.post(environment.BASE_API_URL+"/auth/login", this.signInForm.value).subscribe({
         next: data => {
@@ -65,9 +64,7 @@ export class LoginComponent {
           }
         }
       })
-    } else {
-      alert("Upisite sve podatke")
-    }
+
   }
 
 }

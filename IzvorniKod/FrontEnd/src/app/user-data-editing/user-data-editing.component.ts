@@ -36,15 +36,9 @@ export class UserDataEditingComponent implements AfterViewInit,OnInit{
     email:new FormControl('',[Validators.email,Validators.required])
   })
 
-  apiurl = 'http://localhost:3000/user';
-
   userData: any;
-  userId: any;
-  emailError: boolean = false;
-  nameError: boolean = false;
-
+  oldPicture: any;
   selectedOptions:any=[]
-  imageInput: any;
   files: any = [];
   imageURL: any;
   turnToRightFormat:any={}
@@ -90,6 +84,7 @@ export class UserDataEditingComponent implements AfterViewInit,OnInit{
     }
 
     const blob = new Blob([uint8Array], { type: "image/jpeg" }); // Adjust the MIME type accordingly
+    this.oldPicture=blob
     this.imageURL = URL.createObjectURL(blob);
   }
 
@@ -133,7 +128,7 @@ export class UserDataEditingComponent implements AfterViewInit,OnInit{
       formData.append('firstName',this.profileForm.value.firstName!)
       formData.append('lastName',this.profileForm.value.lastName!)
       formData.append('role',this.userData['Role'])
-      formData.append('clientPhoto',this.files[0])
+      formData.append('clientPhoto',this.files[0]==undefined ? new File([this.oldPicture],'files',{type:"image/jpeg"}): this.files[0])
       formData.append('educatedFor',this.selectedOptions)
       formData.forEach((value, key) => {
         console.log(key, value);
@@ -142,7 +137,7 @@ export class UserDataEditingComponent implements AfterViewInit,OnInit{
         next: data => {
           let response: any = data;
           console.log("poslano")
-          document.getElementById("newDataSaved")!.style.display = "block";
+          //document.getElementById("newDataSaved")!.style.display = "block";
         }, error: (error) => {
         }
       })
