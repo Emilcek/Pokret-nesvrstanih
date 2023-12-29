@@ -23,7 +23,7 @@ public class DataInitializer {
 
     @Autowired
     private ClientService clientService;
-    private final List<String> vehicleTypes = Arrays.asList("hodanje", "dron", "auto", "brod", "cross motor", "helikopter");
+    private final List<String> vehicleTypes = Arrays.asList("hodanje", "dron", "auto", "brod", "motor", "helikopter");
     private final List<Description> statusTypes = Arrays.asList(Description.PENDING, Description.ACCEPTED, Description.REJECTED);
 
     @EventListener
