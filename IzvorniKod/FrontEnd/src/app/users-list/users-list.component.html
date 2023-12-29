@@ -1,43 +1,46 @@
 <div class="mat-elevation-z8">
+  <div class="main-conainer"></div>
   <div class="upper-div">
     <h2>Popis korisnika</h2>
 </div>
     <table mat-table [dataSource]="dataSource">
   
-      <!-- Position Column -->
+      <!-- clientName Column -->
       <ng-container matColumnDef="clientName">
         <th mat-header-cell *matHeaderCellDef> Korisničko ime </th>
         <td mat-cell *matCellDef="let element" data-label="Korisničko ime"> {{element.clientName}} </td>
       </ng-container>
   
-      <!-- Name Column -->
+      <!-- firstName Column -->
       <ng-container matColumnDef="firstName">
         <th mat-header-cell *matHeaderCellDef> Ime </th>
         <td mat-cell *matCellDef="let element" data-label="Ime"> {{element.firstName}} </td>
       </ng-container>
   
-      <!-- Weight Column -->
+      <!-- lastName Column -->
       <ng-container matColumnDef="lastName">
         <th mat-header-cell *matHeaderCellDef> Prezime </th>
         <td mat-cell *matCellDef="let element" data-label="Prezime"> {{element.lastName}} </td>
       </ng-container>
   
-      <!-- Symbol Column -->
+      <!-- Email Column -->
       <ng-container matColumnDef="email">
         <th mat-header-cell *matHeaderCellDef> Email </th>
         <td mat-cell *matCellDef="let element" data-label="Email"> {{element.email}} </td>
       </ng-container>
 
+      <!-- Role Column -->
       <ng-container matColumnDef="role">
         <th mat-header-cell *matHeaderCellDef> Uloga </th>
         <td mat-cell *matCellDef="let element" data-label="Uloga"> {{element.role}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="Uredi podatke">
+      <!-- Update Column -->
+      <ng-container matColumnDef="Update">
         <th mat-header-cell *matHeaderCellDef> Uredi podatke </th>
-        <td mat-cell *matCellDef="let element" data-label="Uredi podatke">
+        <td mat-cell *matCellDef="let element" data-label="Update">
          <button class="custom-button" (click)="redirectToEditPage(element.id)">
-            <img src="assets/img/Arrow4.jpg" alt="Arrow" class="custom-image" />
+            <img src="assets/img/rightArrow.png" alt="Arrow" class="custom-image" />
           </button>
         </td>
       </ng-container>

@@ -15,7 +15,7 @@ export class UsersListComponent implements OnInit {
   userlist: any
   //dataSource: any
 
-  displayedColumns: string[] = ['clientName', 'firstName', 'lastName', 'email', 'role', 'Uredi podatke'];
+  displayedColumns: string[] = ['clientName', 'firstName', 'lastName', 'email', 'role', 'Update'];
   dataSource = new MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

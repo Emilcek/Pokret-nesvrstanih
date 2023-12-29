@@ -1,32 +1,17 @@
-
-
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
     table-layout: fixed;
+    background-color: #F5F5F5;
 }
 
-mat-paginator-page-size {
-    /* Your styles here */
-    color: red;
-    /* Add any other styles you want */
-  }
-
-
-  
-table caption {
-    font-size: 1.5em;
-    margin: .5em 0 .75em;
-  }
-
-th{
+th {
     border-top: 1px solid #787878;
     border-bottom: 1px solid #787878;
     padding: 8px;
-    background-color: white;
     text-align: center;
-    background-color: #f2f2f2;
+    background-color: #F5F5F5;
     font-size: 20px;
     color: #927979;
 }
@@ -35,43 +20,31 @@ td {
     border: none;
     font-style: normal;
     padding: 8px;
-    background-color: white;
+    background-color: #F5F5F5;
     width: 2%;
     font-size: 16px;
     text-align: center;
     font-weight: 500;
     font-family: Poppins;
-font-style: normal;
-line-height: normal;
+    font-style: normal;
+    line-height: normal;
 }
-
-
-
-
-.center {
-    text-align: center;
-}
-
-.table-container {
-    margin: 29px;
-}
-
 
 
 .upper-div {
     display: flex;
-width: 218px;
-height: 56px;
-flex-direction: column;
-justify-content: center;
-color: #000;
-text-align: left;
-font-family: Poppins;
-font-size: 22px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-margin-left: 2%;
+    width: 218px;
+    height: 56px;
+    flex-direction: column;
+    justify-content: center;
+    color: #000;
+    text-align: left;
+    font-family: Poppins;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-left: 2%;
 }
 
 h2 {
@@ -101,7 +74,7 @@ button {
 img {
     max-width: 100%;
     height: auto;
-
+    background-color: #F5F5F5;
 }
 
 .custom-button {
@@ -110,6 +83,7 @@ img {
     background-color: transparent;
     cursor: pointer;
     transition: transform 0.3s ease;
+    background-color: #F5F5F5;
 }
 
 .custom-button:hover {
@@ -117,104 +91,34 @@ img {
 }
 
 
-/*@media screen and (max-width: 768px) {
-    table {
-        width: 100%;
-        text-align: center;
-        overflow-x: scroll;
-    }
-
-    th,
-    td {
-        width: auto;
-        text-align: center;
-        box-sizing: border-box;
-        padding: 5px;
-    }
-
-    th,
-    td {
-        border-bottom: 1px solid #ddd;
-    }
-
-    th {
-        background-color: #f2f2f2;
-    }
-
-    .center {
-        text-align: center;
-    }
-
-    .upper-div {
-        display: block;
-        margin: 0;
-        padding: 10px;
-        width: 100%;
-    }
-
-    h2 {
-        margin-bottom: 1px;
-    }
-
-    .custom-image {
-        width: 8%;
-        height: auto;
-    }
-
-    button {
-        width: 100%;
-    }
-
-    .table-container {
-        margin: 10px;
-    }
-
-
-    td:not(:first-child):not(:nth-child(6)),
-    th:not(:first-child):not(:nth-child(6)) {
-        display: none;
-    }
-}*/
-
-
-
-  /*.upper-div {
-    display: block;
-    margin: 0;
-    padding: 10px;
-    width: 100%;
-}*/
-
-  .mat-elevation-z8 {
+.mat-elevation-z8 {
     margin: 29px;
-    background-color: white;
-  }
+    background-color: #F5F5F5;
+}
 
-  
-  @media screen and (max-width: 840px) {
+mat-paginator {
+    background-color: #F5F5F5;
+}
+
+
+@media screen and (max-width: 740px) {
     table {
         border: 0;
         vertical-align: middle;
         margin-top: 0;
     }
-  
-    table caption {
-      font-size: 1.3em;
-    }
-    
-    
 
     table th {
         border: none;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
     }
-    
+
     .red {
         display: block;
         border-bottom: 5px solid rgba(0, 0, 0, 0.5);
@@ -223,8 +127,6 @@ img {
         padding-top: 4%;
     }
 
-    
-    
     table td {
         border: initial;
         display: block;
@@ -238,61 +140,48 @@ img {
         border-bottom: 1px solid #ddd !important;
     }
 
-    
-    
     table td::before {
-      /*
-      * aria-label has no advantage, it won't be read inside a table
-      content: attr(aria-label);
-      */
-      content: attr(data-label);
-      float: left;
-      text-transform: uppercase;
-      color: #927979;
-      font-weight: 600;
-      font-size: 0.85em;
+        content: attr(data-label);
+        float: left;
+        text-transform: uppercase;
+        color: #927979;
+        font-weight: 600;
+        font-size: 0.85em;
     }
 
-    
-    
-
-    table td:last-child{
+    table td:last-child {
         margin-bottom: 5%;
-        
-      }
 
-      table td:first-child{
+    }
+
+    table td:first-child {
         margin-top: 0%;
-      }
+    }
 
-      
-
-
-      .upper-div {
-        display: block; /* Vraćanje na inicijalno stanje */
-        width: auto; /* Poništavanje širine */
-        height: auto; /* Poništavanje visine */
-        flex-direction: initial; /* Poništavanje orijentacije */
-        justify-content: initial; /* Poništavanje justifikacije */
-        text-align: initial; /* Poništavanje poravnanja teksta */
-        font-family: initial; /* Poništavanje fonta */
-        font-size: initial; /* Poništavanje veličine fonta */
-        font-style: initial; /* Poništavanje stila fonta */
-        font-weight: initial; /* Poništavanje težine fonta */
-        line-height: initial; /* Poništavanje visine linije */
+    .upper-div {
+        display: block;
+        width: auto;
+        height: auto;
+        flex-direction: initial;
+        justify-content: initial;
+        text-align: initial;
+        font-family: initial;
+        font-size: initial;
+        font-style: initial;
+        font-weight: initial;
+        line-height: initial;
         margin-left: initial;
-    text-align: center;
-    height: 10px;
-    justify-content: center;
-    width: 100%;
-    height: 0px;
-    /*border-bottom: 20px solid rgba(221, 221, 221, 0.6);*/
-    padding-right: 30%;
-    margin-left: 0%;
+        text-align: center;
+        height: 10px;
+        justify-content: center;
+        width: 100%;
+        height: 0px;
+        padding-right: 30%;
+        margin-left: 0%;
     }
 
     h2 {
-        font-size: 35px;
+        font-size: 25px;
         padding-top: 20px;
         margin-bottom: 0;
         text-align: center;
@@ -300,16 +189,15 @@ img {
         width: 100%;
     }
 
-    
-
     .mat-elevation-z8 {
         margin: 29px;
         background-color: white;
-      }
+    }
 
-      .custom-image {
-        width: auto;/* Make the image responsive up to the screen width */
-    height: auto; 
+    .custom-image {
+        width: auto;
+        /* Make the image responsive up to the screen width */
+        height: auto;
     }
 
     .custom-button {
@@ -321,5 +209,4 @@ img {
         width: 18px;
     }
 
-  }
-
+}
