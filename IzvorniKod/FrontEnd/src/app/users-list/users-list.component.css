@@ -1,3 +1,5 @@
+
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -5,25 +7,46 @@ table {
     table-layout: fixed;
 }
 
+mat-paginator-page-size {
+    /* Your styles here */
+    color: red;
+    /* Add any other styles you want */
+  }
+
+
+  
 table caption {
     font-size: 1.5em;
     margin: .5em 0 .75em;
   }
 
-th,
+th{
+    border-top: 1px solid #787878;
+    border-bottom: 1px solid #787878;
+    padding: 8px;
+    background-color: white;
+    text-align: center;
+    background-color: #f2f2f2;
+    font-size: 20px;
+    color: #927979;
+}
+
 td {
-    border: 1px solid #ddd;
+    border: none;
+    font-style: normal;
     padding: 8px;
     background-color: white;
     width: 2%;
+    font-size: 16px;
     text-align: center;
+    font-weight: 500;
+    font-family: Poppins;
+font-style: normal;
+line-height: normal;
 }
 
 
 
-th {
-    background-color: #f2f2f2;
-}
 
 .center {
     text-align: center;
@@ -33,13 +56,7 @@ th {
     margin: 29px;
 }
 
-hr {
-    border-color: gray;
-    width: 95%;
-    text-align: left;
-    margin-left: 2%;
-    margin-bottom: 2%;
-}
+
 
 .upper-div {
     display: flex;
@@ -209,18 +226,19 @@ img {
     
     
     table td {
-        
+        border: initial;
         display: block;
-        font-size: 1em;
+        font-size: 15px;
         text-align: right;
-        font-weight: bold;
         height: 30px;
         width: 98%;
         margin-left: 1%;
         margin-bottom: 4%;
-        border-bottom: 1px solid #ddd;
-        background-color: rgb(226, 230, 230);
+        color: #000;
+        border-bottom: 1px solid #ddd !important;
     }
+
+    
     
     table td::before {
       /*
@@ -230,22 +248,25 @@ img {
       content: attr(data-label);
       float: left;
       text-transform: uppercase;
-  
-      font-weight: normal;
-  
+      color: #927979;
+      font-weight: 600;
       font-size: 0.85em;
-      
     }
+
     
     
 
     table td:last-child{
         margin-bottom: 5%;
+        
       }
 
       table td:first-child{
         margin-top: 0%;
       }
+
+      
+
 
       .upper-div {
         display: block; /* Vraćanje na inicijalno stanje */
@@ -297,7 +318,7 @@ img {
         background-color: transparent;
         cursor: pointer;
         transition: transform 0.3s ease;
-        width: 15px;
+        width: 18px;
     }
 
   }
