@@ -34,7 +34,7 @@ export class StationChoosingComponent implements OnInit, AfterViewInit{
     let headersObj = {
       headers: header
     };
-    this.http.get<any>(environment.BASE_API_URL + "/stations", headersObj).subscribe({
+    this.http.get<any>(environment.BASE_API_URL + "/stationLead/stations", headersObj).subscribe({
       next: (data: any) => {
 
       }})
