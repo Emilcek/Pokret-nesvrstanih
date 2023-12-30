@@ -1,32 +1,57 @@
-<div class="table-container main-container">
-    <div class="upper-div">
-        <h2>Popis korisnika</h2>
-    </div>
-    <hr>
-    <table>
-        <thead>
-            <tr>
-                <th class="center">Korisničko ime</th>
-                <th class="center">Ime</th>
-                <th class="center">Prezime</th>
-                <th class="center">Email</th>
-                <th class="center">Uloga</th>
-                <th class="center">Uredi podatke</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let data of dataSource">
-                <td class="center">{{ data.clientName }}</td>
-                <td class="center">{{ data.firstName }}</td>
-                <td class="center">{{ data.lastName }}</td>
-                <td class="center">{{ data.email }}</td>
-                <td class="center">{{ data.role }}</td>
-                <td class="center">
-                    <button class="custom-button" (click)="redirectToEditPage(data.id)">
-                        <img src="assets/img/arrow.png" alt="Arrow" class="custom-image" />
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<div class="mat-elevation-z8">
+  <div class="upper-div">
+    <h2>Popis korisnika</h2>
 </div>
+    <table mat-table [dataSource]="dataSource">
+  
+      <!-- clientName Column -->
+      <ng-container matColumnDef="clientName">
+        <th mat-header-cell *matHeaderCellDef> Korisničko ime </th>
+        <td mat-cell *matCellDef="let element" data-label="Korisničko ime"> {{element.clientName}} </td>
+      </ng-container>
+  
+      <!-- firstName Column -->
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef> Ime </th>
+        <td mat-cell *matCellDef="let element" data-label="Ime"> {{element.firstName}} </td>
+      </ng-container>
+  
+      <!-- lastName Column -->
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef> Prezime </th>
+        <td mat-cell *matCellDef="let element" data-label="Prezime"> {{element.lastName}} </td>
+      </ng-container>
+  
+      <!-- Email Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> Email </th>
+        <td mat-cell *matCellDef="let element" data-label="Email"> {{element.email}} </td>
+      </ng-container>
+
+      <!-- Role Column -->
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef> Uloga </th>
+        <td mat-cell *matCellDef="let element" data-label="Uloga"> {{element.role}} </td>
+      </ng-container>
+
+      <!-- Update Column -->
+      <ng-container matColumnDef="Update">
+        <th mat-header-cell *matHeaderCellDef> Uredi podatke </th>
+        <td mat-cell *matCellDef="let element" data-label="Uredi podatke">
+         <button class="custom-button" (click)="redirectToEditPage(element.id)">
+            <img src="assets/img/rightArrow.png" alt="Arrow" class="custom-image" />
+          </button>
+        </td>
+      </ng-container>
+      
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="matRed"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="red"></tr>
+    </table>
+  
+    <mat-paginator [pageSize]="10"
+                   showFirstLastButtons
+                   aria-label="Select page of periodic elements">
+    </mat-paginator>
+  </div>
+  

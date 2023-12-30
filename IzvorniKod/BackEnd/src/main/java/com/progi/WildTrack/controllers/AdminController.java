@@ -25,11 +25,11 @@ public class AdminController {
 
     @GetMapping("/clients/{clientName}")
     public ResponseEntity<ClientDetailsDTO> getClientByClientName(@PathVariable String clientName) {
-        return ResponseEntity.ok(service.getClientByClientName(clientName));
+        return service.getClientByClientName(clientName);
     }
     @PostMapping("/clients/update")
-    public ResponseEntity<ClientDetailsDTO> UpdateClient(@RequestBody ClientUpdateDTO client) {
-        return ResponseEntity.ok(service.updateClient(client));
+    public ResponseEntity UpdateClient(@ModelAttribute ClientUpdateDTO client) {
+        return service.updateClient(client);
     }
 
     @GetMapping("/requests")
@@ -39,11 +39,11 @@ public class AdminController {
 
     @GetMapping("/requests/{clientName}/accepted")
     public ResponseEntity<ClientDetailsDTO> acceptRequest(@PathVariable String clientName) {
-        return ResponseEntity.ok(service.updateClientByClientName(clientName, 2));
+        return ResponseEntity.ok(service.updateClientStatusByClientName(clientName, 2));
     }
 
     @GetMapping("/requests/{clientName}/rejected")
     public ResponseEntity<ClientDetailsDTO> rejectRequest(@PathVariable String clientName) {
-        return ResponseEntity.ok(service.updateClientByClientName(clientName, 3));
+        return ResponseEntity.ok(service.updateClientStatusByClientName(clientName, 3));
     }
 }

@@ -22,7 +22,7 @@ public class Vehicle {
     @Column(name="VehicleType",length = 30, nullable = false)
     private String vehicleType;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
     @JoinTable(
             name = "Vehicle_Explorer",
             joinColumns = { @JoinColumn(name = "VehicleId") },
@@ -33,4 +33,13 @@ public class Vehicle {
 //    private List<EducatedFor> educatedForList;
     @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Task> taskList;
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((vehicleType == null) ? 0 : vehicleType.hashCode());
+        result = prime * result + ((vehicleId == null) ? 0 : vehicleId.hashCode());
+        return result;
+    }
 }

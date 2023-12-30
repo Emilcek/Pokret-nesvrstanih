@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -20,6 +21,6 @@ public class RegisterDto {
     private String email;
     private String password;
     private String role;
-    private String clientPhotoURL;
     private List<String> educatedFor;
+    private MultipartFile clientPhoto;
 }
