@@ -8,4 +8,6 @@ public interface StationService {
     Station getStation();
 
     List<Station> getAllStations();
+
+    void createStations();
 }

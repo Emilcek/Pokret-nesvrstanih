@@ -21,12 +21,12 @@ public class Station {
     private Long stationId;
     @Column(name = "StationName", length = 50, nullable = false)
     private String stationName;
-    @Column(name="Radius", nullable = false)
+    @Column(name = "Radius", nullable = false)
     private int radius;
-    @Column(name="StationStatus", nullable = false)
+    @Column(name = "StationStatus", nullable = false)
     private String stationStatus;
-    @Column(name="StatusLocation", nullable = false)
-    private String statusLocation;
+    @Column(name = "StationLocation", nullable = false)
+    private String stationLocation;
 
     @OneToOne(mappedBy = "station", cascade = CascadeType.ALL)
     private StationLead stationLead;
