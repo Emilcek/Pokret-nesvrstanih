@@ -16,6 +16,8 @@ import { UsersRequestsListComponent } from './users-requests-list/users-requests
 import { UsersListComponent } from './users-list/users-list.component';
 import { UserVerifiedSuccessfulComponent } from './user-verified-successful/user-verified-successful.component';
 import { MapComponent } from './map/map.component';
+import { StationInfoComponent } from './station-info/station-info.component';
+import { StationChoosingComponent } from './station-choosing/station-choosing.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { MapComponent } from './map/map.component';
     UsersRequestsListComponent,
     UsersListComponent,
     UserVerifiedSuccessfulComponent,
-    MapComponent
+    MapComponent,
+    StationInfoComponent,
+    StationChoosingComponent
   ],
   imports: [
     BrowserModule,

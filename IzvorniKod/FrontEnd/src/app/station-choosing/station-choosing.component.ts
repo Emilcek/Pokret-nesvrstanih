@@ -1,16 +1,21 @@
-import { Component, AfterViewInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {environment} from "../../environments/environment";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import * as L from 'leaflet';
-import {HttpClient} from "@angular/common/http";
 import 'leaflet-routing-machine';
 import {icon, Icon, Marker} from "leaflet";
 import * as polyline from 'polyline';
 
+
 @Component({
-  selector: 'app-map',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.css']
+  selector: 'app-station-choosing',
+  templateUrl: './station-choosing.component.html',
+  styleUrls: ['./station-choosing.component.css']
 })
-export class MapComponent implements AfterViewInit {
+export class StationChoosingComponent implements OnInit, AfterViewInit{
+  isStationChosen: boolean = false;
+  chosenStationName: any;
+  chosenStationSurface: any;
   private map: any;
 
   private defaultIcon: Icon = icon({
@@ -21,7 +26,19 @@ export class MapComponent implements AfterViewInit {
     Marker.prototype.options.icon = this.defaultIcon;
 
   }
+  ngOnInit(): void {
+    let header = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    });
+    let headersObj = {
+      headers: header
+    };
+    this.http.get<any>(environment.BASE_API_URL + "/stations", headersObj).subscribe({
+      next: (data: any) => {
 
+      }})
+  }
   private initMap(): void {
     this.map = L.map('map', {
       center: [ 45.1, 15.2 ],
@@ -75,8 +92,30 @@ export class MapComponent implements AfterViewInit {
             circle.closeTooltip();
           });
 
-          circle.on('click', function (e) {
+          circle.on('click', (e) => {
             console.log("click");
+            this.chosenStationName = 'Zagreb';
+            this.isStationChosen = true;
+          });
+
+          const circle2 = L.circle([45.5, 18.5 ], {
+            radius: 10000,
+            color: 'red',
+            fillColor: '#f03'
+          }).addTo(this.map);
+
+          circle2.on('mouseover', function (e) {
+            circle2.bindTooltip('Osijek').openTooltip();
+          });
+
+          circle2.on('mouseout', function (e) {
+            circle2.closeTooltip();
+          });
+
+          circle2.on('click', (e) => {
+            console.log("click");
+            this.chosenStationName = 'Osijek';
+            this.isStationChosen = true;
           });
         }
       }
@@ -97,4 +136,5 @@ export class MapComponent implements AfterViewInit {
   errorF(args?: any) {
 
   }
+
 }

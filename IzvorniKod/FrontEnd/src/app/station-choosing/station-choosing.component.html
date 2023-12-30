@@ -1,0 +1,27 @@
+<div class="flex" style="height: 550px">
+  <div style="margin-left: 30px; width: 70%; height: 100%;" class="map-container">
+    <div class="map-frame">
+      <div id="map"></div>
+    </div>
+  </div>
+  <div *ngIf="isStationChosen" style="width: 26%; margin-bottom: 30px">
+    <div class="main-container tasks" style="margin-left: 30px">
+      <div class="title">Informacije o postaji</div>
+      <div class="station-info">
+        <span class="info">Naziv postaje: {{chosenStationName}} </span>
+        <span class="info">Površina: {{chosenStationSurface}} </span>
+      </div>
+      <button class="button">
+        Spremi postaju
+      </button>
+      <div class="info-text">*pritiskom na ovaj gumb postajete voditelj izabrane postaje</div>
+    </div>
+  </div>
+
+  <div *ngIf="!isStationChosen" style="width: 26%">
+    <div class="main-container tasks" style="display: flex; align-items: center; margin-left: 30px; height: 100%">
+      <div class="title" style="border: none">Odaberite postaju na karti!</div>
+    </div>
+  </div>
+
+</div>

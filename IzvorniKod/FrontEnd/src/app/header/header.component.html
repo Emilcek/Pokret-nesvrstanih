@@ -28,6 +28,7 @@
 
   <div class="header-links" *ngIf="isLoggedIn && user==='voditeljPostaje'">
     <a class="header-link" routerLink="station-leader-profile" [ngClass]="{ 'active': activePage === '/station-leader-profile' }" (click)="changeActivePage('/station-leader-profile')">Profil</a>
+    <a class="header-link" routerLink="choose-station" [ngClass]="{ 'active': activePage === '/choose-station' }" (click)="changeActivePage('/choose-station')">Moja postaja</a>
     <button (click)="logout()" type="button" class="header-link sign-out-button">
       <img src="assets/img/poweroff-icon.png" alt="Odjava">
     </button>
