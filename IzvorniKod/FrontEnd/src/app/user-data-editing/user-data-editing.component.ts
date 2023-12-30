@@ -1,23 +1,37 @@
 import {Component, Input, AfterViewInit,Renderer2,ElementRef,OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { Observable } from 'rxjs';
 import {FormControl, FormGroup, NgModel, Validators} from '@angular/forms';
 import {Explorer} from "../explorer-profile/explorer-profile.component";
 import {environment} from "../../environments/environment";
 
+export interface Client {
+  Name: string;
+  Surname: string;
+  Username: string;
+  Password: string;
+  Email: string;
+  Role: string;
+  ClientPhoto: any;
+  Status: string;
+}
 
 @Component({
   selector: 'app-user-data-editing',
   templateUrl: './user-data-editing.component.html',
   styleUrls: ['./user-data-editing.component.css']
 })
-export class UserDataEditingComponent implements AfterViewInit,OnInit{
-  @Input() currentUser!: Explorer;
+
+
+
+export class UserDataEditingComponent implements AfterViewInit, OnInit{
+  @Input() currentUser!: Client;
   keys: any;
   role: any;
+
   // "Name":"Ime","Surname":"Prezime","Username":"Korisničko ime","Password":"Lozinka",
-  constructor(private http: HttpClient, private route: ActivatedRoute,private renderer: Renderer2, private el: ElementRef) {
+  constructor(private http: HttpClient, private route: ActivatedRoute,private renderer: Renderer2, private el: ElementRef, private router: Router) {
     localStorage["Name"]="Ime";
     localStorage["Surname"]="Prezime";
     localStorage["Username"]="Korisničko ime";
@@ -90,7 +104,10 @@ export class UserDataEditingComponent implements AfterViewInit,OnInit{
 
   ngAfterViewInit(): void {
     const imgElement= this.el.nativeElement.querySelector('#imagePreview');
-    imgElement!.innerHTML=`<img src="${this.imageURL}" alt="Image Preview" height="270rem" width="auto">`
+    try {
+      imgElement!.innerHTML=`<img src="${this.imageURL}" alt="Image Preview" height="270rem" width="auto">`
+    }catch (e) {
+    }
     }
 
   checkEducatedFor() {
@@ -191,5 +208,22 @@ export class UserDataEditingComponent implements AfterViewInit,OnInit{
     {id:"helikopter",select:false,name:'helikopter'},
     {id:'motor',select:false,name:'motor'}
   ]
+  deleteUser() {
+    let header = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    });
+    let headersObj = {
+      headers: header
+    };
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    this.http.delete(environment.BASE_API_URL+"/client", headersObj).subscribe(
+      (data) => {
+        console.log("deleted")
+      }
+    )
+    this.refreshPage();
+  }
   protected readonly localStorage = localStorage;
 }

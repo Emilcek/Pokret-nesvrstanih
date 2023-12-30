@@ -1,13 +1,10 @@
 package com.progi.WildTrack.controllers;
 
-import com.progi.WildTrack.domain.Client;
 import com.progi.WildTrack.dto.ClientDetailsDTO;
 import com.progi.WildTrack.dto.ClientUpdateDTO;
-import com.progi.WildTrack.dto.RegisterDto;
 import com.progi.WildTrack.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -27,5 +24,11 @@ public class ClientController {
     public ResponseEntity updateClient(@ModelAttribute ClientUpdateDTO client) {
         System.out.println("ClientController.updateClient" + client);
         return service.updateClient(client);
+    }
+
+    @DeleteMapping
+    public ResponseEntity deleteClient() {
+        System.out.println("ClientController.deleteClient");
+        return service.deleteClient();
     }
 }

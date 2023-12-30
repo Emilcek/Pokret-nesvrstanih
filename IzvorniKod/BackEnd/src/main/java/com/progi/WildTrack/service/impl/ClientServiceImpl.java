@@ -13,7 +13,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.progi.WildTrack.service.impl.AuthenticationServiceImpl.compressPhoto;
 
@@ -173,6 +175,30 @@ public class ClientServiceImpl implements ClientService {
         return ResponseEntity.ok().build();
     }
 
+    public ResponseEntity deleteClient() {
+        Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Token> tokens = tokenRepository.findAllValidTokenByClient(client.getClientName());
+        if (!tokens.isEmpty()) {
+            tokenRepository.deleteAll(tokens);
+        }
+        switch (client.getRole()) {
+            case "voditeljPostaje" -> {
+                StationLead stationLead = stationLeadRepo.findByStationLeadName(client.getClientName());
+                stationLeadRepo.delete(stationLead);
+            }
+            case "istrazivac" -> {
+                Researcher researcher = researcherRepo.findByResearcherName(client.getClientName());
+                researcherRepo.delete(researcher);
+            }
+            case "tragac" -> {
+                Explorer explorer = explorerRepo.findByExplorerName(client.getClientName());
+                explorerRepo.delete(explorer);
+            }
+        }
+        clientRepo.delete(client);
+        return ResponseEntity.ok().build();
+    }
+
     @Override
     @Transactional
     public ClientDetailsDTO updateClientStatusByClientName(String clientName, Integer status) {
@@ -207,7 +233,10 @@ public class ClientServiceImpl implements ClientService {
                 clientDetailsDTO = new ClientDetailsDTO(client, client.getStationLead());
             }
             case "tragac" -> {
-                clientDetailsDTO = new ClientDetailsDTO(client, client.getExplorer().getVehicles());
+                clientDetailsDTO = new ClientDetailsDTO(client, client.getExplorer());
+            }
+            case "istrazivac" -> {
+                clientDetailsDTO = new ClientDetailsDTO(client, client.getResearcher());
             }
             default -> clientDetailsDTO = new ClientDetailsDTO(client);
         };

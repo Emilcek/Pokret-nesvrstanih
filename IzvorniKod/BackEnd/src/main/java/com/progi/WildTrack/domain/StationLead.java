@@ -20,7 +20,7 @@ public class StationLead {
     private String stationLeadName;
 
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "StatusId")
     private Status status;
     @OneToOne(cascade = CascadeType.ALL)

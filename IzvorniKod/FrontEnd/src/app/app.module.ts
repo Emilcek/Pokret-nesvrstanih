@@ -10,6 +10,7 @@ import { UserDataEditingComponent } from './user-data-editing/user-data-editing.
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { StationLeaderProfileComponent } from './station-leader-profile/station-leader-profile.component';
+import { ResearcherProfileComponent } from './researcher-profile/researcher-profile.component';
 import { ExplorerTasksComponent } from './explorer-tasks/explorer-tasks.component';
 import { ExplorerProfileComponent } from './explorer-profile/explorer-profile.component';
 import { UsersRequestsListComponent } from './users-requests-list/users-requests-list.component';
@@ -23,8 +24,8 @@ import {NgOptimizedImage} from "@angular/common";
     UserDataEditingComponent,
     LoginComponent,
     RegisterComponent,
-    ExplorerProfileComponent,
     StationLeaderProfileComponent,
+    ResearcherProfileComponent,
     ExplorerTasksComponent,
     ExplorerProfileComponent,
     UsersRequestsListComponent,

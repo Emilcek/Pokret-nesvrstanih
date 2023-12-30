@@ -3,11 +3,11 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 
 @Component({
-  selector: 'app-station-leader-profile',
-  templateUrl: './station-leader-profile.component.html',
-  styleUrls: ['./station-leader-profile.component.css']
+  selector: 'app-researcher-profile',
+  templateUrl: './researcher-profile.component.html',
+  styleUrls: ['./researcher-profile.component.css']
 })
-export class StationLeaderProfileComponent implements OnInit{
+export class ResearcherProfileComponent implements OnInit{
   currentUser: any;
 
   constructor(private http: HttpClient) {
@@ -22,9 +22,9 @@ export class StationLeaderProfileComponent implements OnInit{
     };
 
     //backend mi ne vraća loziku
-    this.http.get<any>(environment.BASE_API_URL + "/stationLead", headersObj).subscribe({
+    this.http.get<any>(environment.BASE_API_URL + "/researcher", headersObj).subscribe({
       next: data => {
-        console.log("aaaaaaaaaaa:",data) //ispisuje se sve osim lozinke
+        console.log("res:",data) //ispisuje se sve osim lozinke
         let res: any = data;
         this.currentUser = {
           Name: data.firstName,
