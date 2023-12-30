@@ -29,19 +29,19 @@ public class ClientDetailsDTO {
     private String stationName;
 
     public ClientDetailsDTO(Client client) {
-        SetBaseAttributes(client);
+        setBaseAttributes(client);
     }
 
     public ClientDetailsDTO(Client client, Set<Vehicle> educatedFor) {
         System.out.println("ClientDetailsDTO");
-        SetBaseAttributes(client);
+        setBaseAttributes(client);
         for (Vehicle vehicle : educatedFor) {
             this.educatedFor.add(vehicle.getVehicleType());
         }
     }
 
     public ClientDetailsDTO(Client client, StationLead stationLead) {
-        SetBaseAttributes(client);
+        setBaseAttributes(client);
         if (stationLead.getStation() != null) {
             this.stationName = stationLead.getStation().getStationName();
         }
@@ -51,7 +51,7 @@ public class ClientDetailsDTO {
     }
 
 
-    private void SetBaseAttributes(Client client) {
+    private void setBaseAttributes(Client client) {
         this.clientName = client.getClientName();
         this.firstName = client.getFirstName();
         this.lastName = client.getLastName();
