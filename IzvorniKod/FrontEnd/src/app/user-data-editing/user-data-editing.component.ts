@@ -160,6 +160,7 @@ export class UserDataEditingComponent implements AfterViewInit, OnInit{
       })
 
     }
+    this.refreshPage();
 
   }
   handleFileInput(event: any): void {
@@ -199,6 +200,10 @@ export class UserDataEditingComponent implements AfterViewInit, OnInit{
   }
   refreshPage() {
     window.location.reload();
+  }
+
+  refreshData() {
+    this.ngOnInit();
   }
   abilities=[
     {id:"hodanje",select:false,name:'hodanje'},

@@ -17,6 +17,10 @@ import { UsersRequestsListComponent } from './users-requests-list/users-requests
 import { UsersListComponent } from './users-list/users-list.component';
 import { UserVerifiedSuccessfulComponent } from './user-verified-successful/user-verified-successful.component';
 import {NgOptimizedImage} from "@angular/common";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +44,9 @@ import {NgOptimizedImage} from "@angular/common";
     FormsModule,
     UserVerifiedSuccessfulComponent,
     NgOptimizedImage,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]
