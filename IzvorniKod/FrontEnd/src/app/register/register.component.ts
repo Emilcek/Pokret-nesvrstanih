@@ -118,7 +118,7 @@ files: any=[]
     const isChecked = event.target.checked
     this.abilities = this.abilities.map(d=>{
       if(d.id == id){
-        d.select=isChecked
+        d.select=true
         return d
       }
       return d
