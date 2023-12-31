@@ -1,12 +1,21 @@
 package com.progi.WildTrack.domain;
 
+import com.progi.WildTrack.dto.TaskDTO;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "Task")
 public class Task {
     @Id
@@ -15,9 +24,9 @@ public class Task {
     private Long taskId;
     @Column(name="TaskDescription",nullable = false)
     private String taskDescription;
-    @Column(name="EndLocation")
+    @Column(name="EndLocation", nullable = false)
     private String endLocation;
-    @Column(name="StartLocation", nullable = false)
+    @Column(name="StartLocation")
     private String startLocation;
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -39,7 +48,16 @@ public class Task {
     @JoinColumn(name = "AnimalId")
     private Animal animal;
 
-    public Task() {
-    }
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="RequestId")
+    private Request request;
 
+
+    public Task(TaskDTO task, Vehicle vehicle) {
+        this.taskDescription = task.getDescription();
+        this.endLocation = task.getEndLocation();
+        this.startLocation = task.getStartLocation();
+        this.vehicle = vehicle;
+
+    }
 }

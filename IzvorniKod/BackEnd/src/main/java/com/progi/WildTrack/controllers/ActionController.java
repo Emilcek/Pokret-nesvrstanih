@@ -1,21 +1,17 @@
 package com.progi.WildTrack.controllers;
 
-
-import com.progi.WildTrack.service.TaskService;
+import com.progi.WildTrack.dto.CreateActionDTO;
+import com.progi.WildTrack.service.ActionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/explorer")
+@RequestMapping("/action")
 @CrossOrigin(origins = "${FRONTEND_API_URL}")
 @RequiredArgsConstructor
-public class ExplorerController {
+public class ActionController {
 
-    private final TaskService taskService;
+    private ActionService service;
 
-    @GetMapping("/tasks")
-    public ResponseEntity getTasks() {
-        return taskService.getTasks();
-    }
 }

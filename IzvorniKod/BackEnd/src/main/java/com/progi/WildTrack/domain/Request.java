@@ -1,7 +1,18 @@
 package com.progi.WildTrack.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Data
 @Table(name = "Request")
 public class Request {
     @Id
@@ -12,8 +23,12 @@ public class Request {
     @Column(name = "RequestStatus", length = 30, nullable = false)
     private String requestStatus;
 
-    @Column(name = "NumOfPeople", nullable = false)
-    private int numOfPeople;
+//    @Column(name = "NumOfPeople", nullable = false)
+//    private int numOfPeople;
+
+    @OneToMany(mappedBy = "request", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Task> tasks;
+
 
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -22,8 +37,5 @@ public class Request {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="Researchername")
     private Researcher researcher;
-
-    public Request() {
-    }
 
 }
