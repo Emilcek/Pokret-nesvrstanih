@@ -29,6 +29,7 @@
 
   <div class="header-links" *ngIf="isLoggedIn && user==='istrazivac'" [ngClass]="{'is-mobile-open': isNavOpen}">
     <a class="header-link" routerLink="researcher-profile" [ngClass]="{ 'active': activePage === '/researcher-profile' }" (click)="changeActivePage('/researcher-profile')">Profil</a>
+    <a class="header-link" routerLink="action-creation" [ngClass]="{ 'active': activePage === '/action-creation' }" (click)="changeActivePage('/action-creation')">Akcije</a>
     <button (click)="logout()" type="button" class="header-link sign-out-button">
       <img src="assets/img/poweroff-icon.png" alt="Odjava">
     </button>

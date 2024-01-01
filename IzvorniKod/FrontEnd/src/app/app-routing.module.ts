@@ -9,6 +9,7 @@ import { ExplorerProfileComponent } from './explorer-profile/explorer-profile.co
 import { UsersRequestsListComponent } from './users-requests-list/users-requests-list.component';
 import { UsersListComponent } from './users-list/users-list.component';
 import { UserVerifiedSuccessfulComponent } from './user-verified-successful/user-verified-successful.component';
+import { ActionCreationComponent } from './action-creation/action-creation.component'
 import {AuthGuard} from "./auth/auth.guard";
 import {AuthLoginGuard} from "./auth/auth.loginguard";
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'users-request-list', component: UsersRequestsListComponent, canActivate:[AuthGuard], data: { requiredRole: 'admin' }},
   { path: 'verified' , component: UserVerifiedSuccessfulComponent},
   { path: 'researcher-profile', component: ResearcherProfileComponent, canActivate:[AuthGuard], data: { requiredRole: 'istrazivac' } },
+  { path: 'action-creation', component: ActionCreationComponent, canActivate:[AuthGuard], data: { requiredRole: 'istrazivac' } },
   { path: 'station-leader-profile', component: StationLeaderProfileComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' } },
   { path: '**', component: LoginComponent, canActivate:[AuthLoginGuard]}
 ];

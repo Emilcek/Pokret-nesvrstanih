@@ -1,0 +1,32 @@
+<div class="outer-wrapper">
+  <div class="top">
+  Kreiranje nove akcije
+    <hr>
+  </div>
+  <div class="center-grid">
+    <div>
+      <label for="pass" class="label">Postaja</label>
+      <select name="position" id="pos" >
+        <option value="placeholder" [selected]="true" [hidden]="true">Odaberi postaju</option>
+        <option value="Postaja1">Postaja1</option>
+        <option value="Postaja2">Postaja2</option>
+        <option value="Postaja3">Postaja3</option>
+      </select>
+    </div>
+    <div>
+      <label for="pass" class="label">Lista zadataka</label>
+      <div class="listOfTasks">
+        <tr *ngFor="let n of tasks">
+        </tr>
+      </div>
+    </div>
+    <div>
+      <button class="btn-add" (click)="showOptions()">
+        Dodaj zadatak
+      </button>
+    </div>
+  </div>
+  <div>
+    <hr>
+  </div>
+</div>
