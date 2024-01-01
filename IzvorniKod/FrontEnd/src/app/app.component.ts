@@ -22,6 +22,7 @@ export class AppComponent implements OnInit {
     }
   }
   ngOnInit() {
+    localStorage.clear();
     this.activePage = window.location.pathname;
     console.log(this.activePage);
     this.isLoggedIn = localStorage.getItem("token") !== null;
