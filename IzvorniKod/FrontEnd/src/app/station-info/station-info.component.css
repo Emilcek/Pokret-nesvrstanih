@@ -1,0 +1,38 @@
+.main-container {
+  margin: 30px;
+}
+
+.title {
+  border-bottom: 1px solid #787878;
+  padding: 20px;
+  font-size: 25px;
+}
+
+.info {
+  padding: 20px;
+  font-size: 20px;
+}
+.tragaci {
+  margin-top: 20px;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.save-button {
+  background-color: #95C4E7;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-size: 18px;
+  margin-top: 20px;
+  transition: 0.3s;
+  color: #756E6E;
+  width: fit-content;
+  align-self: center;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #548ca9;
+  }
+}

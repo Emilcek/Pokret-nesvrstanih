@@ -2,8 +2,8 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import * as L from 'leaflet';
+import {icon, Icon, LatLng, Marker} from 'leaflet';
 import 'leaflet-routing-machine';
-import {icon, Icon, Marker} from "leaflet";
 import * as polyline from 'polyline';
 
 
@@ -14,9 +14,17 @@ import * as polyline from 'polyline';
 })
 export class StationChoosingComponent implements OnInit, AfterViewInit{
   isStationChosen: boolean = false;
+  chosenStation: any;
   chosenStationName: any;
   chosenStationSurface: any;
   private map: any;
+  header = new HttpHeaders({
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer ' + localStorage.getItem('token'),
+});
+  headersObj = {
+  headers: this.header
+};
 
   private defaultIcon: Icon = icon({
     iconUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-icon.png"
@@ -24,19 +32,39 @@ export class StationChoosingComponent implements OnInit, AfterViewInit{
 
   constructor(private http: HttpClient) {
     Marker.prototype.options.icon = this.defaultIcon;
-
   }
   ngOnInit(): void {
-    let header = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + localStorage.getItem('token'),
-    });
-    let headersObj = {
-      headers: header
-    };
-    this.http.get<any>(environment.BASE_API_URL + "/stationLead/stations", headersObj).subscribe({
-      next: (data: any) => {
 
+    this.http.get<any>(environment.BASE_API_URL + "/stationLead/stations", this.headersObj).subscribe({
+      next: (data: any) => {
+        let stationsArray = new Array(7);
+        for (let station of data) {
+          console.log(station);
+          let [latitude, longitude] = station.stationLocation.split(',').map(Number);
+          let latLng = { lat: latitude, lng: longitude };
+
+          let circle = L.circle(latLng, {
+            radius: station.radius,
+            color: 'red',
+            fillColor: '#f03'
+          }).addTo(this.map);
+
+          circle.on('mouseover', function (e) {
+            circle.bindTooltip(station.stationName).openTooltip();
+          });
+
+          circle.on('mouseout', function (e) {
+            circle.closeTooltip();
+          });
+
+          circle.on('click', (e) => {
+            console.log("click");
+            this.chosenStationName = station.stationName;
+            this.chosenStationSurface = Math.round(Math.pow(station.radius, 2) * Math.PI)
+            this.isStationChosen = true;
+            this.chosenStation = station;
+          });
+        }
       }})
   }
   private initMap(): void {
@@ -58,83 +86,21 @@ export class StationChoosingComponent implements OnInit, AfterViewInit{
       popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
     });
 
-    /*this.http.get<any>('https://router.project-osrm.org/route/v1/foot/49.52334,3.186035;51.061132,7.514648?overview=false&alternatives=true').subscribe({
-      next: data => {
-        let resData: any = data;
-        console.log(data)
-        L.Routing.control({waypoints: [L.latLng(resData.waypoints[0].location[0], resData.waypoints[0].location[1]), L.latLng(resData.waypoints[1].location[0], resData.waypoints[1].location[1])]}).addTo(this.map)
-      }
-      }
-    )*/
-
-    this.http.get<any>('http://router.project-osrm.org/route/v1/walking/13.388860,52.517037;13.397634,52.529407;13.428555,52.523219;13.388860,52.517037?overview=full').subscribe({
-        next: data => {
-          const encodedPolyline = data.routes[0].geometry;
-          console.log(encodedPolyline)
-          const routeCoordinates = polyline.decode(encodedPolyline).map((coord) => L.latLng(coord[0], coord[1]));
-          console.log(routeCoordinates)
-
-          const routePolyline = L.polyline(routeCoordinates, { color: 'blue' });
-          routePolyline.addTo(this.map);
-          //L.Routing.line(data.routes[0].geometry).addTo(this.map);
-          const coords = polyline.decode(encodedPolyline);
-          const circle = L.circle([45.8, 16.1 ], {
-            radius: 10000,
-            color: 'red',
-            fillColor: '#f03'
-          }).addTo(this.map);
-
-          circle.on('mouseover', function (e) {
-            circle.bindTooltip('Zagreb').openTooltip();
-          });
-
-          circle.on('mouseout', function (e) {
-            circle.closeTooltip();
-          });
-
-          circle.on('click', (e) => {
-            console.log("click");
-            this.chosenStationName = 'Zagreb';
-            this.isStationChosen = true;
-          });
-
-          const circle2 = L.circle([45.5, 18.5 ], {
-            radius: 10000,
-            color: 'red',
-            fillColor: '#f03'
-          }).addTo(this.map);
-
-          circle2.on('mouseover', function (e) {
-            circle2.bindTooltip('Osijek').openTooltip();
-          });
-
-          circle2.on('mouseout', function (e) {
-            circle2.closeTooltip();
-          });
-
-          circle2.on('click', (e) => {
-            console.log("click");
-            this.chosenStationName = 'Osijek';
-            this.isStationChosen = true;
-          });
-        }
-      }
-    )
-
 
     tiles.addTo(this.map);
-    /*L.Routing.control({
-      waypoints: [L.latLng(50.2055, 11.4148), L.latLng(51.783, 6.2512)],
-      routeWhileDragging: true,
-    }).addTo(this.map);*/
   }
 
   ngAfterViewInit(): void {
     this.initMap();
   }
 
-  errorF(args?: any) {
-
+  saveStation() {
+    this.http.get<any>(environment.BASE_API_URL + "/stationLead", this.headersObj).subscribe({
+      next: (data: any) => {
+        console.log(data)
+        this.chosenStation.stationLead = data.email;
+        console.log(this.chosenStation)
+        this.http.put<any>(environment.BASE_API_URL + "/stationLead/stations", this.chosenStation);
+      }})
   }
-
 }

@@ -9,9 +9,9 @@
       <div class="title">Informacije o postaji</div>
       <div class="station-info">
         <span class="info">Naziv postaje: {{chosenStationName}} </span>
-        <span class="info">Površina: {{chosenStationSurface}} </span>
+        <span class="info">Površina: {{chosenStationSurface}} km<sup>2</sup> </span>
       </div>
-      <button class="button">
+      <button class="button" (click)="saveStation()">
         Spremi postaju
       </button>
       <div class="info-text">*pritiskom na ovaj gumb postajete voditelj izabrane postaje</div>

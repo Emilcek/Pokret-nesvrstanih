@@ -18,6 +18,8 @@ import { UserVerifiedSuccessfulComponent } from './user-verified-successful/user
 import { MapComponent } from './map/map.component';
 import { StationInfoComponent } from './station-info/station-info.component';
 import { StationChoosingComponent } from './station-choosing/station-choosing.component';
+import {MatSelectModule} from '@angular/material/select';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -44,6 +46,8 @@ import { StationChoosingComponent } from './station-choosing/station-choosing.co
     NgSelectModule,
     HttpClientModule,
     FormsModule,
+    MatSelectModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
