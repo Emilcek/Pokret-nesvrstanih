@@ -1,6 +1,8 @@
 <div class="outer-wrapper">
-  <div class="top">
-  Kreiranje nove akcije
+  <div>
+    <div class="top">
+      Kreiranje nove akcije
+    </div>
     <hr>
   </div>
   <div class="center-grid">
@@ -13,7 +15,7 @@
         <option value="Postaja3">Postaja3</option>
       </select>
     </div>
-    <div>
+    <div class="listOfTasks-div">
       <label for="pass" class="label">Lista zadataka</label>
       <div class="listOfTasks">
         <tr *ngFor="let n of tasks">
@@ -21,7 +23,7 @@
       </div>
     </div>
       <div class="taskDefining">
-        <div>
+        <div class="buttons-div">
           <button class="btn-add" (click)="showOptions()">
             Dodaj zadatak
           </button>
@@ -29,22 +31,27 @@
             Odustani
           </button>
         </div>
-        <div>
-          <label class="label">Opis zadatka</label>
-          <div>
-            <textarea id="description"></textarea>
+        <div class="inner-grid">
+          <div class="description-div">
+            <label class="label">Opis zadatka</label>
+            <div>
+              <textarea id="description"></textarea>
+            </div>
+          </div>
+          <div id="education-div">
+            <select name="position" id="education">
+              <option value="placeholder" [selected]="true" [hidden]="true">Odaberi kompetenciju</option>
+              <option value="hodanje">Hodanje</option>
+              <option value="dron">Dron</option>
+              <option value="motor">Motor</option>
+              <option value="helikopter">Helikopter</option>
+              <option value="auto">Auto</option>
+              <option value="brod">Brod</option>
+            </select>
           </div>
         </div>
-        <div>
-          <select name="position" id="education">
-            <option value="placeholder" [selected]="true" [hidden]="true">Odaberi kompetenciju</option>
-            <option value="hodanje">Hodanje</option>
-            <option value="dron">Dron</option>
-            <option value="motor">Motor</option>
-            <option value="helikopter">Helikopter</option>
-            <option value="auto">Auto</option>
-            <option value="brod">Brod</option>
-          </select>
+        <div id="map">
+          Karta
         </div>
       </div>
   </div>

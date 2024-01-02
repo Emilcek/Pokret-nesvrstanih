@@ -9,7 +9,10 @@
 
 .top{
   width: 100%;
-  font-size: 1.2rem;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 1rem;
 }
 
 .center-grid{
@@ -64,7 +67,7 @@ button {
 
 .taskDefining{
   display: grid;
-  grid-template-rows: 0.1fr 0.1fr 0.1fr 1fr;
+  grid-template-rows: 0.1fr 0.1fr 1fr;
   grid-gap: 20px;
 }
 
@@ -91,3 +94,32 @@ button {
   width:14rem;
 }
 
+.inner-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
+#education-div{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+#map{
+  display: flex;
+  font-size: 10rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttons-div{
+  padding-left: 5rem;
+}
+
+.listOfTasks-div{
+  padding-left: 5rem;
+}
