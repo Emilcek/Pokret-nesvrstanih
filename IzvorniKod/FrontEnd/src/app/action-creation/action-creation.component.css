@@ -36,6 +36,7 @@ select{
   border: 1px solid black;
   border-radius: 10px;
   min-height: 10rem;
+  height:auto;
 }
 
 button {
@@ -52,3 +53,41 @@ button {
 .btn-add:hover{
     background-color: rgb(88, 141, 156);
 }
+
+.btn-dismiss {
+  background-color: rgb(198, 192, 192);
+}
+
+.btn-dismiss:hover {
+  background-color: rgb(136, 119, 119);
+}
+
+.taskDefining{
+  display: grid;
+  grid-template-rows: 0.1fr 0.1fr 0.1fr 1fr;
+  grid-gap: 20px;
+}
+
+#description{
+  height:5rem;
+  width: 14rem;
+}
+
+.sendButtonDiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sendAction{
+  font-size: 1.5rem;
+}
+
+.sendAction:hover{
+  background-color: rgb(88, 141, 156);
+}
+
+#education{
+  width:14rem;
+}
+
