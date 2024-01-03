@@ -44,7 +44,7 @@ export class StationChoosingComponent implements OnInit, AfterViewInit{
           let latLng = { lat: latitude, lng: longitude };
 
           let circle = L.circle(latLng, {
-            radius: station.radius,
+            radius: station.radius * 100,
             color: 'red',
             fillColor: '#f03'
           }).addTo(this.map);
@@ -99,8 +99,15 @@ export class StationChoosingComponent implements OnInit, AfterViewInit{
       next: (data: any) => {
         console.log(data)
         this.chosenStation.stationLead = data.email;
-        console.log(this.chosenStation)
-        this.http.put<any>(environment.BASE_API_URL + "/stationLead/stations", this.chosenStation);
+        console.log(this.chosenStation) // saljem istu postaju samo stationLead više nije null
+        /*this.http.put(environment.BASE_API_URL + "/stationLead/stations", this.chosenStation).subscribe({
+          next: (putData: any) => {
+            console.log("PUT request successful", putData);
+          },
+          error: (error) => {
+            console.error("Error in PUT request", error);
+          }
+        });*/
       }})
   }
 }

@@ -2,6 +2,10 @@
   margin: 30px;
 }
 
+.content {
+  height: 550px;
+}
+
 .title {
   border-bottom: 1px solid #787878;
   padding: 20px;
@@ -12,11 +16,24 @@
   padding: 20px;
   font-size: 20px;
 }
+
+.list {
+  padding: 20px 0;
+  font-size: 18px;
+}
+
 .tragaci {
   margin-top: 20px;
   justify-content: center;
   display: flex;
-  flex-direction: column;
+}
+.add-new-text {
+  font-size: 16px;
+}
+
+.light-text {
+  color: #756E6E;
+  margin-right: 10px;
 }
 
 .save-button {
@@ -35,4 +52,37 @@
     cursor: pointer;
     background-color: #548ca9;
   }
+}
+
+.main-container {
+  margin-top: 0;
+}
+
+.map-container {
+  height: 80%;
+  width: 40%;
+  margin: 30px;
+}
+
+.map-frame {
+  border: 2px solid black;
+  height: 100%;
+  width: 100%;
+}
+
+#map {
+  height: 100%;
+  width: 100%;
+}
+
+.custom-tooltip {
+  background-color: white;
+  border: 1px solid red;
+  padding: 8px;
+  font-size: 14px;
+
+  &:focus {
+    outline: none;
+  }
+
 }
