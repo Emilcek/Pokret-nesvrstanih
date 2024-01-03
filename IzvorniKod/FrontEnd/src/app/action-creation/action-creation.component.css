@@ -17,7 +17,7 @@
 
 .center-grid{
   display: grid;
-  grid-template-columns: 1.5fr 2fr 3fr;
+  grid-template-columns: 1.5fr 2fr 2fr;
   grid-gap: 20px;
   justify-content: center;
 }
@@ -67,7 +67,7 @@ button {
 
 .taskDefining{
   display: grid;
-  grid-template-rows: 0.1fr 0.1fr 1fr;
+  grid-template-rows: 0.5fr 0.5fr 1fr;
   grid-gap: 20px;
 }
 
@@ -120,6 +120,24 @@ button {
   padding-left: 5rem;
 }
 
-.listOfTasks-div{
-  padding-left: 5rem;
+.firstColDiv{
+  display: grid;
+  grid-template-rows: 0.2fr 1fr;
+  grid-gap: 10px;
+}
+
+.map-container {
+  height: 100%;
+  width: 100%;
+}
+
+.map-frame {
+  border: 2px solid black;
+  height: 100%;
+  width: 100%;
+}
+
+#map {
+  height: 100%;
+  width: 100%;
 }
