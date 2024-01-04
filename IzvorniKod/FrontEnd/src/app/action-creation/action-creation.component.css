@@ -66,6 +66,7 @@ button {
 .taskDefining{
   display: flex;
   height: 30rem;
+  width: 40%;
 }
 
 #description{
@@ -93,20 +94,12 @@ button {
 .inner-grid{
   display: flex;
   flex-direction: column;
-  width:20rem;
+  width: 100%;
 }
 
 #education-div{
   display:flex;
   justify-content: center;
-}
-
-
-#map{
-  display: flex;
-  font-size: 10rem;
-  justify-content: center;
-  align-items: center;
 }
 
 .buttons-div{
@@ -118,6 +111,7 @@ button {
   display: flex;
   flex-direction: column;
   gap: 5rem;
+  width: 25%;
 }
 
 .map-container {
@@ -152,5 +146,5 @@ button {
   display: flex;
   flex-direction: column;
   gap: 5px;
-  width:10rem;
+  width: 25%;
 }
