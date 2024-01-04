@@ -70,7 +70,8 @@ button {
 }
 
 .description{
-width:17rem;
+  width:20rem;
+  height:7rem ;
 }
 
 .sendButtonDiv{
@@ -177,4 +178,7 @@ width:17rem;
   display: flex;
   flex-direction: column;
   gap: 2px;
+}
+textarea{
+  resize:none;
 }

@@ -20,8 +20,8 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
   isStationChosen: boolean = false;
   chosenStationName: any;
   chosenStationSurface: any;
-  startLocation:string="";
-  endLocation:string="";
+  startLocation:any;
+  endLocation:any;
   markersGroup: any;
   educatedForChosen:any;
   task=new FormGroup({
@@ -72,11 +72,12 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
       if (markersCount < 2) {
         var marker = L.marker(e.latlng,{icon:customIcon}).addTo(mg);
         if(markersCount!=1){
-          marker.bindPopup("Početna lokacija").openPopup();
-          this.startLocation=e.latlng.lat+","+e.latlng.lng
-        }else{
           marker.bindPopup("Krajnja lokacija").openPopup();
           this.endLocation=e.latlng.lat+","+e.latlng.lng
+          this.startLocation=null
+        }else{
+          marker.bindPopup("Početna lokacija").openPopup();
+          this.startLocation=e.latlng.lat+","+e.latlng.lng
         }
 
         return;
