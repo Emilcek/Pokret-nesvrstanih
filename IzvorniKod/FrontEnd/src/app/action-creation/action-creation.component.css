@@ -20,6 +20,7 @@
   grid-template-columns: 1.5fr 2fr 2fr;
   grid-gap: 20px;
   justify-content: center;
+  overflow: hidden;
 }
 
 select{
@@ -135,9 +136,14 @@ button {
   border: 2px solid black;
   height: 100%;
   width: 100%;
+  font-size: 20px;
 }
 
 #map {
   height: 100%;
   width: 100%;
+}
+
+.flex{
+  width:10rem;
 }
