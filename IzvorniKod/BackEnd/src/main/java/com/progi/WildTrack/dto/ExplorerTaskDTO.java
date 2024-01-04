@@ -13,5 +13,4 @@ public class ExplorerTaskDTO {
 
         private String explorerName;
         private Long taskId;
-        private String vehicle;
 }

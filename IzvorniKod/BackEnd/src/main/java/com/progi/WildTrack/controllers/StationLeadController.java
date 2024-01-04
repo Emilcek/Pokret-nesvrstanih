@@ -20,9 +20,8 @@ public class StationLeadController {
 
     private final ClientService clientService;
     private final StationService stationService;
-    private final StationLeadService stationLeadService;
-    private final RequestService requestService;
     private final ExplorerService explorerService;
+    private final ActionService actionService;
 
     @GetMapping
     public ResponseEntity<ClientDetailsDTO> getStationLead() {
@@ -41,7 +40,7 @@ public class StationLeadController {
 
     @GetMapping("/requests")
     public ResponseEntity getRequests() {
-        return requestService.getStationLeadRequests();
+        return actionService.getStationLeadRequests();
     }
 
     @GetMapping("/explorers")
@@ -51,11 +50,11 @@ public class StationLeadController {
 
     @PutMapping("/request/{requestId}/declined")
     public ResponseEntity updateRequest(@PathVariable Long requestId) {
-        return requestService.declineRequest(requestId);
+        return actionService.declineRequest(requestId);
     }
     @PutMapping("/request/{requestId}/accepted")
     public ResponseEntity updateRequest(@PathVariable Long requestId,
                                         @RequestBody List<ExplorerTaskDTO> explorerTaskDTO) {
-        return requestService.acceptRequest(requestId, explorerTaskDTO);
+        return actionService.acceptRequest(requestId, explorerTaskDTO);
     }
 }

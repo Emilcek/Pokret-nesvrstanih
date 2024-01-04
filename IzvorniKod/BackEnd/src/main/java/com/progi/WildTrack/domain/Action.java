@@ -22,11 +22,19 @@ public class Action {
     @Column(name = "ActionId", nullable = false)
     private Long actionId;
 
+    @Column(name = "ActionName", nullable = false)
+    private String actionName;
+    @Column(name = "ActionDescription", nullable = false)
+    private String actionDescription;
+    @Column(name = "ActionStatus", nullable = false)
+    private String actionStatus;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "StationLeadname")
+    private StationLead stationLead;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Researchername")
     private Researcher researcher;
-    @OneToMany(mappedBy = "action", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ActionComment> actionComments;
     @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
     @JoinTable(
             name = "Explorer_Action",

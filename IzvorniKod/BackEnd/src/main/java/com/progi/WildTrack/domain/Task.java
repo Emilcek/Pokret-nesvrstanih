@@ -10,6 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -28,6 +29,8 @@ public class Task {
     private String endLocation;
     @Column(name="StartLocation")
     private String startLocation;
+    @Column(name="TaskStatus", nullable = false)
+    private String taskStatus;
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "TaskTS", nullable = false)
@@ -36,6 +39,8 @@ public class Task {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ActionId")
     private Action action;
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+    private List<TaskComment> taskComments;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Explorername")
@@ -48,16 +53,12 @@ public class Task {
     @JoinColumn(name = "AnimalId")
     private Animal animal;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="RequestId")
-    private Request request;
-
-
     public Task(TaskDTO task, Vehicle vehicle) {
         this.taskDescription = task.getDescription();
         this.endLocation = task.getEndLocation();
         this.startLocation = task.getStartLocation();
         this.vehicle = vehicle;
+        this.taskStatus = "Ongoing";
 
     }
 }

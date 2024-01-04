@@ -43,7 +43,7 @@ public class Client implements UserDetails {
     @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
     private StationLead stationLead;
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ActionComment> actionComments;
+    private List<TaskComment> taskComments;
 
     private String role;
 

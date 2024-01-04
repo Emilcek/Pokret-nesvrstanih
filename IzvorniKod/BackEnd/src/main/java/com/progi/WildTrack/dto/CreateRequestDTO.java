@@ -14,5 +14,7 @@ import java.util.List;
 public class CreateRequestDTO {
 
     private String station;
+    private String name;
+    private String description;
     private List<TaskDTO> tasks;
 }
