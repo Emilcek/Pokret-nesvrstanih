@@ -3,14 +3,17 @@ import { FormGroup, FormControl, Validators } from '@angular/forms'
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {icon, Icon, Marker} from "leaflet";
 import * as polyline from 'polyline';
+import {Router} from "@angular/router";
+import {HeaderService} from "../header/header.service";
+import {environment} from "../../environments/environment";
 @Component({
   selector: 'app-action-creation',
   templateUrl: './action-creation.component.html',
   styleUrls: ['./action-creation.component.css']
 })
 export class ActionCreationComponent implements AfterViewInit, OnInit {
+  constructor(private http:HttpClient, private router:Router, private headerService: HeaderService){}
   tasks: any = [];
   private map: any;
   private center: L.LatLngExpression = L.latLng(45.1, 15.2);
@@ -22,10 +25,13 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
   markersGroup: any;
   educatedForChosen:any;
   task=new FormGroup({
+    actionTitle:new FormControl(''),
+    actionDescription:new FormControl(''),
     station:new FormControl(''),
     educatedFor:new FormControl(),
     description:new FormControl('',Validators.required),
   })
+
   ngOnInit() {
   }
 
@@ -91,12 +97,9 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
     if (this.task.valid && this.educatedForChosen!=undefined) {
       this.tasks.push({"description": this.task.value.description, "endLocation": this.endLocation, "startLocation":this.startLocation,"educatedFor": this.educatedForChosen});
     }
-    //console.log(this.tasks)
   }
 
   saveEducatedFor(event:any){
-    console.log(event.target.value)
-    console.log(this.startLocation+","+this.endLocation)
     this.educatedForChosen=event.target.value;
     return event.target.value;
   }
@@ -104,5 +107,30 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
   deleteFromTasks(task:any){
     this.tasks.splice(this.tasks.indexOf(task),1)
   }
-}
+
+  sendAction(){
+    if(this.task.value.actionTitle!=undefined || this.task.value.actionDescription!=undefined || this.educatedForChosen!=undefined){
+      let formData = new FormData()
+      formData.append('actionTitle',this.task.value.actionTitle!)
+      formData.append('actionDescription',this.task.value.actionDescription!)
+      formData.append('station',this.chosenStationName)
+      formData.append('task',this.tasks)
+
+      let header = new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+      });
+      let headersObj = {
+        headers: header
+      };
+      this.http.post(environment.BASE_API_URL+"/researcher/request",formData,headersObj).subscribe({
+        next: data => {
+          let response: any = data;
+          console.log(response)
+          }, error: (error) => {
+          console.log(error,"error")
+        }
+      })
+      }
+    }
+  }
 

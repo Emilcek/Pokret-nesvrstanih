@@ -62,14 +62,14 @@
       <label class="label">Lista zadataka</label>
       <div class="listOfTasks">
         <tr *ngFor="let n of this.tasks">
-          <td>{{this.tasks.indexOf(n)+1}}.Opis zadatka: {{n.description}}, kompetencija: {{n.educatedFor}} <button class="btn-dismiss" id="delete" (click)="deleteFromTasks(n)">Obriši</button></td>
+          <td>{{this.tasks.indexOf(n)+1}}. Opis zadatka: {{n.description}}, kompetencija: {{n.educatedFor}} <button class="btn-dismiss" id="delete" (click)="deleteFromTasks(n)">Obriši</button></td>
         </tr>
       </div>
     </div>
   </div>
     <hr>
     <div class="sendButtonDiv">
-      <button class="sendAction">
+      <button class="sendAction" (click)="sendAction()">
         Pošalji akciju
       </button>
     </div>
