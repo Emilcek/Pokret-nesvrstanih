@@ -8,7 +8,7 @@
   <div class="center-grid">
     <div class="firstColDiv">
       <div>
-        <label for="pass" class="label">Postaja</label>
+        <label class="label">Postaja</label>
         <select name="position" id="pos" >
           <option value="placeholder" [selected]="true" [hidden]="true">Odaberi postaju</option>
           <option value="Postaja1">Postaja1</option>
@@ -16,55 +16,54 @@
           <option value="Postaja3">Postaja3</option>
         </select>
       </div>
-      <div class="listOfTasks-div">
-        <label class="label">Lista zadataka</label>
-        <div class="listOfTasks">
-          <tr *ngFor="let n of this.tasks">
-            <td>{{n.description}}</td>
-          </tr>
-        </div>
+      <div class="buttons-div">
+        <button class="btn-add" (click)="showOptions()">
+          Dodaj zadatak
+        </button>
+        <button class="btn-dismiss">
+          Odustani
+        </button>
       </div>
     </div>
-      <div class="taskDefining">
-        <div class="buttons-div">
-          <button class="btn-add" (click)="showOptions()">
-            Dodaj zadatak
-          </button>
-          <button class="btn-dismiss">
-            Odustani
-          </button>
-        </div>
+    <div class="taskDefining">
         <div class="inner-grid">
+          <div style="height: 60%" class="map-container">
+            <div class="map-frame">
+              <div id="map"></div>
+            </div>
+          </div>
           <div class="description-div">
             <label class="label">Opis zadatka</label>
             <div>
               <textarea id="description"></textarea>
             </div>
-          </div>
-          <div id="education-div">
-            <select name="position" id="education">
-              <option value="placeholder" [selected]="true" [hidden]="true">Odaberi kompetenciju</option>
-              <option value="hodanje">Hodanje</option>
-              <option value="dron">Dron</option>
-              <option value="motor">Motor</option>
-              <option value="helikopter">Helikopter</option>
-              <option value="auto">Auto</option>
-              <option value="brod">Brod</option>
-            </select>
+            <div id="education-div">
+              <select name="position" id="education">
+                <option value="placeholder" [selected]="true" [hidden]="true">Odaberi kompetenciju</option>
+                <option value="hodanje">Hodanje</option>
+                <option value="dron">Dron</option>
+                <option value="motor">Motor</option>
+                <option value="helikopter">Helikopter</option>
+                <option value="auto">Auto</option>
+                <option value="brod">Brod</option>
+              </select>
+            </div>
           </div>
         </div>
-      </div>
-    <div style="margin-left: 30px; width: 70%; height: 100%;" class="map-container">
-      <div class="map-frame">
-        <div id="map"></div>
+    </div>
+    <div class="listOfTasks-div">
+      <label class="label">Lista zadataka</label>
+      <div class="listOfTasks">
+        <tr *ngFor="let n of this.tasks">
+          <td>{{n.description}}</td>
+        </tr>
       </div>
     </div>
-  <div>
+  </div>
     <hr>
     <div class="sendButtonDiv">
       <button class="sendAction">
         Pošalji akciju
       </button>
     </div>
-  </div>
 </div>

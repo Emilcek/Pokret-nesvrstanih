@@ -1,10 +1,10 @@
 .outer-wrapper{
-  display: grid;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
   background-color: white;
   padding: 20px;
   margin: 30px;
-  grid-template-rows: 1fr 6fr 1fr;
 }
 
 .top{
@@ -16,11 +16,8 @@
 }
 
 .center-grid{
-  display: grid;
-  grid-template-columns: 1.5fr 2fr 2fr;
-  grid-gap: 20px;
-  justify-content: center;
-  overflow: hidden;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 select{
@@ -67,14 +64,12 @@ button {
 }
 
 .taskDefining{
-  display: grid;
-  grid-template-rows: 0.5fr 0.5fr 1fr;
-  grid-gap: 20px;
+  display: flex;
+  height: 30rem;
 }
 
 #description{
-  height:5rem;
-  width: 14rem;
+
 }
 
 .sendButtonDiv{
@@ -96,17 +91,14 @@ button {
 }
 
 .inner-grid{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 20px;
-  padding-left: 5rem;
-  padding-right: 5rem;
+  display: flex;
+  flex-direction: column;
+  width:20rem;
 }
 
 #education-div{
   display:flex;
   justify-content: center;
-  align-items: center;
 }
 
 
@@ -118,13 +110,14 @@ button {
 }
 
 .buttons-div{
-  padding-left: 5rem;
+  display: flex;
+  gap: 5px;
 }
 
 .firstColDiv{
-  display: grid;
-  grid-template-rows: 0.2fr 1fr;
-  grid-gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
 }
 
 .map-container {
@@ -137,6 +130,7 @@ button {
   height: 100%;
   width: 100%;
   font-size: 20px;
+  overflow: hidden;
 }
 
 #map {
@@ -145,5 +139,18 @@ button {
 }
 
 .flex{
+  width:10rem;
+}
+
+.description-div{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width:10rem;
+}
+.listOfTasks-div{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
   width:10rem;
 }

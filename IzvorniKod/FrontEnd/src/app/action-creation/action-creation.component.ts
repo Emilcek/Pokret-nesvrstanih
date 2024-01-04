@@ -28,6 +28,9 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
 
 
     const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      minZoom: 3,
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright"></a>'
     });
 
     var customIcon = L.icon({
