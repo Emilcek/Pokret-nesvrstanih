@@ -1,9 +1,16 @@
 package com.progi.WildTrack.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
-
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "Animal")
 public class Animal {
@@ -25,7 +32,15 @@ public class Animal {
     @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Task> taskList;
 
-    public Animal() {
+    @Override
+    public String toString() {
+        return "Animal{" +
+                "animalId=" + animalId +
+                ", species='" + species + '\'' +
+                ", animalDescription='" + animalDescription + '\'' +
+                ", animalPhotoURL='" + animalPhotoURL + '\'' +
+                '}';
     }
+
 
 }
