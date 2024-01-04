@@ -7,10 +7,14 @@ import {HeaderService} from "../header/header.service";
   styleUrls: ['./explorer-tasks.component.css']
 })
 export class ExplorerTasksComponent implements OnInit{
+  tasks: any;
+
   constructor(private headerService: HeaderService) {
   }
 
   ngOnInit() {
-
+    this.tasks = [
+      "task 1", "task 2", "task 3"
+    ]
   }
 }
