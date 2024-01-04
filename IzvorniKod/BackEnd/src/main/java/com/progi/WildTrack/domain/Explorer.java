@@ -27,7 +27,7 @@ public class Explorer {
     private Client client;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "StationId", insertable = false, updatable = false)
+    @JoinColumn(name = "StationId")
     private Station station;
 
     @OneToMany(mappedBy = "explorer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

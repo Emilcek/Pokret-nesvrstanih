@@ -30,14 +30,21 @@ export class StationLeaderProfileComponent implements OnInit{
           Name: data.firstName,
           Surname: data.lastName,
           Username: data.clientName,
-          Password: data.password, //zbog toga ne mogu pristupiti lozinci
+          Password: data.password,
           Email: data.email,
           ClientPhoto: data.clientPhoto,
           Role: data.role,
           EducatedFor: data.educatedFor,
-          Status: data.status
+          Status: data.status,
+          StationName: data.stationName,
         }
       }
+    })
+
+    this.http.get<any>(environment.BASE_API_URL + "/stationLead/availableExplorers", headersObj).subscribe({
+      next: data => {
+        console.log("bbbbb:",data)
+        }
     })
   }
 

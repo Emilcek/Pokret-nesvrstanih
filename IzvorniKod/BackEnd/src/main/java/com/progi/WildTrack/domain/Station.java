@@ -1,5 +1,6 @@
 package com.progi.WildTrack.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +20,7 @@ public class Station {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "StationId", nullable = false)
     private Long stationId;
-    @Column(name = "StationName", length = 50, nullable = false)
+    @Column(name = "StationName", length = 50, unique = true)
     private String stationName;
     @Column(name = "Radius", nullable = false)
     private int radius;
@@ -28,9 +29,10 @@ public class Station {
     @Column(name = "StationLocation", nullable = false)
     private String stationLocation;
 
-    @OneToOne(mappedBy = "station", cascade = CascadeType.ALL)
+    @JsonBackReference
+    @OneToOne(mappedBy = "station", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     private StationLead stationLead;
-    @OneToMany(mappedBy = "station", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "station", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     private List<Explorer> explorer;
 
 
