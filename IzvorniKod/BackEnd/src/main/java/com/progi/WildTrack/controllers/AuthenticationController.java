@@ -26,11 +26,11 @@ public class AuthenticationController {
     private final AuthenticationService service;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponseDto>register(
-            @RequestBody RegisterDto request
+    public ResponseEntity register(
+            @ModelAttribute RegisterDto request
     ) {
         System.out.println("controller " + request);
-        return ResponseEntity.ok(service.register(request));
+        return service.register(request);
     }
     @PostMapping("/verified")
     public ResponseEntity<ClientDetailsDTO> verified(@RequestBody String url) {
@@ -38,11 +38,11 @@ public class AuthenticationController {
         return service.verify(url);
     }
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponseDto> authenticate(
+    public ResponseEntity authenticate(
             @RequestBody LoginDto request
     ) {
         System.out.println("controller " + request);
-        return ResponseEntity.ok(service.authenticate(request));
+        return service.authenticate(request);
     }
 
     @PostMapping("/refresh-token")

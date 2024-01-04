@@ -4,10 +4,13 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {UserDataEditingComponent} from "../user-data-editing/user-data-editing.component";
 
 export interface Explorer {
-  Ime: string;
-  Prezime: number;
-  Username: number;
-  Email: number;
+  Name: string;
+  Surname: string;
+  Username: string;
+  Password: string;
+  Email: string;
+  Role: string;
+  ClientPhoto: any;
 }
 
 
@@ -31,17 +34,23 @@ export class ExplorerProfileComponent implements OnInit{
       headers: header
     };
 
+
+    //backend mi ne vraća loziku
     this.http.get<any>(environment.BASE_API_URL + "/client", headersObj).subscribe({
       next: data => {
-        console.log(data)
+        console.log("This is data:",data) //ispisuje se sve osim lozinke
         let res: any = data;
         this.currentUser = {
-          Ime: data.firstName,
-          Prezime: data.lastName,
+          Name: data.firstName,
+          Surname: data.lastName,
           Username: data.clientName,
-          Email: data.email
+          Password: data.password, //zbog toga ne mogu pristupiti lozinci
+          Email: data.email,
+          ClientPhoto: data.clientPhoto,
+          Role: data.role,
+          EducatedFor: data.educatedFor
         }
-        console.log(this.currentUser, "user")
+        //console.log(this.currentUser, "user")
       }
     })
   }

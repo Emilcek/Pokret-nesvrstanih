@@ -26,7 +26,8 @@ public class DataInitializer {
     private StatusService statusService;
     @Autowired
     private ClientService clientService;
-
+    private final List<String> vehicleTypes = Arrays.asList("hodanje", "dron", "auto", "brod", "motor", "helikopter");
+    private final List<Description> statusTypes = Arrays.asList(Description.PENDING, Description.ACCEPTED, Description.REJECTED);
     @EventListener
     public void appReady(ApplicationReadyEvent event) {
         for (String vehicleType : vehicleTypes) {

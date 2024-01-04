@@ -16,14 +16,14 @@ import java.util.List;
 @Table(name = "Researcher")
 public class Researcher {
     @Id
-    @Column(name = "Researchername" ,length = 30, nullable = false)
+    @Column(name = "Researchername", length = 30, nullable = false)
     private String researcherName;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "StatusId")
     private Status status;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Resarchername" ,referencedColumnName = "Clientname")
+    @JoinColumn(name = "Resarchername", referencedColumnName = "Clientname")
     @MapsId
     private Client client;
     @OneToMany(mappedBy = "researcher", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -32,5 +32,8 @@ public class Researcher {
     private List<Action> actions;
 
 
-
+    public Researcher(Client savedClient, Status status) {
+        this.client = savedClient;
+        this.status = status;
+    }
 }
