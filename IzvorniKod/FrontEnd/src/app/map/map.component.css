@@ -1,0 +1,22 @@
+.map-container {
+  height: 100%;
+  width: 100%;
+}
+
+.map-frame {
+  border: 2px solid black;
+  height: 100%;
+  width: 100%;
+}
+
+#map {
+  height: 100%;
+  width: 100%;
+}
+
+.custom-tooltip {
+  background-color: white;
+  border: 1px solid red;
+  padding: 8px;
+  font-size: 14px;
+}
