@@ -15,9 +15,6 @@ import java.util.List;
 
 @Component
 public class DataInitializer {
-
-    private final List<String> vehicleTypes = Arrays.asList("hodanje", "dron", "auto", "brod", "cross motor", "helikopter");
-    private final List<Description> statusTypes = Arrays.asList(Description.PENDING, Description.ACCEPTED, Description.REJECTED);
     @Autowired
     StationService stationService;
     @Autowired

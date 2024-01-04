@@ -38,7 +38,6 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     ExplorerProfileComponent,
     UsersRequestsListComponent,
     UsersListComponent,
-    UserVerifiedSuccessfulComponent,
     MapComponent,
     StationInfoComponent,
     StationChoosingComponent
