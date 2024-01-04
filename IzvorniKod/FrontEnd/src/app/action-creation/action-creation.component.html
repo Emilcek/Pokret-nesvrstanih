@@ -1,4 +1,4 @@
-<div class="outer-wrapper">
+<div class="outer-wrapper" [formGroup]="task">
   <div>
     <div class="top">
       Kreiranje nove akcije
@@ -7,27 +7,34 @@
   </div>
   <div class="center-grid">
     <div class="firstColDiv">
+      <div class="actionStuff">
+        <div class="actionTitle">
+          <label class="form-input-label">Naziv akcije</label>
+          <input type="text" class="form-input">
+        </div>
+        <div class="actionDescription">
+          <label class="label">Opis akcije</label>
+          <textarea class="description" formControlName="description"></textarea>
+        </div>
+      </div>
       <div>
         <label class="label">Postaja</label>
-        <select name="position" id="pos" >
-          <option value="placeholder" [selected]="true" [hidden]="true">Odaberi postaju</option>
+        <select name="position" id="pos" formControlName="station">
+          <option value="placeholder" [selected]="true" [hidden]="true" >Odaberi postaju</option>
           <option value="Postaja1">Postaja1</option>
           <option value="Postaja2">Postaja2</option>
           <option value="Postaja3">Postaja3</option>
         </select>
       </div>
       <div class="buttons-div">
-        <button class="btn-add" (click)="showOptions()">
+        <button class="btn-add" (click)="addTask()">
           Dodaj zadatak
-        </button>
-        <button class="btn-dismiss">
-          Odustani
         </button>
       </div>
     </div>
     <div class="taskDefining">
         <div class="inner-grid">
-          <div style="margin-left: 30px; width: 70%; height: 100%;" class="map-container">
+          <div style="margin-top:10px; width: 100%; height: 100%;" class="map-container">
             <div class="map-frame">
               <div id="map"></div>
             </div>
@@ -35,10 +42,10 @@
           <div class="description-div">
             <label class="label">Opis zadatka</label>
             <div>
-              <textarea id="description"></textarea>
+              <textarea class="description" formControlName="description"></textarea>
             </div>
             <div id="education-div">
-              <select name="position" id="education">
+              <select name="position" id="education" (change)="saveEducatedFor($event)">
                 <option value="placeholder" [selected]="true" [hidden]="true">Odaberi kompetenciju</option>
                 <option value="hodanje">Hodanje</option>
                 <option value="dron">Dron</option>
@@ -55,7 +62,7 @@
       <label class="label">Lista zadataka</label>
       <div class="listOfTasks">
         <tr *ngFor="let n of this.tasks">
-          <td>{{n.description}}</td>
+          <td>{{this.tasks.indexOf(n)+1}}.Opis zadatka: {{n.description}}, kompetencija: {{n.educatedFor}} <button class="btn-dismiss" id="delete" (click)="deleteFromTasks(n)">Obriši</button></td>
         </tr>
       </div>
     </div>

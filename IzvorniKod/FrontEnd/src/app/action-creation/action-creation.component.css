@@ -4,7 +4,6 @@
   height: fit-content;
   background-color: white;
   padding: 20px;
-  margin: 30px;
 }
 
 .top{
@@ -69,8 +68,8 @@ button {
   width: 40%;
 }
 
-#description{
-
+.description{
+width:17rem;
 }
 
 .sendButtonDiv{
@@ -95,11 +94,13 @@ button {
   display: flex;
   flex-direction: column;
   width: 100%;
+  padding-bottom: 2rem;
 }
 
 #education-div{
   display:flex;
   justify-content: center;
+  margin-left: 1rem;
 }
 
 .buttons-div{
@@ -141,10 +142,37 @@ button {
   flex-direction: column;
   gap: 5px;
   width:10rem;
+  margin:1rem;
 }
 .listOfTasks-div{
   display: flex;
   flex-direction: column;
   gap: 5px;
   width: 25%;
+}
+#delete{
+  padding:2px;
+}
+
+.form-input {
+  border: 1px solid #5b5656;
+  border-radius: 10px;
+  width: 17rem;
+  font-size: large;
+  padding-left: 10px;
+}
+
+.actionTitle{
+  display: flex;
+  flex-direction: column;
+}
+.actionDescription{
+  display: flex;
+  flex-direction: column;
+}
+
+.actionStuff{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
