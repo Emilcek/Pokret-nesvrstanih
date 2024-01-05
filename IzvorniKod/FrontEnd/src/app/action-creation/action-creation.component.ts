@@ -22,9 +22,11 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
   taskAdded: any=false;
   educatedForChosen:any;
   markersGroup:any;
+  actionAdded:any=false;
+
   task=new FormGroup({
-    actionTitle:new FormControl(),
-    actionDescription:new FormControl(),
+    actionTitle:new FormControl(''),
+    actionDescription:new FormControl(''),
     station:new FormControl('placeholder'),
     educatedFor:new FormControl('placeholder'),
     description:new FormControl(),
@@ -85,8 +87,6 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
       // remove the markers when MARKERS_MAX is reached
       this.markersGroup.clearLayers();
     });
-    console.log(this.startLocation)
-
   }
 
   ngAfterViewInit(): void {
@@ -95,11 +95,12 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
 
   addTask() {
     this.taskAdded=true;
-    if (this.task.value.description!=null && this.task.value.educatedFor!='placeholder' && this.markersGroup.getLayers().length>0 && this.task.value.taskType!='placeholder') {
-      this.tasks.push({"description": this.task.value.description, "endLocation": this.endLocation, "startLocation":this.startLocation,"educatedFor": this.educatedForChosen});
+    if (this.task.value.description!=null && this.task.value.educatedFor!='placeholder' && this.markersGroup.getLayers().length>0 && this.task.value.taskType!='placeholder'
+    && !(this.task.value.taskType==="Prođi rutom" && this.markersGroup.getLayers().length<2)){
+      this.tasks.push({"description": this.task.value.taskType+": "+this.task.value.description, "endLocation": this.endLocation, "startLocation":this.startLocation,"educatedFor": this.educatedForChosen});
       this.markersGroup.clearLayers();
       this.taskAdded=false;
-      this.task.reset();
+      this.task.get('description')?.reset()
       this.task.get('station')?.setValue('placeholder')
       this.task.get('educatedFor')?.setValue('placeholder')
       this.task.get('taskType')?.setValue('placeholder')
@@ -127,6 +128,7 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
   }
 
   sendAction(){
+    this.actionAdded=true;
     if(this.task.value.actionTitle!=null && this.task.value.actionDescription!=null && this.task.value.station!='placeholder' && this.tasks.length>0){
       let formData = new FormData()
       formData.append('actionTitle',this.task.value.actionTitle!)
@@ -148,6 +150,7 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
           console.log(error,"error")
         }
       })
+      this.actionAdded=false;
       }
     }
   }

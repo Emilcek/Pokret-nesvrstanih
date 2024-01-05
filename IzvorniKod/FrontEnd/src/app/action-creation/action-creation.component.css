@@ -4,6 +4,7 @@
   height: fit-content;
   background-color: white;
   padding: 20px;
+  min-width:630px;
 }
 
 .top{
@@ -16,6 +17,7 @@
 
 .center-grid{
   display: flex;
+  gap:1rem;
   justify-content: space-evenly;
   flex-wrap: wrap;
 }
@@ -123,6 +125,7 @@ button {
 .map-container {
   height: 100%;
   width: 100%;
+  margin-top:10px;
 }
 
 .map-frame {
@@ -208,4 +211,23 @@ textarea{
   display: flex;
   justify-content: space-evenly;
   gap:1rem;
+}
+
+@media only screen and (max-width: 1200px) {
+  .all-about-task{
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 807px) {
+  .center-grid{
+    flex-direction: column;
+    justify-content: center;
+    padding-left:10rem;
+  }
+  .map-container{
+    width:20rem;
+  }
+
+
 }
