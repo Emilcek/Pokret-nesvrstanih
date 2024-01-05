@@ -5,6 +5,7 @@ import com.progi.WildTrack.domain.*;
 import com.progi.WildTrack.dto.CreateRequestDTO;
 import com.progi.WildTrack.dto.ExplorerTaskDTO;
 import com.progi.WildTrack.dto.TaskDTO;
+import com.progi.WildTrack.dto.ActionDTO;
 import com.progi.WildTrack.service.ActionService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +32,14 @@ public class ActionServiceImpl implements ActionService {
     public ResponseEntity getActions() {
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Researcher researcher = client.getResearcher();
-        return ResponseEntity.ok(actionRepo.findAllByResearcher(researcher));
+        List<Action> actions = actionRepo.findAllByResearcher(researcher);
+        return ResponseEntity.ok(actions.stream().map(ActionDTO::new).toList());
     }
 
     @Override
     public ResponseEntity getAction(Long actionId) {
-        return ResponseEntity.ok(actionRepo.findById(actionId));
+        Action action = actionRepo.findByActionId(actionId);
+        return ResponseEntity.ok(new ActionDTO(action));
     }
 
     @Override
@@ -118,6 +121,6 @@ public class ActionServiceImpl implements ActionService {
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         StationLead stationLead = client.getStationLead();
         List<Action> requests = actionRepo.findAllByStationLead(stationLead).stream().filter(action -> action.getActionStatus().equals("Pending")).toList();
-        return ResponseEntity.ok(requests);
+        return ResponseEntity.ok(requests.stream().map(ActionDTO::new).toList());
     }
 }
