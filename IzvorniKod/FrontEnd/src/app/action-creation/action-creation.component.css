@@ -213,7 +213,7 @@ textarea{
   gap:1rem;
 }
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 1045px) {
   .all-about-task{
     flex-direction: column;
   }
