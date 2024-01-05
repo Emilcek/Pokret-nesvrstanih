@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Data
 @Builder
@@ -11,7 +14,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ClientUpdateDTO {
 
-    public String clientName;
-    public String firstName;
-    public String lastName;
+    private String clientName;
+    private String firstName;
+    private String lastName;
+    private String role;
+    private MultipartFile clientPhoto;
+    private String stationName;
+    private List<String> educatedFor;
 }

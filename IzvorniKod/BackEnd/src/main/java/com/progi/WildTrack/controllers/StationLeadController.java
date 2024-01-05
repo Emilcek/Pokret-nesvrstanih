@@ -26,11 +26,6 @@ public class StationLeadController {
         return ResponseEntity.ok(clientService.getClient());
     }
 
-    @PostMapping
-    public ResponseEntity<ClientDetailsDTO> updateStationLead(@RequestBody ClientUpdateDTO client) {
-        return ResponseEntity.ok(clientService.updateClient(client));
-    }
-
     @GetMapping("/myStation")
     public ResponseEntity<Station> getStation() {
         return ResponseEntity.ok(stationService.getStation());

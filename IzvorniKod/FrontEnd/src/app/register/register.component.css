@@ -37,7 +37,6 @@
 
 .login-html .tab{
 	font-size:22px;
-	margin-right:15px;
 	padding-bottom:5px;
 	margin:0 15px 10px 0;
 	display:inline-block;
@@ -92,15 +91,12 @@
 .sign-in-htm{
     padding-top: 1rem;
 }
-#myFile{
-	color: rgb(117, 110, 110);
-}
 body{
 	font:600 16px/18px;
-    font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 .group{
-		padding-top: 0.3rem;
+  margin-top: 0.6rem;
 }
 :hover .button {
 	cursor: pointer;
@@ -127,11 +123,11 @@ body{
 }
 
 #name{
-	margin:0px 0px;
+	margin:0px;
 }
 
 #surname{
-	margin-left:20px;
+  margin-top:0;
 }
 select {
 	background-color: transparent;
@@ -145,6 +141,80 @@ select {
 	border-color: rgb(117, 110, 110);
 	border-radius: 10px;
 }
-option{
-	cursor: pointer;
+
+#abilityGrid{
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  }
+
+.checkbox-container input{
+  width: 2rem;
+  height: 0.9rem;
+  justify-content: center;
+  vertical-align: center;
+  cursor: pointer;
+}
+.checkbox-container input:checked{
+  background:#95C4E7;
+}
+
+#nameSurnameDiv{
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap:10px;
+}
+
+.ErrorMessage{
+  color: red;
+  font-size:0.8rem;
+}
+
+.WarningMessage{
+  color: #d0a811;
+  font-size:0.8rem;
+}
+
+.ValidMessage{
+  color: #1ea230;
+  font-size:0.8rem;
+}
+
+.custom-file-input {
+  display: inline-block;
+  padding: 6px 10px;
+  cursor: pointer;
+  border: 1px solid #927979;
+  width: fit-content;
+  transition: 0.2s;
+  margin: 10px 0;
+  background:#95C4E7;
+  border-radius: 10px;
+  color: rgb(117, 110, 110);
+  font-size: 0.8rem;
+}
+input[type="file"]{
+  display: none;
+}
+#grid{
+  display: grid;
+  grid-template-columns: repeat(2,1.5fr);
+  gap:10px;
+}
+#UsedUserName{
+  display:none;
+}
+#UsedEmail{
+  display: none;
+}
+
+.ValidMessage.big{
+  font-size: 1rem;
+}
+
+#verifyLink{
+  display: none;
+}
+
+#noPhotoError{
+  display: none;
 }

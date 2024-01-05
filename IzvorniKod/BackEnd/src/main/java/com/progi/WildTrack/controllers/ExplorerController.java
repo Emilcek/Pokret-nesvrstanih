@@ -16,17 +16,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ExplorerController {
 
-    private final ClientService clientService;
-    @GetMapping
-    public ResponseEntity<ClientDetailsDTO> getExplorer() {
-        return ResponseEntity.ok(clientService.getClient());
-    }
-
-    @PostMapping
-    public ResponseEntity<ClientDetailsDTO> updateExplorer(@RequestBody ClientUpdateDTO client) {
-        return ResponseEntity.ok(clientService.updateClient(client));
-    }
-
     @GetMapping("/tasks")
     public ResponseEntity<Task> getTasks() {
         //todo

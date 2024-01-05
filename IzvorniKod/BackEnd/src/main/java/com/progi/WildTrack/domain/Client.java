@@ -5,10 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.sql.Types;
 import java.util.Collection;
 import java.util.List;
 @Data
@@ -23,8 +25,9 @@ public class Client implements UserDetails {
     private String clientName;
     @Column(name = "ClientPassword", nullable = false)
     private String clientPassword;
-    @Column(name = "ClientPhotoURL", nullable = false)
-    private String clientPhotoURL;
+    @JdbcTypeCode(Types.VARBINARY)
+    @Column(name = "ClientPhoto", nullable = false)
+    private byte[] clientPhoto;
     @Column(name = "FirstName", length = 50, nullable = false)
     private String firstName;
     @Column(name = "LastName", length = 50, nullable = false)
@@ -79,4 +82,13 @@ public class Client implements UserDetails {
         return true;
     }
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        // include only the fields that uniquely identify a Client
+        result = prime * result + ((clientName == null) ? 0 : clientName.hashCode());
+        result = prime * result + ((email == null) ? 0 : email.hashCode());
+        return result;
+    }
 }

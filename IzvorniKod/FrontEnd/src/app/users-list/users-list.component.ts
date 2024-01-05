@@ -1,8 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { Input } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Router } from '@angular/router';
 import {environment} from "../../environments/environment";
+import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 
 @Component({
   selector: 'app-users-list',
@@ -11,7 +13,12 @@ import {environment} from "../../environments/environment";
 })
 export class UsersListComponent implements OnInit {
   userlist: any
-  dataSource: any
+  //dataSource: any
+
+  displayedColumns: string[] = ['clientName', 'firstName', 'lastName', 'email', 'role', 'Update'];
+  dataSource = new MatTableDataSource<any>;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private http: HttpClient, private router: Router) {
   }
@@ -28,7 +35,8 @@ export class UsersListComponent implements OnInit {
       next: data => {
         console.log(data)
         let res: any = data;
-        this.dataSource = res;
+        this.dataSource = new MatTableDataSource(data);
+        this.dataSource.paginator = this.paginator;
         console.log(data, "data")
       }
     })
@@ -38,7 +46,7 @@ export class UsersListComponent implements OnInit {
 
   LoadUser() {
     this.GetAll().subscribe(res => {
-      this.dataSource = res;
+      //this.dataSource = res;
       console.log(this.dataSource);
     });
   }

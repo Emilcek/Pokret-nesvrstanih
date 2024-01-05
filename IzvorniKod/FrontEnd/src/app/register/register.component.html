@@ -1,51 +1,76 @@
 <div class="login-wrap main-container">
-    <div class="login-html">
-        <div class="login-form">
-            <form class="sign-up-htm" [formGroup]="signUpForm" (ngSubmit)="signUp()">
+  <div class="login-html">
+    <div class="login-form">
+      <form class="sign-up-htm" [formGroup]="signUpForm" (ngSubmit)="signUp()">
+        <div class="ValidMessage big" id="verifyLink">Verifikacijski link poslan je na Vaš email!</div>
                 <div class="group">
                     <label for="pass" class="label">Uloga</label>
-                    <select name="position" id="pos" formControlName="role" (change)="showDiv($event)" required>
+                    <select name="position" id="pos" formControlName="role" (change)="showDiv($event)" >
                         <option value="placeholder" [selected]="true" [hidden]="true">Odaberi ulogu...</option>
                         <option value="voditeljPostaje">Voditelj postaje</option>
                         <option value="istrazivac">Istraživač</option>
                         <option value="tragac">Tragač</option>
                     </select>
+                  <div *ngIf="signUpForm.controls.role.pristine && signUpForm.controls.role.touched && signUpForm.controls.role.invalid" class="ErrorMessage">Obvezan odabir uloge</div>
                 </div>
                 <div class="group" id="abilities">
                     <label for="pass" class="label">Kompetencije</label>
+                  <div id="abilityGrid" class="checkbox-container">
                     <tr *ngFor="let n of abilities">
-                        <input type="checkbox" formControlName="educatedFor" checked="false" [value]="n.id" (change)="onChangeAbility($event)"> {{n.name}}
+                      <input type="checkbox" formControlName="educatedFor" checked="false" [value]="n.id" (change)="onChangeAbility($event)"> {{n.name}}
                     </tr>
+                  </div>
+                  <div *ngIf="checkEducatedFor()" class="ErrorMessage" id="abilitiesError">Morate označiti barem jednu kompetenciju</div>
                 </div>
                 <div class="group">
                     <label for="pass" class="label">Osobna fotografija</label>
-                    <input type="file" id="myFile" name="filename" formControlName="clientPhotoURL"
-                    accept="image/png, image/jpeg, image/jpg" >
+                  <div id="grid">
+                    <div>
+                      <label class="custom-file-input">
+                        Odaberite fotografiju
+                        <input type="file" id="myFile" name="filename"
+                               accept="image/png, image/jpeg, image/jpg" (change)="handleFileInput($event)">
+                      </label>
+                    </div>
+                    <div id="imagepreview"></div>
+                  </div>
+                  <div class="ErrorMessage" id="noPhotoError" *ngIf="checkPhoto()">Morate priložiti osobnu fotografiju</div>
                 </div>
-                <div class="group" id="nameSurname">
+
+                <div class="group" id="nameSurnameDiv">
                     <div class="group" id="name">
                         <label for="user" class="label">Ime</label>
-                        <input type="text" class="input" required formControlName="firstName" placeholder="Unesite ime">
+                        <input type="text" class="input" formControlName="firstName" placeholder="Unesite ime">
+                      <div *ngIf="signUpForm.controls.firstName.invalid && signUpForm.controls.firstName.touched && signUpForm.controls.firstName.pristine" class="ErrorMessage">Obvezan unos imena</div>
+                      <div *ngIf="signUpForm.controls.firstName.dirty && signUpForm.controls.firstName.invalid " class="WarningMessage">Ime se mora sastojati od slova</div>
                     </div>
                     <div class="group" id="surname">
                         <label for="user" class="label">Prezime</label>
-                        <input type="text" class="input" formControlName="lastName" placeholder="Unesite prezime" required>
+                        <input type="text" class="input" formControlName="lastName" placeholder="Unesite prezime" >
+                       <div *ngIf="signUpForm.controls.lastName.invalid && signUpForm.controls.lastName.touched && signUpForm.controls.lastName.pristine" class="ErrorMessage">Obvezan unos prezimena</div>
+                      <div *ngIf="signUpForm.controls.lastName.dirty && signUpForm.controls.lastName.invalid" class="WarningMessage">Prezime se mora sastojati od slova</div>
                     </div>
                 </div>
                 <div class="group">
-
-                </div>
-                <div class="group">
                     <label for="user" class="label">Korisničko ime</label>
-                    <input type="text" class="input"  formControlName="clientName" placeholder="Unesite korisničko ime (započinje slovom)" required>
+                    <input type="text" class="input"  formControlName="clientName" placeholder="Unesite korisničko ime (započinje slovom)" >
+                  <div *ngIf="signUpForm.controls.clientName.pristine && signUpForm.controls.clientName.touched && signUpForm.controls.clientName.invalid" class="ErrorMessage">Obvezan unos korisničkog imena</div>
+                  <div *ngIf="signUpForm.controls.clientName.dirty && signUpForm.controls.clientName.invalid " class="WarningMessage">Korisničko ime treba sadržavati kombinaciju slova i brojeva, bez korištenja dijakritičkih znakova.</div>
+                  <div class="ErrorMessage" id = "UsedUserName" >Odabrali ste korisničko ime koje se već koristi</div>
                 </div>
                 <div class="group">
                     <label for="pass" class="label">Lozinka</label>
-                    <input type="password" class="input" data-type="password" formControlName="password" placeholder="Unesite lozinku  (min 8 znakova)" required>
+                    <input type="password" class="input" data-type="password" formControlName="password" placeholder="Unesite lozinku  (min 8 znakova)" >
+                  <div *ngIf="signUpForm.controls.password.dirty && signUpForm.controls.password.invalid" class="WarningMessage">Lozinka je prekratka</div>
+                  <div *ngIf="signUpForm.controls.password.pristine && signUpForm.controls.password.touched && signUpForm.controls.password.invalid" class="ErrorMessage">Obvezan unos lozinke</div>
+                  <div *ngIf="signUpForm.controls.password.valid" class="ValidMessage">Jaka lozinka</div>
                 </div>
                 <div class="group">
                     <label for="pass" class="label">Email adresa</label>
-                    <input type="email" class="input" formControlName="email" placeholder="Unesite email adresu (npr.  filip.vitkovic@gmail.com)" required>
+                    <input type="email" class="input" formControlName="email" placeholder="npr.  filip.vitkovic@gmail.com" >
+                  <div *ngIf="signUpForm.controls.email.dirty && signUpForm.controls.email.invalid && signUpForm.controls.email.touched" class="WarningMessage">Email adresa nije ispravna</div>
+                  <div *ngIf="signUpForm.controls.email.pristine && signUpForm.controls.email.touched && signUpForm.controls.email.invalid" class="ErrorMessage">Obvezan unos emaila</div>
+                  <div class="ErrorMessage" id = "UsedEmail" >Odabrali ste email adresu koja se već koristi</div>
                 </div>
                 <div class="group">
                     <input type="submit" class="button" value="Registriraj se" >
