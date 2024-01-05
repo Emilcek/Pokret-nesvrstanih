@@ -1,9 +1,11 @@
 package com.progi.WildTrack.service.impl;
 
 import com.progi.WildTrack.dao.ActionRepository;
+import com.progi.WildTrack.dao.ExplorerRepository;
 import com.progi.WildTrack.dao.TaskRepository;
 import com.progi.WildTrack.domain.Action;
 import com.progi.WildTrack.domain.Client;
+import com.progi.WildTrack.domain.Explorer;
 import com.progi.WildTrack.domain.Task;
 import com.progi.WildTrack.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ public class TaskServiceImpl implements TaskService {
     private TaskRepository taskRepo;
     @Autowired
     private ActionRepository actionRepo;
+    @Autowired
+    private ExplorerRepository explorerRepo;
 
     @Override
     public ResponseEntity getTasks() {
@@ -46,6 +50,8 @@ public class TaskServiceImpl implements TaskService {
         }
         task.setTaskStatus("Done");
         taskRepo.save(task);
+
+        //postavljanje akcije u "Done" ako su rijeseni svi zadatci
         Action action = task.getAction();
         boolean allDone = true;
         for (Task t : action.getTasks()) {
@@ -57,6 +63,20 @@ public class TaskServiceImpl implements TaskService {
         if (allDone) {
             action.setActionStatus("Done");
             actionRepo.save(action);
+        }
+
+        //postavljanje tragaca u "Available" ako su rijeseni svi zadatci
+        allDone = true;
+        for (Task t : client.getExplorer().getTasks()) {
+            if (!t.getTaskStatus().equals("Done")) {
+                allDone = false;
+                break;
+            }
+        }
+        if (allDone) {
+            Explorer explorer = client.getExplorer();
+            explorer.setExplorerStatus("Available");
+            explorerRepo.save(explorer);
         }
         return ResponseEntity.ok().build();
     }

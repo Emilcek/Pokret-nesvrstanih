@@ -26,12 +26,12 @@ public class TaskCommentServiceImpl implements TaskCommentService {
             return ResponseEntity.notFound().build();
         }
         TaskComment taskComment = TaskComment.builder()
-                .taskDescription(comment)
+                .content(comment)
                 .task(task)
                 .client(client)
                 .build();
         taskCommentRepo.save(taskComment);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(taskComment);
     }
 
     @Override

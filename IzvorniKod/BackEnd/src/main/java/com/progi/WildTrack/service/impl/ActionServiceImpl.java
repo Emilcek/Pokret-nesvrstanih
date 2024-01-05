@@ -6,6 +6,7 @@ import com.progi.WildTrack.dto.CreateRequestDTO;
 import com.progi.WildTrack.dto.ExplorerTaskDTO;
 import com.progi.WildTrack.dto.TaskDTO;
 import com.progi.WildTrack.service.ActionService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,6 +40,7 @@ public class ActionServiceImpl implements ActionService {
     }
 
     @Override
+    @Transactional
     public ResponseEntity createRequest(CreateRequestDTO request) {
         System.out.println(request);
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -46,7 +48,7 @@ public class ActionServiceImpl implements ActionService {
         Station station = stationRepo.findByStationName(request.getStation());
         System.out.println("station " + station.getStationName());
         StationLead stationLead = station.getStationLead();
-        if (stationLead == null) {
+        if (stationLead == null || researcher == null) {
             return ResponseEntity.badRequest().build();
         }
         Action action = Action.builder()
@@ -57,20 +59,23 @@ public class ActionServiceImpl implements ActionService {
         actionRepo.save(action);
         for(TaskDTO task : request.getTasks()) {
             Vehicle vehicle = (Vehicle) vehicleRepo.findByVehicleType(task.getTaskVehicle()).orElseThrow();
-            Task build = new Task(task, vehicle);
-            build.setAction(action);
+            Task build = new Task(task, vehicle, action);
             taskRepo.save(build);
         }
         return ResponseEntity.ok().build();
     }
 
     @Override
+    @Transactional
     public ResponseEntity acceptRequest(Long actionId, List<ExplorerTaskDTO> explorerTasks) {
         Action action = actionRepo.findByActionId(actionId);
         action.setActionStatus("Accepted");
         actionRepo.save(action);
         for (ExplorerTaskDTO explorerTask : explorerTasks) {
             Explorer explorer = explorerRepo.findByExplorerName(explorerTask.getExplorerName());
+            if (explorer == null) {
+                return ResponseEntity.notFound().build();
+            }
             explorer.setExplorerStatus("Unavailable");
             explorer.getActions().add(action);
             explorerRepo.save(explorer);
@@ -100,6 +105,9 @@ public class ActionServiceImpl implements ActionService {
     @Override
     public ResponseEntity declineRequest(Long actionId) {
         Action action = actionRepo.findByActionId(actionId);
+        if (action == null) {
+            return ResponseEntity.notFound().build();
+        }
         action.setActionStatus("Declined");
         actionRepo.save(action);
         return ResponseEntity.ok().build();

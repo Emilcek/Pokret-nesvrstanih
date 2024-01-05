@@ -1,10 +1,8 @@
 package com.progi.WildTrack.service.impl;
 
-import com.progi.WildTrack.dao.ExplorerRepository;
 import com.progi.WildTrack.domain.Client;
 import com.progi.WildTrack.domain.Explorer;
 import com.progi.WildTrack.service.ExplorerService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -14,8 +12,6 @@ import java.util.List;
 
 @Service
 public class ExplorerServiceImpl implements ExplorerService {
-    @Autowired
-    private ExplorerRepository explorerRepo;
 
     @Override
     public ResponseEntity getAvailableExplorers() {

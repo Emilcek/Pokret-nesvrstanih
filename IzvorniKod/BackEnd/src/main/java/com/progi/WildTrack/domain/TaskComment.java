@@ -28,8 +28,8 @@ public class TaskComment {
     @Column(name = "TaskCommentTS", nullable = false)
     private Timestamp taskCommentTS;
 
-    @Column(name = "TaskDescription")
-    private String taskDescription;
+    @Column(name = "Content", nullable = false)
+    private String content;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "TaskId")

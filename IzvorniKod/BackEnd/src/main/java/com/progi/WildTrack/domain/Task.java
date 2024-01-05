@@ -53,12 +53,13 @@ public class Task {
     @JoinColumn(name = "AnimalId")
     private Animal animal;
 
-    public Task(TaskDTO task, Vehicle vehicle) {
+    public Task(TaskDTO task, Vehicle vehicle, Action action) {
         this.taskDescription = task.getDescription();
         this.endLocation = task.getEndLocation();
         this.startLocation = task.getStartLocation();
         this.vehicle = vehicle;
         this.taskStatus = "Ongoing";
+        this.action = action;
 
     }
 }

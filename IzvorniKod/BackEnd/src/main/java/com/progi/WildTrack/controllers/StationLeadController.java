@@ -1,9 +1,7 @@
 package com.progi.WildTrack.controllers;
 
-import com.progi.WildTrack.domain.Client;
 import com.progi.WildTrack.domain.Station;
 import com.progi.WildTrack.dto.ClientDetailsDTO;
-import com.progi.WildTrack.dto.ClientUpdateDTO;
 import com.progi.WildTrack.dto.ExplorerTaskDTO;
 import com.progi.WildTrack.service.*;
 import lombok.RequiredArgsConstructor;

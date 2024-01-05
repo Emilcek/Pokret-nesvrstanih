@@ -9,5 +9,4 @@ import org.springframework.stereotype.Service;
 public class StationLeadServiceImpl implements StationLeadService {
     @Autowired
     private StationLeadRepository stationLeadRepo;
-
 }

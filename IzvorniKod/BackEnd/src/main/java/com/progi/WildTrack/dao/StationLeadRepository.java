@@ -10,6 +10,4 @@ public interface StationLeadRepository extends JpaRepository<StationLead, Long> 
     List<StationLead> findAllByStatusStatusId(Long statusId);
 
     StationLead findByStationLeadName(String clientName);
-
-    StationLead findByStation(Station station);
 }
