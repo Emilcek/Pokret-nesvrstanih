@@ -226,3 +226,26 @@ button {
 input[type="file"]{
   display: none;
 }
+
+.up-div{
+  display:flex;
+  flex-direction: column;
+}
+.in-div{
+  display:flex;
+  justify-content: center;
+  padding-bottom: 1rem;
+}
+
+.button-and-text{
+  display:flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap:1rem;
+}
+
+.rejectTitle{
+  display: flex;
+  justify-content: center;
+}
