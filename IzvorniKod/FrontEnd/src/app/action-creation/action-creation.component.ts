@@ -3,7 +3,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms'
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import * as polyline from 'polyline';
 import {Router} from "@angular/router";
 import {HeaderService} from "../header/header.service";
 import {environment} from "../../environments/environment";
@@ -17,19 +16,18 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
   tasks: any = [];
   private map: any;
   private center: L.LatLngExpression = L.latLng(45.1, 15.2);
-  isStationChosen: boolean = false;
   chosenStationName: any;
-  chosenStationSurface: any;
   startLocation:any;
   endLocation:any;
-  markersGroup: any;
+  taskAdded: any=false;
   educatedForChosen:any;
+  markersGroup:any;
   task=new FormGroup({
-    actionTitle:new FormControl(''),
-    actionDescription:new FormControl(''),
-    station:new FormControl(''),
-    educatedFor:new FormControl(),
-    description:new FormControl('',Validators.required),
+    actionTitle:new FormControl(),
+    actionDescription:new FormControl(),
+    station:new FormControl('placeholder'),
+    educatedFor:new FormControl('placeholder'),
+    description:new FormControl(),
   })
 
   ngOnInit() {
@@ -63,14 +61,14 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
     tiles.addTo(this.map);
 
     // a layer group, used here like a container for markers
-     var mg = L.layerGroup();
-    this.map.addLayer(mg);
+    this.markersGroup = L.layerGroup();
+    this.map.addLayer(this.markersGroup);
 
     this.map.on('click', (e:any) => {
       // get the count of currently displayed markers
-      var markersCount = mg.getLayers().length;
+      var markersCount = this.markersGroup.getLayers().length;
       if (markersCount < 2) {
-        var marker = L.marker(e.latlng,{icon:customIcon}).addTo(mg);
+        var marker = L.marker(e.latlng,{icon:customIcon,draggable:true}).addTo(this.markersGroup);
         if(markersCount!=1){
           marker.bindPopup("Krajnja lokacija").openPopup();
           this.endLocation=e.latlng.lat+","+e.latlng.lng
@@ -84,7 +82,7 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
       }
       console.log(this.startLocation)
       // remove the markers when MARKERS_MAX is reached
-      mg.clearLayers();
+      this.markersGroup.clearLayers();
     });
     console.log(this.startLocation)
 
@@ -95,9 +93,24 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
   }
 
   addTask() {
-    if (this.task.valid && this.educatedForChosen!=undefined) {
+    this.taskAdded=true;
+    if (this.task.value.description!=null && this.task.value.educatedFor!='placeholder' && this.markersGroup.getLayers().length>0) {
       this.tasks.push({"description": this.task.value.description, "endLocation": this.endLocation, "startLocation":this.startLocation,"educatedFor": this.educatedForChosen});
+      this.markersGroup.clearLayers();
+      this.taskAdded=false;
+      this.task.reset();
+      this.task.get('station')?.setValue('placeholder')
     }
+
+  }
+
+  dismissTask(){
+    console.log(this.task.value.description)
+    this.taskAdded=false;
+    this.markersGroup.clearLayers();
+    this.task.reset();
+    this.task.get('station')?.setValue('placeholder')
+    this.task.get('educatedFor')?.setValue('placeholder')
   }
 
   saveEducatedFor(event:any){
@@ -110,7 +123,7 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
   }
 
   sendAction(){
-    if(this.task.value.actionTitle!=undefined || this.task.value.actionDescription!=undefined || this.educatedForChosen!=undefined){
+    if(this.task.value.actionTitle!=null && this.task.value.actionDescription!=null && this.task.value.station!='placeholder' && this.tasks.length>0){
       let formData = new FormData()
       formData.append('actionTitle',this.task.value.actionTitle!)
       formData.append('actionDescription',this.task.value.actionDescription!)
