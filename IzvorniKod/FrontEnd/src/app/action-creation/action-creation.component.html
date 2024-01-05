@@ -38,20 +38,20 @@
           <div class="all-about-task">
             <div class="description-div">
               <div >
-                <select name="position" (change)="saveEducatedFor($event)" >
+                <select name="position" (change)="saveEducatedFor($event)" formControlName="taskType">
                   <option value="placeholder" [selected]="true" [hidden]="true">Odaberi vrstu zadatka</option>
                   <option value="postaviKameru">Postavi kameru</option>
                   <option value="postaviGPS">Postavi GPS</option>
                   <option value="prodiRutom">Prođi rutom</option>
                   <option value="dodiNaLokaciju">Dođi na lokaciju</option>
                 </select>
+                <div *ngIf="this.taskAdded && this.task.value.taskType=='placeholder'" class="ErrorMessage"> Morate dodati opis zadatka</div>
               </div>
               <label class="label">Opis zadatka</label>
               <div>
                 <textarea class="description" formControlName="description" placeholder="Napišite opis zadatka"></textarea>
                 <div *ngIf="this.taskAdded && this.task.value.description==null" class="ErrorMessage"> Morate dodati opis zadatka</div>
               </div>
-
             </div>
             <div class="button-educated">
               <div id="education-div">

@@ -28,6 +28,7 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
     station:new FormControl('placeholder'),
     educatedFor:new FormControl('placeholder'),
     description:new FormControl(),
+    taskType:new FormControl('placeholder')
   })
 
   ngOnInit() {
@@ -94,12 +95,14 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
 
   addTask() {
     this.taskAdded=true;
-    if (this.task.value.description!=null && this.task.value.educatedFor!='placeholder' && this.markersGroup.getLayers().length>0) {
+    if (this.task.value.description!=null && this.task.value.educatedFor!='placeholder' && this.markersGroup.getLayers().length>0 && this.task.value.taskType!='placeholder') {
       this.tasks.push({"description": this.task.value.description, "endLocation": this.endLocation, "startLocation":this.startLocation,"educatedFor": this.educatedForChosen});
       this.markersGroup.clearLayers();
       this.taskAdded=false;
       this.task.reset();
       this.task.get('station')?.setValue('placeholder')
+      this.task.get('educatedFor')?.setValue('placeholder')
+      this.task.get('taskType')?.setValue('placeholder')
     }
 
   }
@@ -111,6 +114,7 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
     this.task.reset();
     this.task.get('station')?.setValue('placeholder')
     this.task.get('educatedFor')?.setValue('placeholder')
+    this.task.get('taskType')?.setValue('placeholder')
   }
 
   saveEducatedFor(event:any){

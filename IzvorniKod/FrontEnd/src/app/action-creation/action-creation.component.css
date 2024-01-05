@@ -117,8 +117,7 @@ button {
 .firstColDiv{
   display: flex;
   flex-direction: column;
-  gap: 5rem;
-  width: 25%;
+  gap: 1rem;
 }
 
 .map-container {
@@ -148,13 +147,14 @@ button {
   flex-direction: column;
   gap: 5px;
   width:100%;
-  margin:1rem  0 0 1rem;
+  margin:1rem  0 0 0;
 }
 .listOfTasks-div{
   display: flex;
   flex-direction: column;
   gap: 5px;
   width: 30%;
+  padding-bottom: 1rem;
 }
 #delete{
   padding:2px;
@@ -164,7 +164,7 @@ button {
   border: 1px solid #5b5656;
   border-radius: 10px;
   width: 17rem;
-  font-size: large;
+  font-size: medium;
   padding-left: 10px;
 }
 
@@ -180,7 +180,7 @@ button {
 .actionStuff{
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1rem;
 }
 textarea{
   resize:none;
@@ -206,4 +206,6 @@ textarea{
 
 .all-about-task{
   display: flex;
+  justify-content: space-evenly;
+  gap:1rem;
 }
