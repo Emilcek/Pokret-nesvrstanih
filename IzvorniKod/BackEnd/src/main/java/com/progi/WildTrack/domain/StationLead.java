@@ -1,5 +1,7 @@
 package com.progi.WildTrack.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,8 +29,10 @@ public class StationLead {
     @JoinColumn(name = "Clientname", referencedColumnName = "StationLeadname")
     @MapsId
     private Client client;
+
+    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "StationId",updatable = false, insertable = false)
+    @JoinColumn(name = "StationId")
     private Station station;
     @OneToMany(mappedBy = "stationLead", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Action> actions;

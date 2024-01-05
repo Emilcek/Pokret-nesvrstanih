@@ -30,7 +30,7 @@ public class Explorer {
     private Client client;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "StationId", insertable = false, updatable = false)
+    @JoinColumn(name = "StationId")
     private Station station;
     @ManyToMany(mappedBy = "explorers", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Action> actions = new HashSet<>();

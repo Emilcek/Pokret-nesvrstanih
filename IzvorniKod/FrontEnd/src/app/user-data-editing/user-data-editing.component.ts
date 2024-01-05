@@ -153,14 +153,14 @@ export class UserDataEditingComponent implements AfterViewInit, OnInit{
       this.http.put(environment.BASE_API_URL+"/client",formData,headersObj).subscribe({
         next: data => {
           let response: any = data;
-          console.log("poslano")
+          console.log("poslano", formData)
           //document.getElementById("newDataSaved")!.style.display = "block";
         }, error: (error) => {
         }
       })
 
     }
-    this.refreshPage();
+   // this.refreshPage();
 
   }
   handleFileInput(event: any): void {

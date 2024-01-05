@@ -19,7 +19,6 @@ export class StationChoosingComponent implements OnInit, AfterViewInit{
   chosenStationSurface: any;
   private map: any;
   header = new HttpHeaders({
-  'Content-Type': 'application/json',
   'Authorization': 'Bearer ' + localStorage.getItem('token'),
 });
   headersObj = {
@@ -98,16 +97,27 @@ export class StationChoosingComponent implements OnInit, AfterViewInit{
     this.http.get<any>(environment.BASE_API_URL + "/stationLead", this.headersObj).subscribe({
       next: (data: any) => {
         console.log(data)
-        this.chosenStation.stationLead = data.email;
+        //this.chosenStation.stationLead = data.email;
+
+        data.stationName = this.chosenStation.stationName;
         console.log(this.chosenStation) // saljem istu postaju samo stationLead više nije null
-        /*this.http.put(environment.BASE_API_URL + "/stationLead/stations", this.chosenStation).subscribe({
+        let formData = new FormData()
+        formData.append('clientName',data.clientName)
+        formData.append('firstName',data.firstName)
+        formData.append('lastName',data.lastName)
+        formData.append('role',data.role)
+        formData.append('educatedFor',data.educatedFor)
+        formData.append('stationName',this.chosenStation.stationName)
+        formData.append('email',data.email)
+
+        this.http.put(environment.BASE_API_URL + "/stationLead", formData, this.headersObj).subscribe({
           next: (putData: any) => {
             console.log("PUT request successful", putData);
           },
           error: (error) => {
             console.error("Error in PUT request", error);
           }
-        });*/
+        });
       }})
   }
 }
