@@ -7,11 +7,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+
+@Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Table(name = "Animal")
 public class Animal {
     @Id
@@ -31,6 +32,7 @@ public class Animal {
     private List<AnimalLocation> animalLocationList;
     @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Task> taskList;
+
 
     @Override
     public String toString() {

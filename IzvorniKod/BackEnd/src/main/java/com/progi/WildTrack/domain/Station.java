@@ -31,7 +31,7 @@ public class Station {
     @OneToOne(mappedBy = "station", cascade = CascadeType.ALL)
     private StationLead stationLead;
     @OneToMany(mappedBy = "station", cascade = CascadeType.ALL)
-    private List<Explorer> explorer;
+    private List<Explorer> explorers;
 
 
 }

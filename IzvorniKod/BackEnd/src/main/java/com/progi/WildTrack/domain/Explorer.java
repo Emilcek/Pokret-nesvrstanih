@@ -21,6 +21,9 @@ public class Explorer {
     @Column(name = "Explorername" ,length = 30, nullable = false)
     private String explorerName;
 
+    @Column(name = "ExplorerStatus", nullable = false)
+    private String explorerStatus;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Explorername" ,referencedColumnName = "Clientname")
     @MapsId
@@ -29,13 +32,12 @@ public class Explorer {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "StationId", insertable = false, updatable = false)
     private Station station;
-
-    @OneToMany(mappedBy = "explorer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ExplorerAction> explorerActions;
+    @ManyToMany(mappedBy = "explorers", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Action> actions = new HashSet<>();
     @OneToMany(mappedBy = "explorer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<AnimalComment> animalComments;
     @OneToMany(mappedBy = "explorer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Task> task;
+    private List<Task> tasks;
     @OneToMany(mappedBy = "explorer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ExplorerLocation> explorerLocations;
     @ManyToMany(mappedBy = "explorers", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -43,6 +45,7 @@ public class Explorer {
 
     public Explorer(Client client) {
         this.client = client;
+        this.explorerStatus = "Available";
     }
 
 }
