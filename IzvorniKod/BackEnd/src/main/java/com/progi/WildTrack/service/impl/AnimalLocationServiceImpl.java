@@ -7,7 +7,9 @@ import com.progi.WildTrack.domain.AnimalLocation;
 import com.progi.WildTrack.dto.AnimalDetailsDTO;
 import com.progi.WildTrack.dto.AnimalLocationDTO;
 import com.progi.WildTrack.service.AnimalLocationService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -21,9 +23,12 @@ public class AnimalLocationServiceImpl implements AnimalLocationService {
     private AnimalRepository animalRepo;
 
     @Override
-    public String addAnimalLocation(Long animalId, AnimalLocationDTO animalLocationDTO) {
+    public ResponseEntity addAnimalLocation(Long animalId, AnimalLocationDTO animalLocationDTO) {
         //if animal exists -> create new animal location with timestamp
-        Animal animal = animalRepo.findById(animalId).orElseThrow(() -> new RuntimeException("Animal not found"));
+        if (!animalRepo.existsById(animalId)) {
+            return ResponseEntity.badRequest().body("Animal not found");
+        }
+        Animal animal = animalRepo.findById(animalId).get();
         String location = animalLocationDTO.getLatitude() + "," + animalLocationDTO.getLongitude();
         AnimalLocation animalLocation = AnimalLocation.builder()
                 .animal(animal)
@@ -32,28 +37,31 @@ public class AnimalLocationServiceImpl implements AnimalLocationService {
                 .build();
         animalLocationRepo.save(animalLocation);
         System.out.println("Animal location added " + animalLocation);
-        return animalLocation.toString();
+        return ResponseEntity.ok(AnimalDetailsDTO.builder()
+                .animalSpecies(animalLocation.getAnimal().getSpecies())
+                .animalPhotoURL(animalLocation.getAnimal().getAnimalPhotoURL())
+                .animalDescription(animalLocation.getAnimal().getAnimalDescription())
+                .latitude(animalLocation.getLocationofAnimal().split(",")[0])
+                .longitude(animalLocation.getLocationofAnimal().split(",")[1])
+                .build());
     }
 
+    @Transactional
     @Override
-    public AnimalDetailsDTO getAnimalDetails(Long animalId) {
+    public ResponseEntity getAnimalDetails(Long animalId) {
         //if animal exists -> get animal last location and animal details
-        Animal animal = animalRepo.findById(animalId).orElseThrow(() -> new RuntimeException("Animal not found"));
-
-        if (animalRepo.existsById(animalId)) {
-            AnimalLocation animalLocation = animalLocationRepo.findFirstByAnimal_AnimalIdOrderByAnimalLocationTSDesc(animalId);
-            AnimalDetailsDTO animalDetailsDTO = AnimalDetailsDTO.builder()
-                    .animalSpecies(animalLocation.getAnimal().getSpecies())
-                    .animalPhotoURL(animalLocation.getAnimal().getAnimalPhotoURL())
-                    .animalDescription(animalLocation.getAnimal().getAnimalDescription())
-                    .latitude(animalLocation.getLocationofAnimal().split(",")[0])
-                    .longitude(animalLocation.getLocationofAnimal().split(",")[1])
-                    .build();
-            return animalDetailsDTO;
-
-        } else {
-            throw new RuntimeException("Animal not found");
+        if (!animalRepo.existsById(animalId)) {
+            return ResponseEntity.badRequest().body("Animal not found");
         }
+        AnimalLocation animalLocation = animalLocationRepo.findFirstByAnimal_AnimalIdOrderByAnimalLocationTSDesc(animalId);
+        AnimalDetailsDTO animalDetailsDTO = AnimalDetailsDTO.builder()
+                .animalSpecies(animalLocation.getAnimal().getSpecies())
+                .animalPhotoURL(animalLocation.getAnimal().getAnimalPhotoURL())
+                .animalDescription(animalLocation.getAnimal().getAnimalDescription())
+                .latitude(animalLocation.getLocationofAnimal().split(",")[0])
+                .longitude(animalLocation.getLocationofAnimal().split(",")[1])
+                .build();
+        return ResponseEntity.ok(animalDetailsDTO);
     }
 
         @Override

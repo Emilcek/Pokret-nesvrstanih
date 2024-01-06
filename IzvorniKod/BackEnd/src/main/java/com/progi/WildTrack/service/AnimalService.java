@@ -1,12 +1,12 @@
 package com.progi.WildTrack.service;
 
 import com.progi.WildTrack.dto.AnimalDTO;
-import com.progi.WildTrack.dto.AnimalDetailsDTO;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface AnimalService {
-    AnimalDTO addAnimal(AnimalDTO animalDTO);
+    ResponseEntity addAnimal(AnimalDTO animalDTO);
 
 
     List<AnimalDTO> getAllAnimals();

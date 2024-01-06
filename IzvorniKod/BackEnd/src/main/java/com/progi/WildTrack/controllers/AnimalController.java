@@ -21,21 +21,6 @@ public class AnimalController {
     private final  AnimalLocationService animalLocationService;
     private final AnimalService animalService;
 
-    //animal's current location is added to the database
-    @PostMapping("/current/location/{animalId}")
-    public ResponseEntity<String> addAnimalLocation(@PathVariable Long animalId, @RequestBody AnimalLocationDTO animalLocationDTO) {
-        return ResponseEntity.ok(animalLocationService.addAnimalLocation(animalId, animalLocationDTO));
-    }
-    //tragac wants to see current location of the animal
-    @GetMapping("/location/{animalId}")
-    public ResponseEntity<AnimalDetailsDTO> getAnimalDetails(@PathVariable Long animalId) {
-        return ResponseEntity.ok(animalLocationService.getAnimalDetails(animalId));
-    }
-    //list of all animals current location
-    @GetMapping("/location/all")
-    public ResponseEntity<List<AnimalDetailsDTO>> getAllAnimalsDetails() {
-        return ResponseEntity.ok(animalLocationService.getAllAnimalsDetails());
-    }
     //list of all animals
     @GetMapping("/all")
     public ResponseEntity<List<AnimalDTO>> getAllAnimals() {
@@ -43,9 +28,35 @@ public class AnimalController {
     }
     //animal is added to the database
     @PostMapping("/add")
-    public ResponseEntity<AnimalDTO> addAnimal(@RequestBody AnimalDTO animal) {
-        return ResponseEntity.ok(animalService.addAnimal(animal));
+    public ResponseEntity addAnimal(@RequestBody AnimalDTO animal) {
+        return animalService.addAnimal(animal);
     }
+
+    //animal's current location is added to the database
+    @PostMapping("/current/location/{animalId}")
+    public ResponseEntity addAnimalLocation(@PathVariable Long animalId, @RequestBody AnimalLocationDTO animalLocationDTO) {
+        return animalLocationService.addAnimalLocation(animalId, animalLocationDTO);
+    }
+    //tragac wants to see current location of the animal
+    @GetMapping("/location/{animalId}")
+    public ResponseEntity<AnimalDetailsDTO> getAnimalDetails(@PathVariable Long animalId) {
+        return animalLocationService.getAnimalDetails(animalId);
+    }
+    //list of locations of all animals that are on same task as the explorer
+    @GetMapping("/location/task/{explorerId}")
+    //je li on na akciji
+    //nac id taska na kojem je
+    // ako je onda vrati sve zivotinje koje su na toj akciji
+    //ako nema zivotinja posalji praznu listu
+    public ResponseEntity<List<AnimalDetailsDTO>> getAnimalsDetails(@PathVariable Long explorerId) {
+        return null;
+    }
+    //list of all animals current location
+    @GetMapping("/location/all")
+    public ResponseEntity<List<AnimalDetailsDTO>> getAllAnimalsDetails() {
+        return ResponseEntity.ok(animalLocationService.getAllAnimalsDetails());
+    }
+
 
 
 }
