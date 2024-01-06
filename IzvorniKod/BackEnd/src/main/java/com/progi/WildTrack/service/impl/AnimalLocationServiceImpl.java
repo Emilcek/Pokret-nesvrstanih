@@ -55,6 +55,7 @@ public class AnimalLocationServiceImpl implements AnimalLocationService {
         }
         AnimalLocation animalLocation = animalLocationRepo.findFirstByAnimal_AnimalIdOrderByAnimalLocationTSDesc(animalId);
         AnimalDetailsDTO animalDetailsDTO = AnimalDetailsDTO.builder()
+                .animalId(animalLocation.getAnimal().getAnimalId())
                 .animalSpecies(animalLocation.getAnimal().getSpecies())
                 .animalPhotoURL(animalLocation.getAnimal().getAnimalPhotoURL())
                 .animalDescription(animalLocation.getAnimal().getAnimalDescription())
@@ -71,6 +72,7 @@ public class AnimalLocationServiceImpl implements AnimalLocationService {
             List<AnimalLocation> locationList = animalLocationRepo.findAll();
             for (AnimalLocation animalLocation : locationList) {
                 AnimalDetailsDTO animalDetailsDTO = AnimalDetailsDTO.builder()
+                        .animalId(animalLocation.getAnimal().getAnimalId())
                         .animalSpecies(animalLocation.getAnimal().getSpecies())
                         .animalPhotoURL(animalLocation.getAnimal().getAnimalPhotoURL())
                         .animalDescription(animalLocation.getAnimal().getAnimalDescription())
