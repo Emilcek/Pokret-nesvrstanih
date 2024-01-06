@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AnimalDetailsDTO {
-
+    private Long animalId;
     private String animalSpecies;
     private String animalPhotoURL;
     private String animalDescription;
