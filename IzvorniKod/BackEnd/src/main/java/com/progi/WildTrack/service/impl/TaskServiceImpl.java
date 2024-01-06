@@ -54,40 +54,41 @@ public class TaskServiceImpl implements TaskService {
         if (task == null || task.getTaskStatus().equals("Done") || !task.getExplorer().getExplorerName().equals(client.getClientName())) {
             return ResponseEntity.notFound().build();
         }
-        task.setTaskStatus("Done");
-        taskRepo.save(task);
 
         //postavljanje akcije u "Done" ako su rijeseni svi zadatci
         Action action = task.getAction();
-        boolean allDone = true;
+        boolean actionDone = true;
         for (Task t : action.getTasks()) {
             if (!t.getTaskStatus().equals("Done") && !(Objects.equals(t.getTaskId(), taskId))) {
                 System.out.println("Task " + t.getTaskId() + " in action not done");
-                allDone = false;
+                actionDone = false;
                 break;
             }
-        }
-        if (allDone) {
-            System.out.println("All tasks in action done");
-            action.setActionStatus("Done");
-            actionRepo.save(action);
         }
 
         //postavljanje tragaca u "Available" ako su rijeseni svi zadatci
-        allDone = true;
+        boolean tasksDone = true;
         for (Task t : client.getExplorer().getTasks()) {
             if (!t.getTaskStatus().equals("Done") && !(Objects.equals(t.getTaskId(), taskId))) {
                 System.out.println("Task " + t.getTaskId() + " not done");
-                allDone = false;
+                tasksDone = false;
                 break;
             }
         }
-        if (allDone) {
+        if (tasksDone) {
             System.out.println("All tasks for explorer done");
             Explorer explorer = client.getExplorer();
             explorer.setExplorerStatus("Available");
             explorerRepo.save(explorer);
         }
+        if (actionDone) {
+            System.out.println("All tasks for action done");
+            action.setActionStatus("Done");
+            actionRepo.save(action);
+        }
+
+        task.setTaskStatus("Done");
+        taskRepo.save(task);
         return ResponseEntity.ok().build();
     }
 }
