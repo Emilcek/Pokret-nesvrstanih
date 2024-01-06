@@ -1,11 +1,16 @@
 package com.progi.WildTrack.domain;
 
 import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 import java.util.Date;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "AnimalLocation")
 public class AnimalLocation {
@@ -20,9 +25,10 @@ public class AnimalLocation {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "AnimalId")
+    @ToString.Exclude
     private Animal animal;
-    public AnimalLocation() {
-    }
+
+
 
 
 }

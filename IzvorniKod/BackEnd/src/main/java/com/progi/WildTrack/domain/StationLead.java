@@ -31,7 +31,7 @@ public class StationLead {
     @JoinColumn(name = "StationId",updatable = false, insertable = false)
     private Station station;
     @OneToMany(mappedBy = "stationLead", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Request> Requests;
+    private List<Action> actions;
 
 
     public StationLead(Client savedClient, Status status) {

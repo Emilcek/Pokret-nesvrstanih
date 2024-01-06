@@ -27,8 +27,6 @@ public class Researcher {
     @MapsId
     private Client client;
     @OneToMany(mappedBy = "researcher", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Request> Requests;
-    @OneToMany(mappedBy = "researcher", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Action> actions;
 
 

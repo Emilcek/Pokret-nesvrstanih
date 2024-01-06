@@ -29,8 +29,6 @@ public class Vehicle {
             inverseJoinColumns = { @JoinColumn(name = "Explorername") }
     )
     private Set<Explorer> explorers = new HashSet<>();
-//    @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private List<EducatedFor> educatedForList;
     @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Task> taskList;
 
