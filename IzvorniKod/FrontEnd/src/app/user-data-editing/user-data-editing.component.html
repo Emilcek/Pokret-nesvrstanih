@@ -1,70 +1,74 @@
-  <div class="hole-div main-container" *ngIf="currentUser">
+<div class="hole-div main-container" *ngIf="currentUser">
+  <div class="da" *ngIf="currentUser.Status !== 'REJECTED'">
     <div class="upper-div"><h2>Podaci o profilu</h2></div>
     <hr style="width:90%;text-align:left;margin-left:5%">
     <div class="flex">
-      <div class="flex-column form-container">
+      <div class="flex-column form-container" [formGroup]="profileForm">
+        <div>
+          <div id="imagePreview"></div>
+        </div>
+        <label class="custom-file-input">
+          Promijenite fotografiju
+          <input type="file" id="myFile" name="filename"
+                 accept="image/png, image/jpeg, image/jpg" (change)="handleFileInput($event)">
+        </label>
         <div class="form-inputs flex">
           <div *ngFor="let key of keys" class="form-input-container">
-            <input type="text" class="form-input" placeholder=" " [(ngModel)]="userData[key]">
-            <label class="form-input-label">{{key}}</label>
-            <div *ngIf="!userData.Ime && key==='Ime'" class="error-message">Ime je potrebno</div>
+            <div>
+              <input type="text" class="form-input" [formControlName]="turnToRightFormat[key]" placeholder=" ">
+              <label class="form-input-label">{{localStorage[key]}}</label>
+              <div *ngIf="key=='Name' && this.profileForm.controls.firstName.invalid" class="ErrorMessage">Unos imena je
+                obvezan <br>i ono
+                se mora sastojati samo od slova.
+              </div>
+              <div *ngIf="key=='Surname' && this.profileForm.controls.lastName.invalid" class="ErrorMessage">Unos
+                prezimena je obvezan <br>i ono
+                se mora sastojati samo od slova.
+              </div>
+            </div>
+          </div>
+          <div *ngIf="role==='tragac'">
+            <label class="form-input-label" id="labelEducatedFor">Kompetencije</label>
+            <div id="abilityGrid" class="checkbox-container">
+              <tr *ngFor="let n of abilities">
+                <input type="checkbox" [checked]="Checked(n.name)" [value]="n.id"
+                       (change)="onChangeAbility($event)"> {{n.name}}
+              </tr>
+            </div>
+            <div *ngIf="checkEducatedFor()" class="ErrorMessage">Morate odabrati barem jednu kompetenciju</div>
           </div>
         </div>
         <div class="buttons">
           <div class="button-div1">
-            <button class="btn2" (click)="saveUserData()" type="submit">Spremi</button>
+            <button class="btn2" type="submit" (click)="saveUserData()">Spremi</button>
           </div>
           <div class="button-div2">
-            <button class="btn1" (click)="this.getUserData();" type="button">Odustani</button>
+            <button class="btn1" (click)="refreshData()" type="button">Odustani</button>
           </div>
         </div>
       </div>
       <p *ngIf="role==='tragac'" class="text">Još niste odabrani ni za jednu postaju!</p>
     </div>
-
-
+  </div>
+  <div class="rejected-container">
+    <div class="up-div" *ngIf="currentUser.Status === 'REJECTED'">
+      <div class="rejectTitle">
+        <h2>Vaš zahtjev je odbijen!</h2>
+      </div>
+      <hr class="divider">
+      <div class="in-div">
+        <h3>
+          <br>
+          Administrator je odbio vaš zahtjev za registraciju. Pokušajte se registrirati sa drugom ulogom<br>
+        </h3>
+      </div>
+      <div class="button-and-text">
+        <button (click)="deleteUser()" class="btn1">Povratak na prijavu</button>
+        <p class="additional-text">Vaš profil je obrisan. Kliknite ovaj gumb i stvorite novi!</p>
+      </div>
+    </div>
   </div>
 
-
-           <!-- <div class="grid-cell">
-                <div class="form-input-container">
-                    <input type="text" class="form-input" placeholder=" " [(ngModel)]="userData.firstName">
-                    <label class="form-input-label">Ime</label>
-                    <div *ngIf="!userData.firstName" class="error-message">Ime je potrebno</div>
-                </div>
-            </div>
-            <div class="grid-cell">
-                <div class="form-input-container">
-                    <input type="text" class="form-input" placeholder=" " [(ngModel)]="userData.lastName">
-                    <label class="form-input-label">Prezime</label>
-                    <div *ngIf="!userData.lastName" class="error-message">Prezime je potrebno</div>
-                </div>
-            </div>
-            <div class="text">
-                <p>Još niste odabrani ni za jednu postaju!</p>
-            </div>
-            <div class="grid-cell">
-                <div class="form-input-container">
-                    <input type="text" class="form-input" placeholder=" " [(ngModel)]="userData.username"
-                        style="pointer-events: none;">
-                    <label class="form-input-label">Korisničko ime</label>
-                </div>
-            </div>
-            <div class="grid-cell">
-                <div class="form-input-container">
-                    <input type="text" class="form-input" placeholder=" " [(ngModel)]="userData.password">
-                    <label class="form-input-label">Lozinka</label>
-                    <div *ngIf="!userData.password" class="error-message">Lozinka je potrebno</div>
-                </div>
-            </div>
-            <div class="grid-cell-email">
-                <div class="form-input-container">
-                    <input type="text" class="form-input" placeholder=" " [(ngModel)]="userData.email"
-                        (input)="validateEmail()">
-                    <label class="form-input-label">E-mail</label>
-                    <div *ngIf="emailError" class="error-message">Neispravan email</div>
-                    <div *ngIf="!userData.email" class="error-message">Email je potreban</div>
-                </div>
-            </div> -->
+</div>
 
 

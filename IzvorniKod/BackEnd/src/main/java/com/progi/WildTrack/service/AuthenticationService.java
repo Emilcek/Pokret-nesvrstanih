@@ -13,9 +13,9 @@ import java.io.IOException;
 
 public interface AuthenticationService {
 
-    AuthenticationResponseDto register(RegisterDto request);
+    ResponseEntity register(RegisterDto request);
 
-    AuthenticationResponseDto authenticate(LoginDto request);
+    ResponseEntity authenticate(LoginDto request);
 
     void refreshToken(
             HttpServletRequest request,

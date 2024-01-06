@@ -21,8 +21,4 @@ public class ResearcherController {
         return ResponseEntity.ok(clientService.getClient());
     }
 
-    @PostMapping
-    public ResponseEntity<ClientDetailsDTO> updateResearcher(@RequestBody ClientUpdateDTO client) {
-        return ResponseEntity.ok(clientService.updateClient(client));
-    }
 }
