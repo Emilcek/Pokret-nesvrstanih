@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, AfterViewInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
 import * as L from 'leaflet';
-import { environment } from 'src/environments/environment';
+import {environment} from "../../environments/environment";
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-animal-location-mock',
@@ -14,8 +14,9 @@ export class AnimalLocationMockComponent {
   private map: any;
   private marker: L.Marker<any> | undefined;
   private circle: L.Circle<any> | undefined;
+  private id: string | undefined;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private route: ActivatedRoute) {
 
   }
 
@@ -38,6 +39,11 @@ export class AnimalLocationMockComponent {
 
 
     private getLocationData(): void {
+
+      const idFromRoute = this.route.snapshot.paramMap.get('id');
+      this.id = idFromRoute !== null ? idFromRoute : undefined;
+      console.log("ID: " + this.id)
+
       //post rekvest u bazu za lat, long, tmiestamp
       let header = new HttpHeaders({
         'Content-Type': 'application/json',
@@ -46,7 +52,7 @@ export class AnimalLocationMockComponent {
       let headersObj = {
         headers: header
       };
-      this.http.get<LocationResponse>(environment.BASE_API_URL + "/location/1", headersObj).subscribe({
+      this.http.get<LocationResponse>(environment.BASE_API_URL + "/animal/location/" + this.id, headersObj).subscribe({
         next: (responseData: LocationResponse) => {
           console.log(responseData);
           const serverLat = responseData.latitude;

@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, AfterViewInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
 import * as L from 'leaflet';
-import { environment } from 'src/environments/environment';
+import {environment} from "../../environments/environment";
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-animal-location',
@@ -11,8 +11,9 @@ import { environment } from 'src/environments/environment';
 })
 export class AnimalLocationComponent {
   private map: any;
+  private id: string | undefined;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private route: ActivatedRoute) {
 
   }
 
@@ -36,14 +37,21 @@ export class AnimalLocationComponent {
       console.log(position)
       const lat = position.coords.latitude;
       const long = position.coords.longitude;
-      const timeStamp = position.timestamp;
+      const timeStamp = new Date(position.timestamp).toISOString().slice(0, 19).replace('T', ' ');
+      console.log("Timestamp: " + timeStamp)
       const accuracy = position.coords.accuracy;
 
+      const idFromRoute = this.route.snapshot.paramMap.get('id');
+      this.id = idFromRoute !== null ? idFromRoute : undefined;
+      console.log("ID: " + this.id)
+
       const data = {
-        latitude: lat,
         longitude: long,
+        latitude: lat,
         timestamp: timeStamp,
       };
+
+      console.log("Data: " + JSON.stringify(data))
 
       //post rekvest u bazu za lat, long, tmiestamp
       let header = new HttpHeaders({
@@ -53,7 +61,7 @@ export class AnimalLocationComponent {
       let headersObj = {
         headers: header
       };
-      this.http.post(environment.BASE_API_URL + "/current/location/1", data, headersObj).subscribe({
+      this.http.post(environment.BASE_API_URL + "/animallocation/" + this.id, data, headersObj).subscribe({
         next: responseData => {
           console.log("Poslana lokacija: " + responseData);
         },
