@@ -18,10 +18,6 @@ export class AuthService {
     }
 
   isUserLoggedIn() {
-      if(localStorage.getItem('token') !== null) {
-        return true;
-      } else {
-        return false;
-      }
+    return !!localStorage.getItem('token');
   }
 }

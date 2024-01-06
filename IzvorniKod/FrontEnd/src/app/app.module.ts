@@ -26,6 +26,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { AnimalLocationComponent } from './animal-location/animal-location.component';
 import { AnimalLocationMockComponent } from './animal-location-mock/animal-location-mock.component';
+import { ActionCreationComponent } from './action-creation/action-creation.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,8 @@ import { AnimalLocationMockComponent } from './animal-location-mock/animal-locat
     ExplorerTasksComponent,
     ExplorerProfileComponent,
     UsersRequestsListComponent,
+    UsersListComponent,
+    ActionCreationComponent,
     UsersListComponent,
     MapComponent,
     StationInfoComponent,
