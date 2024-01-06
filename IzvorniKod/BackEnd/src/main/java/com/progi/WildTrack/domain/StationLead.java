@@ -42,4 +42,13 @@ public class StationLead {
         this.client = savedClient;
         this.status = status;
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((stationLeadName == null) ? 0 : stationLeadName.hashCode());
+        result = prime * result + ((status == null) ? 0 : status.hashCode());
+        return result;
+    }
 }
