@@ -1,0 +1,102 @@
+<div class="outer-wrapper" [formGroup]="task" style="margin:30px;">
+  <div>
+    <div class="top">
+      Kreiranje nove akcije
+    </div>
+    <hr>
+  </div>
+  <div class="center-grid">
+    <div class="firstColDiv">
+      <div class="actionStuff">
+        <div class="actionTitle">
+          <label class="form-input-label">Naziv akcije</label>
+          <input type="text" class="form-input" placeholder="Unesite ime akcije" formControlName="actionTitle">
+          <div *ngIf="this.actionAdded && this.task.value.actionTitle==''" class="ErrorMessage"> Morate napisati naziv akcije</div>
+        </div>
+        <div class="actionDescription">
+          <label class="label">Opis akcije</label>
+          <textarea class="description" formControlName="actionDescription" placeholder="Napišite kratak opis akcije"></textarea>
+          <div *ngIf="this.actionAdded && this.task.value.actionDescription==''" class="ErrorMessage"> Morate napisati opis akcije</div>
+        </div>
+      </div>
+      <div class="stationChoosing">
+        <label class="label">Postaja</label>
+        <select name="position" id="pos" formControlName="station">
+          <option value="placeholder" [selected]="true" [hidden]="true" >Odaberi postaju</option>
+          <option value="Postaja1">Postaja1</option>
+          <option value="Postaja2">Postaja2</option>
+          <option value="Postaja3">Postaja3</option>
+        </select>
+        <div *ngIf="this.actionAdded && this.task.value.station=='placeholder'" class="ErrorMessage"> Morate dodati postaju kojoj šaljete akciju</div>
+      </div>
+    </div>
+    <div class="taskDefining">
+        <div class="inner-grid">
+          <div class="map-container">
+            <div class="map-frame">
+              <div id="map"></div>
+            </div>
+          </div>
+          <div *ngIf="this.taskAdded && (this.markersGroup.getLayers().length==1 && this.task.value.taskType==='Prođi rutom')" class="ErrorMessage"> Ako ste odabrali tip zadatka Prođi rutom, obvezno je dodavanje i početne i krajnje lokacije</div>
+          <div *ngIf="this.markersGroup!=undefined && this.markersGroup.getLayers().length==0 && this.taskAdded" class="ErrorMessage"> Morate označiti barem jednu lokaciju na karti</div>
+          <div class="all-about-task">
+            <div class="description-div">
+              <div >
+                <select name="position" (change)="saveEducatedFor($event)" formControlName="taskType">
+                  <option value="placeholder" [selected]="true" [hidden]="true">Odaberi vrstu zadatka</option>
+                  <option value="Postavi kameru">Postavi kameru</option>
+                  <option value="Postavi GPS">Postavi GPS</option>
+                  <option value="Prođi rutom">Prođi rutom</option>
+                  <option value="Dođi na lokaciju">Dođi na lokaciju</option>
+                </select>
+                <div *ngIf="this.taskAdded && this.task.value.taskType=='placeholder'" class="ErrorMessage"> Morate dodati opis zadatka</div>
+              </div>
+              <label class="label">Opis zadatka</label>
+              <div>
+                <textarea class="description" formControlName="description" placeholder="Napišite opis zadatka"></textarea>
+                <div *ngIf="this.taskAdded && this.task.value.description==null" class="ErrorMessage"> Morate dodati opis zadatka</div>
+              </div>
+            </div>
+            <div class="button-educated">
+              <div id="education-div">
+                <select name="position" id="education" (change)="saveEducatedFor($event)" formControlName="educatedFor">
+                  <option value="placeholder" [selected]="true" [hidden]="true">Odaberi kompetenciju</option>
+                  <option value="hodanje">Hodanje</option>
+                  <option value="dron">Dron</option>
+                  <option value="motor">Motor</option>
+                  <option value="helikopter">Helikopter</option>
+                  <option value="auto">Auto</option>
+                  <option value="brod">Brod</option>
+                </select>
+                <div *ngIf="this.taskAdded && (this.task.value.educatedFor=='placeholder' || this.task.value.educatedFor==null)" class="ErrorMessage"> Odabir kompetencije je obvezan</div>
+              </div>
+              <div class="buttons-div">
+                <button class="btn-add" (click)="addTask()">
+                  Dodaj zadatak
+                </button>
+                <button class="btn-dismiss" (click)="dismissTask()">
+                  Odustani
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+    </div>
+    <div class="listOfTasks-div">
+      <label class="label">Lista zadataka</label>
+      <div class="listOfTasks">
+        <tr *ngFor="let n of this.tasks">
+          <td style="padding-left: 0.5rem">{{this.tasks.indexOf(n)+1}}. {{n.description}}, kompetencija: {{n.educatedFor}} <button class="btn-dismiss" id="delete" (click)="deleteFromTasks(n)">Obriši</button></td>
+        </tr>
+      </div>
+      <div *ngIf="this.actionAdded && this.tasks.length==0" class="ErrorMessage"> Morate dodati barem jedan zadatak</div>
+    </div>
+  </div>
+    <hr>
+    <div class="sendButtonDiv">
+      <button class="sendAction" (click)="sendAction()">
+        Pošalji akciju
+      </button>
+    </div>
+</div>
