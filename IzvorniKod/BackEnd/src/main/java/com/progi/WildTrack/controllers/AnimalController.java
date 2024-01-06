@@ -32,11 +32,6 @@ public class AnimalController {
         return animalService.addAnimal(animal);
     }
 
-    //animal's current location is added to the database
-    @PostMapping("/current/location/{animalId}")
-    public ResponseEntity addAnimalLocation(@PathVariable Long animalId, @RequestBody AnimalLocationDTO animalLocationDTO) {
-        return animalLocationService.addAnimalLocation(animalId, animalLocationDTO);
-    }
     //tragac wants to see current location of the animal
     @GetMapping("/location/{animalId}")
     public ResponseEntity<AnimalDetailsDTO> getAnimalDetails(@PathVariable Long animalId) {
