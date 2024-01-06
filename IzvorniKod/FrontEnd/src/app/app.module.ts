@@ -24,6 +24,8 @@ import {NgOptimizedImage} from "@angular/common";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { AnimalLocationComponent } from './animal-location/animal-location.component';
+import { AnimalLocationMockComponent } from './animal-location-mock/animal-location-mock.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     UsersListComponent,
     MapComponent,
     StationInfoComponent,
-    StationChoosingComponent
+    StationChoosingComponent,
+    AnimalLocationComponent,
+    AnimalLocationMockComponent
   ],
   imports: [
     BrowserModule,
