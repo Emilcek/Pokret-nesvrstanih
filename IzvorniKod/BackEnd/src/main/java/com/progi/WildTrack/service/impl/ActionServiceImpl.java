@@ -100,17 +100,10 @@ public class ActionServiceImpl implements ActionService {
             taskRepo.save(task);
 
             action.getExplorers().add(explorer);
+            action.getExplorers().forEach(explorer1 -> System.out.println("explorer " + explorer1.getExplorerName()));
             actionRepo.save(action);
         }
         return ResponseEntity.ok().build();
-    }
-
-    @Override
-    public ResponseEntity getResearcherRequests() {
-        Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Researcher researcher = client.getResearcher();
-        List<Action> requests = actionRepo.findAllByResearcher(researcher).stream().filter(action -> action.getActionStatus().equals("Pending")).toList();
-        return ResponseEntity.ok(requests);
     }
 
     @Override

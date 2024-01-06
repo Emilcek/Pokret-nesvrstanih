@@ -16,8 +16,6 @@ public interface ActionService {
 
     ResponseEntity acceptRequest(Long requestId, List<ExplorerTaskDTO> explorerTaskDTO);
 
-    ResponseEntity getResearcherRequests();
-
     ResponseEntity declineRequest(Long requestId);
 
     ResponseEntity getStationLeadRequests();

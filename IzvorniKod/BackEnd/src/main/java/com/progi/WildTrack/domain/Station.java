@@ -37,4 +37,15 @@ public class Station {
     private List<Explorer> explorers;
 
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((stationId == null) ? 0 : stationId.hashCode());
+        result = prime * result + ((stationName == null) ? 0 : stationName.hashCode());
+        result = prime * result + radius;
+        result = prime * result + ((stationStatus == null) ? 0 : stationStatus.hashCode());
+        result = prime * result + ((stationLocation == null) ? 0 : stationLocation.hashCode());
+        return result;
+    }
 }

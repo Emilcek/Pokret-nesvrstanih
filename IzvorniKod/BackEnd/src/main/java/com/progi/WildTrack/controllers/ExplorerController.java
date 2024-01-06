@@ -26,7 +26,7 @@ public class ExplorerController {
         return taskService.getTask(taskId);
     }
 
-    @PostMapping("/task/{taskId}/done")
+    @PutMapping("/task/{taskId}/done")
     public ResponseEntity setTaskDone(@PathVariable Long taskId) {
         return taskService.setTaskDone(taskId);
     }

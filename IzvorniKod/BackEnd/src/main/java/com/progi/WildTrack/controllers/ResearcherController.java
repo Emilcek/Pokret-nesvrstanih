@@ -33,11 +33,6 @@ public class ResearcherController {
         return actionService.createRequest(request);
     }
 
-    @GetMapping("/requests")
-    public ResponseEntity getRequests() {
-        return actionService.getResearcherRequests();
-    }
-
     @GetMapping("/actions")
     public ResponseEntity getActions() {
         return actionService.getActions();

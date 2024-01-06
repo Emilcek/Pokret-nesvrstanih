@@ -36,7 +36,7 @@ public class Explorer {
     private Set<Action> actions = new HashSet<>();
     @OneToMany(mappedBy = "explorer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<AnimalComment> animalComments;
-    @OneToMany(mappedBy = "explorer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "explorer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Task> tasks;
     @OneToMany(mappedBy = "explorer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ExplorerLocation> explorerLocations;
