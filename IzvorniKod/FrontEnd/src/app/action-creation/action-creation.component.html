@@ -1,4 +1,4 @@
-<div class="outer-wrapper" [formGroup]="task" style="margin:30px;" *ngIf="!actionPending()">
+<div class="outer-wrapper" [formGroup]="task" style="margin:30px;" >
   <div>
     <div class="top">
       Kreiranje nove akcije
@@ -11,12 +11,12 @@
         <div class="actionTitle">
           <label class="form-input-label">Naziv akcije</label>
           <input type="text" class="form-input" placeholder="Unesite ime akcije" formControlName="actionTitle">
-          <div *ngIf="this.actionAdded && this.task.value.actionTitle==''" class="ErrorMessage"> Morate napisati naziv akcije</div>
+          <div *ngIf="this.actionAdded && (this.task.value.actionTitle=='' || this.task.value.actionTitle==null)" class="ErrorMessage"> Morate napisati naziv akcije</div>
         </div>
         <div class="actionDescription">
           <label class="label">Opis akcije</label>
           <textarea class="description" formControlName="actionDescription" placeholder="Napišite kratak opis akcije"></textarea>
-          <div *ngIf="this.actionAdded && this.task.value.actionDescription==''" class="ErrorMessage"> Morate napisati opis akcije</div>
+          <div *ngIf="this.actionAdded && (this.task.value.actionDescription=='' || this.task.value.actionDescription==null)" class="ErrorMessage"> Morate napisati opis akcije</div>
         </div>
       </div>
       <div class="stationChoosing">
@@ -101,9 +101,15 @@
     </div>
 </div>
 
-<div class="outer-wrapper" *ngIf="actionPending()">
-  <div class="top">
-    <div class="loader"></div>
-    <div class="loader-text">Slanje akcije u tijeku</div>
+
+<div class="outer-wrapper" *ngIf="!actionDone" style="margin:30px; height:30rem; flex-direction: column;justify-content: center;gap: 1.5rem">
+  <div style="display:flex; flex-direction: column; gap:1rem;">
+    <div class="feedback" style="color: #1ea230">Akcija je prihvaćena</div>
+    <div class="feedback" style="color:red">Akcija je odbijena</div>
+    <div class="feedback" style="color: #d0a811">Slanje akcije u tijeku</div>
+    <div class="underText">Morate pričekati odbijanje akcije ili njeno izvršavanje kako bi ste izradili novu</div>
+    <div style="display: flex;justify-content: center">
+      <button style="width:50%" class="btn-add">Izradite novu akciju</button>
+    </div>
   </div>
 </div>

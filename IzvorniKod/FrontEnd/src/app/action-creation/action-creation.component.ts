@@ -23,6 +23,7 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
   educatedForChosen:any;
   markersGroup:any;
   actionAdded:any=false;
+  actionDone:boolean=true;
 
   task=new FormGroup({
     actionTitle:new FormControl(''),
@@ -34,6 +35,7 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
   })
 
   ngOnInit() {
+  this.actionDone=this.actionNotDone();
   }
 
   private initMap(): void {
@@ -90,7 +92,7 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
-    if(!this.actionPending()){
+    if(this.actionDone){
       this.initMap();
     }
 
@@ -100,11 +102,10 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
     this.taskAdded=true;
     if (this.task.value.description!=null && this.task.value.educatedFor!='placeholder' && this.markersGroup.getLayers().length>0 && this.task.value.taskType!='placeholder'
     && !(this.task.value.taskType==="Prođi rutom" && this.markersGroup.getLayers().length<2)){
-      this.tasks.push({"description": this.task.value.taskType+": "+this.task.value.description, "endLocation": this.endLocation, "startLocation":this.startLocation,"educatedFor": this.educatedForChosen});
+      this.tasks.push({"description": this.task.value.taskType+": "+this.task.value.description, "endLocation": this.endLocation, "startLocation":this.startLocation,"taskVehicle": this.educatedForChosen});
       this.markersGroup.clearLayers();
       this.taskAdded=false;
       this.task.get('description')?.reset()
-      this.task.get('station')?.setValue('placeholder')
       this.task.get('educatedFor')?.setValue('placeholder')
       this.task.get('taskType')?.setValue('placeholder')
     }
@@ -116,7 +117,7 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
     this.taskAdded=false;
     this.markersGroup.clearLayers();
     this.task.reset();
-    this.task.get('station')?.setValue('placeholder')
+    this.task.get('description')?.reset()
     this.task.get('educatedFor')?.setValue('placeholder')
     this.task.get('taskType')?.setValue('placeholder')
   }
@@ -135,13 +136,18 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
     //ovdje treba provjeriti popis akcija da se zna može li korisnik izraditi novu akciju
     if(this.task.value.actionTitle!=null && this.task.value.actionDescription!=null && this.task.value.station!='placeholder' && this.tasks.length>0){
       let formData = new FormData()
-      formData.append('actionTitle',this.task.value.actionTitle!)
-      formData.append('actionDescription',this.task.value.actionDescription!)
-      formData.append('station',this.chosenStationName)
-      formData.append('task',this.tasks)
+      formData.append('station',this.task.value.station!)
+      formData.append('name',this.task.value.actionTitle!)
+      formData.append('description',this.task.value.actionDescription!)
+      formData.append('tasks',JSON.stringify(this.tasks))
+
+      formData.forEach(function(value, key){
+        console.log(key + ': ' + value);
+      });
 
       let header = new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        'Content-Type': 'application/json'
       });
       let headersObj = {
         headers: header
@@ -155,15 +161,39 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
         }
       })
       this.actionAdded=false;
+      this.task.reset()
+      this.task.get('station')?.setValue('placeholder')
+      this.task.get('educatedFor')?.setValue('placeholder')
+      this.task.get('taskType')?.setValue('placeholder')
+      this.tasks=[]
       }
     }
 
-    actionPending(){
+    actionNotDone(){
+      let header = new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+      });
+      let headersObj = {
+        headers: header
+      };
+    this.http.get(environment.BASE_API_URL+"/researcher/actions",headersObj).subscribe({
+    next: data => {
+        let response: any = data;
+        console.log(response)
+        if(response.length==0) {
+          this.actionDone = true;
+        }
+      }, error: (error) => {
+        console.log(error,"error")
+      }
+    })
+
     // u ovoj funckiji provjeriti ima li istraživač već izrađenu akciju koja čeka odobrenje
       // ako ima, onda mu se prikazije ekran s porukom da već ima akciju koja čeka odobrenje
       // inače se prikazuje ekran za izradu nove akcije
       return true;
     }
     //  /stationLeads/stations za getanje stationa
+
   }
 

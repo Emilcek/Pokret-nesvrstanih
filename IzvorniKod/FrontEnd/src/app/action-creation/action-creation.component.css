@@ -213,6 +213,17 @@ textarea{
   gap:1rem;
 }
 
+.feedback{
+  display: flex;
+  justify-content: center;
+  font-size: 3rem;
+}
+
+.underText{
+  display: flex;
+  justify-content: center;
+}
+
 @media only screen and (max-width: 1045px) {
   .all-about-task{
     flex-direction: column;
