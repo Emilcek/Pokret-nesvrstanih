@@ -1,4 +1,4 @@
-<div class="outer-wrapper" [formGroup]="task" style="margin:30px;">
+<div class="outer-wrapper" [formGroup]="task" style="margin:30px;" *ngIf="!actionPending()">
   <div>
     <div class="top">
       Kreiranje nove akcije
@@ -99,4 +99,11 @@
         Pošalji akciju
       </button>
     </div>
+</div>
+
+<div class="outer-wrapper" *ngIf="actionPending()">
+  <div class="top">
+    <div class="loader"></div>
+    <div class="loader-text">Slanje akcije u tijeku</div>
+  </div>
 </div>

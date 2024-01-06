@@ -90,7 +90,10 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.initMap();
+    if(!this.actionPending()){
+      this.initMap();
+    }
+
   }
 
   addTask() {
@@ -129,6 +132,7 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
 
   sendAction(){
     this.actionAdded=true;
+    //ovdje treba provjeriti popis akcija da se zna može li korisnik izraditi novu akciju
     if(this.task.value.actionTitle!=null && this.task.value.actionDescription!=null && this.task.value.station!='placeholder' && this.tasks.length>0){
       let formData = new FormData()
       formData.append('actionTitle',this.task.value.actionTitle!)
@@ -153,5 +157,13 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
       this.actionAdded=false;
       }
     }
+
+    actionPending(){
+    // u ovoj funckiji provjeriti ima li istraživač već izrađenu akciju koja čeka odobrenje
+      // ako ima, onda mu se prikazije ekran s porukom da već ima akciju koja čeka odobrenje
+      // inače se prikazuje ekran za izradu nove akcije
+      return true;
+    }
+    //  /stationLeads/stations za getanje stationa
   }
 
