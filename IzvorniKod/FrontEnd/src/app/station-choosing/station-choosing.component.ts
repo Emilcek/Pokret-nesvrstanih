@@ -20,7 +20,8 @@ export class StationChoosingComponent implements OnInit, AfterViewInit{
   private map: any;
   header = new HttpHeaders({
   'Authorization': 'Bearer ' + localStorage.getItem('token'),
-});
+   //'Content-Type': 'application/json',
+  });
   headersObj = {
   headers: this.header
 };
@@ -97,20 +98,28 @@ export class StationChoosingComponent implements OnInit, AfterViewInit{
     this.http.get<any>(environment.BASE_API_URL + "/stationLead", this.headersObj).subscribe({
       next: (data: any) => {
         console.log(data)
-        //this.chosenStation.stationLead = data.email;
-
-        data.stationName = this.chosenStation.stationName;
+        let stationName = this.chosenStation.stationName;
         console.log(this.chosenStation) // saljem istu postaju samo stationLead više nije null
-        let formData = new FormData()
-        formData.append('clientName',data.clientName)
-        formData.append('firstName',data.firstName)
-        formData.append('lastName',data.lastName)
-        formData.append('role',data.role)
-        formData.append('educatedFor',data.educatedFor)
-        formData.append('stationName',this.chosenStation.stationName)
-        formData.append('email',data.email)
 
-        this.http.put(environment.BASE_API_URL + "/stationLead", formData, this.headersObj).subscribe({
+        //this.http.get<any>(environment.BASE_API_URL + "/stationLead/myStation", this.headersObj).subscribe({
+        //  next: (data: any) => {
+        //    console.log("dataaaaaaaaaaa" + data)
+        //  }
+        //}) dohvacanje moje stanice
+
+        // this.http.put<any>(environment.BASE_API_URL + "/stationLead/myStation/removeExplorer/" +explorerName, stationName, this.headersObj).subscribe({
+        //  next: (data: any) => {
+        //    console.log("dataaaaaaaaaaa" + data)
+        //  }
+        // })// remove i add explorer su isti samo se razlikuju u putanji
+
+        // this.http.get<any>(environment.BASE_API_URL + "/stationLead/availableExplorers", headersObj).subscribe({
+        //   next: data => {
+        //     console.log("bbbbb:",data)
+        //   }
+        // })
+
+        this.http.put(environment.BASE_API_URL + "/stationLead/myStation/" + stationName,{}, this.headersObj).subscribe({
           next: (putData: any) => {
             console.log("PUT request successful", putData);
           },

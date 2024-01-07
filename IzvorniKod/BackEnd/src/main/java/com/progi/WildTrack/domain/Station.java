@@ -1,6 +1,7 @@
 package com.progi.WildTrack.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +16,7 @@ import java.util.List;
 @Builder
 @Data
 @Table(name = "Station")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "stationId")
 public class Station {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,11 +31,16 @@ public class Station {
     @Column(name = "StationLocation", nullable = false)
     private String stationLocation;
 
-    @JsonBackReference
+    //@JsonBackReference
+    //@JsonIdentityReference(alwaysAsId = true)
     @OneToOne(mappedBy = "station", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     private StationLead stationLead;
+    //@JsonBackReference
     @OneToMany(mappedBy = "station", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     private List<Explorer> explorer;
 
-
+    @Override
+    public int hashCode() {
+        return stationId.hashCode();
+    }
 }

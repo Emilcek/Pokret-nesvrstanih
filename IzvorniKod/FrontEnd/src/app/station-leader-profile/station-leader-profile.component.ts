@@ -40,12 +40,6 @@ export class StationLeaderProfileComponent implements OnInit{
         }
       }
     })
-
-    this.http.get<any>(environment.BASE_API_URL + "/stationLead/availableExplorers", headersObj).subscribe({
-      next: data => {
-        console.log("bbbbb:",data)
-        }
-    })
   }
 
 }
