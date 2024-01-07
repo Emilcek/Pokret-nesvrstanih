@@ -34,7 +34,6 @@ public class Explorer {
     @MapsId
     private Client client;
 
-    @JsonManagedReference
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "StationId")
     private Station station;

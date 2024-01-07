@@ -32,12 +32,6 @@ public class StationLeadController {
         return ResponseEntity.ok(clientService.getClient());
     }
 
-    @PutMapping
-    public ResponseEntity updateStationLead(@ModelAttribute ClientUpdateDTO clientUpdateDTO) {
-        System.out.println("StationLeadController.updateStationLead" + clientUpdateDTO);
-        return stationLeadService.updateClient(clientUpdateDTO);
-    }
-
     @PutMapping("/myStation/{stationName}")
     public ResponseEntity assignStationToStationLead(@PathVariable String stationName){
         System.out.println("StationLeadController.assignStationToStationLead" + stationName);

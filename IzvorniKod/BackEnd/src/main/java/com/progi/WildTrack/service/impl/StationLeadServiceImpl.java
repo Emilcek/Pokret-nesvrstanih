@@ -27,22 +27,6 @@ public class StationLeadServiceImpl implements StationLeadService {
     @Autowired
     private ExplorerRepository explorerRepo;
 
-    public ResponseEntity updateClient(ClientUpdateDTO client){
-
-        StationLead stationLead = stationLeadRepo.findByStationLeadName(client.getClientName());
-        if (stationLead != null) {
-            stationLead.setStationLeadName(client.getClientName());
-            Station station = stationRepo.findByStationName(client.getStationName());
-            if (station != null) {
-                stationLead.setStation(station);
-                stationLeadRepo.save(stationLead);
-            }
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
     public ResponseEntity assignStationToStationLead(String stationName){
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         StationLead stationLead = stationLeadRepo.findByStationLeadName(client.getClientName());
@@ -62,9 +46,9 @@ public class StationLeadServiceImpl implements StationLeadService {
         Station station = stationRepo.findByStationName(stationName);
         Explorer explorer = explorerRepo.findByExplorerName(explorerName);
         if (station != null && explorer != null) {
-            List<Explorer> explorers = station.getExplorer();
+            List<Explorer> explorers = station.getExplorers();
             explorers.add(explorer);
-            station.setExplorer(explorers);
+            station.setExplorers(explorers);
             stationRepo.save(station);
             explorer.setStation(station);
             explorerRepo.save(explorer);
@@ -78,9 +62,9 @@ public class StationLeadServiceImpl implements StationLeadService {
         Station station = stationRepo.findByStationName(stationName);
         Explorer explorer = explorerRepo.findByExplorerName(explorerName);
         if (station != null && explorer != null) {
-            List<Explorer> explorers = station.getExplorer();
+            List<Explorer> explorers = station.getExplorers();
             explorers.remove(explorer);
-            station.setExplorer(explorers);
+            station.setExplorers(explorers);
             stationRepo.save(station);
             explorer.setStation(null);
             explorerRepo.save(explorer);
