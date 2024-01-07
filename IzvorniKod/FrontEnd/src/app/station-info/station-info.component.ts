@@ -38,7 +38,7 @@ export class StationInfoComponent implements OnInit {
   ngOnInit(): void {
     this.http.get<any>(environment.BASE_API_URL + "/stationLead/myStation", this.headersObj).subscribe({
       next: (data: any) => {
-        this.tragaci2 = data.explorer;
+        this.tragaci2 = data.explorers;
         this.stationName = data.stationName;
         this.stationSurface = Math.pow(data.radius, 2);
         this.isTragaciEmpty = !(this.tragaci2.length > 0);
