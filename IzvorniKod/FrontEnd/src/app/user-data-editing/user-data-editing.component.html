@@ -51,18 +51,21 @@
     </div>
   </div>
   <div class="rejected-container">
-    <div class="upper-div" *ngIf="currentUser.Status === 'REJECTED'">
-      <h2>Vaš zahtjev je odbijen!</h2>
-
-    <hr class="divider">
-    <div class="flex">
-      <h3>
-        <br>
-        Administrator je odbio vaš zahtjev za registraciju. Pokušajte se registrirati sa drugom ulogom<br>
-      </h3>
-    </div>
-    <button (click)="deleteUser()">Click me</button>
-    <p class="additional-text">This is additional text below the button</p>
+    <div class="up-div" *ngIf="currentUser.Status === 'REJECTED'">
+      <div class="rejectTitle">
+        <h2>Vaš zahtjev je odbijen!</h2>
+      </div>
+      <hr class="divider">
+      <div class="in-div">
+        <h3>
+          <br>
+          Administrator je odbio vaš zahtjev za registraciju. Pokušajte se registrirati sa drugom ulogom<br>
+        </h3>
+      </div>
+      <div class="button-and-text">
+        <button (click)="deleteUser()" class="btn1">Ponovno izradite račun</button>
+        <p class="additional-text">Vaš profil je obrisan. Kliknite ovaj gumb i stvorite novi!</p>
+      </div>
     </div>
   </div>
 

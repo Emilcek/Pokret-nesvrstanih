@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "StationLead")
@@ -36,7 +35,7 @@ public class StationLead {
     @JoinColumn(name = "StationId")
     private Station station;
     @OneToMany(mappedBy = "stationLead", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Request> Requests;
+    private List<Action> actions;
 
 
     public StationLead(Client savedClient, Status status) {
@@ -45,17 +44,11 @@ public class StationLead {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        StationLead that = (StationLead) o;
-        return Objects.equals(stationLeadName, that.stationLeadName);
-        // Check equality based on unique identifier or fields
-    }
-
-    @Override
     public int hashCode() {
-        return Objects.hash(stationLeadName);
-        // Generate hash code based on the unique identifier
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((stationLeadName == null) ? 0 : stationLeadName.hashCode());
+        result = prime * result + ((status == null) ? 0 : status.hashCode());
+        return result;
     }
 }

@@ -2,6 +2,8 @@ package com.progi.WildTrack.controllers;
 
 import com.progi.WildTrack.domain.Station;
 import com.progi.WildTrack.dto.ClientDetailsDTO;
+import com.progi.WildTrack.dto.ExplorerTaskDTO;
+import com.progi.WildTrack.service.*;
 import com.progi.WildTrack.dto.ClientUpdateDTO;
 import com.progi.WildTrack.service.ClientService;
 import com.progi.WildTrack.service.StationLeadService;
@@ -21,17 +23,13 @@ public class StationLeadController {
 
     private final ClientService clientService;
     private final StationService stationService;
+    private final ExplorerService explorerService;
+    private final ActionService actionService;
     private final StationLeadService stationLeadService;
 
     @GetMapping
     public ResponseEntity<ClientDetailsDTO> getStationLead() {
         return ResponseEntity.ok(clientService.getClient());
-    }
-
-    @PutMapping
-    public ResponseEntity updateStationLead(@ModelAttribute ClientUpdateDTO clientUpdateDTO) {
-        System.out.println("StationLeadController.updateStationLead" + clientUpdateDTO);
-        return stationLeadService.updateClient(clientUpdateDTO);
     }
 
     @PutMapping("/myStation/{stationName}")
@@ -60,6 +58,25 @@ public class StationLeadController {
         return ResponseEntity.ok(stationService.getAllStations());
     }
 
+    @GetMapping("/requests")
+    public ResponseEntity getRequests() {
+        return actionService.getStationLeadRequests();
+    }
+
+    @GetMapping("/explorers")
+    public ResponseEntity getExplorers() {
+        return explorerService.getExplorers();
+    }
+
+    @PutMapping("/request/{requestId}/declined")
+    public ResponseEntity updateRequest(@PathVariable Long requestId) {
+        return actionService.declineRequest(requestId);
+    }
+    @PutMapping("/request/{requestId}/accepted")
+    public ResponseEntity updateRequest(@PathVariable Long requestId,
+                                        @RequestBody List<ExplorerTaskDTO> explorerTaskDTO) {
+        return actionService.acceptRequest(requestId, explorerTaskDTO);
+    }
     @GetMapping("/availableExplorers")
     public ResponseEntity<List<ClientDetailsDTO>> getAllAvailableExplorers() {
         return ResponseEntity.ok(clientService.getAllAvailableExplorers());
