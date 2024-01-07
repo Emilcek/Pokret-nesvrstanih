@@ -21,10 +21,9 @@ public class ExplorerServiceImpl implements ExplorerService {
     private ExplorerRepository explorerRepo;
 
     @Override
-    public ResponseEntity getAvailableExplorers() {
+    public ResponseEntity getExplorers() {
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<Explorer> explorers = explorerRepo.findAllByStationStationName(client.getStationLead().getStation().getStationName());
-        List<Explorer> availableExplorers = explorers.stream().filter(explorer -> explorer.getExplorerStatus().equals("Available")).toList();
-        return ResponseEntity.ok(availableExplorers.stream().map(explorer -> new ClientDetailsDTO(explorer.getClient(), explorer)).toList());
+        return ResponseEntity.ok(explorers.stream().map(explorer -> new ClientDetailsDTO(explorer.getClient(), explorer)).toList());
     }
 }

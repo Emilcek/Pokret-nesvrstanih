@@ -49,7 +49,7 @@ public class StationLeadController {
 
     @GetMapping("/explorers")
     public ResponseEntity getExplorers() {
-        return explorerService.getAvailableExplorers();
+        return explorerService.getExplorers();
     }
 
     @PutMapping("/request/{requestId}/declined")
