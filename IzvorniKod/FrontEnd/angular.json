@@ -31,7 +31,7 @@
               "src/styles.css"
             ],
             "scripts": [
-              "node_modules/leaflet/dist/leaflet.js",
+              "node_modules/leaflet/dist/leaflet.js"
             ]
           },
           "configurations": {
@@ -105,7 +105,7 @@
               "src/styles.css"
             ],
             "scripts": [
-              "node_modules/leaflet/dist/leaflet.js",
+              "node_modules/leaflet/dist/leaflet.js"
 
             ]
           }

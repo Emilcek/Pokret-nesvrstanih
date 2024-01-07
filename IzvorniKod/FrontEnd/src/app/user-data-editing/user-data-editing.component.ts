@@ -114,6 +114,7 @@ export class UserDataEditingComponent implements AfterViewInit, OnInit{
     return !this.abilities.some(d => d.select);
   }
   saveUserData() {
+    console.log(this.files[0])
     let header = new HttpHeaders({
       'Authorization': 'Bearer ' + localStorage.getItem('token'),
     });
@@ -160,8 +161,7 @@ export class UserDataEditingComponent implements AfterViewInit, OnInit{
       })
 
     }
-   // this.refreshPage();
-
+    this.ngOnInit();
   }
   handleFileInput(event: any): void {
     this.files=[]
@@ -228,7 +228,7 @@ export class UserDataEditingComponent implements AfterViewInit, OnInit{
         console.log("deleted")
       }
     )
-    this.refreshPage();
+    this.refreshPage()
   }
   protected readonly localStorage = localStorage;
 }

@@ -9,10 +9,11 @@ import { ExplorerProfileComponent } from './explorer-profile/explorer-profile.co
 import { UsersRequestsListComponent } from './users-requests-list/users-requests-list.component';
 import { UsersListComponent } from './users-list/users-list.component';
 import { UserVerifiedSuccessfulComponent } from './user-verified-successful/user-verified-successful.component';
+import { ActionCreationComponent } from './action-creation/action-creation.component'
 import {AuthGuard} from "./auth/auth.guard";
 import {AuthLoginGuard} from "./auth/auth.loginguard";
 import {StationChoosingComponent} from "./station-choosing/station-choosing.component";
-import {StationInfoComponent} from "./station-info/station-info.component";
+import {ActionLogComponent} from "./action-log/action-log.component";
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent, canActivate:[AuthLoginGuard]},
@@ -22,11 +23,11 @@ const routes: Routes = [
   { path: 'users-list', component: UsersListComponent, canActivate:[AuthGuard], data: { requiredRole: 'admin' }},
   { path: 'users-request-list', component: UsersRequestsListComponent, canActivate:[AuthGuard], data: { requiredRole: 'admin' }},
   { path: 'verified' , component: UserVerifiedSuccessfulComponent},
-  { path: 'explorer-profile', component: ExplorerProfileComponent, canActivate:[AuthGuard], data: { requiredRole: 'tragac' } },
-  { path: 'choose-station', component: StationChoosingComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' } },
-  { path: 'station-info', component: StationInfoComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' } },
   { path: 'researcher-profile', component: ResearcherProfileComponent, canActivate:[AuthGuard], data: { requiredRole: 'istrazivac' } },
+  { path: 'action-creation', component: ActionCreationComponent, canActivate:[AuthGuard], data: { requiredRole: 'istrazivac' } },
+  { path: 'action-log', component: ActionLogComponent, canActivate:[AuthGuard], data: { requiredRole: 'istrazivac' } },
   { path: 'station-leader-profile', component: StationLeaderProfileComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' } },
+  {path: 'station-choosing', component: StationChoosingComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' }},
   { path: '**', component: LoginComponent, canActivate:[AuthLoginGuard]}
 ];
 

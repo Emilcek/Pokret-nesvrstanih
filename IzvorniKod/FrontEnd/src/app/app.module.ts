@@ -24,6 +24,8 @@ import {NgOptimizedImage} from "@angular/common";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { ActionCreationComponent } from './action-creation/action-creation.component';
+import { ActionLogComponent } from './action-log/action-log.component';
 
 @NgModule({
   declarations: [
@@ -38,9 +40,12 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     ExplorerProfileComponent,
     UsersRequestsListComponent,
     UsersListComponent,
+    ActionCreationComponent,
+    UsersListComponent,
     MapComponent,
     StationInfoComponent,
-    StationChoosingComponent
+    StationChoosingComponent,
+    ActionLogComponent
   ],
   imports: [
     BrowserModule,
