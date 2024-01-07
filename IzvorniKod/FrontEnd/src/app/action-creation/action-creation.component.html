@@ -23,9 +23,7 @@
         <label class="label">Postaja</label>
         <select name="position" id="pos" formControlName="station">
           <option value="placeholder" [selected]="true" [hidden]="true" >Odaberi postaju</option>
-          <option value="Postaja1">Postaja1</option>
-          <option value="Postaja2">Postaja2</option>
-          <option value="Postaja3">Postaja3</option>
+          <option *ngFor="let n of this.stations" value={{n.stationName}}>{{ n.stationName }}</option>
         </select>
         <div *ngIf="this.actionAdded && this.task.value.station=='placeholder'" class="ErrorMessage"> Morate dodati postaju kojoj šaljete akciju</div>
       </div>
@@ -41,7 +39,7 @@
           <div *ngIf="this.markersGroup!=undefined && this.markersGroup.getLayers().length==0 && this.taskAdded" class="ErrorMessage"> Morate označiti barem jednu lokaciju na karti</div>
           <div class="all-about-task">
             <div class="description-div">
-              <div >
+              <div>
                 <select name="position" (change)="saveEducatedFor($event)" formControlName="taskType">
                   <option value="placeholder" [selected]="true" [hidden]="true">Odaberi vrstu zadatka</option>
                   <option value="Postavi kameru">Postavi kameru</option>

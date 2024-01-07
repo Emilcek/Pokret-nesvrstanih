@@ -24,6 +24,7 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
   markersGroup:any;
   actionAdded:any=false;
   actionDone:boolean=true;
+  stations:any=[];
 
   task=new FormGroup({
     actionTitle:new FormControl(''),
@@ -36,6 +37,22 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
 
   ngOnInit() {
   this.actionDone=this.actionNotDone();
+    let header = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('token'),
+      'Content-Type': 'application/json'
+    });
+    let headersObj = {
+      headers: header
+    };
+  this.http.get(environment.BASE_API_URL+"/researcher/stations",headersObj).subscribe({
+    next: data => {
+      let response: any = data;
+      this.stations=response;
+      console.log(this.stations)
+    }, error: (error) => {
+      console.log(error,"error")
+    }
+  })
   }
 
   private initMap(): void {
@@ -102,7 +119,7 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
     this.taskAdded=true;
     if (this.task.value.description!=null && this.task.value.educatedFor!='placeholder' && this.markersGroup.getLayers().length>0 && this.task.value.taskType!='placeholder'
     && !(this.task.value.taskType==="Prođi rutom" && this.markersGroup.getLayers().length<2)){
-      this.tasks.push({"description": this.task.value.taskType+": "+this.task.value.description, "endLocation": this.endLocation, "startLocation":this.startLocation,"taskVehicle": this.educatedForChosen});
+      this.tasks.push({description: this.task.value.taskType+': '+this.task.value.description, endLocation: this.endLocation, startLocation:this.startLocation,taskVehicle: this.educatedForChosen});
       this.markersGroup.clearLayers();
       this.taskAdded=false;
       this.task.get('description')?.reset()
@@ -135,15 +152,13 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
     this.actionAdded=true;
     //ovdje treba provjeriti popis akcija da se zna može li korisnik izraditi novu akciju
     if(this.task.value.actionTitle!=null && this.task.value.actionDescription!=null && this.task.value.station!='placeholder' && this.tasks.length>0){
-      let formData = new FormData()
-      formData.append('station',this.task.value.station!)
-      formData.append('name',this.task.value.actionTitle!)
-      formData.append('description',this.task.value.actionDescription!)
-      formData.append('tasks',JSON.stringify(this.tasks))
+      let formData = {
+        station: this.task.value.station,
+        name: this.task.value.actionTitle,
+        description: this.task.value.actionDescription,
+        tasks: this.tasks
+      }
 
-      formData.forEach(function(value, key){
-        console.log(key + ': ' + value);
-      });
 
       let header = new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -152,7 +167,7 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
       let headersObj = {
         headers: header
       };
-      this.http.post(environment.BASE_API_URL+"/researcher/request",formData,headersObj).subscribe({
+      this.http.post(environment.BASE_API_URL+"/researcher/request",JSON.stringify(formData),headersObj).subscribe({
         next: data => {
           let response: any = data;
           console.log(response)
