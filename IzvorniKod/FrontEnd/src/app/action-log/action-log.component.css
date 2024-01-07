@@ -1,0 +1,17 @@
+#description {
+  max-width: 100px; /* Adjust the value as needed */
+  word-wrap: break-word;
+  padding:0;
+}
+
+td{
+  width:fit-content;
+  padding-left: 2rem;
+}
+
+#title{
+  max-width: 100px; /* Adjust the value as needed */
+  word-wrap: break-word;
+  font-size: 1rem;
+  padding:0.5rem;
+}

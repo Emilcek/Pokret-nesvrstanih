@@ -25,6 +25,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { ActionCreationComponent } from './action-creation/action-creation.component';
+import { ActionLogComponent } from './action-log/action-log.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ActionCreationComponent } from './action-creation/action-creation.compo
     UsersListComponent,
     MapComponent,
     StationInfoComponent,
-    StationChoosingComponent
+    StationChoosingComponent,
+    ActionLogComponent
   ],
   imports: [
     BrowserModule,

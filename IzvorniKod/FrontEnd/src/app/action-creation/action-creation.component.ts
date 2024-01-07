@@ -25,6 +25,7 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
   actionAdded:boolean=false;
   actionPending:boolean=false;
   actionAccepted:boolean=false;
+  actionGimmic:any[]=[]
 
   task=new FormGroup({
     actionTitle:new FormControl(''),
@@ -152,7 +153,7 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
         description: this.task.value.actionDescription,
         tasks: this.tasks
       }
-
+      this.actionGimmic.push(formData)
 
       let header = new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('token'),
