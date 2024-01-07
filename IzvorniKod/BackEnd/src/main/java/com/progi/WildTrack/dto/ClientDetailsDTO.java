@@ -24,6 +24,7 @@ public class ClientDetailsDTO {
     private Set<String> educatedFor = new HashSet<>();
     private String stationName;
     private Description status;
+    private String explorerStatus;
 
     public ClientDetailsDTO(Client client) {
         setBaseAttributes(client);
@@ -31,6 +32,7 @@ public class ClientDetailsDTO {
 
     public ClientDetailsDTO(Client client, Explorer explorer) {
        setBaseAttributes(client);
+       this.explorerStatus = explorer.getExplorerStatus();
         if(explorer.getVehicles() != null){
             Set<Vehicle> educatedFor = explorer.getVehicles();
             for (Vehicle vehicle : educatedFor) {
