@@ -12,6 +12,7 @@ import { UserVerifiedSuccessfulComponent } from './user-verified-successful/user
 import { ActionCreationComponent } from './action-creation/action-creation.component'
 import {AuthGuard} from "./auth/auth.guard";
 import {AuthLoginGuard} from "./auth/auth.loginguard";
+import {StationChoosingComponent} from "./station-choosing/station-choosing.component";
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent, canActivate:[AuthLoginGuard]},
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'researcher-profile', component: ResearcherProfileComponent, canActivate:[AuthGuard], data: { requiredRole: 'istrazivac' } },
   { path: 'action-creation', component: ActionCreationComponent, canActivate:[AuthGuard], data: { requiredRole: 'istrazivac' } },
   { path: 'station-leader-profile', component: StationLeaderProfileComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' } },
+  {path: 'station-choosing', component: StationChoosingComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' }},
   { path: '**', component: LoginComponent, canActivate:[AuthLoginGuard]}
 ];
 

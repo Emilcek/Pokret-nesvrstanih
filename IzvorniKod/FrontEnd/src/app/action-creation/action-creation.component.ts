@@ -20,11 +20,11 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
   startLocation:any;
   endLocation:any;
   taskAdded: any=false;
-  educatedForChosen:any;
   markersGroup:any;
-  actionAdded:any=false;
-  actionDone:boolean=true;
   stations:any=[];
+  actionAdded:boolean=false;
+  actionPending:boolean=false;
+  actionAccepted:boolean=false;
 
   task=new FormGroup({
     actionTitle:new FormControl(''),
@@ -36,7 +36,7 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
   })
 
   ngOnInit() {
-  this.actionDone=this.actionNotDone();
+  this.actionNotDone();
     let header = new HttpHeaders({
       'Authorization': 'Bearer ' + localStorage.getItem('token'),
       'Content-Type': 'application/json'
@@ -48,9 +48,8 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
     next: data => {
       let response: any = data;
       this.stations=response;
-      console.log(this.stations)
     }, error: (error) => {
-      console.log(error,"error")
+      console.log(error,"krivo dodane postaje")
     }
   })
   }
@@ -109,7 +108,7 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
-    if(this.actionDone){
+    if(!this.actionAdded){
       this.initMap();
     }
 
@@ -119,7 +118,7 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
     this.taskAdded=true;
     if (this.task.value.description!=null && this.task.value.educatedFor!='placeholder' && this.markersGroup.getLayers().length>0 && this.task.value.taskType!='placeholder'
     && !(this.task.value.taskType==="Prođi rutom" && this.markersGroup.getLayers().length<2)){
-      this.tasks.push({description: this.task.value.taskType+': '+this.task.value.description, endLocation: this.endLocation, startLocation:this.startLocation,taskVehicle: this.educatedForChosen});
+      this.tasks.push({description: this.task.value.taskType+': '+this.task.value.description, endLocation: this.endLocation, startLocation:this.startLocation,taskVehicle: this.task.value.educatedFor});
       this.markersGroup.clearLayers();
       this.taskAdded=false;
       this.task.get('description')?.reset()
@@ -137,11 +136,6 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
     this.task.get('description')?.reset()
     this.task.get('educatedFor')?.setValue('placeholder')
     this.task.get('taskType')?.setValue('placeholder')
-  }
-
-  saveEducatedFor(event:any){
-    this.educatedForChosen=event.target.value;
-    return event.target.value;
   }
 
   deleteFromTasks(task:any){
@@ -172,7 +166,7 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
           let response: any = data;
           console.log(response)
           }, error: (error) => {
-          console.log(error,"error")
+
         }
       })
       this.actionAdded=false;
@@ -194,9 +188,16 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
     this.http.get(environment.BASE_API_URL+"/researcher/actions",headersObj).subscribe({
     next: data => {
         let response: any = data;
-        console.log(response)
-        if(response.length==0) {
-          this.actionDone = true;
+        console.log(response,"actions")
+        if(response.some((d:any)=>d.status==="PENDING")) {
+          this.actionPending = true;
+          this.actionAccepted=false;
+        }else if(response.some((d:any)=>d.status==="ACCEPTED")) {
+          this.actionAccepted = true;
+          this.actionPending= false;
+        }else{
+          this.actionPending= false;
+          this.actionAccepted=false;
         }
       }, error: (error) => {
         console.log(error,"error")
@@ -208,7 +209,7 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
       // inače se prikazuje ekran za izradu nove akcije
       return true;
     }
-    //  /stationLeads/stations za getanje stationa
+
 
   }
 
