@@ -1,6 +1,7 @@
 package com.progi.WildTrack.service.impl;
 
 import com.progi.WildTrack.dao.AnimalRepository;
+import com.progi.WildTrack.dao.TaskRepository;
 import com.progi.WildTrack.domain.Animal;
 import com.progi.WildTrack.dto.AnimalDTO;
 import com.progi.WildTrack.service.AnimalService;
