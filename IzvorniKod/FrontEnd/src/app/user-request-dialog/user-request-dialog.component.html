@@ -6,29 +6,27 @@
 </div>
 <hr style="width:90%;text-align:left;margin-left:5%">
 <div class="container">
-    <div class="left">
-        <div class="left-column">
-            <img src="assets/img/blank-profile-picture.jpg" alt="Arrow" class="custom-image" />
-        </div>
-        <div class="rigth-column">
-            <div class="left-info">
-                <h2>Ime: {{ datas.firstName }}</h2>
-                <h2>Prezime: {{ datas.lastName }}</h2>
-                <h2>Email: sebastinamejdakovic77@gmail.com</h2>
-            </div>
-            <div class="left-button">
-                <button class="btn2" (click)="acceptUser(datas.clientName)" type="button" [mat-dialog-close]="dataSource">Prihvati zahtjev</button>
-            </div>
-        </div>
+    <div class="left-column">
+
     </div>
     <div class="right">
-        <div class="right-info">
+        <div class="column column1">
+            <h2>Ime: {{ datas.firstName }}</h2>
+            <h2>Prezime: {{ datas.lastName }}</h2>
+            <h2>Email: {{datas.email}}</h2>
+
+        </div>
+        <div class="column column2">
             <h2>Korisničko ime: {{ datas.clientName }}</h2>
             <h2>Uloga: {{ datas.role }}</h2>
-            <h2>Postaja: {{ datas.station_id }}</h2>
+            <h2>Postaja: {{ datas.stationName}}</h2>
+
         </div>
-        <div class="right-button">
-            <button class="btn1" (click)="deleteUserRequset(datas.clientName)" type="button" [mat-dialog-close]="dataSource">Odbaci zahtjev</button>
-        </div>
+    </div>
+    <div class="btns">
+        <button class="btn2" (click)="acceptUser(datas.clientName)" type="button"
+            [mat-dialog-close]="dataSource">Prihvati zahtjev</button>
+        <button class="btn1" (click)="deleteUserRequset(datas.clientName)" type="button"
+            [mat-dialog-close]="dataSource">Odbaci zahtjev</button>
     </div>
 </div>

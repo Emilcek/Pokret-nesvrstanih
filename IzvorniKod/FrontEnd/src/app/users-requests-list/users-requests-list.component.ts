@@ -39,52 +39,17 @@ export class UsersRequestsListComponent implements OnInit {
   constructor(private http: HttpClient, private dialog: MatDialog) {
   }
 
-  apiurl = 'http://localhost:3000/requests';
-
-
-  GetAll() {
-    return this.http.get(this.apiurl)
-  }
-
-  acceptUser(clientName: any) {
-    let header = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + localStorage.getItem('token'),
-    });
-    let headersObj = {
-      headers: header
-    };
-    this.http.get(environment.BASE_API_URL + '/admin/requests/' + clientName + '/accepted', headersObj).subscribe(
-      (response) => {
-        console.log('User saved successfully:', response);
-        this.LoadData();
-      }
-    );
-  }
-
-  deleteUserRequset(clientName: any) {
-    let header = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + localStorage.getItem('token'),
-    });
-    let headersObj = {
-      headers: header
-    };
-    this.http.get(environment.BASE_API_URL + '/admin/requests/' + clientName + '/rejected', headersObj).subscribe(
-      (response) => {
-        console.log('User rejected successfully:', response);
-        this.LoadData();
-      }
-    );
-  }
-
 
   openDialog(user:any) {
-    this.dialog.open(UserRequestDialogComponent, {
+    const dialogRef = this.dialog.open(UserRequestDialogComponent, {
       width:'80%',
-      height:'80%',
+      height:'75%',
       data: user,
     });
     console.log(user)
+    dialogRef.afterClosed().subscribe(result => {
+      // This code will run when the dialog is closed
+      this.LoadData();
+    });
   }
 }

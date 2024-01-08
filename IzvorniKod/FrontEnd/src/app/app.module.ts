@@ -41,7 +41,6 @@ import { ActionCreationComponent } from './action-creation/action-creation.compo
     ExplorerProfileComponent,
     UsersRequestsListComponent,
     UsersListComponent,
-    UserVerifiedSuccessfulComponent,
     UserRequestDialogComponent,
     ActionCreationComponent,
     UsersListComponent,

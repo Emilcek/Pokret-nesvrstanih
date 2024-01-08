@@ -1,143 +1,270 @@
-.container h2 {
-    color: #333;
-    font-size: 28px;
-    white-space: nowrap; 
-  width: 450px; 
-  overflow: hidden;
+.container h2:hover {
   text-overflow: ellipsis;
+  overflow: visible;
 }
 
-.container h2:hover {
-   overflow: visible;
- }
-
- h2 {
-   color: #333;
-    font-size: 35px;
- }
+h2 {
+  color: #333;
+  font-size: 39px;
+}
 
 .upper-div {
-    display: flex;
-    margin-left: 70px;
-    margin-top: 2%;
-    padding: 30px;
+  display: flex;
+  margin-left: 70px;
+  margin-top: 2%;
+  padding: 30px;
 }
 
 hr {
-    border-color: gray;
+  border-color: gray;
 }
 
 .container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Two columns with equal width */
-    gap: 10px; /* Optional: Add gap between columns */
-  }
-  
- .left {
-    display: flex;
-    height: 550px;
-    margin-top: 2%;
- }
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* Two columns with equal width */
+}
+.right {
+  display: flex;
+  height: 20rem;
+  width: 60rem;
+}
 
- .right {
-    height: 550px;
-    margin-top: 2%;
- }
+.column {
+  flex: 1;
+  margin-top: 10%;
+}
 
- .left-column {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
- }
+.column h2 {
+  margin-bottom: 40px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 
- .left-column img{
-   width: 13vw;
-    margin-bottom:50%;
- }
- .left-info {
-   padding-top: 110px;
-   padding-left: 7%;
- }
+.column1 h2 {
+  font-size: 28px;
+}
 
- .left-info h2 {
-   padding-bottom: 5%;
- }
+.column2 h2 {
 
- 
+  font-size: 28px;
+}
 
- .right-column {
-    flex: 1;
- }
+.column1 {
+  width: 200px;
+  margin-right: 10%;
+}
 
- .left-button {
-    padding-top: 77px;
-    padding-left: 30%;
- }
+.left-column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 27rem;
+  height: 25rem;
+  margin-top: 3%;
+  margin-left: 12%;
+}
 
- .left-button button {
-   width:300px;
- }
+.btns {
+  display: flex;
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  gap: 5%;
+}
 
- .right-info {
-    padding-top: 100px;
-    padding-left: 30%;
- }
-
- .right-info h2{
-    padding-bottom: 5%;
- }
-
- .right-button {
-    padding-top: 70px;
-    padding-left: 4%;
- }
-
- .right-button button {
-    width:300px;
- }
-
-
- button {
-    border-radius: 20px;
-    border: none;
-    cursor: pointer;
-    transition: 0.3s;
-    font-size: 25px;
+button {
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 25px;
 }
 
 
 .btn1 {
-    background-color: rgb(198, 192, 192);
-    padding: 10px;
+  background-color: rgb(198, 192, 192);
+  padding: 10px;
+  width: 20rem;
+  margin-right: 14%;
 }
 
 .btn2 {
-    background-color: rgb(122, 187, 204);
-    padding: 10px;
+  background-color: rgb(122, 187, 204);
+  padding: 10px;
+  width: 20rem;
 }
 
 .btn1:hover {
-    background-color: rgb(136, 119, 119);
+  background-color: rgb(136, 119, 119);
 }
 
 .btn2:hover {
-    background-color: rgb(88, 141, 156);
+  background-color: rgb(88, 141, 156);
 }
 
 .close-button {
-   position: absolute;
-   top: 10px;
-   right: 10px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 .close-btn {
-   background-color: transparent;
-   border: none;
-   font-size: 20px;
-   cursor: pointer;
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 .close-btn:hover {
-   color: red; /* Change the color on hover as desired */
+  color: red;
+  /* Change the color on hover as desired */
+}
+
+@media screen and (max-width: 1850px) {
+  .column1 {
+    width: 50px;
+    margin-left: 6%;
+  }
+}
+
+@media screen and (max-width: 1650px) {
+  .container {
+    grid-template-columns: 1fr;
+    /* Single column for small screens */
+  }
+
+  .btns {
+    grid-column: 1;
+    margin-bottom: 3%;
+  }
+
+  .right {
+    margin-left: 10%;
+  }
+
+  .left-column {
+    margin-left: 33%;
+  }
+}
+
+@media screen and (max-width: 1088px) {
+  .container {
+    grid-template-columns: 1fr;
+    /* Single column for small screens */
+  }
+
+  .right {
+    flex-direction: column;
+    /* Change to column for small screens */
+    width: 100%;
+    /* Make it take full width on small screens */
+  }
+
+  .column {
+    width: 100%;
+    margin-top: 0%;
+  }
+
+  .column h2 {
+    margin-bottom: 5px;
+  }
+
+  .column1 h2 {
+    font-size: 25px;
+  }
+
+  .column2 h2 {
+    margin-left: 6%;
+    font-size: 25px;
+  }
+
+  .btn2 {
+    margin-top: 0%;
+  }
+
+  .btns {
+    flex-direction: column;
+    /* Stack buttons vertically on small screens */
+    align-items: center;
+    /* Center buttons horizontally on small screens */
+  }
+
+  .btn1 {
+    margin-left: 14%;
+    margin-top: 3%;
+  }
+
+  .right {
+    margin-left: 26%;
+    width: 20rem;
+  }
+
+  .left-column {
+    margin-left: 22%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+    /* Single column for small screens */
+  }
+
+  .btns {
+    grid-column: 1;
+    margin-bottom: 3%;
+  }
+
+  .right {
+    width: 15rem;
+    margin-left: 9%;
+  }
+
+  .left-column {
+    width: 15rem;
+    height: 17rem;
+    margin-left: 9%;
+  }
+
+  button {
+    font-size: 15px;
+  }
+
+  .column1 h2 {
+    font-size: 20px;
+  }
+
+  .column2 h2 {
+    margin-left: 6%;
+    font-size: 20px;
+  }
+
+  .btn1 {
+    background-color: rgb(198, 192, 192);
+    padding: 10px;
+    width: 10rem;
+    margin-right: 14%;
+  }
+
+  .btn2 {
+    background-color: rgb(122, 187, 204);
+    padding: 10px;
+    width: 10rem;
+  }
+
+  .upper-div {
+    display: flex;
+    margin-left: 15px;
+    margin-top: 2%;
+    padding: 15px;
+  }
+
+  .upper-div h2 {
+    font-size: 35px;
+  }
 }
