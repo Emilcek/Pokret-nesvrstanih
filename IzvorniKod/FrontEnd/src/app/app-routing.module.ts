@@ -15,6 +15,7 @@ import {AuthLoginGuard} from "./auth/auth.loginguard";
 import {StationChoosingComponent} from "./station-choosing/station-choosing.component";
 import {ActionLogComponent} from "./action-log/action-log.component";
 import {StationInfoComponent} from "./station-info/station-info.component";
+import {LeaderActionHandlerComponent} from "./leader-action-handler/leader-action-handler.component";
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent, canActivate:[AuthLoginGuard]},
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: 'station-leader-profile', component: StationLeaderProfileComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' } },
   {path: 'station-choosing', component: StationChoosingComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' }},
   {path: 'station-info', component: StationInfoComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' }},
+  {path: 'action-handling', component: LeaderActionHandlerComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' }},
   { path: '**', component: LoginComponent, canActivate:[AuthLoginGuard]}
 ];
 
