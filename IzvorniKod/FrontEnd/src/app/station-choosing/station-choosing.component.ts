@@ -21,7 +21,6 @@ export class StationChoosingComponent implements OnInit, AfterViewInit{
   private map: any;
   header = new HttpHeaders({
   'Authorization': 'Bearer ' + localStorage.getItem('token'),
-   //'Content-Type': 'application/json',
   });
   headersObj = {
   headers: this.header
@@ -47,7 +46,7 @@ export class StationChoosingComponent implements OnInit, AfterViewInit{
       next: (data: any) => {
         let stationsArray = new Array(7);
         for (let station of data) {
-          if(station.stationLead === null) {
+          if(station.stationStatus === "Inactive") {
             let [latitude, longitude] = station.stationLocation.split(',').map(Number);
             let latLng = { lat: latitude, lng: longitude };
 
