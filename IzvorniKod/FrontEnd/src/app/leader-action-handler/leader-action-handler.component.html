@@ -1,1 +1,20 @@
-<p>leader-action-handler works!</p>
+<div class="main-container">
+  <table id="table" *ngIf="allActions">
+    <thead>
+    <tr>
+      <th>Ime akcije</th>
+      <th>Istraživač</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let action of allActions">
+      <td>{{action.actionName}}</td>
+      <td>{{action.actionResearcherName}}</td>
+      <td>
+        <a [routerLink]="['/action-details', action.actionId]">detalji</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
