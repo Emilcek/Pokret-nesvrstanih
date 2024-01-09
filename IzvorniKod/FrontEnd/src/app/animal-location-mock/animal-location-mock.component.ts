@@ -27,6 +27,8 @@ export class AnimalLocationMockComponent {
       zoom: 9
     });
 
+    
+
 
     const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 18,
@@ -43,6 +45,13 @@ export class AnimalLocationMockComponent {
       const idFromRoute = this.route.snapshot.paramMap.get('id');
       this.id = idFromRoute !== null ? idFromRoute : undefined;
       console.log("ID: " + this.id)
+
+      const customIcon = L.icon({
+        iconUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-icon.png", // Specify the path to your custom icon image
+        iconSize: [22, 32], // Set the size of the icon
+        iconAnchor: [16, 32], // Set the anchor point of the icon (relative to its size)
+        popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
+      });
 
       //post rekvest u bazu za lat, long, tmiestamp
       let header = new HttpHeaders({
@@ -63,7 +72,7 @@ export class AnimalLocationMockComponent {
             this.map.removeLayer(this.marker);
           }
 
-          this.marker = L.marker([serverLat, serverLong]).addTo(this.map);
+          this.marker = L.marker([serverLat, serverLong], {icon:customIcon}).addTo(this.map);
         },
         error: error => {
           console.error("Error getting location:", error);

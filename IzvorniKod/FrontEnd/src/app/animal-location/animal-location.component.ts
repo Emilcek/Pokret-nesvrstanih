@@ -31,6 +31,13 @@ export class AnimalLocationComponent {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
 
+    const customIcon = L.icon({
+      iconUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-icon.png", // Specify the path to your custom icon image
+      iconSize: [22, 32], // Set the size of the icon
+      iconAnchor: [16, 32], // Set the anchor point of the icon (relative to its size)
+      popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
+    });
+
     let marker: L.Marker<any>, circle: L.Circle<any>;
 
     const getPosition = (position:any) => {
@@ -40,6 +47,7 @@ export class AnimalLocationComponent {
       const timeStamp = new Date(position.timestamp).toISOString().slice(0, 19).replace('T', ' ');
       console.log("Timestamp: " + timeStamp)
       const accuracy = position.coords.accuracy;
+
 
       const idFromRoute = this.route.snapshot.paramMap.get('id');
       this.id = idFromRoute !== null ? idFromRoute : undefined;
@@ -67,6 +75,8 @@ export class AnimalLocationComponent {
         },
         error: error => {
           console.error("Error sending location:", error);
+  console.log("Error Status: " + error.status);
+  console.log("Error Message: " + error.message);
         }
       })
 
@@ -81,7 +91,7 @@ export class AnimalLocationComponent {
       }
       
       circle = L.circle([lat, long], {radius: accuracy}).addTo(this.map);
-      marker = L.marker([lat, long]).addTo(this.map);
+      marker = L.marker([lat, long], {icon:customIcon}).addTo(this.map);
       
 
       console.log("Lat: " + lat + " Long: " + long + " Timestamp: " + timeStamp)
