@@ -1,1 +1,6 @@
-<p>edit-data-admin-dialog works!</p>
+<div class="close-button">
+    <button mat-button mat-dialog-close class="close-btn">X</button>
+</div>
+<app-user-data-editing [currentUser]="currentUser" *ngIf="currentUser"></app-user-data-editing>
+    
+

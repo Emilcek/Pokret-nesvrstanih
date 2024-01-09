@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import {environment} from "../../environments/environment";
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { EditDataAdminDialogComponent } from '../edit-data-admin-dialog/edit-data-admin-dialog.component';
 
 @Component({
   selector: 'app-users-list',
@@ -14,13 +16,14 @@ import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 export class UsersListComponent implements OnInit {
   userlist: any
   //dataSource: any
+  userFor: any
 
   displayedColumns: string[] = ['clientName', 'firstName', 'lastName', 'email', 'role', 'Update'];
   dataSource = new MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private dialog:MatDialog) {
   }
 
   ngOnInit() {
@@ -57,5 +60,27 @@ export class UsersListComponent implements OnInit {
 
   redirectToEditPage(userId: string) {
     //this.router.navigate([`admin/userdata/edit/${userId}`]);
+  }
+
+  Openpopup(user:any) {
+    this.userFor = {
+      Name: user.firstName,
+      Surname: user.lastName,
+      Username: user.clientName,
+      Password: user.password, //zbog toga ne mogu pristupiti lozinci
+      Email: user.email,
+      ClientPhoto: user.clientPhoto,
+      Role: user.role,
+      EducatedFor: user.educatedFor
+    }
+    const dialogRef = this.dialog.open(EditDataAdminDialogComponent, {
+      width:"80%",
+      height:"96%",
+      data: this.userFor,
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      // This code will run when the dialog is closed
+      this.ngOnInit();
+    });
   }
 }
