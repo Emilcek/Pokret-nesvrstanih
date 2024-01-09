@@ -67,7 +67,7 @@ export class UsersListComponent implements OnInit {
       Name: user.firstName,
       Surname: user.lastName,
       Username: user.clientName,
-      Password: user.password, //zbog toga ne mogu pristupiti lozinci
+      Password: user.password, 
       Email: user.email,
       ClientPhoto: user.clientPhoto,
       Role: user.role,
@@ -79,7 +79,6 @@ export class UsersListComponent implements OnInit {
       data: this.userFor,
     })
     dialogRef.afterClosed().subscribe(result => {
-      // This code will run when the dialog is closed
       this.ngOnInit();
     });
   }
