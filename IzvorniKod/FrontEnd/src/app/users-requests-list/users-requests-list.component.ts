@@ -48,7 +48,6 @@ export class UsersRequestsListComponent implements OnInit {
     });
     console.log(user)
     dialogRef.afterClosed().subscribe(result => {
-      // This code will run when the dialog is closed
       this.LoadData();
     });
   }

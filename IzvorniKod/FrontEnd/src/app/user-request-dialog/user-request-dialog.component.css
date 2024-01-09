@@ -22,7 +22,6 @@ hr {
 .container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  /* Two columns with equal width */
 }
 .right {
   display: flex;
@@ -122,7 +121,6 @@ button {
 
 .close-btn:hover {
   color: red;
-  /* Change the color on hover as desired */
 }
 
 @media screen and (max-width: 1850px) {
@@ -135,7 +133,6 @@ button {
 @media screen and (max-width: 1650px) {
   .container {
     grid-template-columns: 1fr;
-    /* Single column for small screens */
   }
 
   .btns {
@@ -155,14 +152,11 @@ button {
 @media screen and (max-width: 1088px) {
   .container {
     grid-template-columns: 1fr;
-    /* Single column for small screens */
   }
 
   .right {
     flex-direction: column;
-    /* Change to column for small screens */
     width: 100%;
-    /* Make it take full width on small screens */
   }
 
   .column {
@@ -189,9 +183,7 @@ button {
 
   .btns {
     flex-direction: column;
-    /* Stack buttons vertically on small screens */
     align-items: center;
-    /* Center buttons horizontally on small screens */
   }
 
   .btn1 {
@@ -212,7 +204,6 @@ button {
 @media screen and (max-width: 768px) {
   .container {
     grid-template-columns: 1fr;
-    /* Single column for small screens */
   }
 
   .btns {

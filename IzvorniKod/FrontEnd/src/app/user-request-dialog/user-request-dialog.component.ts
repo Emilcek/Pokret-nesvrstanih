@@ -48,8 +48,7 @@ export class UserRequestDialogComponent {
   ngOnInit() {
     console.log('User data in dialog:', this.datas);
 
-    //prikaz slike
-    const base64String=this.datas.clientPhoto; // Your Base64 image data
+    const base64String=this.datas.clientPhoto; 
 
     const binaryImageData = atob(base64String);
 
@@ -60,7 +59,7 @@ export class UserRequestDialogComponent {
       uint8Array[i] = binaryImageData.charCodeAt(i);
     }
 
-    const blob = new Blob([uint8Array], { type: "image/jpeg" }); // Adjust the MIME type accordingly
+    const blob = new Blob([uint8Array], { type: "image/jpeg" }); 
     this.imageURL = URL.createObjectURL(blob);
 
   }
