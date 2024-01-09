@@ -1,18 +1,14 @@
 package com.progi.WildTrack.controllers;
 
 
-import com.progi.WildTrack.dto.AnimalLocationDTO;
+
 import com.progi.WildTrack.dto.ExplorerLocationDTO;
-import com.progi.WildTrack.dto.ExplorerTaskDTO;
 import com.progi.WildTrack.service.ActionService;
 import com.progi.WildTrack.service.ExplorerLocationService;
-import com.progi.WildTrack.service.ExplorerService;
-import com.progi.WildTrack.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/explorerGPS")
@@ -53,12 +49,9 @@ public class ExplorerGPSController {
     public ResponseEntity getAllExplorersAllLocations() {
         return explorerLocationService.getAllExplorersAllLocations();
     }
-   //TODO: get all current locations of all explorers
-
-
-
-
-
-
+    @GetMapping("/all/explorers/all/currentLocation")
+    public ResponseEntity getAllExplorersCurrentLocations() {
+        return explorerLocationService.getAllExplorersCurrentLocations();
+    }
 
 }

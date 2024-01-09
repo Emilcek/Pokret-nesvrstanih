@@ -11,4 +11,6 @@ public interface ExplorerLocationService {
     ResponseEntity getExplorerLocations(String explorerName);
 
     ResponseEntity getAllExplorersAllLocations();
+
+    ResponseEntity getAllExplorersCurrentLocations();
 }

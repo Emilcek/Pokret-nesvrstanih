@@ -105,5 +105,28 @@ public class ExplorerLocationServiceImpl implements ExplorerLocationService {
         return ResponseEntity.ok(explorerAllLocationsDTOList);
     }
 
+    @Override
+    public ResponseEntity getAllExplorersCurrentLocations() {
+        var explorers = explorerRepo.findAll();
+        List<ExplorerDetailsDTO> explorerDetailsDTOList = new java.util.ArrayList<>();
+        explorers.forEach(explorer -> {
+            ExplorerLocation explorerLocation = explorerLocationRepo.findFirstByExplorer_ExplorerNameOrderByLocationTimestampDesc(explorer.getExplorerName());
+            ExplorerDetailsDTO explorerDetailsDTO = ExplorerDetailsDTO.builder()
+                    .explorerName(explorerLocation.getExplorer().getExplorerName())
+                    .firstName(explorerLocation.getExplorer().getClient().getFirstName())
+                    .lastName(explorerLocation.getExplorer().getClient().getLastName())
+                    .email(explorerLocation.getExplorer().getClient().getEmail())
+                    .clientPhoto(explorerLocation.getExplorer().getClient().getClientPhoto())
+                    .status(explorerLocation.getExplorer().getExplorerStatus())
+                    .stationName(explorerLocation.getExplorer().getStation().getStationName())
+                    .educatedFor(explorerLocation.getExplorer().getVehicles())
+                    .latitude(explorerLocation.getLocationOfExplorer().split(",")[0])
+                    .longitude(explorerLocation.getLocationOfExplorer().split(",")[1])
+                    .build();
+            explorerDetailsDTOList.add(explorerDetailsDTO);
+        });
+        return null;
+    }
+
 
 }

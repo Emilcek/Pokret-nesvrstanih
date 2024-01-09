@@ -64,19 +64,19 @@ public class AnimalLocationServiceImpl implements AnimalLocationService {
         public List<AnimalDetailsDTO> getAllAnimalsDetails() {
             //for each animal get last location and animal details
             List<AnimalDetailsDTO> animalDetailsDTOList = new java.util.ArrayList<>();
-            List<AnimalLocation> locationList = animalLocationRepo.findAll();
-            for (AnimalLocation animalLocation : locationList) {
-                AnimalDetailsDTO animalDetailsDTO = AnimalDetailsDTO.builder()
-                        .animalId(animalLocation.getAnimal().getAnimalId())
-                        .animalSpecies(animalLocation.getAnimal().getSpecies())
-                        .animalPhotoURL(animalLocation.getAnimal().getAnimalPhotoURL())
-                        .animalDescription(animalLocation.getAnimal().getAnimalDescription())
-                        .latitude(animalLocation.getLocationofAnimal().split(",")[0])
-                        .longitude(animalLocation.getLocationofAnimal().split(",")[1])
-                        .build();
-                System.out.println("Animal details: "  + animalDetailsDTO);
-                animalDetailsDTOList.add(animalDetailsDTO);
-            }
+            var animals = animalRepo.findAll();
+           animals.forEach(animal -> {
+               AnimalLocation animalLocation = animalLocationRepo.findFirstByAnimal_AnimalIdOrderByAnimalLocationTSDesc(animal.getAnimalId());
+               AnimalDetailsDTO animalDetailsDTO = AnimalDetailsDTO.builder()
+                       .animalId(animalLocation.getAnimal().getAnimalId())
+                       .animalSpecies(animalLocation.getAnimal().getSpecies())
+                       .animalPhotoURL(animalLocation.getAnimal().getAnimalPhotoURL())
+                       .animalDescription(animalLocation.getAnimal().getAnimalDescription())
+                       .latitude(animalLocation.getLocationofAnimal().split(",")[0])
+                       .longitude(animalLocation.getLocationofAnimal().split(",")[1])
+                       .build();
+               animalDetailsDTOList.add(animalDetailsDTO);
+           });
             return animalDetailsDTOList;
         }
 
