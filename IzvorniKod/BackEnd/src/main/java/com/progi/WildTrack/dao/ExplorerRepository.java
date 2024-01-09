@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ExplorerRepository extends JpaRepository<Explorer, String> {
 
     Explorer findByExplorerName(String clientName);
+    boolean existsByExplorerName(String clientName);
 }

@@ -37,13 +37,6 @@ public class AnimalController {
     public ResponseEntity<AnimalDetailsDTO> getAnimalDetails(@PathVariable Long animalId) {
         return animalLocationService.getAnimalDetails(animalId);
     }
-    //list of locations of all animals that are on same action as the explorer
-    //@GetMapping("/action/location/{actionId}")
-    //je li on na akciji
-    //nac id taska na kojem je
-    // ako je onda vrati sve zivotinje koje su na toj akciji
-    //ako nema zivotinja posalji praznu listu
-   //ide u task kontroler
 
 
     //list of all animals current location

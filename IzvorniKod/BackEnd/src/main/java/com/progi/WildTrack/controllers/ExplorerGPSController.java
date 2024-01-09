@@ -1,0 +1,55 @@
+package com.progi.WildTrack.controllers;
+
+
+import com.progi.WildTrack.dto.AnimalLocationDTO;
+import com.progi.WildTrack.dto.ExplorerLocationDTO;
+import com.progi.WildTrack.dto.ExplorerTaskDTO;
+import com.progi.WildTrack.service.ActionService;
+import com.progi.WildTrack.service.ExplorerLocationService;
+import com.progi.WildTrack.service.ExplorerService;
+import com.progi.WildTrack.service.TaskService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/explorerGPS")
+@CrossOrigin(origins = "${FRONTEND_API_URL}")
+@RequiredArgsConstructor
+public class ExplorerGPSController {
+    private final ActionService actionService;
+    private final ExplorerLocationService explorerLocationService;
+
+    //save explorers current location
+    @PostMapping("/")
+    public ResponseEntity saveExplorerLocation(@RequestBody ExplorerLocationDTO explorerLocationDTO) {
+        return explorerLocationService.saveExplorerLocation(explorerLocationDTO);
+    }
+    //get explorers current location
+    @GetMapping("/get")
+    public ResponseEntity getExplorerLocation(@RequestParam String explorerName) {
+        return explorerLocationService.getExplorerLocation(explorerName);
+    }
+
+    //list of locations of all animals that are on same action
+    @GetMapping("/animals/{actionId}")
+    public ResponseEntity getActionAnimals(@PathVariable Long actionId, @RequestParam String clientName) {
+        return actionService.getActionAnimalLocations(actionId, clientName);
+    }
+    //list of locations of all explorers that are on same action
+    @GetMapping("/explorers/{actionId}")
+    public ResponseEntity getActionExplorers(@PathVariable Long actionId, @RequestParam String clientName) {
+        return actionService.getActionExplorerLocations(actionId, clientName);
+    }
+    //TODO: get all locations of explorer
+    //TODO: get all locations of all explorers
+    //TODO: get all locations of all explorers on same action
+
+
+
+
+
+
+}

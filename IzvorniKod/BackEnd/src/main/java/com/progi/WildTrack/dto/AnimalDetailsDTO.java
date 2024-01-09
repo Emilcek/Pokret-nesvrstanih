@@ -1,5 +1,7 @@
 package com.progi.WildTrack.dto;
 
+import com.progi.WildTrack.domain.Animal;
+import com.progi.WildTrack.domain.AnimalLocation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,4 +19,6 @@ public class AnimalDetailsDTO {
     private String longitude;
     private String latitude;
     //private String timestamp;
+
+
 }

@@ -37,13 +37,7 @@ public class AnimalLocationServiceImpl implements AnimalLocationService {
                 .build();
         animalLocationRepo.save(animalLocation);
         System.out.println("Animal location added " + animalLocation);
-        return ResponseEntity.ok(AnimalDetailsDTO.builder()
-                .animalSpecies(animalLocation.getAnimal().getSpecies())
-                .animalPhotoURL(animalLocation.getAnimal().getAnimalPhotoURL())
-                .animalDescription(animalLocation.getAnimal().getAnimalDescription())
-                .latitude(animalLocation.getLocationofAnimal().split(",")[0])
-                .longitude(animalLocation.getLocationofAnimal().split(",")[1])
-                .build());
+        return ResponseEntity.ok("Animal location added " + animalLocation);
     }
 
     @Transactional
