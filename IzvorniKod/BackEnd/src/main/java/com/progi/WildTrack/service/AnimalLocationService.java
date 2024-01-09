@@ -13,4 +13,7 @@ public interface AnimalLocationService {
 
     List<AnimalDetailsDTO> getAllAnimalsDetails();
 
+    ResponseEntity getAnimalLocations(Long animalId);
+
+    ResponseEntity getAllAnimalsAllLocations();
 }

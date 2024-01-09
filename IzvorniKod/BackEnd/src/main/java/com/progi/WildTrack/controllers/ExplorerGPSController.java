@@ -1,18 +1,14 @@
 package com.progi.WildTrack.controllers;
 
 
-import com.progi.WildTrack.dto.AnimalLocationDTO;
+
 import com.progi.WildTrack.dto.ExplorerLocationDTO;
-import com.progi.WildTrack.dto.ExplorerTaskDTO;
 import com.progi.WildTrack.service.ActionService;
 import com.progi.WildTrack.service.ExplorerLocationService;
-import com.progi.WildTrack.service.ExplorerService;
-import com.progi.WildTrack.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/explorerGPS")
@@ -43,13 +39,19 @@ public class ExplorerGPSController {
     public ResponseEntity getActionExplorers(@PathVariable Long actionId, @RequestParam String clientName) {
         return actionService.getActionExplorerLocations(actionId, clientName);
     }
-    //TODO: get all locations of explorer
-    //TODO: get all locations of all explorers
-    //TODO: get all locations of all explorers on same action
-
-
-
-
-
+    //list of all explorers locations
+    @GetMapping("/explorer/{explorerName}")
+    public ResponseEntity getExplorerLocations(@PathVariable String explorerName) {
+        return explorerLocationService.getExplorerLocations(explorerName);
+    }
+    //list of all explorers location history
+    @GetMapping("/all/explorers/all/location")
+    public ResponseEntity getAllExplorersAllLocations() {
+        return explorerLocationService.getAllExplorersAllLocations();
+    }
+    @GetMapping("/all/explorers/all/currentLocation")
+    public ResponseEntity getAllExplorersCurrentLocations() {
+        return explorerLocationService.getAllExplorersCurrentLocations();
+    }
 
 }

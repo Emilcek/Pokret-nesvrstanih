@@ -30,7 +30,7 @@ public class AnimalServiceImpl implements AnimalService {
                 .species(animalDTO.getAnimalSpecies())
                 .build();
         animalRepo.save(animal);
-        return ResponseEntity.ok("Animal added " + animal);
+        return ResponseEntity.ok(animalDTO);
 
     }
 

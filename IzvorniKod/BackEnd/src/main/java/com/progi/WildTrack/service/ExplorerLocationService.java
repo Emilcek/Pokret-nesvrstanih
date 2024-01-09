@@ -7,4 +7,10 @@ public interface ExplorerLocationService {
     ResponseEntity saveExplorerLocation(ExplorerLocationDTO explorerLocationDTO);
 
     ResponseEntity getExplorerLocation(String explorerName);
+
+    ResponseEntity getExplorerLocations(String explorerName);
+
+    ResponseEntity getAllExplorersAllLocations();
+
+    ResponseEntity getAllExplorersCurrentLocations();
 }
