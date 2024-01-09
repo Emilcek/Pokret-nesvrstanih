@@ -32,19 +32,27 @@ public class AnimalController {
         return animalService.addAnimal(animal);
     }
 
-    //tragac wants to see current location of the animal
+    //current location of the animal
     @GetMapping("/location/{animalId}")
     public ResponseEntity<AnimalDetailsDTO> getAnimalDetails(@PathVariable Long animalId) {
         return animalLocationService.getAnimalDetails(animalId);
     }
-
+    //get all locations of the animal
+    @GetMapping("/location/all/{animalId}")
+    public ResponseEntity getAnimalLocations(@PathVariable Long animalId) {
+        return animalLocationService.getAnimalLocations(animalId);
+    }
 
     //list of all animals current location
     @GetMapping("/location/all")
     public ResponseEntity<List<AnimalDetailsDTO>> getAllAnimalsDetails() {
         return ResponseEntity.ok(animalLocationService.getAllAnimalsDetails());
     }
-
+    //list of all animals location history
+    @GetMapping("all/locations/all")
+    public ResponseEntity getAllAnimalsAllLocations() {
+        return animalLocationService.getAllAnimalsAllLocations();
+    }
 
 
 }

@@ -43,9 +43,18 @@ public class ExplorerGPSController {
     public ResponseEntity getActionExplorers(@PathVariable Long actionId, @RequestParam String clientName) {
         return actionService.getActionExplorerLocations(actionId, clientName);
     }
-    //TODO: get all locations of explorer
-    //TODO: get all locations of all explorers
-    //TODO: get all locations of all explorers on same action
+    //list of all explorers locations
+    @GetMapping("/explorer/{explorerName}")
+    public ResponseEntity getExplorerLocations(@PathVariable String explorerName) {
+        return explorerLocationService.getExplorerLocations(explorerName);
+    }
+    //list of all explorers location history
+    @GetMapping("/all/explorers/all/location")
+    public ResponseEntity getAllExplorersAllLocations() {
+        return explorerLocationService.getAllExplorersAllLocations();
+    }
+   //TODO: get all current locations of all explorers
+
 
 
 
