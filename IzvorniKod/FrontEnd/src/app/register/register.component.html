@@ -32,7 +32,7 @@
                                accept="image/png, image/jpeg, image/jpg" (change)="handleFileInput($event)">
                       </label>
                     </div>
-                    <div id="imagepreview"></div>
+                    <div id="imagepreview" style="max-width: 300px;max-height: 200px"></div>
                   </div>
                   <div class="ErrorMessage" id="noPhotoError" *ngIf="checkPhoto()">Morate priložiti osobnu fotografiju</div>
                 </div>
