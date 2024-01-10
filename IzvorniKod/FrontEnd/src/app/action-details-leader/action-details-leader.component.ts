@@ -2,19 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {ActivatedRoute, Router} from "@angular/router";
-import {NgForOf, NgIf} from "@angular/common";
-import {ReactiveFormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-action-details-leader',
-  standalone: true,
-  imports: [
-    NgIf,
-    NgForOf,
-    ReactiveFormsModule
-  ],
   templateUrl: './action-details-leader.component.html',
-  styleUrl: './action-details-leader.component.css'
+  styleUrls: ['./action-details-leader.component.css']
 })
 export class ActionDetailsLeaderComponent implements OnInit {
   allActions: any;

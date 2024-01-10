@@ -26,6 +26,8 @@ import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { ActionCreationComponent } from './action-creation/action-creation.component';
 import { ActionLogComponent } from './action-log/action-log.component';
+import {ActionDetailsLeaderComponent} from "./action-details-leader/action-details-leader.component";
+import {LeaderActionHandlerComponent} from "./leader-action-handler/leader-action-handler.component";
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { ActionLogComponent } from './action-log/action-log.component';
     MapComponent,
     StationInfoComponent,
     StationChoosingComponent,
-    ActionLogComponent
+    ActionLogComponent,
+    ActionDetailsLeaderComponent,
+    LeaderActionHandlerComponent
   ],
   imports: [
     BrowserModule,

@@ -6,14 +6,8 @@ import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-leader-action-handler',
-  standalone: true,
-  imports: [
-    NgForOf,
-    NgIf,
-    RouterLink
-  ],
   templateUrl: './leader-action-handler.component.html',
-  styleUrl: './leader-action-handler.component.css'
+  styleUrls: ['./leader-action-handler.component.css']
 })
 export class LeaderActionHandlerComponent implements OnInit {
   allActions: any;
