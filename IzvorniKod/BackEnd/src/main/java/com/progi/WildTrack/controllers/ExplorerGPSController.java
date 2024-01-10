@@ -25,18 +25,18 @@ public class ExplorerGPSController {
     }
     //get explorers current location
     @GetMapping("/get")
-    public ResponseEntity getExplorerLocation(@RequestParam String explorerName) {
+    public ResponseEntity getExplorerLocation(@RequestBody String explorerName) {
         return explorerLocationService.getExplorerLocation(explorerName);
     }
 
     //list of locations of all animals that are on same action
     @GetMapping("/animals/{actionId}")
-    public ResponseEntity getActionAnimals(@PathVariable Long actionId, @RequestParam String clientName) {
+    public ResponseEntity getActionAnimals(@PathVariable Long actionId, @RequestBody String clientName) {
         return actionService.getActionAnimalLocations(actionId, clientName);
     }
     //list of locations of all explorers that are on same action
     @GetMapping("/explorers/{actionId}")
-    public ResponseEntity getActionExplorers(@PathVariable Long actionId, @RequestParam String clientName) {
+    public ResponseEntity getActionExplorers(@PathVariable Long actionId, @RequestBody String clientName) {
         return actionService.getActionExplorerLocations(actionId, clientName);
     }
     //list of all explorers locations
@@ -49,6 +49,7 @@ public class ExplorerGPSController {
     public ResponseEntity getAllExplorersAllLocations() {
         return explorerLocationService.getAllExplorersAllLocations();
     }
+    //list of all explorers current location
     @GetMapping("/all/explorers/all/currentLocation")
     public ResponseEntity getAllExplorersCurrentLocations() {
         return explorerLocationService.getAllExplorersCurrentLocations();

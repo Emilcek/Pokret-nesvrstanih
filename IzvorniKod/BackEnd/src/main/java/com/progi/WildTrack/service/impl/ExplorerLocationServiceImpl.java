@@ -125,7 +125,7 @@ public class ExplorerLocationServiceImpl implements ExplorerLocationService {
                     .build();
             explorerDetailsDTOList.add(explorerDetailsDTO);
         });
-        return null;
+        return ResponseEntity.ok(explorerDetailsDTOList);
     }
 
 
