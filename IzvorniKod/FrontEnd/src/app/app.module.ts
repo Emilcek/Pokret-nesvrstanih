@@ -26,6 +26,8 @@ import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { ActionCreationComponent } from './action-creation/action-creation.component';
 import { ActionLogComponent } from './action-log/action-log.component';
+import { ActionDetailsComponent } from './action-details/action-details.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import { ActionLogComponent } from './action-log/action-log.component';
     MapComponent,
     StationInfoComponent,
     StationChoosingComponent,
-    ActionLogComponent
+    ActionLogComponent,
+    ActionDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +62,8 @@ import { ActionLogComponent } from './action-log/action-log.component';
     NgOptimizedImage,
     BrowserAnimationsModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
