@@ -1,5 +1,9 @@
 package com.progi.WildTrack.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,6 +20,7 @@ import java.util.Set;
 @Builder
 @Data
 @Table(name = "Explorer")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "explorerName")
 public class Explorer {
     @Id
     @Column(name = "Explorername" ,length = 30, nullable = false)
@@ -29,7 +34,7 @@ public class Explorer {
     @MapsId
     private Client client;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "StationId")
     private Station station;
     @ManyToMany(mappedBy = "explorers", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

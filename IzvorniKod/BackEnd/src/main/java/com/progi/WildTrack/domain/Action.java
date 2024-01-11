@@ -1,5 +1,7 @@
 package com.progi.WildTrack.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,6 +18,7 @@ import java.util.Set;
 @Builder
 @Data
 @Table(name = "Action")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "actionId")
 public class Action {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
