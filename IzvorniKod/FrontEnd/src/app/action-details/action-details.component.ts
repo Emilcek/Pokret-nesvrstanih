@@ -10,6 +10,7 @@ import 'leaflet-routing-machine';
 export class ActionDetailsComponent implements OnInit,AfterViewInit{
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
   tasks: any = [];
+  taskStatus: any = {'Ongoing': 'U tijeku', 'Done': 'Izvršen'};
   private map: any;
   private center: L.LatLngExpression = L.latLng(45.1, 15.2);
   chosenStationName: any;

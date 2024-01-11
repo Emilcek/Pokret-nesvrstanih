@@ -74,11 +74,11 @@ button {
 
 .description{
   width:20rem;
-  height:12rem ;
+  height:9rem ;
 }
 
 .description.task{
-  height:5rem;
+  height:7rem;
 }
 
 .sendButtonDiv{

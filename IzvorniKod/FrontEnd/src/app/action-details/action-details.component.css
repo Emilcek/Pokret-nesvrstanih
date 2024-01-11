@@ -17,3 +17,17 @@
   width: 100%;
 }
 
+.otherData{
+  display: flex;
+  padding: 1rem;
+  justify-content: space-evenly;
+}
+
+.sub-title{
+  padding-left: 1rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.listOfTasks{
+}

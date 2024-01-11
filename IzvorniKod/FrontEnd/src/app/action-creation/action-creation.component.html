@@ -1,4 +1,4 @@
-<div class="outer-wrapper" [formGroup]="task" style="margin:30px;" *ngIf="!(actionPending || actionAccepted)" >
+<div class="outer-wrapper" [formGroup]="task" style="margin:30px;"  *ngIf="!(actionPending || actionAccepted)">
   <div>
     <div class="top">
       Kreiranje nove akcije
@@ -15,7 +15,7 @@
         </div>
         <div class="actionDescription">
           <label class="label">Opis akcije</label>
-          <textarea class="description" formControlName="actionDescription" placeholder="Napišite kratak opis akcije"></textarea>
+          <textarea class="description" formControlName="actionDescription" placeholder="Napišite kratak opis akcije" maxlength="220"></textarea>
           <div *ngIf="this.actionAdded && (this.task.value.actionDescription=='' || this.task.value.actionDescription==null)" class="ErrorMessage"> Morate napisati opis akcije</div>
         </div>
       </div>
@@ -51,7 +51,7 @@
               </div>
               <label class="label">Opis zadatka</label>
               <div>
-                <textarea class="description task" formControlName="description" placeholder="Napišite opis zadatka"></textarea>
+                <textarea class="description task" formControlName="description" placeholder="Napišite opis zadatka" maxlength="170"></textarea>
                 <div *ngIf="this.taskAdded && this.task.value.description==null" class="ErrorMessage"> Morate dodati opis zadatka</div>
               </div>
             </div>
