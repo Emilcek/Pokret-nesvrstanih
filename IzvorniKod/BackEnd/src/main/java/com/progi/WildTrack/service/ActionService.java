@@ -23,8 +23,8 @@ public interface ActionService {
 
     ResponseEntity getStationLeadRequests();
 
-    ResponseEntity getActionAnimalLocations(Long actionId, String clientName);
+    ResponseEntity getActionAnimalLocations(Long actionId);
 
 
-    ResponseEntity getActionExplorerLocations(Long actionId, String clientName);
+    ResponseEntity getActionExplorerLocations(Long actionId);
 }

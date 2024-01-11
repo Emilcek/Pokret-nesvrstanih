@@ -131,14 +131,15 @@ public class ActionServiceImpl implements ActionService {
 
     @Transactional
     @Override
-    public ResponseEntity getActionAnimalLocations(Long actionId, String clientName) {
+    public ResponseEntity getActionAnimalLocations(Long actionId) {
         Action action = actionRepo.findByActionId(actionId);
         if (action == null) {
             return ResponseEntity.badRequest().body("Action not found");
         }
         //check if client is researcher or explorer
-        Explorer explorer = explorerRepo.findByExplorerName(clientName);
-        Researcher researcher = researcherRepo.findByResearcherName(clientName);
+        Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Explorer explorer = explorerRepo.findByExplorerName(client.getClientName());
+        Researcher researcher = researcherRepo.findByResearcherName(client.getClientName());
         if (explorer == null && researcher == null) {
             return ResponseEntity.badRequest().body("Client not found");
         }
@@ -152,30 +153,34 @@ public class ActionServiceImpl implements ActionService {
         List<AnimalDetailsDTO> animalDetailsDTOList = new java.util.ArrayList<>();
         tasks.forEach(task -> {
             Animal animal = task.getAnimal();
-            AnimalLocation animalLocation = animalLocationRepo.findFirstByAnimal_AnimalIdOrderByAnimalLocationTSDesc(animal.getAnimalId());
-            AnimalDetailsDTO animalDetailsDTO = AnimalDetailsDTO.builder()
-                    .animalId(animal.getAnimalId())
-                    .animalSpecies(animal.getSpecies())
-                    .animalPhotoURL(animal.getAnimalPhotoURL())
-                    .animalDescription(animal.getAnimalDescription())
-                    .latitude(animalLocation.getLocationofAnimal().split(",")[0])
-                    .longitude(animalLocation.getLocationofAnimal().split(",")[1])
-                    .build();
-            animalDetailsDTOList.add(animalDetailsDTO);
+            if (animal != null) {
+                AnimalLocation animalLocation = animalLocationRepo.findFirstByAnimal_AnimalIdOrderByAnimalLocationTSDesc(animal.getAnimalId());
+                AnimalDetailsDTO animalDetailsDTO = AnimalDetailsDTO.builder()
+                        .animalId(animal.getAnimalId())
+                        .animalSpecies(animal.getSpecies())
+                        .animalPhotoURL(animal.getAnimalPhotoURL())
+                        .animalDescription(animal.getAnimalDescription())
+                        .latitude(animalLocation.getLocationofAnimal().split(",")[0])
+                        .longitude(animalLocation.getLocationofAnimal().split(",")[1])
+                        .build();
+                animalDetailsDTOList.add(animalDetailsDTO);
+            }
+
         });
 
         return ResponseEntity.ok(animalDetailsDTOList);
     }
 
     @Override
-    public ResponseEntity getActionExplorerLocations(Long actionId, String clientName) {
+    public ResponseEntity getActionExplorerLocations(Long actionId) {
         Action action = actionRepo.findByActionId(actionId);
         if (action == null) {
             return ResponseEntity.badRequest().body("Action not found");
         }
         //check if client is researcher or explorer
-        Explorer explorer = explorerRepo.findByExplorerName(clientName);
-        Researcher researcher = researcherRepo.findByResearcherName(clientName);
+        Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Explorer explorer = explorerRepo.findByExplorerName(client.getClientName());
+        Researcher researcher = researcherRepo.findByResearcherName(client.getClientName());
         if (explorer == null && researcher == null) {
             return ResponseEntity.badRequest().body("Client not found");
         }
@@ -193,8 +198,8 @@ public class ActionServiceImpl implements ActionService {
                     .firstName(explorer1.getClient().getFirstName())
                     .lastName(explorer1.getClient().getLastName())
                     .email(explorer1.getClient().getEmail())
-                    .clientPhoto(explorer1.getClient().getClientPhoto())
-                    .status(explorer1.getExplorerStatus())
+                    //.clientPhoto(explorer1.getClient().getClientPhoto())
+                    //.status(explorer1.getExplorerStatus())
                     .stationName(explorer1.getStation().getStationName())
                     .educatedFor(explorer1.getVehicles())
                     .latitude(explorerLocation.getLocationOfExplorer().split(",")[0])

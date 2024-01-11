@@ -33,23 +33,23 @@ public class AnimalController {
     }
 
     //current location of the animal
-    @GetMapping("/location/{animalId}")
-    public ResponseEntity<AnimalDetailsDTO> getAnimalDetails(@PathVariable Long animalId) {
-        return animalLocationService.getAnimalDetails(animalId);
+    @GetMapping("/location/get/{animalId}")
+    public ResponseEntity getAnimalLocation(@PathVariable Long animalId) {
+        return animalLocationService.getAnimalLocation(animalId);
     }
     //get all locations of the animal
-    @GetMapping("/location/all/{animalId}")
+    @GetMapping("/locations/all/{animalId}")
     public ResponseEntity getAnimalLocations(@PathVariable Long animalId) {
         return animalLocationService.getAnimalLocations(animalId);
     }
 
     //list of all animals current location
-    @GetMapping("/location/all")
-    public ResponseEntity<List<AnimalDetailsDTO>> getAllAnimalsDetails() {
-        return ResponseEntity.ok(animalLocationService.getAllAnimalsDetails());
+    @GetMapping("/currentLocations/all")
+    public ResponseEntity<List<AnimalDetailsDTO>> getAllAnimalsCurrentLocations() {
+        return ResponseEntity.ok(animalLocationService.getAllAnimalsCurrentLocations());
     }
     //list of all animals location history
-    @GetMapping("all/locations/all")
+    @GetMapping("locations/all")
     public ResponseEntity getAllAnimalsAllLocations() {
         return animalLocationService.getAllAnimalsAllLocations();
     }

@@ -43,7 +43,7 @@ public class AnimalLocationServiceImpl implements AnimalLocationService {
 
     @Transactional
     @Override
-    public ResponseEntity getAnimalDetails(Long animalId) {
+    public ResponseEntity getAnimalLocation(Long animalId) {
         //if animal exists -> get animal last location and animal details
         if (!animalRepo.existsById(animalId)) {
             return ResponseEntity.badRequest().body("Animal not found");
@@ -61,7 +61,7 @@ public class AnimalLocationServiceImpl implements AnimalLocationService {
     }
 
         @Override
-        public List<AnimalDetailsDTO> getAllAnimalsDetails() {
+        public List<AnimalDetailsDTO> getAllAnimalsCurrentLocations() {
             //for each animal get last location and animal details
             List<AnimalDetailsDTO> animalDetailsDTOList = new java.util.ArrayList<>();
             var animals = animalRepo.findAll();
