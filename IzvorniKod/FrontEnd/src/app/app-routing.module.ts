@@ -16,7 +16,9 @@ import {StationChoosingComponent} from "./station-choosing/station-choosing.comp
 import {StationInfoComponent} from "./station-info/station-info.component";
 import { AnimalLocationComponent } from './animal-location/animal-location.component';
 import { AnimalLocationMockComponent } from './animal-location-mock/animal-location-mock.component';
-
+import {ActionLogComponent} from "./action-log/action-log.component";
+import {LeaderActionHandlerComponent} from "./leader-action-handler/leader-action-handler.component";
+import {ActionDetailsLeaderComponent} from "./action-details-leader/action-details-leader.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -29,11 +31,19 @@ const routes: Routes = [
   { path: 'verified' , component: UserVerifiedSuccessfulComponent},
   { path: 'researcher-profile', component: ResearcherProfileComponent, canActivate:[AuthGuard], data: { requiredRole: 'istrazivac' } },
   { path: 'action-creation', component: ActionCreationComponent, canActivate:[AuthGuard], data: { requiredRole: 'istrazivac' } },
+  { path: 'action-log', component: ActionLogComponent, canActivate:[AuthGuard], data: { requiredRole: 'istrazivac' } },
   { path: 'station-leader-profile', component: StationLeaderProfileComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' } },
   { path: 'animallocation/:id' , component: AnimalLocationComponent, canActivate:[AuthGuard], data: { requiredRole: ['tragac', 'istrazivac', 'voditeljPostaje', 'admin'] }},
   //kak namjestit da mogu tragac ili istrazivac
   { path: 'animal/location/:id' , component: AnimalLocationMockComponent, canActivate:[AuthGuard], data: { requiredRole: ['tragac', 'istrazivac', 'admin'] }},
   { path: '**', component: LoginComponent, canActivate:[AuthLoginGuard]},
+
+  {path: 'station-choosing', component: StationChoosingComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' }},
+  {path: 'station-info', component: StationInfoComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' }},
+  {path: 'action-handling', component: LeaderActionHandlerComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' }},
+  {path: 'action-details/:id', component: ActionDetailsLeaderComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' }},
+  { path: '**', component: LoginComponent, canActivate:[AuthLoginGuard]}
+
 ];
 
 @NgModule({

@@ -2,6 +2,8 @@ package com.progi.WildTrack.service.impl;
 
 import com.progi.WildTrack.dao.ExplorerLocationRepository;
 import com.progi.WildTrack.dao.ExplorerRepository;
+import com.progi.WildTrack.domain.Animal;
+import com.progi.WildTrack.domain.AnimalLocation;
 import com.progi.WildTrack.domain.Explorer;
 import com.progi.WildTrack.domain.ExplorerLocation;
 import com.progi.WildTrack.dto.ExplorerAllLocationsDTO;
@@ -24,17 +26,18 @@ public class ExplorerLocationServiceImpl implements ExplorerLocationService {
     private ExplorerRepository explorerRepo;
 
     @Override
-    public ResponseEntity saveExplorerLocation(ExplorerLocationDTO explorerLocationDTO) {
+    public ResponseEntity addExplorerLocation(String explorerName,ExplorerLocationDTO explorerLocationDTO) {
         //check if explorer exists
-       if (!explorerRepo.existsByExplorerName(explorerLocationDTO.getExplorerName())) {
+       if (!explorerRepo.existsByExplorerName(explorerName)) {
             return ResponseEntity.badRequest().body("Explorer not found");
         }
         //if explorer exists -> create new explorer location with timestamp
         ExplorerLocation explorerLocation = ExplorerLocation.builder()
-                .explorer(explorerRepo.findById(explorerLocationDTO.getExplorerName()).get())
+                .explorer(explorerRepo.findById(explorerName).get())
                 .locationOfExplorer(explorerLocationDTO.getLatitude() + "," + explorerLocationDTO.getLongitude())
                 .locationTimestamp(Timestamp.valueOf(explorerLocationDTO.getLocationTimestamp()))
                 .build();
+       //System.out.println("Explorer location added " + explorerLocation);
         explorerLocationRepo.save(explorerLocation);
         return ResponseEntity.ok(explorerLocationDTO);
     }
@@ -53,8 +56,8 @@ public class ExplorerLocationServiceImpl implements ExplorerLocationService {
                 .firstName(explorerLocation.getExplorer().getClient().getFirstName())
                 .lastName(explorerLocation.getExplorer().getClient().getLastName())
                 .email(explorerLocation.getExplorer().getClient().getEmail())
-                .clientPhoto(explorerLocation.getExplorer().getClient().getClientPhoto())
-                .status(explorerLocation.getExplorer().getExplorerStatus())
+                //.clientPhoto(explorerLocation.getExplorer().getClient().getClientPhoto())
+                //.status(explorerLocation.getExplorer().getExplorerStatus())
                 .stationName(explorerLocation.getExplorer().getStation().getStationName())
                 .educatedFor(explorerLocation.getExplorer().getVehicles())
                 .latitude(explorerLocation.getLocationOfExplorer().split(",")[0])
@@ -73,7 +76,7 @@ public class ExplorerLocationServiceImpl implements ExplorerLocationService {
         Set<ExplorerLocationDTO> explorerLocationDTOList = new java.util.HashSet<>();
         explorerLocationList.forEach(explorerLocation -> {
             ExplorerLocationDTO explorerLocationDTO = ExplorerLocationDTO.builder()
-                    .explorerName(explorerLocation.getExplorer().getExplorerName())
+                    //.explorerName(explorerLocation.getExplorer().getExplorerName())
                     .latitude(explorerLocation.getLocationOfExplorer().split(",")[0])
                     .longitude(explorerLocation.getLocationOfExplorer().split(",")[1])
                     .locationTimestamp(explorerLocation.getLocationTimestamp().toString())
@@ -93,8 +96,8 @@ public class ExplorerLocationServiceImpl implements ExplorerLocationService {
                     .firstName(explorer.getClient().getFirstName())
                     .lastName(explorer.getClient().getLastName())
                     .email(explorer.getClient().getEmail())
-                    .clientPhoto(explorer.getClient().getClientPhoto())
-                    .status(explorer.getExplorerStatus())
+                    //.clientPhoto(explorer.getClient().getClientPhoto())
+                    //.status(explorer.getExplorerStatus())
                     .stationName(explorer.getStation().getStationName())
                     .educatedFor(explorer.getVehicles())
                     .explorerLocations(explorerLocationRepo.findAllByExplorer_ExplorerName(explorer.getExplorerName()))
@@ -116,8 +119,8 @@ public class ExplorerLocationServiceImpl implements ExplorerLocationService {
                     .firstName(explorerLocation.getExplorer().getClient().getFirstName())
                     .lastName(explorerLocation.getExplorer().getClient().getLastName())
                     .email(explorerLocation.getExplorer().getClient().getEmail())
-                    .clientPhoto(explorerLocation.getExplorer().getClient().getClientPhoto())
-                    .status(explorerLocation.getExplorer().getExplorerStatus())
+                    //.clientPhoto(explorerLocation.getExplorer().getClient().getClientPhoto())
+                    //.status(explorerLocation.getExplorer().getExplorerStatus())
                     .stationName(explorerLocation.getExplorer().getStation().getStationName())
                     .educatedFor(explorerLocation.getExplorer().getVehicles())
                     .latitude(explorerLocation.getLocationOfExplorer().split(",")[0])

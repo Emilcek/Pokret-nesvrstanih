@@ -17,14 +17,12 @@ public interface ActionService {
 
     ResponseEntity acceptRequest(Long requestId, List<ExplorerTaskDTO> explorerTaskDTO);
 
-    ResponseEntity getResearcherRequests();
-
     ResponseEntity declineRequest(Long requestId);
 
     ResponseEntity getStationLeadRequests();
 
-    ResponseEntity getActionAnimalLocations(Long actionId, String clientName);
+    ResponseEntity getActionAnimalLocations(Long actionId);
 
 
-    ResponseEntity getActionExplorerLocations(Long actionId, String clientName);
+    ResponseEntity getActionExplorerLocations(Long actionId);
 }

@@ -14,5 +14,5 @@ public class ExplorerLocationDTO {
         private String longitude;
         private String latitude;
         private String locationTimestamp;
-        private String explorerName;
+
 }

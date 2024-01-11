@@ -27,6 +27,9 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import { AnimalLocationComponent } from './animal-location/animal-location.component';
 import { AnimalLocationMockComponent } from './animal-location-mock/animal-location-mock.component';
 import { ActionCreationComponent } from './action-creation/action-creation.component';
+import { ActionLogComponent } from './action-log/action-log.component';
+import {ActionDetailsLeaderComponent} from "./action-details-leader/action-details-leader.component";
+import {LeaderActionHandlerComponent} from "./leader-action-handler/leader-action-handler.component";
 
 @NgModule({
   declarations: [
@@ -46,8 +49,12 @@ import { ActionCreationComponent } from './action-creation/action-creation.compo
     MapComponent,
     StationInfoComponent,
     StationChoosingComponent,
+
     AnimalLocationComponent,
-    AnimalLocationMockComponent
+    AnimalLocationMockComponent,
+    ActionLogComponent,
+    ActionDetailsLeaderComponent,
+    LeaderActionHandlerComponent
   ],
   imports: [
     BrowserModule,

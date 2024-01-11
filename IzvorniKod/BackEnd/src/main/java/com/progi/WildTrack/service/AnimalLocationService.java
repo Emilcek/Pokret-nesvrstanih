@@ -9,9 +9,9 @@ import java.util.List;
 public interface AnimalLocationService {
     ResponseEntity addAnimalLocation(Long animalId, AnimalLocationDTO animalLocationDTO);
 
-    ResponseEntity getAnimalDetails(Long animalId);
+    ResponseEntity getAnimalLocation(Long animalId);
 
-    List<AnimalDetailsDTO> getAllAnimalsDetails();
+    List<AnimalDetailsDTO> getAllAnimalsCurrentLocations();
 
     ResponseEntity getAnimalLocations(Long animalId);
 

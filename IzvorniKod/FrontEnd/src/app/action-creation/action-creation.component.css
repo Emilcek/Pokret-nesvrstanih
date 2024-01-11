@@ -39,7 +39,7 @@ select{
   border: 1px solid black;
   border-radius: 10px;
   min-height: 10rem;
-  height:auto;
+  height:50%;
 }
 
 button {
@@ -213,9 +213,23 @@ textarea{
   gap:1rem;
 }
 
+.feedback{
+  display: flex;
+  justify-content: center;
+  font-size: 3rem;
+}
+
+.underText{
+  display: flex;
+  justify-content: center;
+}
+
 @media only screen and (max-width: 1045px) {
   .all-about-task{
     flex-direction: column;
+  }
+  .listOfTasks{
+    width:20rem;
   }
 }
 
@@ -226,6 +240,10 @@ textarea{
     padding-left:10rem;
   }
   .map-container{
+    width:20rem;
+  }
+
+  .listOfTasks{
     width:20rem;
   }
 

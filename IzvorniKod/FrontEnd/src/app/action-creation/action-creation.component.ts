@@ -20,9 +20,12 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
   startLocation:any;
   endLocation:any;
   taskAdded: any=false;
-  educatedForChosen:any;
   markersGroup:any;
-  actionAdded:any=false;
+  stations:any=[];
+  actionAdded:boolean=false;
+  actionPending:boolean=false;
+  actionAccepted:boolean=false;
+  actionGimmic:any[]=[]
 
   task=new FormGroup({
     actionTitle:new FormControl(''),
@@ -34,6 +37,22 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
   })
 
   ngOnInit() {
+  this.actionNotDone();
+    let header = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('token'),
+      'Content-Type': 'application/json'
+    });
+    let headersObj = {
+      headers: header
+    };
+  this.http.get(environment.BASE_API_URL+"/researcher/stations",headersObj).subscribe({
+    next: data => {
+      let response: any = data;
+      this.stations=response;
+    }, error: (error) => {
+      console.log(error,"krivo dodane postaje")
+    }
+  })
   }
 
   private initMap(): void {
@@ -90,18 +109,20 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.initMap();
+    if(!this.actionAdded){
+      this.initMap();
+    }
+
   }
 
   addTask() {
     this.taskAdded=true;
     if (this.task.value.description!=null && this.task.value.educatedFor!='placeholder' && this.markersGroup.getLayers().length>0 && this.task.value.taskType!='placeholder'
     && !(this.task.value.taskType==="Prođi rutom" && this.markersGroup.getLayers().length<2)){
-      this.tasks.push({"description": this.task.value.taskType+": "+this.task.value.description, "endLocation": this.endLocation, "startLocation":this.startLocation,"educatedFor": this.educatedForChosen});
+      this.tasks.push({description: this.task.value.taskType+': '+this.task.value.description, endLocation: this.endLocation, startLocation:this.startLocation,taskVehicle: this.task.value.educatedFor});
       this.markersGroup.clearLayers();
       this.taskAdded=false;
       this.task.get('description')?.reset()
-      this.task.get('station')?.setValue('placeholder')
       this.task.get('educatedFor')?.setValue('placeholder')
       this.task.get('taskType')?.setValue('placeholder')
     }
@@ -113,14 +134,9 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
     this.taskAdded=false;
     this.markersGroup.clearLayers();
     this.task.reset();
-    this.task.get('station')?.setValue('placeholder')
+    this.task.get('description')?.reset()
     this.task.get('educatedFor')?.setValue('placeholder')
     this.task.get('taskType')?.setValue('placeholder')
-  }
-
-  saveEducatedFor(event:any){
-    this.educatedForChosen=event.target.value;
-    return event.target.value;
   }
 
   deleteFromTasks(task:any){
@@ -129,29 +145,72 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
 
   sendAction(){
     this.actionAdded=true;
+    //ovdje treba provjeriti popis akcija da se zna može li korisnik izraditi novu akciju
     if(this.task.value.actionTitle!=null && this.task.value.actionDescription!=null && this.task.value.station!='placeholder' && this.tasks.length>0){
-      let formData = new FormData()
-      formData.append('actionTitle',this.task.value.actionTitle!)
-      formData.append('actionDescription',this.task.value.actionDescription!)
-      formData.append('station',this.chosenStationName)
-      formData.append('task',this.tasks)
+      let formData = {
+        station: this.task.value.station,
+        name: this.task.value.actionTitle,
+        description: this.task.value.actionDescription,
+        tasks: this.tasks
+      }
+      this.actionGimmic.push(formData)
 
+      let header = new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        'Content-Type': 'application/json'
+      });
+      let headersObj = {
+        headers: header
+      };
+      this.http.post(environment.BASE_API_URL+"/researcher/request",JSON.stringify(formData),headersObj).subscribe({
+        next: data => {
+          let response: any = data;
+          console.log(response)
+          }, error: (error) => {
+
+        }
+      })
+      this.actionAdded=false;
+      this.task.reset()
+      this.task.get('station')?.setValue('placeholder')
+      this.task.get('educatedFor')?.setValue('placeholder')
+      this.task.get('taskType')?.setValue('placeholder')
+      this.tasks=[]
+      }
+    }
+
+    actionNotDone(){
       let header = new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('token'),
       });
       let headersObj = {
         headers: header
       };
-      this.http.post(environment.BASE_API_URL+"/researcher/request",formData,headersObj).subscribe({
-        next: data => {
-          let response: any = data;
-          console.log(response)
-          }, error: (error) => {
-          console.log(error,"error")
+    this.http.get(environment.BASE_API_URL+"/researcher/actions",headersObj).subscribe({
+    next: data => {
+        let response: any = data;
+        console.log(response,"actions")
+        if(response.some((d:any)=>d.status==="PENDING")) {
+          this.actionPending = true;
+          this.actionAccepted=false;
+        }else if(response.some((d:any)=>d.status==="ACCEPTED")) {
+          this.actionAccepted = true;
+          this.actionPending= false;
+        }else{
+          this.actionPending= false;
+          this.actionAccepted=false;
         }
-      })
-      this.actionAdded=false;
+      }, error: (error) => {
+        console.log(error,"error")
       }
+    })
+
+    // u ovoj funckiji provjeriti ima li istraživač već izrađenu akciju koja čeka odobrenje
+      // ako ima, onda mu se prikazije ekran s porukom da već ima akciju koja čeka odobrenje
+      // inače se prikazuje ekran za izradu nove akcije
+      return true;
     }
+
+
   }
 

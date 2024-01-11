@@ -1,0 +1,16 @@
+<div class="main-container" *ngIf="getDone">
+  <div class="info">Ime akcije: {{action.actionName}}</div>
+  <div class="info">Opis akcije: {{action.actionDescription}}</div>
+  <div class="flex info" *ngFor="let task of action.actionTasks; let i = index">
+    <div>{{i + 1}} . zadatak:  {{task.taskDescription}}</div>
+    <select (change)="onSelect($event, task.taskId)">
+      <option value="placeholder" [selected]="true" [hidden]="true">Odaberi tragača za zadatak</option>
+      <option *ngFor="let tragac of task.poljeTragaca" >{{tragac.clientName}}</option>
+    </select>
+  </div>
+  <div class="errorMessage info">{{errorMessage}}</div>
+  <div class="buttons info">
+    <button (click)="acceptAction()">Prihvati akciju</button>
+    <button>Odbij akciju</button>
+  </div>
+</div>

@@ -32,6 +32,8 @@ public class ActionServiceImpl implements ActionService {
     private ResearcherRepository researcherRepo;
     @Autowired
     private ExplorerLocationRepository explorerLocationRepo;
+    @Autowired
+    private StationLeadRepository stationLeadRepo;
 
     @Override
     public ResponseEntity getActions() {
@@ -52,21 +54,25 @@ public class ActionServiceImpl implements ActionService {
     public ResponseEntity createRequest(CreateRequestDTO request) {
         System.out.println(request);
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Researcher researcher = client.getResearcher();
+        Researcher researcher = researcherRepo.findByResearcherName(client.getUsername());
         Station station = stationRepo.findByStationName(request.getStation());
-        System.out.println("station " + station.getStationName());
-        StationLead stationLead = station.getStationLead();
+        StationLead stationLead = stationLeadRepo.findByStationLeadName(station.getStationLead().getStationLeadName());
         if (stationLead == null || researcher == null) {
             return ResponseEntity.badRequest().build();
         }
+
         Action action = Action.builder()
+                .actionName(request.getName())
+                .actionDescription(request.getDescription())
                 .actionStatus("Pending")
                 .researcher(researcher)
                 .stationLead(stationLead)
                 .build();
         actionRepo.save(action);
+
         for(TaskDTO task : request.getTasks()) {
             Vehicle vehicle = (Vehicle) vehicleRepo.findByVehicleType(task.getTaskVehicle()).orElseThrow();
+            System.out.println("task " + task.getTaskVehicle());
             Task build = new Task(task, vehicle, action);
             taskRepo.save(build);
         }
@@ -97,17 +103,10 @@ public class ActionServiceImpl implements ActionService {
             taskRepo.save(task);
 
             action.getExplorers().add(explorer);
+            action.getExplorers().forEach(explorer1 -> System.out.println("explorer " + explorer1.getExplorerName()));
             actionRepo.save(action);
         }
         return ResponseEntity.ok().build();
-    }
-
-    @Override
-    public ResponseEntity getResearcherRequests() {
-        Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Researcher researcher = client.getResearcher();
-        List<Action> requests = actionRepo.findAllByResearcher(researcher).stream().filter(action -> action.getActionStatus().equals("Pending")).toList();
-        return ResponseEntity.ok(requests);
     }
 
     @Override
@@ -131,14 +130,15 @@ public class ActionServiceImpl implements ActionService {
 
     @Transactional
     @Override
-    public ResponseEntity getActionAnimalLocations(Long actionId, String clientName) {
+    public ResponseEntity getActionAnimalLocations(Long actionId) {
         Action action = actionRepo.findByActionId(actionId);
         if (action == null) {
             return ResponseEntity.badRequest().body("Action not found");
         }
         //check if client is researcher or explorer
-        Explorer explorer = explorerRepo.findByExplorerName(clientName);
-        Researcher researcher = researcherRepo.findByResearcherName(clientName);
+        Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Explorer explorer = explorerRepo.findByExplorerName(client.getClientName());
+        Researcher researcher = researcherRepo.findByResearcherName(client.getClientName());
         if (explorer == null && researcher == null) {
             return ResponseEntity.badRequest().body("Client not found");
         }
@@ -152,30 +152,34 @@ public class ActionServiceImpl implements ActionService {
         List<AnimalDetailsDTO> animalDetailsDTOList = new java.util.ArrayList<>();
         tasks.forEach(task -> {
             Animal animal = task.getAnimal();
-            AnimalLocation animalLocation = animalLocationRepo.findFirstByAnimal_AnimalIdOrderByAnimalLocationTSDesc(animal.getAnimalId());
-            AnimalDetailsDTO animalDetailsDTO = AnimalDetailsDTO.builder()
-                    .animalId(animal.getAnimalId())
-                    .animalSpecies(animal.getSpecies())
-                    .animalPhotoURL(animal.getAnimalPhotoURL())
-                    .animalDescription(animal.getAnimalDescription())
-                    .latitude(animalLocation.getLocationofAnimal().split(",")[0])
-                    .longitude(animalLocation.getLocationofAnimal().split(",")[1])
-                    .build();
-            animalDetailsDTOList.add(animalDetailsDTO);
+            if (animal != null) {
+                AnimalLocation animalLocation = animalLocationRepo.findFirstByAnimal_AnimalIdOrderByAnimalLocationTSDesc(animal.getAnimalId());
+                AnimalDetailsDTO animalDetailsDTO = AnimalDetailsDTO.builder()
+                        .animalId(animal.getAnimalId())
+                        .animalSpecies(animal.getSpecies())
+                        .animalPhotoURL(animal.getAnimalPhotoURL())
+                        .animalDescription(animal.getAnimalDescription())
+                        .latitude(animalLocation.getLocationofAnimal().split(",")[0])
+                        .longitude(animalLocation.getLocationofAnimal().split(",")[1])
+                        .build();
+                animalDetailsDTOList.add(animalDetailsDTO);
+            }
+
         });
 
         return ResponseEntity.ok(animalDetailsDTOList);
     }
 
     @Override
-    public ResponseEntity getActionExplorerLocations(Long actionId, String clientName) {
+    public ResponseEntity getActionExplorerLocations(Long actionId) {
         Action action = actionRepo.findByActionId(actionId);
         if (action == null) {
             return ResponseEntity.badRequest().body("Action not found");
         }
         //check if client is researcher or explorer
-        Explorer explorer = explorerRepo.findByExplorerName(clientName);
-        Researcher researcher = researcherRepo.findByResearcherName(clientName);
+        Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Explorer explorer = explorerRepo.findByExplorerName(client.getClientName());
+        Researcher researcher = researcherRepo.findByResearcherName(client.getClientName());
         if (explorer == null && researcher == null) {
             return ResponseEntity.badRequest().body("Client not found");
         }
@@ -193,8 +197,8 @@ public class ActionServiceImpl implements ActionService {
                     .firstName(explorer1.getClient().getFirstName())
                     .lastName(explorer1.getClient().getLastName())
                     .email(explorer1.getClient().getEmail())
-                    .clientPhoto(explorer1.getClient().getClientPhoto())
-                    .status(explorer1.getExplorerStatus())
+                    //.clientPhoto(explorer1.getClient().getClientPhoto())
+                    //.status(explorer1.getExplorerStatus())
                     .stationName(explorer1.getStation().getStationName())
                     .educatedFor(explorer1.getVehicles())
                     .latitude(explorerLocation.getLocationOfExplorer().split(",")[0])
