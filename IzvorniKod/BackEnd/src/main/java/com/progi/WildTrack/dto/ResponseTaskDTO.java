@@ -38,9 +38,15 @@ public class ResponseTaskDTO {
         this.actionName = task.getAction().getActionName();
         this.actionId = task.getAction().getActionId();
         this.taskComments =  task.getTaskComments().stream().map(TaskCommentDTO::new).toList();
-        this.explorerName = task.getExplorer().getExplorerName();
-        this.vehicleName = task.getVehicle().getVehicleType();
-        this.animalSpecies = task.getAnimal().getSpecies();
+        if (task.getExplorer() != null){
+            this.explorerName = task.getExplorer().getExplorerName();
+        }
+        if (task.getVehicle() != null){
+            this.vehicleName = task.getVehicle().getVehicleType();
+        }
+        if (task.getAnimal() != null){
+            this.animalSpecies = task.getAnimal().getSpecies();
+        }
     }
 }
 

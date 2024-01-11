@@ -154,7 +154,7 @@ export class UserDataEditingComponent implements AfterViewInit, OnInit{
       this.http.put(environment.BASE_API_URL+"/client",formData,headersObj).subscribe({
         next: data => {
           let response: any = data;
-          console.log("poslano")
+          console.log("poslano", formData)
           //document.getElementById("newDataSaved")!.style.display = "block";
         }, error: (error) => {
         }
@@ -228,7 +228,7 @@ export class UserDataEditingComponent implements AfterViewInit, OnInit{
         console.log("deleted")
       }
     )
-    this.refreshPage();
+    this.refreshPage()
   }
   protected readonly localStorage = localStorage;
 }

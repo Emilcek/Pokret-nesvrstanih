@@ -32,6 +32,8 @@ public class ActionServiceImpl implements ActionService {
     private ResearcherRepository researcherRepo;
     @Autowired
     private ExplorerLocationRepository explorerLocationRepo;
+    @Autowired
+    private StationLeadRepository stationLeadRepo;
 
     @Override
     public ResponseEntity getActions() {
@@ -52,21 +54,25 @@ public class ActionServiceImpl implements ActionService {
     public ResponseEntity createRequest(CreateRequestDTO request) {
         System.out.println(request);
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Researcher researcher = client.getResearcher();
+        Researcher researcher = researcherRepo.findByResearcherName(client.getUsername());
         Station station = stationRepo.findByStationName(request.getStation());
-        System.out.println("station " + station.getStationName());
-        StationLead stationLead = station.getStationLead();
+        StationLead stationLead = stationLeadRepo.findByStationLeadName(station.getStationLead().getStationLeadName());
         if (stationLead == null || researcher == null) {
             return ResponseEntity.badRequest().build();
         }
+
         Action action = Action.builder()
+                .actionName(request.getName())
+                .actionDescription(request.getDescription())
                 .actionStatus("Pending")
                 .researcher(researcher)
                 .stationLead(stationLead)
                 .build();
         actionRepo.save(action);
+
         for(TaskDTO task : request.getTasks()) {
             Vehicle vehicle = (Vehicle) vehicleRepo.findByVehicleType(task.getTaskVehicle()).orElseThrow();
+            System.out.println("task " + task.getTaskVehicle());
             Task build = new Task(task, vehicle, action);
             taskRepo.save(build);
         }
@@ -97,17 +103,10 @@ public class ActionServiceImpl implements ActionService {
             taskRepo.save(task);
 
             action.getExplorers().add(explorer);
+            action.getExplorers().forEach(explorer1 -> System.out.println("explorer " + explorer1.getExplorerName()));
             actionRepo.save(action);
         }
         return ResponseEntity.ok().build();
-    }
-
-    @Override
-    public ResponseEntity getResearcherRequests() {
-        Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Researcher researcher = client.getResearcher();
-        List<Action> requests = actionRepo.findAllByResearcher(researcher).stream().filter(action -> action.getActionStatus().equals("Pending")).toList();
-        return ResponseEntity.ok(requests);
     }
 
     @Override

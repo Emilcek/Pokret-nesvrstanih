@@ -1,5 +1,9 @@
 package com.progi.WildTrack.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,6 +20,7 @@ import java.util.Set;
 @Builder
 @Data
 @Table(name = "Explorer")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "explorerName")
 public class Explorer {
     @Id
     @Column(name = "Explorername" ,length = 30, nullable = false)
@@ -29,14 +34,14 @@ public class Explorer {
     @MapsId
     private Client client;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "StationId", insertable = false, updatable = false)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @JoinColumn(name = "StationId")
     private Station station;
     @ManyToMany(mappedBy = "explorers", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Action> actions = new HashSet<>();
     @OneToMany(mappedBy = "explorer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<AnimalComment> animalComments;
-    @OneToMany(mappedBy = "explorer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "explorer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Task> tasks;
     @OneToMany(mappedBy = "explorer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ExplorerLocation> explorerLocations;

@@ -1,0 +1,35 @@
+<div class="mat-elevation-z8" style="margin: 30px">
+  <table mat-table [dataSource]="dataSource">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef> Naslov akcije </th>
+      <td mat-cell *matCellDef="let element" id="title"> {{element.actionName}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> Opis akcije </th>
+      <td mat-cell *matCellDef="let element" id="description"> {{element.actionDescription}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status akcije </th>
+      <td mat-cell *matCellDef="let element"> {{element.actionStatus}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="stationLead">
+      <th mat-header-cell *matHeaderCellDef> Voditelj stanice </th>
+      <td mat-cell *matCellDef="let element"> {{element.stationLead}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSize]="10"
+                 aria-label="Select page of periodic elements">
+  </mat-paginator>
+</div>

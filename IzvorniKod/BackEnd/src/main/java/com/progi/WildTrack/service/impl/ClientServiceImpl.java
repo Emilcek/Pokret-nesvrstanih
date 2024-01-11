@@ -91,6 +91,11 @@ public class ClientServiceImpl implements ClientService {
         return requestStationLeads.stream().filter(Client::isVerified).map(ClientDetailsDTO::new).toList();
     }
 
+    public List<ClientDetailsDTO> getAllAvailableExplorers() {
+        List<Explorer> explorers = explorerRepo.findAllByStationIsNull();
+        return explorers.stream().map(Explorer::getClient).map(ClientDetailsDTO::new).toList();
+    }
+
     @Override
     @Transactional
     public ResponseEntity updateClient(ClientUpdateDTO client) {

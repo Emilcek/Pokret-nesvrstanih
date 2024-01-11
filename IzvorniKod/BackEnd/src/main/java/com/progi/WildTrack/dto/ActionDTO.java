@@ -20,7 +20,7 @@ public class ActionDTO {
     private String actionStatus;
     private String actionStationLeadName;
     private String actionResearcherName;
-    List<String> actionExplorers;
+    List<ClientDetailsDTO> actionExplorers;
     List<ResponseTaskDTO> actionTasks;
 
     public ActionDTO(Action action) {
@@ -30,7 +30,11 @@ public class ActionDTO {
         this.actionStatus = action.getActionStatus();
         this.actionStationLeadName = action.getStationLead().getStationLeadName();
         this.actionResearcherName = action.getResearcher().getResearcherName();
-        this.actionExplorers = action.getExplorers().stream().map(Explorer::getExplorerName).toList();
-        this.actionTasks = action.getTasks().stream().map(ResponseTaskDTO::new).toList();
+        if (action.getExplorers() != null) {
+            this.actionExplorers = action.getExplorers().stream().map(explorer -> new ClientDetailsDTO(explorer.getClient(), explorer)).toList();
+        }
+        if (action.getTasks() != null){
+            this.actionTasks = action.getTasks().stream().map(ResponseTaskDTO::new).toList();
+        }
     }
 }

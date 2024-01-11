@@ -30,6 +30,7 @@
   <div class="header-links" *ngIf="isLoggedIn && user==='istrazivac'" [ngClass]="{'is-mobile-open': isNavOpen}">
     <a class="header-link" routerLink="researcher-profile" [ngClass]="{ 'active': activePage === '/researcher-profile' }" (click)="changeActivePage('/researcher-profile')">Profil</a>
     <a class="header-link" routerLink="action-creation" [ngClass]="{ 'active': activePage === '/action-creation' }" (click)="changeActivePage('/action-creation')">Izrada akcije</a>
+    <a class="header-link" routerLink="action-log" [ngClass]="{ 'active': activePage === '/action-log' }" (click)="changeActivePage('/action-log')">Akcije</a>
     <button (click)="logout()" type="button" class="header-link sign-out-button">
       <img src="assets/img/poweroff-icon.png" alt="Odjava">
     </button>
@@ -37,7 +38,8 @@
 
   <div class="header-links" *ngIf="isLoggedIn && user==='voditeljPostaje'" [ngClass]="{'is-mobile-open': isNavOpen}">
     <a class="header-link" routerLink="station-leader-profile" [ngClass]="{ 'active': activePage === '/station-leader-profile' }" (click)="changeActivePage('/station-leader-profile')">Profil</a>
-    <a class="header-link" routerLink="choose-station" [ngClass]="{ 'active': activePage === '/choose-station' }" (click)="changeActivePage('/choose-station')">Moja postaja</a>
+    <a class="header-link" routerLink="station-choosing" [ngClass]="{ 'active': activePage === '/station-choosing' }" (click)="changeActivePage('/station-choosing')">Moja postaja</a>
+    <a class="header-link" routerLink="action-handling" [ngClass]="{ 'active': activePage === '/action-handling' }" (click)="changeActivePage('/action-handling')">Zahtjevi</a>
     <button (click)="logout()" type="button" class="header-link sign-out-button">
       <img src="assets/img/poweroff-icon.png" alt="Odjava">
     </button>

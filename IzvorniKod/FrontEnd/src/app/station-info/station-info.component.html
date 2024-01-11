@@ -10,29 +10,30 @@
     <div style="margin-top: 20px; margin-right: 40px;">
       <div class="info"><span class="light-text">Naziv: </span> {{stationName}}</div>
       <div class="info"><span class="light-text">Površina: </span> {{stationSurface}}</div>
-    </div>
-
-    <div class="tragaci" style="margin-top: 20px;" *ngIf="isTragaciEmpty">
-      <div class="info">U vašoj postaji još nema tragača. Molimo odaberite ih: </div>
-      <mat-form-field>
-        <mat-select placeholder="Tragači" [formControl]="tragaci" multiple>
-          <mat-option *ngFor="let tragac of tragaci2" [value]="tragac">{{tragac}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <button class="save-button">Spremi tragače</button>
-    </div>
-
-    <div class="tragaci flex" style="margin-top: 20px;" *ngIf="!isTragaciEmpty">
-      <span class="info light-text">Tragači u postaji: </span>
-      <div class="flex-column">
-        <div class="list">Tragac 1</div>
-        <div class="add-new-text">Dodajte nove tragače: </div>
-        <mat-form-field class="add-new-text">
+      <div class="tragaci flex-column" style="margin-top: 20px;" *ngIf="isTragaciEmpty">
+        <div class="info">U vašoj postaji još nema tragača. Molimo odaberite ih: </div>
+        <mat-form-field>
           <mat-select placeholder="Tragači" [formControl]="tragaci" multiple>
-            <mat-option *ngFor="let tragac of tragaci2" [value]="tragac">{{tragac}}</mat-option>
+            <mat-option *ngFor="let tragac of dostupniTragaci" [value]="tragac">{{tragac.clientName}}</mat-option>
           </mat-select>
         </mat-form-field>
-        <button class="save-button">Spremi tragače</button>
+        <button class="save-button" (click)="saveResearchers()">Spremi tragače</button>
+      </div>
+
+      <div class="tragaci flex" style="margin-top: 20px;" *ngIf="!isTragaciEmpty">
+        <span class="info light-text">Tragači u postaji: </span>
+        <div class="flex-column">
+          <div class="list" style="margin-bottom: 10px;" *ngFor="let tragac of tragaci2">
+            {{tragac.clientName}}
+          </div>
+          <div class="add-new-text">Dodajte nove tragače: </div>
+          <mat-form-field class="add-new-text">
+            <mat-select placeholder="Tragači" [formControl]="tragaci" multiple>
+              <mat-option *ngFor="let tragac of dostupniTragaci" [value]="tragac">{{tragac.clientName}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button class="save-button" (click)="saveResearchers()">Spremi tragače</button>
+        </div>
       </div>
     </div>
   </div>
