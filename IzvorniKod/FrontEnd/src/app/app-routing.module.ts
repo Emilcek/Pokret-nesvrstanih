@@ -30,9 +30,9 @@ const routes: Routes = [
   { path: 'researcher-profile', component: ResearcherProfileComponent, canActivate:[AuthGuard], data: { requiredRole: 'istrazivac' } },
   { path: 'action-creation', component: ActionCreationComponent, canActivate:[AuthGuard], data: { requiredRole: 'istrazivac' } },
   { path: 'station-leader-profile', component: StationLeaderProfileComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' } },
-  { path: 'animallocation/:id' , component: AnimalLocationComponent, canActivate:[AuthGuard], data: { requiredRole: 'tragac' }},
+  { path: 'animallocation/:id' , component: AnimalLocationComponent, canActivate:[AuthGuard], data: { requiredRole: ['tragac', 'istrazivac', 'voditeljPostaje', 'admin'] }},
   //kak namjestit da mogu tragac ili istrazivac
-  { path: 'animal/location/:id' , component: AnimalLocationMockComponent, canActivate:[AuthGuard], data: { requiredRole: 'tragac' }},
+  { path: 'animal/location/:id' , component: AnimalLocationMockComponent, canActivate:[AuthGuard], data: { requiredRole: ['tragac', 'istrazivac', 'admin'] }},
   { path: '**', component: LoginComponent, canActivate:[AuthLoginGuard]},
 ];
 
