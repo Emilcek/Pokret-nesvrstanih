@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
+import {AfterViewInit, OnInit, Component, Inject, ViewChild} from '@angular/core';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
@@ -17,20 +17,27 @@ import {HeaderService} from "../header/header.service";
   styleUrls: ['./action-log.component.css']
 })
 
-export class ActionLogComponent implements AfterViewInit{
+export class ActionLogComponent implements AfterViewInit, OnInit{
+
+  data:any=[];
+  actionId:any;
   constructor(private http:HttpClient, private router:Router, private headerService: HeaderService,public dialog: MatDialog){}
   displayedColumns: string[] = ['title', 'description', 'status', 'stationLead','moreInfo'];
-  dataSource = new MatTableDataSource(table);
+  dataSource = new MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  ngOnInit() {
+    this.getActions();
+    console.log(this.dataSource)
+  }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
 
-  moreAboutAction(){
+  moreAboutAction(actionDetails:any){
     const dialog= this.dialog.open( ActionDetailsComponent, {
       width: '100%',
-      data: {name: 'test'}, //predaja podataka u dialog
+      data: actionDetails, //predaja podataka u dialog
       height: '30rem',
 
     });
@@ -44,29 +51,19 @@ export class ActionLogComponent implements AfterViewInit{
     let headersObj = {
       headers: header
     };
-    this.http.get(environment.BASE_API_URL + "/researcher/actions", headersObj).subscribe((res: any) => {
-      console.log(res);
-    });
+    this.http.get(environment.BASE_API_URL+"/researcher/actions",headersObj).subscribe({
+      next: data => {
+        this.data=data
+        console.log(this.data,"this data")
+        let res: any = data;
+        this.dataSource = new MatTableDataSource(res);
+        this.dataSource.paginator = this.paginator;
+        console.log(data, "data")
+      }, error: (error) => {
+        console.log(error,"error")
+      }
+    })
     }
 
   }
 
-
-
-//napraviti get request na backend za sve akcije i onda ih prikazati u tablici
-const table = [
-  {actionName: 'Rjesavanje problema sa svinjama', actionDescription: 'Pokusavamo istražiti zašto svinje umiru na zadanim područjima', actionStatus: 1.0079, stationLead: 'Branko Jurić'},
-  {actionName: 'Rjesavanje problema sa svinjama', actionDescription: 'Pokusavamo istražiti zašto svinje umiru na zadanim područjima', actionStatus: 1.0079, stationLead: 'H'},
-  {actionName: 'Rjesavanje problema sa svinjama', actionDescription: 'Pokusavamo istražiti zašto svinje umiru na zadanim područjima', actionStatus: 1.0079, stationLead: 'H'},
-  {actionName: 'Rjesavanje problema sa svinjama', actionDescription: 'Pokusavamo istražiti zašto svinje umiru na zadanim područjima', actionStatus: 1.0079, stationLead: 'H'},
-  {actionName: 'Rjesavanje problema sa svinjama', actionDescription: 'Pokusavamo istražiti zašto svinje umiru na zadanim područjima', actionStatus: 1.0079, stationLead: 'H'},
-  {actionName: 'Rjesavanje problema sa svinjama', actionDescription: 'Pokusavamo istražiti zašto svinje umiru na zadanim područjima', actionStatus: 1.0079, stationLead: 'H'},
-  {actionName: 'Rjesavanje problema sa svinjama', actionDescription: 'Pokusavamo istražiti zašto svinje umiru na zadanim područjima', actionStatus: 1.0079, stationLead: 'H'},
-  {actionName: 'Rjesavanje problema sa svinjama', actionDescription: 'Pokusavamo istražiti zašto svinje umiru na zadanim područjima', actionStatus: 1.0079, stationLead: 'H'},
-  {actionName: 'Rjesavanje problema sa svinjama', actionDescription: 'Pokusavamo istražiti zašto svinje umiru na zadanim područjima', actionStatus: 1.0079, stationLead: 'H'},
-  {actionName: 'Rjesavanje problema sa svinjama', actionDescription: 'Pokusavamo istražiti zašto svinje umiru na zadanim područjima', actionStatus: 1.0079, stationLead: 'H'},
-  {actionName: 'Rjesavanje problema sa svinjama', actionDescription: 'Pokusavamo istražiti zašto svinje umiru na zadanim područjima', actionStatus: 1.0079, stationLead: 'H'},
-  {actionName: 'Rjesavanje problema sa svinjama', actionDescription: 'Pokusavamo istražiti zašto svinje umiru na zadanim područjima', actionStatus: 1.0079, stationLead: 'H'},
-  {actionName: 'Rjesavanje problema sa svinjama', actionDescription: 'Pokusavamo istražiti zašto svinje umiru na zadanim područjima', actionStatus: 1.0079, stationLead: 'H'},
-
-];

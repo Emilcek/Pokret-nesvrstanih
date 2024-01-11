@@ -39,7 +39,7 @@ select{
   border: 1px solid black;
   border-radius: 10px;
   min-height: 10rem;
-  height:50%;
+  height:auto;
 }
 
 button {
@@ -74,7 +74,11 @@ button {
 
 .description{
   width:20rem;
-  height:5rem ;
+  height:12rem ;
+}
+
+.description.task{
+  height:5rem;
 }
 
 .sendButtonDiv{
@@ -247,5 +251,13 @@ textarea{
     width:20rem;
   }
 
+}
 
+td{
+  max-width: 100%;
+  word-wrap: break-word;
+}
+tr{
+  max-width: 10rem;
+  word-wrap: break-word;
 }

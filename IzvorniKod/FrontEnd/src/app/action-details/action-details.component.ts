@@ -56,6 +56,7 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit{
   }
   ngAfterViewInit(): void {
       this.initMap();
+      console.log(this.data,"nigga")
   }
 
 }

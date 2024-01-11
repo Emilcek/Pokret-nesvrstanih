@@ -51,7 +51,7 @@
               </div>
               <label class="label">Opis zadatka</label>
               <div>
-                <textarea class="description" formControlName="description" placeholder="Napišite opis zadatka"></textarea>
+                <textarea class="description task" formControlName="description" placeholder="Napišite opis zadatka"></textarea>
                 <div *ngIf="this.taskAdded && this.task.value.description==null" class="ErrorMessage"> Morate dodati opis zadatka</div>
               </div>
             </div>
@@ -85,7 +85,7 @@
       <label class="label">Lista zadataka</label>
       <div class="listOfTasks">
         <tr *ngFor="let n of this.tasks">
-          <td style="padding-left: 0.5rem">{{this.tasks.indexOf(n)+1}}. {{n.description}}, kompetencija: {{n.taskVehicle}} <button class="btn-dismiss" id="delete" (click)="deleteFromTasks(n)">Obriši</button></td>
+          <td style="padding-left: 0.5rem"><p>{{this.tasks.indexOf(n)+1}}. {{n.description}}, kompetencija: {{n.taskVehicle}}</p> <button class="btn-dismiss" id="delete" (click)="deleteFromTasks(n)">Obriši</button></td>
         </tr>
       </div>
       <div *ngIf="this.actionAdded && this.tasks.length==0" class="ErrorMessage"> Morate dodati barem jedan zadatak</div>

@@ -37,7 +37,7 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
   })
 
   ngOnInit() {
-  this.actionNotDone();
+    this.actionNotDone();
     let header = new HttpHeaders({
       'Authorization': 'Bearer ' + localStorage.getItem('token'),
       'Content-Type': 'application/json'
@@ -54,6 +54,8 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
     }
   })
   }
+
+
 
   private initMap(): void {
     this.map = L.map('map', {
@@ -112,7 +114,6 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
     if(!this.actionAdded){
       this.initMap();
     }
-
   }
 
   addTask() {
@@ -165,9 +166,9 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
       this.http.post(environment.BASE_API_URL+"/researcher/request",JSON.stringify(formData),headersObj).subscribe({
         next: data => {
           let response: any = data;
-          console.log(response)
+          console.log(response,"Akcija uspješno poslana")
           }, error: (error) => {
-
+          console.log(error,"greška u slanju akcije")
         }
       })
       this.actionAdded=false;
@@ -177,9 +178,11 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
       this.task.get('taskType')?.setValue('placeholder')
       this.tasks=[]
       }
+    location.reload();
     }
 
     actionNotDone(){
+    console.log("action not done")
       let header = new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('token'),
       });
@@ -190,10 +193,11 @@ export class ActionCreationComponent implements AfterViewInit, OnInit {
     next: data => {
         let response: any = data;
         console.log(response,"actions")
-        if(response.some((d:any)=>d.status==="PENDING")) {
+        if(response.some((d:any)=>d.actionStatus==="Pending")) {
+          console.log("ima pending")
           this.actionPending = true;
           this.actionAccepted=false;
-        }else if(response.some((d:any)=>d.status==="ACCEPTED")) {
+        }else if(response.some((d:any)=>d.actionStatus==="Accepted")){
           this.actionAccepted = true;
           this.actionPending= false;
         }else{
