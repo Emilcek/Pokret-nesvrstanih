@@ -2,13 +2,15 @@ import {Component, Inject,AfterViewInit,OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
+import {environment} from "../../environments/environment";
+import {HttpHeaders,HttpClient} from "@angular/common/http";
 @Component({
   selector: 'app-action-details',
   templateUrl: './action-details.component.html',
   styleUrls: ['./action-details.component.css']
 })
 export class ActionDetailsComponent implements OnInit,AfterViewInit{
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private http : HttpClient) { }
   tasks: any = [];
   taskStatus: any = {'Ongoing': 'U tijeku', 'Done': 'Izvršen'};
   private map: any;
@@ -18,8 +20,32 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit{
   endLocation:any;
   taskAdded: any=false;
   markersGroup:any;
+  explorersData:any[]=[];
+  animalsData:any[]=[];
   ngOnInit(): void {
-
+    let header = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('token'),
+      'Content-Type': 'application/json'
+    });
+    let headersObj = {
+      headers: header
+    };
+    this.http.get(environment.BASE_API_URL+"/action/explorers/"+this.data.actionId,headersObj).subscribe({
+      next: data => {
+        let response: any = data;
+        this.explorersData=response;
+      }, error: (error) => {
+        console.log(error,"krivo dodani podaci o tragačima")
+      }
+    })
+    this.http.get(environment.BASE_API_URL+"/action/animals/"+this.data.actionId,headersObj).subscribe({
+      next: data => {
+        let response: any = data;
+        this.animalsData=response;
+      }, error: (error) => {
+        console.log(error,"krivo dodani podaci o životinjama")
+      }
+    })
   }
   private initMap(): void {
     this.map = L.map('map', {

@@ -237,7 +237,7 @@ textarea{
   }
 }
 
-@media only screen and (max-width: 807px) {
+@media only screen and (max-width: 909px) {
   .center-grid{
     flex-direction: column;
     justify-content: center;

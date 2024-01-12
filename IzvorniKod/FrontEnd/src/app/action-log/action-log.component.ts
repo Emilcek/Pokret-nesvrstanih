@@ -38,7 +38,7 @@ export class ActionLogComponent implements AfterViewInit, OnInit{
     const dialog= this.dialog.open( ActionDetailsComponent, {
       width: '100%',
       data: actionDetails, //predaja podataka u dialog
-      height: '30rem',
+      height: '90%',
 
     });
   }
