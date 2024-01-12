@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import * as L from 'leaflet';
 import {environment} from "../../environments/environment";
 import { ActivatedRoute } from '@angular/router';
@@ -9,12 +9,13 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './animal-location-mock.component.html',
   styleUrls: ['./animal-location-mock.component.css']
 })
-export class AnimalLocationMockComponent {
+export class AnimalLocationMockComponent implements AfterViewInit, OnDestroy{
 
   private map: any;
   private marker: L.Marker<any> | undefined;
   private circle: L.Circle<any> | undefined;
   private id: string | undefined;
+  private intervalId: any;
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {
 
@@ -22,13 +23,10 @@ export class AnimalLocationMockComponent {
 
 
   private initMap(): void {
-    this.map = L.map('map', {
+    this.map = L.map('maps', {
       center: [45.815399, 15.966568],
       zoom: 9
     });
-
-    
-
 
     const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 18,
@@ -89,11 +87,20 @@ export class AnimalLocationMockComponent {
     }*/
 
 
+  ngOnDestroy(): void {
+    if(this.intervalId) {
+      clearInterval(this.intervalId)
+      this.map.remove()
+      console.log("Ociscen interval i maknuta karta")
+    }
+  }
+
+
 
   ngAfterViewInit(): void {
     this.initMap();
 
-    setInterval(() => {
+    this.intervalId = setInterval(() => {
       this.getLocationData();
     }, 5000);
   }

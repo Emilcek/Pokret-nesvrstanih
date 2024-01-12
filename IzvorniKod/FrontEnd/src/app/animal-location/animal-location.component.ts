@@ -1,17 +1,19 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import * as L from 'leaflet';
 import {environment} from "../../environments/environment";
 import { ActivatedRoute } from '@angular/router';
+import { every } from 'rxjs';
 
 @Component({
   selector: 'app-animal-location',
   templateUrl: './animal-location.component.html',
   styleUrls: ['./animal-location.component.css']
 })
-export class AnimalLocationComponent {
+export class AnimalLocationComponent implements AfterViewInit, OnDestroy{
   private map: any;
   private id: string | undefined;
+  private intervalId : any
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {
 
@@ -19,7 +21,7 @@ export class AnimalLocationComponent {
 
 
   private initMap(): void {
-    this.map = L.map('map', {
+    this.map = L.map('mapa', {
       center: [ 45.815399, 15.966568],
       zoom: 9
     });
@@ -32,8 +34,8 @@ export class AnimalLocationComponent {
     });
 
     const customIcon = L.icon({
-      iconUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-icon.png", // Specify the path to your custom icon image
-      iconSize: [22, 32], // Set the size of the icon
+      iconUrl: "assets/img/myLoc.png", // Specify the path to your custom icon image
+      iconSize: [32, 32], // Set the size of the icon
       iconAnchor: [16, 32], // Set the anchor point of the icon (relative to its size)
       popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
     });
@@ -89,9 +91,19 @@ export class AnimalLocationComponent {
       if(circle) {
         this.map.removeLayer(circle);
       }
+
+      let popupOptions = {
+        "closeButton":false
+      }
       
-      circle = L.circle([lat, long], {radius: accuracy}).addTo(this.map);
-      marker = L.marker([lat, long], {icon:customIcon}).addTo(this.map);
+      //circle = L.circle([lat, long], {radius: accuracy}).addTo(this.map);
+      marker = L.marker([lat, long], {icon:customIcon}).addTo(this.map)
+      .on("mouseover", event => {
+        event.target.bindPopup('<h3>' +this.id+ '</h3>', popupOptions).openPopup();
+      })
+      .on("mouseout", event => {
+        event.target.closePopup();
+      });
       
 
       console.log("Lat: " + lat + " Long: " + long + " Timestamp: " + timeStamp)
@@ -100,7 +112,7 @@ export class AnimalLocationComponent {
     if(!navigator.geolocation) {
       console.log("Browser ne podrzava geolocation");
     } else {
-      setInterval(() => {
+      this.intervalId = setInterval(() => {
         navigator.geolocation.getCurrentPosition(getPosition);
       }, 5000)
     }
@@ -111,6 +123,13 @@ export class AnimalLocationComponent {
     tiles.addTo(this.map)
   }
 
+  ngOnDestroy(): void {
+    if(this.intervalId) {
+      clearInterval(this.intervalId)
+      //this.map.remove()
+      console.log("Ociscen interval i maknuta karta")
+    }
+  }
 
   ngAfterViewInit(): void {
     this.initMap();
