@@ -54,8 +54,6 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit {
       center: [ 45.1, 15.2 ],
       zoom: 7
     });
-
-
     const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 18,
       minZoom: 3,
