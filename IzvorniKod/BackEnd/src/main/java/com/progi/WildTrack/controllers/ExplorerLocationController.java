@@ -3,7 +3,6 @@ package com.progi.WildTrack.controllers;
 
 
 import com.progi.WildTrack.dto.ExplorerLocationDTO;
-import com.progi.WildTrack.service.ActionService;
 import com.progi.WildTrack.service.ExplorerLocationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "${FRONTEND_API_URL}")
 @RequiredArgsConstructor
 public class ExplorerLocationController {
-    private final ActionService actionService;
     private final ExplorerLocationService explorerLocationService;
 
     //save explorers current location
@@ -27,18 +25,6 @@ public class ExplorerLocationController {
     @GetMapping("/get/{explorerName}")
     public ResponseEntity getExplorerLocation(@PathVariable String explorerName) {
         return explorerLocationService.getExplorerLocation(explorerName);
-    }
-    //ide u action controller
-    //list of locations of all animals that are on same action
-    @GetMapping("/animals/{actionId}")
-    public ResponseEntity getActionAnimals(@PathVariable Long actionId) {
-        return actionService.getActionAnimalLocations(actionId);
-    }
-    //ide u action controller
-    //list of locations of all explorers that are on same action
-    @GetMapping("/explorers/{actionId}")
-    public ResponseEntity getActionExplorers(@PathVariable Long actionId) {
-        return actionService.getActionExplorerLocations(actionId);
     }
 
     //list of all explorers locations

@@ -52,7 +52,7 @@ public class AnimalLocationServiceImpl implements AnimalLocationService {
         AnimalDetailsDTO animalDetailsDTO = AnimalDetailsDTO.builder()
                 .animalId(animalLocation.getAnimal().getAnimalId())
                 .animalSpecies(animalLocation.getAnimal().getSpecies())
-                .animalPhotoURL(animalLocation.getAnimal().getAnimalPhotoURL())
+                //.animalPhotoURL(animalLocation.getAnimal().getAnimalPhotoURL())
                 .animalDescription(animalLocation.getAnimal().getAnimalDescription())
                 .latitude(animalLocation.getLocationofAnimal().split(",")[0])
                 .longitude(animalLocation.getLocationofAnimal().split(",")[1])
@@ -70,7 +70,7 @@ public class AnimalLocationServiceImpl implements AnimalLocationService {
                AnimalDetailsDTO animalDetailsDTO = AnimalDetailsDTO.builder()
                        .animalId(animalLocation.getAnimal().getAnimalId())
                        .animalSpecies(animalLocation.getAnimal().getSpecies())
-                       .animalPhotoURL(animalLocation.getAnimal().getAnimalPhotoURL())
+                       //.animalPhotoURL(animalLocation.getAnimal().getAnimalPhotoURL())
                        .animalDescription(animalLocation.getAnimal().getAnimalDescription())
                        .latitude(animalLocation.getLocationofAnimal().split(",")[0])
                        .longitude(animalLocation.getLocationofAnimal().split(",")[1])
@@ -109,12 +109,21 @@ public class AnimalLocationServiceImpl implements AnimalLocationService {
             AnimalAllLocationsDTO animalAllLocationsDTO = AnimalAllLocationsDTO.builder()
                     .animalId(animal.getAnimalId())
                     .animalSpecies(animal.getSpecies())
-                    .animalPhotoURL(animal.getAnimalPhotoURL())
+                    //.animalPhotoURL(animal.getAnimalPhotoURL())
                     .animalDescription(animal.getAnimalDescription())
-                    .animalLocations(animalLocationRepo.findAllByAnimal_AnimalId(animal.getAnimalId()))
+                    .animalLocations(
+                            animalLocationRepo.findAllByAnimal_AnimalId(animal.getAnimalId())
+                                    .stream()
+                                    .map(animalLocation -> AnimalLocationDTO.builder()
+                                            .latitude(animalLocation.getLocationofAnimal().split(",")[0])
+                                            .longitude(animalLocation.getLocationofAnimal().split(",")[1])
+                                            .timestamp(animalLocation.getAnimalLocationTS().toString())
+                                            .build())
+                                    .toList()
+                    )
                     .build();
         });
-        return null;
+        return ResponseEntity.ok(animalAllLocationsDTOList);
     }
 
 
