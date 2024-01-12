@@ -6,6 +6,7 @@ import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import {environment} from "../../environments/environment";
 import {Router} from "@angular/router";
+import {HeaderService} from "../header/header.service";
 
 @Component({
   selector: 'app-station-info',
@@ -32,10 +33,11 @@ export class StationInfoComponent implements OnInit {
     iconUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-icon.png"
   });
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private headerService: HeaderService) {
     Marker.prototype.options.icon = this.defaultIcon;
   }
   ngOnInit(): void {
+    this.headerService.changeActivePage("/station-choosing")
     this.http.get<any>(environment.BASE_API_URL + "/stationLead/myStation", this.headersObj).subscribe({
       next: (data: any) => {
         this.stationName = data.stationName;
@@ -94,8 +96,16 @@ export class StationInfoComponent implements OnInit {
     /*this.http.put<any>(environment.BASE_API_URL + "/stationLead/myStation/removeExplorer/" + "s" , this.stationName, this.headersObj).subscribe({
       next: (data: any) => {
       }
+    })*/
+    /*this.http.put<any>(environment.BASE_API_URL + "/stationLead/myStation/removeExplorer/" + "Marko" , this.stationName, this.headersObj).subscribe({
+      next: (data: any) => {
+      }
     })
-    this.http.put<any>(environment.BASE_API_URL + "/stationLead/myStation/removeExplorer/" + "ss" , this.stationName, this.headersObj).subscribe({
+    this.http.put<any>(environment.BASE_API_URL + "/stationLead/myStation/removeExplorer/" + "Sebo" , this.stationName, this.headersObj).subscribe({
+      next: (data: any) => {
+      }
+    })
+    this.http.put<any>(environment.BASE_API_URL + "/stationLead/myStation/removeExplorer/" + "Ivan" , this.stationName, this.headersObj).subscribe({
       next: (data: any) => {
       }
     })*/
@@ -104,17 +114,18 @@ export class StationInfoComponent implements OnInit {
       this.http.put<any>(environment.BASE_API_URL + "/stationLead/myStation/addExplorer/" +tragac.clientName , this.stationName, this.headersObj).subscribe({
         next: (data: any) => {
           if(i == this.tragaci.value.length) {
-            this.http.get<any>(environment.BASE_API_URL + "/stationLead/myStation", this.headersObj).subscribe({
+            this.http.get<any>(environment.BASE_API_URL + "/stationLead/explorers", this.headersObj).subscribe({
               next: (data: any) => {
-                this.tragaci2 = data.explorer;
+                this.tragaci2 = data;
+                this.http.get<any>(environment.BASE_API_URL + "/stationLead/availableExplorers", this.headersObj).subscribe({
+                  next: (data: any) => {
+                    this.dostupniTragaci = data;
+                    this.isTragaciEmpty = false;
+                  }
+                })
               }
             })
-            this.http.get<any>(environment.BASE_API_URL + "/stationLead/availableExplorers", this.headersObj).subscribe({
-              next: (data: any) => {
-                this.dostupniTragaci = data;
-                this.isTragaciEmpty = false;
-              }
-            })
+
           }
           i++;
         }

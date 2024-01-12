@@ -1,16 +1,36 @@
-<div class="main-container" *ngIf="getDone">
-  <div class="info">Ime akcije: {{action.actionName}}</div>
-  <div class="info">Opis akcije: {{action.actionDescription}}</div>
-  <div class="flex info" *ngFor="let task of action.actionTasks; let i = index">
-    <div>{{i + 1}} . zadatak:  {{task.taskDescription}}</div>
-    <select (change)="onSelect($event, task.taskId)">
-      <option value="placeholder" [selected]="true" [hidden]="true">Odaberi tragača za zadatak</option>
-      <option *ngFor="let tragac of task.poljeTragaca" >{{tragac.clientName}}</option>
-    </select>
+<div class="main-container flex-column" *ngIf="getDone">
+  <div class="title-content">
+    <span><b>{{action.actionName}}</b>, {{action.actionDescription}}</span>
+  </div>
+  <div class="flex" style="height: 450px">
+    <div style="margin: 30px; width: 50%; height: 100%;" class="map-container">
+      <div class="map-frame">
+        <div id="map"></div>
+      </div>
+    </div>
+    <div class="tasks-container">
+      <div class="flex-column info" *ngFor="let task of action.actionTasks; let i = index">
+        <div class="task-title">
+          <span class="number-of-task">{{i + 1}} . zadatak:</span>
+          <span class="task-type">{{task.taskType}}</span>
+        </div>
+        <span class="info-text">Opis: {{task.desc}}</span>
+        <span class="info-text">Način kretanja: {{task.vehicleName}}</span>
+        <div class="flex">
+          <button class="button" (click)="showTaskOnMap(task)">Prikaži na karti</button>
+          <select *ngIf="task.poljeTragaca && task.poljeTragaca.length !== 0" (change)="onSelect($event, task.taskId)">
+            <option value="placeholder" [selected]="true" [hidden]="true">Odaberi tragača za zadatak</option>
+            <option *ngFor="let tragac of task.poljeTragaca" >{{tragac.clientName}}</option>
+          </select>
+          <div class="text" *ngIf="task.poljeTragaca && task.poljeTragaca.length === 0">U postaji nemate tragača koji može obaviti ovaj zadatak</div>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="errorMessage info">{{errorMessage}}</div>
   <div class="buttons info">
-    <button (click)="acceptAction()">Prihvati akciju</button>
-    <button>Odbij akciju</button>
+    <button class="button big" id="accept-button" (click)="acceptAction()">Prihvati akciju</button>
+    <button class="button grey big" (click)="declineAction()">Odbij akciju</button>
   </div>
+  <span class="errorMessage" style="text-align: center; margin-bottom: 15px">{{noResearchersError}}</span>
 </div>
