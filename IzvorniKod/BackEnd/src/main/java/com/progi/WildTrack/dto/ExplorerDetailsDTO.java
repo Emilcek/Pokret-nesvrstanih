@@ -20,7 +20,7 @@ public class ExplorerDetailsDTO {
     private String email;
    // private byte[] clientPhoto;
     private Set<Vehicle> educatedFor;
-    private String stationName;
+   // private String stationName;
     //private String status;
     private String longitude;
     private String latitude;

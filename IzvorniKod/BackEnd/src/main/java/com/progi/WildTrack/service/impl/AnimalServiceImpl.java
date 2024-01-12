@@ -21,11 +21,11 @@ public class AnimalServiceImpl implements AnimalService {
     @Override
     public ResponseEntity addAnimal(AnimalDTO animalDTO) {
         //if animal exists -> create new animal location with timestamp-
-        if (animalRepo.findByAnimalPhotoURLAndAnimalDescription(animalDTO.getAnimalPhotoURL(), animalDTO.getAnimalDescription()).isPresent()) {
+        if (animalRepo.findAnimalByAnimalDescriptionAndSpecies(animalDTO.getAnimalDescription(), animalDTO.getAnimalSpecies()).isPresent()) {
             return ResponseEntity.badRequest().body("Animal already exists");
         }
         Animal animal = Animal.builder()
-                .animalPhotoURL(animalDTO.getAnimalPhotoURL())
+                //.animalPhotoURL(animalDTO.getAnimalPhotoURL())
                 .animalDescription(animalDTO.getAnimalDescription())
                 .species(animalDTO.getAnimalSpecies())
                 .build();
