@@ -59,7 +59,7 @@ export class AnimalLocationMockComponent implements AfterViewInit, OnDestroy{
       let headersObj = {
         headers: header
       };
-      this.http.get<LocationResponse>(environment.BASE_API_URL + "/animal/location/" + this.id, headersObj).subscribe({
+      this.http.get<LocationResponse>(environment.BASE_API_URL + "/animal/location/get/" + this.id, headersObj).subscribe({
         next: (responseData: LocationResponse) => {
           console.log(responseData);
           const serverLat = responseData.latitude;
