@@ -18,7 +18,7 @@ import {HeaderService} from "../header/header.service";
 })
 
 export class ActionLogComponent implements AfterViewInit, OnInit{
-
+  taskStatus: any = {'Pending': 'Čeka na odobrenje', 'Accepted': 'Prihvaćena', 'Done': 'Izvršena','Declined':'Odbijena'};
   data:any=[];
   actionId:any;
   constructor(private http:HttpClient, private router:Router, private headerService: HeaderService,public dialog: MatDialog){}

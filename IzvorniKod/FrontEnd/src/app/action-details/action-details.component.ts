@@ -4,6 +4,7 @@ import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import {environment} from "../../environments/environment";
 import {HttpHeaders,HttpClient} from "@angular/common/http";
+import {timeout} from "rxjs";
 @Component({
   selector: 'app-action-details',
   templateUrl: './action-details.component.html',
@@ -20,8 +21,13 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit{
   endLocation:any;
   taskAdded: any=false;
   markersGroup:any;
-  explorersData:any[]=[];
-  animalsData:any[]=[];
+  explorersData:any=[];
+  animalsData:any=[];
+  tiles:any;
+  overlayMaps:any;
+  animalLayerGroup:any;
+  httpGetDone:boolean=false;
+  layerControl:any;
   ngOnInit(): void {
     let header = new HttpHeaders({
       'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -30,21 +36,6 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit{
     let headersObj = {
       headers: header
     };
-
-
-    this.http.get(environment.BASE_API_URL+"/action/explorers/"+this.data.actionId,headersObj).subscribe({
-      next: data => {
-        let response: any = data;
-        response.forEach((element:any) => {
-          console.log(element,"element")
-          this.explorersData.push(element)
-        })
-
-        console.log(this.explorersData,"explorers")
-      }, error: (error) => {
-        console.log(error,"krivo dodani podaci o tragačima")
-      }
-    })
     this.http.get(environment.BASE_API_URL+"/action/animals/"+this.data.actionId,headersObj).subscribe({
       next: data => {
         let response: any = data;
@@ -53,53 +44,129 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit{
         console.log(error,"krivo dodani podaci o životinjama")
       }
     })
+
+    this.http.get(environment.BASE_API_URL+"/action/explorers/"+this.data.actionId,headersObj).subscribe({
+      next: data => {
+        let response: any = data;
+        response.forEach((element:any) => {
+          this.explorersData.push(element);
+        })
+        this.explorersData=response;
+        var customIcon = L.icon({
+          iconUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-icon.png", // Specify the path to your custom icon image
+          iconSize: [22, 32], // Set the size of the icon
+          iconAnchor: [16, 32], // Set the anchor point of the icon (relative to its size)
+          popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
+        });
+        this.markersGroup = L.layerGroup();
+        this.map.addLayer(this.markersGroup);
+        console.log(this.explorersData,"prije petlje")
+        this.explorersData.forEach((element:any) => {
+          let e = L.latLng(element.latitude, element.longitude);
+          let marker =L.marker(e,{icon:customIcon})
+          marker.bindPopup(element.firstName+" "+element.lastName).openPopup()
+          marker.addTo(this.markersGroup);
+          let Icon = L.icon({
+            iconUrl: "../../assets/img/myLoc.png", // Specify the path to your custom icon image
+            iconSize: [28, 28], // Set the size of the icon
+            iconAnchor: [16, 32], // Set the anchor point of the icon (relative to its size)
+            popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
+          });
+          this.animalLayerGroup = L.layerGroup();
+          this.animalsData.forEach((element:any) => {
+            let e = L.latLng(element.latitude, element.longitude);
+            let marker =L.marker(e,{icon:Icon})
+            marker.bindPopup(element.animalId+":"+element.animalSpecies).openPopup()
+            marker.addTo(this.animalLayerGroup);
+          })
+          this.overlayMaps = {
+            "Tragači": this.markersGroup,
+            "Životinje": this.animalLayerGroup
+          };
+          // a layer group, used here like a container for markers
+          var baseMaps = {
+            "OpenStreetMap": this.tiles
+          }
+          this.layerControl = L.control.layers(baseMaps,this.overlayMaps).addTo(this.map);
+        })
+      }, error: (error) => {
+        console.log(error,"krivo dodani podaci o tragačima")
+      }
+    })
+    setInterval(() => {
+      this.markersGroup.clearLayers();
+      this.animalLayerGroup.clearLayers();
+      this.layerControl.remove();
+      this.http.get(environment.BASE_API_URL+"/action/explorers/"+this.data.actionId,headersObj).subscribe({
+        next: data => {
+          let response: any = data;
+          response.forEach((element:any) => {
+            this.explorersData.push(element);
+          })
+          this.explorersData=response;
+          var customIcon = L.icon({
+            iconUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-icon.png", // Specify the path to your custom icon image
+            iconSize: [22, 32], // Set the size of the icon
+            iconAnchor: [16, 32], // Set the anchor point of the icon (relative to its size)
+            popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
+          });
+          this.markersGroup = L.layerGroup();
+          this.map.addLayer(this.markersGroup);
+          console.log(this.explorersData,"prije petlje")
+          this.explorersData.forEach((element:any) => {
+            let e = L.latLng(element.latitude, element.longitude);
+            let marker =L.marker(e,{icon:customIcon})
+            marker.bindPopup(element.firstName+" "+element.lastName).openPopup()
+            marker.addTo(this.markersGroup);
+            let Icon = L.icon({
+              iconUrl: "../../assets/img/myLoc.png", // Specify the path to your custom icon image
+              iconSize: [28, 28], // Set the size of the icon
+              iconAnchor: [16, 32], // Set the anchor point of the icon (relative to its size)
+              popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
+            });
+            this.animalLayerGroup = L.layerGroup();
+            this.animalsData.forEach((element:any) => {
+              let e = L.latLng(element.latitude, element.longitude);
+              let marker =L.marker(e,{icon:Icon})
+              marker.bindPopup(element.animalId+":"+element.animalSpecies).openPopup()
+              marker.addTo(this.animalLayerGroup);
+            })
+            this.overlayMaps = {
+              "Tragači": this.markersGroup,
+              "Životinje": this.animalLayerGroup
+            };
+            // a layer group, used here like a container for markers
+            var baseMaps = {
+              "OpenStreetMap": this.tiles
+            }
+            this.layerControl = L.control.layers(baseMaps,this.overlayMaps).addTo(this.map);
+          })
+        }, error: (error) => {
+          console.log(error,"krivo dodani podaci o tragačima")
+        }
+      })
+    }, 10000);
   }
   private initMap(): void {
+    console.log(this.explorersData,"begining of init map")
     this.map = L.map('map', {
       center: this.center,
       zoom: 7
     });
 
-    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    this.tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 18,
       minZoom: 3,
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright"></a>'
     });
 
+    this.tiles.addTo(this.map);
 
-    var customIcon = L.icon({
-      iconUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-icon.png", // Specify the path to your custom icon image
-      iconSize: [22, 32], // Set the size of the icon
-      iconAnchor: [16, 32], // Set the anchor point of the icon (relative to its size)
-      popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
-    });
-
-
-    tiles.addTo(this.map);
-
-
-    // a layer group, used here like a container for markers
-    this.markersGroup = L.layerGroup();
-    this.map.addLayer(this.markersGroup);
-    console.log(this.explorersData.length,"prije petlje")
-    this.explorersData.forEach((element:any) => {
-      console.log(element['explorerName'],"element")
-      let e = L.latLng(element.latitude, element.longitude);
-      L.marker(e,{icon:customIcon}).addTo(this.markersGroup);
-    })
-
-
-    var baseMaps = {
-      "OpenStreetMap": tiles
-    }
-
-    var overlayMaps = {
-      "Markers": this.markersGroup
-    };
-    var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(this.map);
   }
   ngAfterViewInit(): void {
+      console.log(this.explorersData,"after view init")
       this.initMap();
-  }
 
+
+  }
 }
