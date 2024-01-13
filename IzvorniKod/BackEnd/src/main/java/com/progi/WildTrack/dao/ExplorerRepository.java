@@ -9,7 +9,10 @@ import java.util.List;
 public interface ExplorerRepository extends JpaRepository<Explorer, String> {
 
     Explorer findByExplorerName(String clientName);
+
+    boolean existsByExplorerName(String clientName);
     List<Explorer> findAllByStationIsNull();
 
     List<Explorer> findAllByStationStationName(String stationName);
+
 }

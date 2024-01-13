@@ -22,8 +22,10 @@ import { StationChoosingComponent } from './station-choosing/station-choosing.co
 import { MatSelectModule } from '@angular/material/select';
 import { NgOptimizedImage } from "@angular/common";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { AnimalLocationComponent } from './animal-location/animal-location.component';
+import { AnimalLocationMockComponent } from './animal-location-mock/animal-location-mock.component';
 import { ActionCreationComponent } from './action-creation/action-creation.component';
 import { ActionLogComponent } from './action-log/action-log.component';
 import { ActionDetailsComponent } from './action-details/action-details.component';
@@ -49,6 +51,9 @@ import { LeaderActionHandlerComponent } from "./leader-action-handler/leader-act
     MapComponent,
     StationInfoComponent,
     StationChoosingComponent,
+
+    AnimalLocationComponent,
+    AnimalLocationMockComponent,
     ActionLogComponent,
     ActionDetailsComponent,
     ActionDetailsLeaderComponent,

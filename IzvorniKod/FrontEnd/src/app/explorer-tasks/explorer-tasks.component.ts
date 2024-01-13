@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, OnDestroy} from '@angular/core';
 import {HeaderService} from "../header/header.service";
 import * as L from "leaflet";
 import {LatLng, Marker} from "leaflet";
@@ -11,14 +11,35 @@ interface Task {
   location: LatLng
 }
 
+export interface Explorer {
+  Name: string;
+  Surname: string;
+  Username: string;
+  Password: string;
+  Email: string;
+  Role: string;
+  ClientPhoto: any;
+}
+
+
 @Component({
   selector: 'app-explorer-tasks',
   templateUrl: './explorer-tasks.component.html',
   styleUrls: ['./explorer-tasks.component.css']
 })
-export class ExplorerTasksComponent implements OnInit, AfterViewInit {
+export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy {
   tasks: any;
   private map: any;
+  private intervalId : any
+  currentUser: any;
+
+  customIconForMyLocation = L.icon({
+    iconUrl: "assets/img/myLocation.png", // Specify the path to your custom icon image
+    iconSize: [32, 32], // Set the size of the icon
+    iconAnchor: [16, 32], // Set the anchor point of the icon (relative to its size)
+    popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
+  });
+  
   errorMessage: string = "";
   customIcon = L.icon({
     iconUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-icon.png", // Specify the path to your custom icon image
@@ -47,7 +68,27 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit {
         this.tasks = data;
       }
     })
+
+    this.http.get<any>(environment.BASE_API_URL + "/client", this.headersObj).subscribe({
+      next: data => {
+        console.log("This is data:",data) //ispisuje se sve osim lozinke
+        let res: any = data;
+        this.currentUser = {
+          Name: data.firstName,
+          Surname: data.lastName,
+          Username: data.clientName,
+          Password: data.password, //zbog toga ne mogu pristupiti lozinci
+          Email: data.email,
+          ClientPhoto: data.clientPhoto,
+          Role: data.role,
+          EducatedFor: data.educatedFor
+        }
+        //console.log(this.currentUser, "user")
+      }
+    })
   }
+
+  
 
   private initMap(): void {
     this.map = L.map('map', {
@@ -62,11 +103,98 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
 
+    let markerMyLocation: L.Marker<any>;
+
+    const getPosition = (position:any) => {
+      
+      console.log(position)
+      const lat = position.coords.latitude;
+      const long = position.coords.longitude;
+      const timeStamp = new Date(position.timestamp).toISOString().slice(0, 10).replace('T', ' ');
+      const time = new Date(position.timestamp).toLocaleTimeString(undefined, {hour12: false});
+      console.log("Date iz timestempa: " + new Date(position.timestamp))
+      console.log("Dan iz datea: " + new Date(position.timestamp).toLocaleDateString())
+      console.log("Sat iz datea: " + new Date(position.timestamp).toLocaleTimeString(undefined, {hour12: false}))
+      console.log("Timestamp: " + timeStamp)
+      const accuracy = position.coords.accuracy;
+
+      const fullDateTimeString = `${timeStamp} ${time}`;
+
+  console.log("Full DateTime String:", fullDateTimeString);
+
+      console.log("Username: " + this.currentUser.Username)
+      const data = {
+        longitude: long,
+        latitude: lat,
+        locationTimestamp: fullDateTimeString,
+      };
+
+      console.log("Data: " + JSON.stringify(data))
+
+      //post rekvest u bazu za lat, long, tmiestamp
+      let header = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+      });
+      let headersObj = {
+        headers: header
+      };
+      this.http.post(environment.BASE_API_URL + "/explorerlocation/add/" + this.currentUser.Username, data, headersObj).subscribe({
+        next: responseData => {
+          console.log("Poslana lokacija: " + responseData);
+        },
+        error: error => {
+          console.error("Error sending location:", error);
+  console.log("Error Status: " + error.status);
+  console.log("Error Message: " + error.message);
+        }
+      })
+
+      //getrekvest u drugoj komponenti
+
+      if(markerMyLocation) {
+        this.map.removeLayer(markerMyLocation);
+      }
+
+      let popupOptions = {
+        "closeButton":false
+      }
+      
+      //circle = L.circle([lat, long], {radius: accuracy}).addTo(this.map);
+      markerMyLocation = L.marker([lat, long], {icon:this.customIconForMyLocation}).addTo(this.map)
+      .on("mouseover", event => {
+        event.target.bindPopup('<h3>Moja lokacija</h3>', popupOptions).openPopup();
+      })
+      .on("mouseout", event => {
+        event.target.closePopup();
+      });
+      
+
+      console.log("Lat: " + lat + " Long: " + long + " Timestamp: " + timeStamp)
+    }
+
     tiles.addTo(this.map);
+
+    //moj dio za prikaz trenutne lokacije
+    if(!navigator.geolocation) {
+      console.log("Browser ne podrzava geolocation");
+    } else {
+      this.intervalId = setInterval(() => {
+        navigator.geolocation.getCurrentPosition(getPosition);
+      }, 5000)
+    }
   }
 
   ngAfterViewInit(): void {
     this.initMap();
+  }
+
+  ngOnDestroy(): void {
+    if(this.intervalId) {
+      clearInterval(this.intervalId)
+      //this.map.remove()
+      console.log("Ociscen interval i maknuta karta")
+    }
   }
 
   onTaskClick(task: any, i: any) {
