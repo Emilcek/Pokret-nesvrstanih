@@ -36,14 +36,11 @@ const routes: Routes = [
   { path: 'animallocation/:id' , component: AnimalLocationComponent, canActivate:[AuthGuard], data: { requiredRole: ['tragac', 'istrazivac', 'voditeljPostaje', 'admin'] }},
   //kak namjestit da mogu tragac ili istrazivac
   { path: 'animal/location/:id' , component: AnimalLocationMockComponent, canActivate:[AuthGuard], data: { requiredRole: ['tragac', 'istrazivac', 'admin'] }},
-  { path: '**', component: LoginComponent, canActivate:[AuthLoginGuard]},
-
   {path: 'station-choosing', component: StationChoosingComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' }},
   {path: 'station-info', component: StationInfoComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' }},
   {path: 'action-handling', component: LeaderActionHandlerComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' }},
   {path: 'action-details/:id', component: ActionDetailsLeaderComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' }},
-  { path: '**', component: LoginComponent, canActivate:[AuthLoginGuard]}
-
+  { path: '**', component: LoginComponent, canActivate:[AuthLoginGuard]},
 ];
 
 @NgModule({

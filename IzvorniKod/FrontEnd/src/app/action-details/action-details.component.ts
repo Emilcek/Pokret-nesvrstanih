@@ -30,10 +30,17 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit{
     let headersObj = {
       headers: header
     };
+
+
     this.http.get(environment.BASE_API_URL+"/action/explorers/"+this.data.actionId,headersObj).subscribe({
       next: data => {
         let response: any = data;
-        this.explorersData=response;
+        response.forEach((element:any) => {
+          console.log(element,"element")
+          this.explorersData.push(element)
+        })
+
+        console.log(this.explorersData,"explorers")
       }, error: (error) => {
         console.log(error,"krivo dodani podaci o tragačima")
       }
@@ -67,23 +74,32 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit{
       popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
     });
 
-    var baseMaps = {
-      "OpenStreetMap": tiles
-    }
 
     tiles.addTo(this.map);
+
 
     // a layer group, used here like a container for markers
     this.markersGroup = L.layerGroup();
     this.map.addLayer(this.markersGroup);
-    let e = L.latLng(45.1, 15.2);
-    var markersCount = this.markersGroup.getLayers().length;
-    var marker = L.marker(e,{icon:customIcon}).addTo(this.markersGroup);
+    console.log(this.explorersData.length,"prije petlje")
+    this.explorersData.forEach((element:any) => {
+      console.log(element['explorerName'],"element")
+      let e = L.latLng(element.latitude, element.longitude);
+      L.marker(e,{icon:customIcon}).addTo(this.markersGroup);
+    })
 
+
+    var baseMaps = {
+      "OpenStreetMap": tiles
+    }
+
+    var overlayMaps = {
+      "Markers": this.markersGroup
+    };
+    var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(this.map);
   }
   ngAfterViewInit(): void {
       this.initMap();
-      console.log(this.data,"nigga")
   }
 
 }
