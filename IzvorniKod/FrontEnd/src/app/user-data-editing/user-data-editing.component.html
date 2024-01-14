@@ -1,29 +1,30 @@
 <div class="hole-div main-container" *ngIf="currentUser">
   <div class="da" *ngIf="currentUser.Status !== 'REJECTED'">
     <div class="upper-div"><h2>Podaci o profilu</h2></div>
-    <hr style="width:90%;text-align:left;margin-left:5%">
     <div class="flex">
       <div class="flex-column form-container" [formGroup]="profileForm">
-        <div>
-          <div id="imagePreview"></div>
-        </div>
-        <label class="custom-file-input">
-          Promijenite fotografiju
-          <input type="file" id="myFile" name="filename"
-                 accept="image/png, image/jpeg, image/jpg" (change)="handleFileInput($event)">
-        </label>
-        <div class="form-inputs flex">
-          <div *ngFor="let key of keys" class="form-input-container">
-            <div>
-              <input type="text" class="form-input" [formControlName]="turnToRightFormat[key]" placeholder=" ">
-              <label class="form-input-label">{{localStorage[key]}}</label>
-              <div *ngIf="key=='Name' && this.profileForm.controls.firstName.invalid" class="ErrorMessage">Unos imena je
-                obvezan <br>i ono
-                se mora sastojati samo od slova.
-              </div>
-              <div *ngIf="key=='Surname' && this.profileForm.controls.lastName.invalid" class="ErrorMessage">Unos
-                prezimena je obvezan <br>i ono
-                se mora sastojati samo od slova.
+        <div class="flex main-content">
+          <div>
+            <div id="imagePreview"></div>
+            <label class="custom-file-input">
+              Promijenite fotografiju
+              <input type="file" id="myFile" name="filename"
+                     accept="image/png, image/jpeg, image/jpg" (change)="handleFileInput($event)">
+            </label>
+          </div>
+          <div class="form-inputs flex">
+            <div *ngFor="let key of keys" class="form-input-container">
+              <div>
+                <input type="text" class="form-input" [formControlName]="turnToRightFormat[key]" placeholder=" ">
+                <label class="form-input-label">{{localStorage[key]}}</label>
+                <div *ngIf="key=='Name' && this.profileForm.controls.firstName.invalid" class="ErrorMessage">Unos imena je
+                  obvezan <br>i ono
+                  se mora sastojati samo od slova.
+                </div>
+                <div *ngIf="key=='Surname' && this.profileForm.controls.lastName.invalid" class="ErrorMessage">Unos
+                  prezimena je obvezan <br>i ono
+                  se mora sastojati samo od slova.
+                </div>
               </div>
             </div>
           </div>
@@ -34,22 +35,21 @@
                 <input type="checkbox" [checked]="Checked(n.name)" [value]="n.id"
                        (change)="onChangeAbility($event)" style="cursor:pointer;"> {{n.name}}
               </tr>
+              </div>
+              <div *ngIf="checkEducatedFor()" class="ErrorMessage">Morate odabrati barem jednu kompetenciju</div>
             </div>
-            <div *ngIf="checkEducatedFor()" class="ErrorMessage">Morate odabrati barem jednu kompetenciju</div>
           </div>
         </div>
+
         <div class="buttons">
-          <div class="button-div1">
-            <button class="btn2" type="submit" (click)="saveUserData()">Spremi</button>
-          </div>
-          <div class="button-div2">
-            <button class="btn1" (click)="refreshData()" type="button">Odustani</button>
-          </div>
+          <button class="btn2" type="submit" (click)="saveUserData()">Spremi</button>
+          <button class="btn1" (click)="refreshData()" type="button">Odustani</button>
         </div>
       </div>
       <p *ngIf="role==='tragac'" class="text">Još niste odabrani ni za jednu postaju!</p>
     </div>
   </div>
+
   <div class="rejected-container">
     <div class="up-div" *ngIf="currentUser.Status === 'REJECTED'">
       <div class="rejectTitle">

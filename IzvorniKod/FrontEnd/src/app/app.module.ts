@@ -16,6 +16,8 @@ import { ExplorerProfileComponent } from './explorer-profile/explorer-profile.co
 import { UsersRequestsListComponent } from './users-requests-list/users-requests-list.component';
 import { UsersListComponent } from './users-list/users-list.component';
 import { UserVerifiedSuccessfulComponent } from './user-verified-successful/user-verified-successful.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { UserRequestDialogComponent } from './user-request-dialog/user-request-dialog.component';
 import { MapComponent } from './map/map.component';
 import { StationInfoComponent } from './station-info/station-info.component';
 import { StationChoosingComponent } from './station-choosing/station-choosing.component';
@@ -29,9 +31,9 @@ import { AnimalLocationMockComponent } from './animal-location-mock/animal-locat
 import { ActionCreationComponent } from './action-creation/action-creation.component';
 import { ActionLogComponent } from './action-log/action-log.component';
 import { ActionDetailsComponent } from './action-details/action-details.component';
-import { MatDialogModule } from '@angular/material/dialog';
 import { ActionDetailsLeaderComponent } from "./action-details-leader/action-details-leader.component";
 import { LeaderActionHandlerComponent } from "./leader-action-handler/leader-action-handler.component";
+import { EditDataAdminDialogComponent } from './edit-data-admin-dialog/edit-data-admin-dialog.component';
 
 @NgModule({
   declarations: [
@@ -46,18 +48,19 @@ import { LeaderActionHandlerComponent } from "./leader-action-handler/leader-act
     ExplorerProfileComponent,
     UsersRequestsListComponent,
     UsersListComponent,
+    UserRequestDialogComponent,
     ActionCreationComponent,
     UsersListComponent,
     MapComponent,
     StationInfoComponent,
     StationChoosingComponent,
-
     AnimalLocationComponent,
     AnimalLocationMockComponent,
     ActionLogComponent,
     ActionDetailsComponent,
     ActionDetailsLeaderComponent,
-    LeaderActionHandlerComponent
+    LeaderActionHandlerComponent,
+    EditDataAdminDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,6 +69,7 @@ import { LeaderActionHandlerComponent } from "./leader-action-handler/leader-act
     NgSelectModule,
     HttpClientModule,
     FormsModule,
+    MatDialogModule,
     MatSelectModule,
     UserVerifiedSuccessfulComponent,
     NgOptimizedImage,
