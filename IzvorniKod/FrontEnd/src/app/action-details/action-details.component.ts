@@ -53,8 +53,8 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit{
         })
         this.explorersData=response;
         var customIcon = L.icon({
-          iconUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-icon.png", // Specify the path to your custom icon image
-          iconSize: [22, 32], // Set the size of the icon
+          iconUrl: "../../assets/img/myLocation.png", // Specify the path to your custom icon image
+          iconSize: [35, 35], // Set the size of the icon
           iconAnchor: [16, 32], // Set the anchor point of the icon (relative to its size)
           popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
         });
@@ -105,8 +105,8 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit{
             })
             this.explorersData=response;
             var customIcon = L.icon({
-              iconUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-icon.png", // Specify the path to your custom icon image
-              iconSize: [22, 32], // Set the size of the icon
+              iconUrl: "../../assets/img/myLocation.png", // Specify the path to your custom icon image
+              iconSize: [35, 35], // Set the size of the icon
               iconAnchor: [16, 32], // Set the anchor point of the icon (relative to its size)
               popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
             });

@@ -3,7 +3,7 @@
     <div class="upper-div"><h2>Podaci o profilu</h2></div>
     <div class="flex">
       <div class="flex-column form-container" [formGroup]="profileForm">
-        <div class="flex main-content">
+        <div class="flex main-content" style="display: flex;flex-direction: column">
           <div>
             <div id="imagePreview"></div>
             <label class="custom-file-input">
@@ -12,7 +12,7 @@
                      accept="image/png, image/jpeg, image/jpg" (change)="handleFileInput($event)">
             </label>
           </div>
-          <div class="form-inputs flex">
+          <div class="form-inputs flex" >
             <div *ngFor="let key of keys" class="form-input-container">
               <div>
                 <input type="text" class="form-input" [formControlName]="turnToRightFormat[key]" placeholder=" ">
@@ -27,14 +27,14 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div *ngIf="role==='tragac'" style="z-index: 1">
-            <label class="form-input-label" id="labelEducatedFor">Kompetencije</label>
-            <div id="abilityGrid" class="checkbox-container">
-              <tr *ngFor="let n of abilities">
-                <input type="checkbox" [checked]="Checked(n.name)" [value]="n.id"
-                       (change)="onChangeAbility($event)" style="cursor:pointer;"> {{n.name}}
-              </tr>
+
+            <div *ngIf="role==='tragac'">
+              <label class="form-input-label" id="labelEducatedFor">Kompetencije</label>
+              <div id="abilityGrid" class="checkbox-container">
+                <tr *ngFor="let n of abilities">
+                  <input type="checkbox" [checked]="Checked(n.name)" [value]="n.id"
+                         (change)="onChangeAbility($event)"> {{n.name}}
+                </tr>
               </div>
               <div *ngIf="checkEducatedFor()" class="ErrorMessage">Morate odabrati barem jednu kompetenciju</div>
             </div>
