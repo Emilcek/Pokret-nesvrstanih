@@ -31,11 +31,9 @@ import { AnimalLocationMockComponent } from './animal-location-mock/animal-locat
 import { ActionCreationComponent } from './action-creation/action-creation.component';
 import { ActionLogComponent } from './action-log/action-log.component';
 import { ActionDetailsComponent } from './action-details/action-details.component';
-import { MatDialogModule } from '@angular/material/dialog';
 import { ActionDetailsLeaderComponent } from "./action-details-leader/action-details-leader.component";
 import { LeaderActionHandlerComponent } from "./leader-action-handler/leader-action-handler.component";
 import { EditDataAdminDialogComponent } from './edit-data-admin-dialog/edit-data-admin-dialog.component';
-import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -61,8 +59,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     ActionLogComponent,
     ActionDetailsComponent,
     ActionDetailsLeaderComponent,
-    LeaderActionHandlerComponent
-    EditDataAdminDialogComponent
+    LeaderActionHandlerComponent,
+    EditDataAdminDialogComponent,
   ],
   imports: [
     BrowserModule,
