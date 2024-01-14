@@ -137,14 +137,14 @@ public class ActionServiceImpl implements ActionService {
         }
         //check if client is researcher or explorer
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Explorer explorer = explorerRepo.findByExplorerName(client.getClientName());
-        Researcher researcher = researcherRepo.findByResearcherName(client.getClientName());
+        Explorer explorer = client.getExplorer();
+        Researcher researcher = client.getResearcher();
         if (explorer == null && researcher == null) {
             return ResponseEntity.badRequest().body("Client not found");
         }
         //check if explorer/researcher is on action
         Set<Explorer> explorers = action.getExplorers();
-        if (!explorers.contains(explorer) && action.getResearcher() == null) {
+        if (!explorers.contains(explorer) && !action.getResearcher().equals(researcher)) {
             return ResponseEntity.badRequest().body("Client is not on action");
         }
 
@@ -178,14 +178,14 @@ public class ActionServiceImpl implements ActionService {
         }
         //check if client is researcher or explorer
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Explorer explorer = explorerRepo.findByExplorerName(client.getClientName());
-        Researcher researcher = researcherRepo.findByResearcherName(client.getClientName());
+        Explorer explorer = client.getExplorer();
+        Researcher researcher = client.getResearcher();
         if (explorer == null && researcher == null) {
             return ResponseEntity.badRequest().body("Client not found");
         }
         //check if explorer/researcher is on action
         Set<Explorer> explorers = action.getExplorers();
-        if (!explorers.contains(explorer) && action.getResearcher() == null) {
+        if (!explorers.contains(explorer) && !action.getResearcher().equals(researcher)) {
             return ResponseEntity.badRequest().body("Client is not on action");
         }
         //for each explorer in explorers find last location
