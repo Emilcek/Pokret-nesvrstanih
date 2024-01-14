@@ -11,11 +11,8 @@
         <hr style="width:90%;text-align:left;margin-left:5%">
         <div *ngFor="let user of dataSource; let i = index" class="request">
             <div class="zahtjev">
-                <p>Zahtjev za ulogu {{user.role}} - {{user.firstName}} {{user.lastName}}</p>
-                <div class="buttons">
-                    <button class="btn2" (click)="acceptUser(user.clientName)" type="button">Prihvati</button>
-                    <button class="btn1" (click)="deleteUserRequset(user.clientName)" type="button">Odbaci</button>
-                </div>
+                <p>Zahtjev za ulogu <strong>{{user.role}}</strong> - <strong>{{user.firstName}} {{user.lastName}}</strong></p>
+                    <button class="btn1" (click)="openDialog(user)" type="button">Upravljaj zahtjevom</button>
             </div>
         </div>
     </div>
