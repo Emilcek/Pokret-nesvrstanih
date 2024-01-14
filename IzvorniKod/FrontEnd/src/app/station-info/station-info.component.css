@@ -18,7 +18,7 @@
 }
 
 .list {
-  padding: 20px 0;
+  padding: 10px 0;
   font-size: 18px;
 }
 
@@ -29,6 +29,7 @@
 }
 .add-new-text {
   font-size: 16px;
+  margin-top: 15px;
 }
 
 .light-text {
@@ -85,4 +86,8 @@
     outline: none;
   }
 
+}
+
+.list-column {
+  padding-top: 10px;
 }

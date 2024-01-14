@@ -1,29 +1,6 @@
-.grid-container2 {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 5px;
-    align-items: center;
-    justify-content: center;
-    margin-top: 3%;
-    height: 100%;
-}
-
 .form-container {
-  width: 70%;
+  width: 100%;
   margin: 20px;
-}
-
-hr {
-    border-color: gray;
-}
-
-
-.button-div1 {
-    display: flex;
-    text-align: center;
-    align-items: center;
-    justify-content: right;
-    margin-left: 20%;
 }
 
 .text {
@@ -40,32 +17,25 @@ hr {
     display: flex;
     text-align: center;
     align-items: center;
-    justify-content: space-evenly;
-    grid-column: span 2;
-    margin-top: 5%;
-}
-
-.button-div2 {
-    display: flex;
-    text-align: center;
-    align-items: center;
-    justify-content: left;
-    margin-right: 40%;
+    justify-content: center;
+  & button {
+    margin: 15px;
+  }
 }
 
 h2 {
-    color: gray;
-    font-size: 35px;
+  color: #756E6E;
+  font-family: 'Poppins', sans-serif;
+  margin: 20px 30px;
+  font-size: 25px;
 }
 
 .upper-div {
     display: flex;
-    margin-left: 7%;
-    margin-top: 2%;
-    margin-bottom: 1%;
+    border-bottom: 2px solid #756E6E;
 }
 
-button {
+button, .custom-file-input {
     color: #736969;
     padding: 5px 30px;
     border: none;
@@ -76,32 +46,28 @@ button {
 }
 
 .btn1 {
-    background-color: rgb(198, 192, 192);
+  background-color: rgb(198, 192, 192);
+  &:hover {
+    background-color: rgb(136, 119, 119);
+  }
 }
 
 .btn2 {
-    background-color: rgb(122, 187, 204);
-}
-
-.btn1:hover {
-    background-color: rgb(136, 119, 119);
-}
-
-.btn2:hover {
+  background-color: #95C4E7;
+  &:hover {
     background-color: rgb(88, 141, 156);
+  }
 }
 
 .form-inputs {
   flex-wrap: wrap;
   margin-top: 30px;
+  justify-content: center;
 }
 
 .form-input-container {
     position: relative;
     align-items: center;
-    width: 30rem;
-
-
 
     .form-input {
         border: 1px solid #5b5656;
@@ -173,22 +139,10 @@ button {
     }
 
 }
-.form-inputs.flex{
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-  grid-gap: 0;
-  padding:0;
-}
 
 #imagePreview {
     display: flex;
     padding-left: 1rem;
-}
-
-.flex{
-  display: flex;
-  padding-left: 5rem;
-  padding-right: 5rem;
 }
 
 #abilityGrid{
@@ -211,17 +165,19 @@ button {
 
 .custom-file-input {
   display: inline-block;
-  padding: 6px 10px;
+  padding: 5px 30px;
   cursor: pointer;
-  border: 1px solid #927979;
   width: fit-content;
   transition: 0.2s;
   background:#95C4E7;
-  border-radius: 10px;
+  border-radius: 15px;
   color: rgb(117, 110, 110);
-  font-size: 0.8rem;
-  margin-left: 1rem;
-  margin-top: 1rem;
+  font-size: 16px;
+  margin: 15px;
+
+  &:hover {
+    background-color: rgb(88, 141, 156);
+  }
 }
 
 input[type="file"]{
@@ -249,4 +205,9 @@ input[type="file"]{
 .rejectTitle{
   display: flex;
   justify-content: center;
+}
+
+.main-content {
+  justify-content: space-between;
+  margin: 0 30px;
 }
