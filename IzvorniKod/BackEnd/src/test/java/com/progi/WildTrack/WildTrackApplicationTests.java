@@ -11,7 +11,6 @@ import com.progi.WildTrack.dto.RegisterDto;
 import com.progi.WildTrack.service.AuthenticationService;
 import com.progi.WildTrack.service.ClientService;
 import com.progi.WildTrack.service.StationLeadService;
-import com.progi.WildTrack.service.VehicleService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,8 +35,6 @@ class WildTrackApplicationTests {
     @Autowired
     private StationRepository stationRepository;
     @Autowired
-    private VehicleService vehicleService;
-    @Autowired
     private ClientRepository clientRepository;
     @Autowired
     private ExplorerRepository explorerRepository;
@@ -47,10 +43,13 @@ class WildTrackApplicationTests {
     @Test
     @DisplayName("Test addStationLeadToStation")
     public void addStationLeadToStation() {
-        MultipartFile multipartFile = new MockMultipartFile("clientPhoto", "test.jpg", "image/jpeg", "test image content".getBytes());
-        RegisterDto stationLead = new RegisterDto("stationLead", "test", "test", "stationLead@test.test", "test", "voditeljPostaje", null, multipartFile);
+        MultipartFile multipartFile = new MockMultipartFile("clientPhoto", "test.jpg",
+                "image/jpeg", "test image content".getBytes());
+        RegisterDto stationLead = new RegisterDto("stationLead", "test", "test",
+                "stationLead@test.test", "test", "voditeljPostaje", null, multipartFile);
         authenticationService.register(stationLead);
-        Station station = new Station (1L, "Postaja test", 2, "Inactive", "45.568000, 17.626000", null, new ArrayList<>());
+        Station station = new Station (1L, "Postaja test", 2, "Inactive",
+                "45.568000, 17.626000", null, new ArrayList<>());
         stationRepository.save(station);
         assertTrue(stationLeadService.assignStationToStationLeadByName("stationLead", "Postaja test"));
         clientService.deleteClient("stationLead");
@@ -59,10 +58,12 @@ class WildTrackApplicationTests {
     @Test
     @DisplayName("Test addStationLeadToStationFail")
     public void addStationLeadToStationFail() {
-        MultipartFile multipartFile = new MockMultipartFile("clientPhoto", "test.jpg", "image/jpeg", "test image content".getBytes());
-        RegisterDto stationLead = new RegisterDto("stationLead", "test", "test", "stationLead@test.test", "test", "voditeljPostaje", null, multipartFile);
+        MultipartFile multipartFile = new MockMultipartFile("clientPhoto", "test.jpg",
+                "image/jpeg", "test image content".getBytes());
+        RegisterDto stationLead = new RegisterDto("stationLead", "test", "test",
+                "stationLead@test.test", "test", "voditeljPostaje", null, multipartFile);
         authenticationService.register(stationLead);
-        assertTrue(stationLeadService.assignStationToStationLeadByName("stationLead", "Postaja test"));
+        assertFalse(stationLeadService.assignStationToStationLeadByName("stationLead", "Nepostojeca postaja"));
         clientService.deleteClient("stationLead");
     }
 
