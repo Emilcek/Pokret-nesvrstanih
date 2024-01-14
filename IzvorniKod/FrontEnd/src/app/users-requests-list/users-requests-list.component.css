@@ -17,6 +17,7 @@ hr {
 
 h2 {
     color: #333;
+    font-size: 35px;
 }
 
 .zahtjev {
@@ -57,59 +58,29 @@ p {
 }
 
 .zahtjev p {
-    font-size: 19px;
-    font-weight: bold;
+    font-size: 25px;
 }
 
-.buttons {
-    display: flex;
-    text-align: center;
-    align-items: center;
-    justify-content: space-between;
-    margin-right: 4%;
-}
-
-.buttons button {
-    margin-right: 15%;
+button {
     border-radius: 20px;
     border: none;
     cursor: pointer;
     transition: 0.3s;
-    font-size: 15px;
+    font-size: 19px;
 }
 
 .btn1 {
     background-color: rgb(198, 192, 192);
     padding: 10px;
+    width: 30%;
 }
-
-.btn2 {
-    background-color: rgb(122, 187, 204);
-    padding: 10px;
-}
-
 .btn1:hover {
     background-color: rgb(136, 119, 119);
 }
 
-.btn2:hover {
-    background-color: rgb(88, 141, 156);
-}
-
 @media screen and (max-width: 768px) {
-    .buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .buttons button {
-        margin: 5px 0;
-        margin-left: 40%;
-    }
-
     .zahtjev p {
         font-size: 16px;
-        font-weight: bold;
     }
 
     .upper-div {
@@ -128,5 +99,22 @@ p {
     
     .zahtjev {
         margin-top: 3.5%;
+        width: 76%;
     }
+
+    button {
+        border-radius: 20px;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s;
+        font-size: 15px;
+    }
+    
+    .btn1 {
+        background-color: rgb(198, 192, 192);
+        padding: 8px;
+        width: 50%;
+        margin-left: 2%;
+    }
+
 }

@@ -16,6 +16,8 @@ import { ExplorerProfileComponent } from './explorer-profile/explorer-profile.co
 import { UsersRequestsListComponent } from './users-requests-list/users-requests-list.component';
 import { UsersListComponent } from './users-list/users-list.component';
 import { UserVerifiedSuccessfulComponent } from './user-verified-successful/user-verified-successful.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { UserRequestDialogComponent } from './user-request-dialog/user-request-dialog.component';
 import { MapComponent } from './map/map.component';
 import { StationInfoComponent } from './station-info/station-info.component';
 import { StationChoosingComponent } from './station-choosing/station-choosing.component';
@@ -41,6 +43,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     ExplorerProfileComponent,
     UsersRequestsListComponent,
     UsersListComponent,
+    UserRequestDialogComponent,
     ActionCreationComponent,
     UsersListComponent,
     MapComponent,
@@ -55,6 +58,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     NgSelectModule,
     HttpClientModule,
     FormsModule,
+    MatDialogModule,
     MatSelectModule,
     UserVerifiedSuccessfulComponent,
     NgOptimizedImage,

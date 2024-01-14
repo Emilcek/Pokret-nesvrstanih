@@ -100,9 +100,8 @@
             "styles": [
               "node_modules/leaflet/dist/leaflet.css",
               "src/styles.css",
-              "node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.css"
-              "@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.css"
+              "node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.css",
+              "@angular/material/prebuilt-themes/indigo-pink.css"
             ],
             "scripts": [
               "node_modules/leaflet/dist/leaflet.js"
