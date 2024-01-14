@@ -25,7 +25,7 @@ public class AnimalServiceImpl implements AnimalService {
             return ResponseEntity.badRequest().body("Animal already exists");
         }
         Animal animal = Animal.builder()
-                //.animalPhotoURL(animalDTO.getAnimalPhotoURL())
+                .animalPhotoURL(animalDTO.getAnimalPhotoURL())
                 .animalDescription(animalDTO.getAnimalDescription())
                 .species(animalDTO.getAnimalSpecies())
                 .build();
