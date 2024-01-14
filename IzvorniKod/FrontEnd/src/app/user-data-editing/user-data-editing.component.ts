@@ -15,6 +15,7 @@ export interface Client {
   Role: string;
   ClientPhoto: any;
   Status: string;
+  StationName: string;
 }
 
 @Component({
