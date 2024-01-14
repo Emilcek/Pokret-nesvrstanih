@@ -28,7 +28,7 @@
 		\end{itemize}
 		
 		 
-		Aplikacija ima slojeve frontend i backend, te bazu podataka. Baza podataka zadužena za pohranu podataka naše web aplikacije je PostgreSQL s kojom smo se upoznali na predmetu Baze podataka. To je moćna relacijska baza podataka koja podržava kompleksne SQL upite i omogućuje efikasno pohranjivanje podataka u tablicama. Osim toga, osigurava konzistentnost i pouzdanost podataka. Iz nje backend sloj dohvaca podatke koristeći Spring Boot tehnologiju. Ona olakšava brzi razvoj backenda jer Spring Data JPA omogućuje jednostavno rukovanje podacima putem Java objekata, čime se smanjuje količina potrebnog SQL koda. Također omogućuje lak prijenos podataka između frontend i backend slojeva koristeći razne formate poput JSON-a, XML-a i drugih. Za frontend sloj koji korisnicima prikazuje podatke koje dobiva iz backenda putem API-a koristimo Angular. U kombinaciji sa Spring Boot-om i PostgreSQL-om, Angular je moćna frontend tehnologija koja olakšava izradu modernih, skalabilnih, i korisnički prijateljskih web aplikacija. Temelji se na komponentnoj arhitekturi, što olakšava razdvajanje funkcionalnosti i ponovnu upotrebu koda. Komponente su samostalne i mogu se lako integrirati. Najveća prednost Angulara je što koristi HTML, CSS, te Typescript, jezike koji su poznati svim članovima tima.
+		Aplikacija ima slojeve frontend i backend, te bazu podataka. Baza podataka zadužena za pohranu podataka naše web aplikacije je PostgreSQL s kojom smo se upoznali na predmetu Baze podataka. To je moćna relacijska baza podataka koja podržava kompleksne SQL upite i omogućuje efikasno pohranjivanje podataka u tablicama. Osim toga, osigurava konzistentnost i pouzdanost podataka. Iz nje backend sloj dohvaća podatke koristeći radni okvir Spring Boot. Ona olakšava brzi razvoj backenda jer Spring Data JPA omogućuje jednostavno rukovanje podacima putem Java objekata, čime se smanjuje količina potrebnog SQL koda. Također omogućuje lak prijenos podataka između frontend i backend slojeva. Za frontend sloj koji korisnicima prikazuje podatke koje dobiva iz backenda putem API-a koristimo Angular. U kombinaciji sa Spring Boot-om i PostgreSQL-om, Angular je moćni radni okvir koja olakšava izradu modernih, skalabilnih, i korisnički prijateljskih web aplikacija. Temelji se na komponentnoj arhitekturi, što olakšava razdvajanje funkcionalnosti i ponovnu upotrebu koda. Komponente su samostalne i mogu se lako integrirati. Najveća prednost Angulara je što koristi HTML, CSS, te Typescript, jezike koji su poznati svim članovima tima.
 
 		
 
@@ -175,7 +175,7 @@
 					\SetCell{LightBlue} ActionId	& INT &   Identifikator akcije na koju je postavljen komentar, (action.actionId)	\\ \hline 
 				\end{longtblr}
 				
-				\textbf{Action} Ovaj entitet opisuje koji istraživač je pokrenuo određenu akciju. Ima atribute: actionId i researcher. U vezi je \textit{Many-to-One} s entitetom Researcher preko atributa researcher. U vezi \textit{One-to-Many} s entitetom ActionComment preko atributa actionId, u vezi \textit{One-to-Many} s entitetom ExplorerAction preko atributa actionId, u vezi \textit{One-to-Many} s entitetom Task preko atributa actionId.
+				\textbf{Action} Ovaj entitet opisuje koji istraživač je pokrenuo određenu akciju. Ima atribute: actionId, researcher, title i description. U vezi je \textit{Many-to-One} s entitetom Researcher preko atributa researcher. U vezi \textit{One-to-Many} s entitetom ActionComment preko atributa actionId, u vezi \textit{One-to-Many} s entitetom ExplorerAction preko atributa actionId, u vezi \textit{One-to-Many} s entitetom Task preko atributa actionId.
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -187,6 +187,8 @@
 					\hline \SetCell[c=3]{c}{\textbf{Action}}	 \\ \hline[3pt]
 					\SetCell{LightGreen} ActionId & INT	&  	Jedinstveni identifikator akcije  	\\ \hline
 					\SetCell{LightBlue} Researcher	& VARCHAR &   Identifikator istraživača koji je započeo akciju, (researcher.clientname)	\\ \hline 
+					\SetCell{LightBlue} Title & VARCHAR	&  	Naslov akcije  	\\ \hline
+					\SetCell{LightBlue} Description	& VARCHAR &   Opis započete akcije	\\ \hline
 				\end{longtblr}
 				
 				\textbf{ExplorerAction} Ovaj entitet opisuje tragača i akciju na kojoj se nalazio. Ima atribute: explorer i actionId. U vezi je \textit{Many-to-One} s entitetom Explorer preko atributa clientname, u vezi \textit{Many-to-One} s entitetom Action preko atributa actionId.
@@ -362,7 +364,7 @@
 			
 		\section{Dijagram razreda}
 		
-			Na slikama 4.2, 4.3 predstavljeni su razredi koji se odnose na backend komponentu MVC arhitekture. Razredi na slici 4.2 nasljeđuju Controller razred. U tim razredima, metode rukuju s Data Transfer Object (DTO), a podaci se dohvaćaju kroz metode definirane u Model razredima. Funkcije implementirane u Controller razredima generiraju JSON datoteke s HTML status kodovima.S ciljem olakšane organizacije, razredi su strukturirani prema ovlastima određenih korisnika, a unutar dijagrama su predstavljene isključivo povezanosti između razreda unutar istog dijela dijagrama. Iz naziva i tipova atributa u razredima može se zaključiti vrsta povezanosti između različitih razreda.
+			Na slikama 4.2, 4.3 predstavljeni su razredi koji se odnose na backend komponentu MVC obrasca. Razredi na slici 4.2 nasljeđuju Controller razred. U tim razredima, metode rukuju s Data Transfer Object (DTO), a podaci se dohvaćaju kroz metode definirane u Model razredima. Funkcije implementirane u Controller razredima generiraju JSON datoteke s HTML status kodovima.S ciljem olakšane organizacije, razredi su strukturirani prema ovlastima određenih korisnika, a unutar dijagrama su predstavljene isključivo povezanosti između razreda unutar istog dijela dijagrama. Iz naziva i tipova atributa u razredima može se zaključiti vrsta povezanosti između različitih razreda.
 			
 			\vspace{90pt}
 			
@@ -383,7 +385,7 @@
 			
 			\vspace{36pt}
 			
-			Model razredi preslikavaju strukturu baze podataka u aplikaciji. Implementirane metode direktno komuniciraju s bazom podataka te vraćaju tražene podatke. Razred User predstavlja neregistriranog korisnika koji se može registrirati u sustav unoseći osnovne informacije. Razred UserLogin predstavlja već registriranog korisnika koji se može prijaviti u sustav unoseći korisničko ime i lozinku. Razred Reasearcher predstavlja istraživača koji ima ovlasti kreiranja novih akcija i slanja zahtjeva za tragačima voditelju postaje. Razred StationLead predstavlja voditelja postaje koji ima ovlasti odabrati postaju i tragače svoje vlastite postaje. Razred Explorer predstavlja tragača koji obavlja zadatke koje mu je dodijelio istraživač. Razred Administrator predstavlja administratora sustava koji ima najveće ovlasti.
+			Implementirane metode direktno komuniciraju s bazom podataka te vraćaju tražene podatke. Razred User predstavlja neregistriranog korisnika koji se može registrirati u sustav unoseći osnovne informacije. Razred UserLogin predstavlja već registriranog korisnika koji se može prijaviti u sustav unoseći korisničko ime i lozinku. Razred Reasearcher predstavlja istraživača koji ima ovlasti kreiranja novih akcija i slanja zahtjeva za tragačima voditelju postaje. Razred StationLead predstavlja voditelja postaje koji ima ovlasti odabrati postaju i tragače svoje vlastite postaje. Razred Explorer predstavlja tragača koji obavlja zadatke koje mu je dodijelio istraživač. Razred Administrator predstavlja administratora sustava koji ima najveće ovlasti.
 			
 			\vspace{36pt}
 		

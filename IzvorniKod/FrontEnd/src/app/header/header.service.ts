@@ -46,8 +46,7 @@ export class HeaderService {
     }
 
     logout() {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
+        localStorage.clear();
         this.isOpen = false;
         this.isNavOpen.next(this.isOpen);
         this.router.navigate(['/login'])

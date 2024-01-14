@@ -41,6 +41,7 @@ public class SecurityConfiguration {
                                 .requestMatchers("/stationLead/**").hasAuthority("voditeljPostaje")
                                 .requestMatchers("/researcher/**").hasAuthority("istrazivac")
                                 .requestMatchers("/admin/**").hasAuthority("admin")
+                                .requestMatchers(antMatcher("/animal/**")).hasAnyAuthority("tragac","istrazivac", "admin")
                                 .anyRequest()
                                 .authenticated()
                 )

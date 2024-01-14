@@ -23,7 +23,7 @@ export class AuthGuard  {
 
       const userRole = this.auth.getUserRole();
 
-      if (userRole === requiredRole) {
+      if (requiredRole.includes(userRole)) {
         // User has the required role, allow access
         return true;
       } else {

@@ -1,26 +1,32 @@
-<!--<div class="main-container main flex-column" style="height: 1000px">
+
+<div class="main-container main flex-column" style="height: 1000px">
     <p>Još niste pozvani u akciju i nemate zadataka!</p>
-    <app-map style="width: 100%; height: 100%;"></app-map>
-</div>-->
+</div>
 
 <div class="flex" style="height: 550px">
-  <app-map style="margin-left: 30px; width: 70%; height: 100%;"></app-map>
+  <div style="margin-left: 30px; width: 70%; height: 100%;" class="map-container">
+    <div class="map-frame">
+      <div id="map"></div>
+    </div>
+  </div>
   <div class="main-container tasks" style="width: 24%; margin-left: 30px">
     <div class="title">Zadaci u akciji</div>
     <div class="tasks-list">
-      <ng-container class="flex-column" *ngFor="let task of tasks">
-        <div class="flex task">
-          <input type="checkbox">
-          <span style="margin-left: 20px">{{task}}</span>
+      <ng-container class="flex-column" *ngFor="let task of tasks; let i = index">
+        <div class="flex task" (click)="onTaskClick(task, i)">
+          <input [id]="i" class="checkbox" type="checkbox" (change)="onCheckboxChange($event, task, i)" disabled>
+          <div class="flex-column task-container">
+            <span class="task-info" style="margin-left: 20px">{{task.taskDescription.split(": ")[0]}}</span>
+            <span class="task-info desc" style="margin-left: 20px">{{task.taskDescription.split(": ")[1]}}</span>
+            <span class="task-info desc" style="margin-left: 20px" *ngIf="task.locationSet && task.taskDescription.split(': ')[0] !== 'Prođi rutom'">Postavljena lokacija: {{task.locationSet}}</span>
+            <input [id]="i+ 'input'" class="task-info desc" type="text" *ngIf="task.clicked">
+          </div>
         </div>
       </ng-container>
     </div>
-    <button class="button">
-      Zadaci riješeni
-    </button>
+    <div class="error-message">{{errorMessage}}</div>
   </div>
 </div>
-
 
 
 
