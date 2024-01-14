@@ -228,7 +228,7 @@ export class UserDataEditingComponent implements AfterViewInit, OnInit{
         console.log("deleted")
       }
     )
-    location.reload();
+    location.reload()
   }
   protected readonly localStorage = localStorage;
 }

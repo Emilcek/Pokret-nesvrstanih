@@ -27,12 +27,12 @@
               </div>
             </div>
           </div>
-          <div *ngIf="role==='tragac'">
+          <div *ngIf="role==='tragac'" style="z-index: 1">
             <label class="form-input-label" id="labelEducatedFor">Kompetencije</label>
             <div id="abilityGrid" class="checkbox-container">
               <tr *ngFor="let n of abilities">
                 <input type="checkbox" [checked]="Checked(n.name)" [value]="n.id"
-                       (change)="onChangeAbility($event)"> {{n.name}}
+                       (change)="onChangeAbility($event)" style="cursor:pointer;"> {{n.name}}
               </tr>
             </div>
             <div *ngIf="checkEducatedFor()" class="ErrorMessage">Morate odabrati barem jednu kompetenciju</div>
