@@ -1,5 +1,6 @@
 package com.progi.WildTrack.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,10 +25,11 @@ public class ExplorerLocation {
     private Timestamp locationTimestamp;
 
     @Id
-    @Column(name = "LocationofExplorer", nullable = false)
+    @Column(name = "LocationofExplorer")
     private String locationOfExplorer;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
     @JoinColumn(name = "Explorername")
     private Explorer explorer;
 
