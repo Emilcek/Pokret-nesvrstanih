@@ -1,10 +1,15 @@
 package com.progi.WildTrack.domain;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "Animal")
 public class Animal {
     @Id
@@ -19,13 +24,16 @@ public class Animal {
     private String animalPhotoURL;
 
     @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ToString.Exclude
     private List<AnimalComment> animalCommentList;
     @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ToString.Exclude
     private List<AnimalLocation> animalLocationList;
     @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ToString.Exclude
     private List<Task> taskList;
 
-    public Animal() {
-    }
+
+
 
 }

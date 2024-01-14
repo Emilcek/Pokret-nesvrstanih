@@ -1,18 +1,19 @@
 .main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 .main p {
-    color:black;
-    text-align: center;
-    font-size: 30px;
+  color:black;
+  text-align: center;
+  font-size: 30px;
 }
 
 .tasks {
   text-align: center;
+  height: fit-content;
 
   .title {
     font-size: 22px;
@@ -29,8 +30,15 @@
     flex-direction: column;
 
     .task {
-      margin: 20px 0;
       font-size: 20px;
+      margin: 10px;
+      background: #d4cbcb;
+      border-radius: 15px;
+      padding: 10px;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 
@@ -49,4 +57,43 @@
       background-color: #548ca9;
     }
   }
+}
+.main-container {
+  margin-top: 0;
+  margin-right: 0;
+}
+
+.map-container {
+  height: 100%;
+  width: 100%;
+}
+
+.map-frame {
+  border: 2px solid black;
+  height: 100%;
+  width: 100%;
+}
+
+#map {
+  height: 100%;
+  width: 100%;
+}
+
+.checkbox {
+  align-self: start;
+  margin-top: 3px;
+}
+
+.task-info {
+  text-align: start;
+
+  &.desc {
+    font-size: 18px;
+    color: #756E6E;
+    margin-top: 10px;
+  }
+}
+
+.error-message {
+  color: red;
 }

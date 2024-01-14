@@ -21,12 +21,19 @@ import { UserRequestDialogComponent } from './user-request-dialog/user-request-d
 import { MapComponent } from './map/map.component';
 import { StationInfoComponent } from './station-info/station-info.component';
 import { StationChoosingComponent } from './station-choosing/station-choosing.component';
-import {MatSelectModule} from '@angular/material/select';
-import {NgOptimizedImage} from "@angular/common";
+import { MatSelectModule } from '@angular/material/select';
+import { NgOptimizedImage } from "@angular/common";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { AnimalLocationComponent } from './animal-location/animal-location.component';
+import { AnimalLocationMockComponent } from './animal-location-mock/animal-location-mock.component';
 import { ActionCreationComponent } from './action-creation/action-creation.component';
+import { ActionLogComponent } from './action-log/action-log.component';
+import { ActionDetailsComponent } from './action-details/action-details.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ActionDetailsLeaderComponent } from "./action-details-leader/action-details-leader.component";
+import { LeaderActionHandlerComponent } from "./leader-action-handler/leader-action-handler.component";
 import { EditDataAdminDialogComponent } from './edit-data-admin-dialog/edit-data-admin-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
 
@@ -49,6 +56,12 @@ import {MatDialogModule} from '@angular/material/dialog';
     MapComponent,
     StationInfoComponent,
     StationChoosingComponent,
+    AnimalLocationComponent,
+    AnimalLocationMockComponent,
+    ActionLogComponent,
+    ActionDetailsComponent,
+    ActionDetailsLeaderComponent,
+    LeaderActionHandlerComponent
     EditDataAdminDialogComponent
   ],
   imports: [

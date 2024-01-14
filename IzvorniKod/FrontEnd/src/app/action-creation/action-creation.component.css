@@ -74,7 +74,11 @@ button {
 
 .description{
   width:20rem;
-  height:5rem ;
+  height:9rem ;
+}
+
+.description.task{
+  height:7rem;
 }
 
 .sendButtonDiv{
@@ -213,13 +217,27 @@ textarea{
   gap:1rem;
 }
 
+.feedback{
+  display: flex;
+  justify-content: center;
+  font-size: 3rem;
+}
+
+.underText{
+  display: flex;
+  justify-content: center;
+}
+
 @media only screen and (max-width: 1045px) {
   .all-about-task{
     flex-direction: column;
   }
+  .listOfTasks{
+    width:20rem;
+  }
 }
 
-@media only screen and (max-width: 807px) {
+@media only screen and (max-width: 909px) {
   .center-grid{
     flex-direction: column;
     justify-content: center;
@@ -229,5 +247,17 @@ textarea{
     width:20rem;
   }
 
+  .listOfTasks{
+    width:20rem;
+  }
 
+}
+
+td{
+  max-width: 100%;
+  word-wrap: break-word;
+}
+tr{
+  max-width: 10rem;
+  word-wrap: break-word;
 }

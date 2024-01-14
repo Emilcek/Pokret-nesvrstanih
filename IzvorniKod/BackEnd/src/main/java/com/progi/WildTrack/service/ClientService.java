@@ -13,6 +13,8 @@ public interface ClientService {
 
     ResponseEntity<ClientDetailsDTO> getClientByClientName(String clientName);
 
+    List<ClientDetailsDTO> getAllAvailableExplorers();
+
     List<ClientDetailsDTO> getAllRequests();
 
     ResponseEntity updateClient(ClientUpdateDTO client);

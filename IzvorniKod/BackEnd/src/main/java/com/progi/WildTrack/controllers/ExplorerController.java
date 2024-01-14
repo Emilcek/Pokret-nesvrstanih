@@ -1,13 +1,10 @@
 package com.progi.WildTrack.controllers;
 
-import com.progi.WildTrack.domain.Client;
-import com.progi.WildTrack.domain.Task;
-import com.progi.WildTrack.dto.ClientDetailsDTO;
-import com.progi.WildTrack.dto.ClientUpdateDTO;
-import com.progi.WildTrack.service.ClientService;
+
+import com.progi.WildTrack.service.TaskCommentService;
+import com.progi.WildTrack.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,9 +13,21 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ExplorerController {
 
+    private final TaskService taskService;
+    private final TaskCommentService taskCommentService;
+
     @GetMapping("/tasks")
-    public ResponseEntity<Task> getTasks() {
-        //todo
-        return ResponseEntity.ok().build();
+    public ResponseEntity getTasks() {
+        return taskService.getTasks();
+    }
+
+    @GetMapping("/tasks/{taskId}")
+    public ResponseEntity getTask(@PathVariable Long taskId) {
+        return taskService.getTask(taskId);
+    }
+
+    @PutMapping("/task/{taskId}/done")
+    public ResponseEntity setTaskDone(@PathVariable Long taskId) {
+        return taskService.setTaskDone(taskId);
     }
 }
