@@ -46,9 +46,13 @@ export class AnimalLocationComponent implements AfterViewInit, OnDestroy{
       console.log(position)
       const lat = position.coords.latitude;
       const long = position.coords.longitude;
-      const timeStamp = new Date(position.timestamp).toISOString().slice(0, 19).replace('T', ' ');
-      console.log("Timestamp: " + timeStamp)
-      const accuracy = position.coords.accuracy;
+      console.log("Staee: " + new Date(position.timestamp).toLocaleDateString())
+      const timeStamp = new Date(position.timestamp).toISOString().slice(0, 10).replace('T', ' ');
+      const time = new Date(position.timestamp).toLocaleTimeString(undefined, { hour12: false });
+
+      const fullDateTimeString = `${timeStamp} ${time}`;
+
+      console.log("Full DateTime String:", fullDateTimeString);
 
 
       const idFromRoute = this.route.snapshot.paramMap.get('id');
@@ -58,7 +62,7 @@ export class AnimalLocationComponent implements AfterViewInit, OnDestroy{
       const data = {
         longitude: long,
         latitude: lat,
-        timestamp: timeStamp,
+        timestamp: fullDateTimeString,
       };
 
       console.log("Data: " + JSON.stringify(data))

@@ -1,0 +1,13 @@
+<div class="upper-div">
+    <h2>Komentari</h2>
+    <div class="close-button">
+        <button mat-button mat-dialog-close class="close-btn">X</button>
+    </div>
+</div>
+<hr style="width:90%;text-align:left;margin-left:5%">
+<div *ngFor="let comment of comments;">
+    <div class="comment">
+        <p>{{comment}}</p>
+    </div>
+</div>
+<button mat-button mat-dialog-close class="btn1" (click)="addComment()" type="button">Dodaj komentar</button>

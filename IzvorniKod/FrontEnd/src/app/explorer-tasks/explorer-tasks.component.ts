@@ -4,6 +4,8 @@ import * as L from "leaflet";
 import { LatLng, Marker } from "leaflet";
 import { environment } from "../../environments/environment";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { AnimalCommentsDialogComponent } from '../animal-comments-dialog/animal-comments-dialog.component';
 
 interface Task {
   type: string,
@@ -31,12 +33,25 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
   tasks: any;
   private map: any;
   private intervalId: any
-  private intervalIdAnimal: any
   currentUser: any;
-  private animalMarkersLayer: L.LayerGroup | undefined;
+  private animalMarkersLayer: any = L.layerGroup();
+  private explorersMarkersLayer: any = L.layerGroup();
+  idOfAction: any;
 
   customIconForMyLocation = L.icon({
     iconUrl: "assets/img/myLocation.png", // Specify the path to your custom icon image
+    iconSize: [32, 32], // Set the size of the icon
+    iconAnchor: [16, 32], // Set the anchor point of the icon (relative to its size)
+    popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
+  });
+  customExplorerIcon = L.icon({
+    iconUrl: "assets/img/ex1.png", // Specify the path to your custom icon image
+    iconSize: [52, 42], // Set the size of the icon
+    iconAnchor: [16, 32], // Set the anchor point of the icon (relative to its size)
+    popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
+  });
+  customIconAnimal = L.icon({
+    iconUrl: "assets/img/animalLoc.png", // Specify the path to your custom icon image
     iconSize: [32, 32], // Set the size of the icon
     iconAnchor: [16, 32], // Set the anchor point of the icon (relative to its size)
     popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
@@ -57,7 +72,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
     headers: this.header
   };
 
-  constructor(private headerService: HeaderService, private http: HttpClient) {
+  constructor(private headerService: HeaderService, private http: HttpClient, private dialog: MatDialog) {
     Marker.prototype.options.icon = this.customIcon;
 
   }
@@ -68,29 +83,30 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
       next: (data: any) => {
         console.log(data)
         this.tasks = data;
+        this.tasks.map((zadatak: any) => {
+          this.idOfAction = zadatak.actionId
+        })
+        console.log("idOfAction: " + this.idOfAction)
       }
     })
 
     this.http.get<any>(environment.BASE_API_URL + "/client", this.headersObj).subscribe({
       next: data => {
-        console.log("This is data:", data) //ispisuje se sve osim lozinke
+        console.log("This is data:", data)
         let res: any = data;
         this.currentUser = {
           Name: data.firstName,
           Surname: data.lastName,
           Username: data.clientName,
-          Password: data.password, //zbog toga ne mogu pristupiti lozinci
+          Password: data.password, 
           Email: data.email,
           ClientPhoto: data.clientPhoto,
           Role: data.role,
           EducatedFor: data.educatedFor
         }
-        //console.log(this.currentUser, "user")
       }
     })
   }
-
-
 
   private initMap(): void {
     this.map = L.map('map', {
@@ -112,11 +128,6 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
       const long = position.coords.longitude;
       const timeStamp = new Date(position.timestamp).toISOString().slice(0, 10).replace('T', ' ');
       const time = new Date(position.timestamp).toLocaleTimeString(undefined, { hour12: false });
-      console.log("Date iz timestempa: " + new Date(position.timestamp))
-      console.log("Dan iz datea: " + new Date(position.timestamp).toLocaleDateString())
-      console.log("Sat iz datea: " + new Date(position.timestamp).toLocaleTimeString(undefined, { hour12: false }))
-      console.log("Timestamp: " + timeStamp)
-      const accuracy = position.coords.accuracy;
 
       const fullDateTimeString = `${timeStamp} ${time}`;
 
@@ -168,29 +179,35 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
         .on("mouseout", event => {
           event.target.closePopup();
         });
-
-
       console.log("Lat: " + lat + " Long: " + long + " Timestamp: " + timeStamp)
     }
 
     tiles.addTo(this.map);
 
-    //moj dio za prikaz trenutne lokacije
-    if (!navigator.geolocation) {
-      console.log("Browser ne podrzava geolocation");
-    } else {
+
+
+    //moj dio za prikaz trenutne lokacije 
       this.intervalId = setInterval(() => {
-        navigator.geolocation.getCurrentPosition(getPosition);
-        this.getAllAnimals();
+        if (!navigator.geolocation) {
+          console.log("Browser ne podrzava geolocation");
+        } else {
+          navigator.geolocation.getCurrentPosition(getPosition);
+          this.getAllAnimals();
+          this.getExplorers();
+        }
       }, 5000)
     }
-  }
 
   private getAllAnimals(): void {
     console.log("Get animals")
-      this.animalMarkersLayer = L.layerGroup();
 
-      this.animalMarkersLayer?.clearLayers();
+      console.log("Prije removanja: " + this.animalMarkersLayer.getLayers().length)
+
+      if(this.animalMarkersLayer) {
+        this.animalMarkersLayer.clearLayers();
+        console.log("Poslije removanja: " + this.animalMarkersLayer.getLayers().length)
+      }
+
 
       let header = new HttpHeaders({
         'Content-Type': 'application/json',
@@ -202,33 +219,75 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
       this.http.get<any>(environment.BASE_API_URL + "/animal/currentLocations/all", headersObj).subscribe({
         next: (responseData: any) => {
           console.log(responseData);
-          if(Array.isArray(responseData)){
-            console.log("Array je")
-          }
-          const serverLat = responseData.latitude;
-          const serverLong = responseData.longitude;
 
-          responseData.map((element: { latitude: any; longitude: any; }) => {
-            console.log("IIIIIIIIIIIIIIIIIIIIIIIIDDDDDDDDDEMOOOOOOOOO")
+          responseData.map((element: {
+            animalSpecies: string;
+            animalId: string; latitude: any; longitude: any; 
+}) => {
             const serverLat = element.latitude;
           const serverLong = element.longitude;
 
-          const animalMarker = L.marker([serverLat, serverLong]);
-
+          const animalMarker = L.marker([serverLat, serverLong], { icon: this.customIconAnimal }).on("mouseover", event => {
+            event.target.bindPopup(element.animalId + ':' + element.animalSpecies).openPopup();
+          }).on("click", event => {
+            console.log("ID i vrsta: " + element.animalId + ", " + element.animalSpecies)
+            //get rekvest za svim komentarima vezanim uz tu zivotinju po ID-u zivotinje
+            this.openDialog(element);
+          })
+          ;
           console.log("Die zivina: " + serverLat + ", " + serverLong)
-
-          this.animalMarkersLayer?.addLayer(animalMarker)
+          animalMarker.addTo(this.animalMarkersLayer)
           });
-
-
+          console.log("Layeri: " + this.animalMarkersLayer.getLayers().length)
           this.map.addLayer(this.animalMarkersLayer);
         },
         error: error => {
           console.error("Error getting location:", error);
         }
-      })
+      }) 
+  }
 
-    
+  private getExplorers() {
+    console.log("Get explorers")
+
+    console.log("Prije removanja: " + this.explorersMarkersLayer.getLayers().length)
+
+    if(this.explorersMarkersLayer) {
+      this.explorersMarkersLayer.clearLayers();
+      console.log("Poslije removanja: " + this.explorersMarkersLayer.getLayers().length)
+    }
+
+
+    let header = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    });
+    let headersObj = {
+      headers: header
+    };
+    this.http.get<any>(environment.BASE_API_URL + "/action/explorers/" + this.idOfAction, headersObj).subscribe({
+      next: (responseData: any) => {
+        console.log(responseData);
+
+        responseData.map((element: {
+          explorerName: string; latitude: any; longitude: any; 
+}) => {
+          const serverLat = element.latitude;
+        const serverLong = element.longitude;
+
+        const animalMarker = L.marker([serverLat, serverLong], { icon: this.customExplorerIcon }).on("mouseover", event => {
+          event.target.bindPopup(element.explorerName).openPopup();
+        });
+        console.log("Die explorer: " + serverLat + ", " + serverLong)
+        animalMarker.addTo(this.explorersMarkersLayer)
+        });
+        console.log("Layeri: " + this.explorersMarkersLayer.getLayers().length)
+        this.map.addLayer(this.explorersMarkersLayer);
+      },
+      error: error => {
+        console.error("Error getting location:", error);
+      }
+    }) 
   }
 
   ngAfterViewInit(): void {
@@ -304,6 +363,18 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
         (document.getElementById(i) as HTMLInputElement).checked = false;
       }
     })
+  }
+
+  openDialog(animal: any) {
+    const dialogRef = this.dialog.open(AnimalCommentsDialogComponent, {
+      width:'60%',
+      height:'65%',
+      data: animal,
+    });
+    //console.log(user)
+    dialogRef.afterClosed().subscribe(result => {
+      
+    });
   }
 
 }
