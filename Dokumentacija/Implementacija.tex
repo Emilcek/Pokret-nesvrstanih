@@ -3,13 +3,19 @@
 		
 		\section{Korištene tehnologije i alati}
 		
-			\textbf{\textit{dio 2. revizije}}
-			
-			 \textit{Detaljno navesti sve tehnologije i alate koji su primijenjeni pri izradi dokumentacije i aplikacije. Ukratko ih opisati, te navesti njihovo značenje i mjesto primjene. Za svaki navedeni alat i tehnologiju je potrebno \textbf{navesti internet poveznicu} gdje se mogu preuzeti ili više saznati o njima}.
-			
-			
-			\eject 
+		Komunikacija u timu je ostvarena putem korištenja aplikacije WhatsApp\footnote{\url{https://www.whatsapp.com/}}. Komunikacija sa asistentom ostvarena je korištenjem aplikacije Microsoft Teams\footnote{\url{https://www.microsoft.com/hr-hr/microsoft-teams/group-chat-software/}}. Za izradu dijagrama korišten je Astah Professional\footnote{\url{https://astah.net/products/astah-professional/}}. Za upravljanje izvornim kodom korišten je alat Git\footnote{\url{https://git-scm.com/}}. Udaljeni repozitorij projekta nalazi se na platformi GitHub\footnote{\url{https://github.com/}}.
 		
+		Kao razvojno okruženje na backendu korišten je IntelliJ\footnote{\url{https://www.jetbrains.com/idea/}}, a na frontendu Visual Studio Code\footnote{\url{https://code.visualstudio.com/}}. Visual Studio Code je razvojno okruženje tvrtke Microsoft za Windows, Linux, macOS. Za razvoj softvera koristi Microsoftove platforme poput Windows API, Windows Forms, Windows Presentation Foundation, Windows Store i Microsoft Silverlight.
+		
+		Tehnologije korištene za razvoj backenda su Spring Boot\footnote{\url{https://spring.io/projects/spring-boot}} i programski jezik Java\footnote{\url{https://www.java.com/en/}}. Tehnologije korištene za razvoj frontenda su Angular\footnote{\url{https://angular.io/}} i programski jezik TypeScript\footnote{\url{https://www.typescriptlang.org/}}. Angular je besplatni okvir(framework) za izgradnju web aplikacija otvorenog izvornog koda temeljen na TypeScriptu. Angular se temelji na principu komponenata gdje nekoliko nezavisnih komponenti surađuje kako bi oblikovali korisničko sučelje. Takva struktura čini aplikacije lako prilagodljivim i održivim.
+		
+		Za automatizirano testiranje koristen je alat Selenium IDE\footnote{\url{https://www.selenium.dev/documentation/ide/}}. Za puštanje aplikacije u pogon korištena je platforma Render\footnote{\url{https://render.com/}}.
+		
+		Baza podataka zadužena za pohranu podataka je PostgreSQL\footnote{\url{https://www.postgresql.org/}}.
+		
+		
+	
+	
 	
 		\section{Ispitivanje programskog rješenja}
 			
@@ -39,11 +45,17 @@
 		
 		\section{Dijagram razmještaja}
 			
-			\textbf{\textit{dio 2. revizije}}
+			Na slici 5.1 nalazi se dijagram razmještaja. Dijagram razmještaja prikazuje fizičku strukturu programskog sustava. Glavna svrha mu je pobliže prikazati arhitekturu razmještaja sustava. Korisnici pristupaju aplikaciji korištenjem web preglednika. Komunikacija se odvija putem protokola HTTP. Na platformi Render se nalaze poslužitelji za frontend, backend i bazu podataka.
 			
-			 \textit{Potrebno je umetnuti \textbf{specifikacijski} dijagram razmještaja i opisati ga. Moguće je umjesto specifikacijskog dijagrama razmještaja umetnuti dijagram razmještaja instanci, pod uvjetom da taj dijagram bolje opisuje neki važniji dio sustava.}
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\textwidth]{slike/Dijagram_razmjestaja.PNG}
+				\caption{Dijagram razmještaja }
+				\label{fig:dijagram_baze}
+			\end{figure}
 			
-			\eject 
+		\vspace{108pt}
+		
 		
 		\section{Upute za puštanje u pogon}
 		
