@@ -20,7 +20,7 @@ public class AnimalLocation {
     @Column(name = "AnimalLocationTS", nullable = false)
     private Timestamp animalLocationTS;
     @Id
-    @Column(name="LocationofAnimal",length = 30, nullable = false)
+    @Column(name="LocationofAnimal",length = 50, nullable = false)
     private String locationofAnimal;
 
     @ManyToOne(cascade = CascadeType.ALL)

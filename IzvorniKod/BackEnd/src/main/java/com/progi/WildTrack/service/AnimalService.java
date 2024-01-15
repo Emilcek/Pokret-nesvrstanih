@@ -10,4 +10,6 @@ public interface AnimalService {
 
 
     List<AnimalDTO> getAllAnimals();
+
+
 }
