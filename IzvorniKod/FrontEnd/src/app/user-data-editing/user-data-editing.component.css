@@ -11,6 +11,7 @@
     justify-content: center;
     grid-row: span 3;
     margin-right: 20px;
+    line-height: 2rem;
 }
 
 .buttons {
@@ -62,7 +63,7 @@ button, .custom-file-input {
 .form-inputs {
   flex-wrap: wrap;
   margin-top: 30px;
-  justify-content: center;
+  max-width: 100%;
 }
 
 .form-input-container {

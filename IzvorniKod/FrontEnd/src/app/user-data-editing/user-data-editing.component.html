@@ -3,7 +3,7 @@
     <div class="upper-div"><h2>Podaci o profilu</h2></div>
     <div class="flex">
       <div class="flex-column form-container" [formGroup]="profileForm">
-        <div class="flex main-content">
+        <div class="flex main-content" style="display: flex;flex-direction: column">
           <div>
             <div id="imagePreview"></div>
             <label class="custom-file-input">
@@ -12,7 +12,7 @@
                      accept="image/png, image/jpeg, image/jpg" (change)="handleFileInput($event)">
             </label>
           </div>
-          <div class="form-inputs flex">
+          <div class="form-inputs flex" >
             <div *ngFor="let key of keys" class="form-input-container">
               <div>
                 <input type="text" class="form-input" [formControlName]="turnToRightFormat[key]" placeholder=" ">
@@ -27,6 +27,7 @@
                 </div>
               </div>
             </div>
+
             <div *ngIf="role==='tragac'">
               <label class="form-input-label" id="labelEducatedFor">Kompetencije</label>
               <div id="abilityGrid" class="checkbox-container">
@@ -45,7 +46,8 @@
           <button class="btn1" (click)="refreshData()" type="button">Odustani</button>
         </div>
       </div>
-      <p *ngIf="role==='tragac'" class="text">Još niste odabrani ni za jednu postaju!</p>
+      <p *ngIf="role==='tragac'&& currentUser.StationName==null" class="text">Još niste odabrani ni za jednu postaju!</p>
+      <p *ngIf="role==='tragac'&& currentUser.StationName!=null" class="text">Vaša postaja: {{currentUser.StationName}}</p>
     </div>
   </div>
 

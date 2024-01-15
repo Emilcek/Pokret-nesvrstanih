@@ -39,7 +39,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
     iconAnchor: [16, 32], // Set the anchor point of the icon (relative to its size)
     popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
   });
-  
+
   errorMessage: string = "";
   customIcon = L.icon({
     iconUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-icon.png", // Specify the path to your custom icon image
@@ -88,7 +88,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
     })
   }
 
-  
+
 
   private initMap(): void {
     this.map = L.map('map', {
@@ -104,7 +104,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
     let markerMyLocation: L.Marker<any>;
 
     const getPosition = (position:any) => {
-      
+
       console.log(position)
       const lat = position.coords.latitude;
       const long = position.coords.longitude;
@@ -157,7 +157,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
       let popupOptions = {
         "closeButton":false
       }
-      
+
       //circle = L.circle([lat, long], {radius: accuracy}).addTo(this.map);
       markerMyLocation = L.marker([lat, long], {icon:this.customIconForMyLocation}).addTo(this.map)
       .on("mouseover", event => {
@@ -166,7 +166,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
       .on("mouseout", event => {
         event.target.closePopup();
       });
-      
+
 
       console.log("Lat: " + lat + " Long: " + long + " Timestamp: " + timeStamp)
     }
