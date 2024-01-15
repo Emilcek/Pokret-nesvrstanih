@@ -35,11 +35,12 @@ export class LoginComponent {
           };
           this.http.get<any>(environment.BASE_API_URL + "/client", headersObj).subscribe({
             next: data => {
-              console.log(data)
               let res: any = data;
               localStorage.setItem("user", data.role);
+              localStorage.setItem("status", data.status);
               this.headerService.userLoggedIn(true)
               this.headerService.roleChanged(data.role);
+              this.headerService.statusChanged(data.status);
               if(data.role === "tragac") {
                 this.headerService.changeActivePage("/explorer-tasks");
                 this.router.navigate(['/explorer-tasks'])

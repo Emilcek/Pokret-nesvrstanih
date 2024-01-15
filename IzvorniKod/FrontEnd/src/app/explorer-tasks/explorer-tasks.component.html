@@ -6,7 +6,7 @@
     </div>
   </div>
   <div class="main-container main flex-column" style="margin-right: 30px" *ngIf="tasks && tasks.length === 0">
-    <p>Još niste pozvani u akciju i nemate zadataka!</p>
+    <span class="no-actions-text">Još niste pozvani u akciju i nemate zadataka!</span>
   </div>
   <div class="main-container tasks" style="width: 24%; margin-left: 30px" *ngIf="tasks && tasks.length !== 0">
     <div class="title flex-column">

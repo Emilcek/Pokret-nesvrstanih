@@ -112,3 +112,11 @@
 .error-message {
   color: red;
 }
+
+.no-actions-text {
+  font-size: 24px;
+  margin: 10px;
+  line-height: 30px;
+  text-align: center;
+  max-width: 300px;
+}

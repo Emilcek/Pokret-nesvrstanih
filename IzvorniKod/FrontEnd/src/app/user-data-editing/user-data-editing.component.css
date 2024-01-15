@@ -26,7 +26,7 @@
 h2 {
   color: #756E6E;
   font-family: 'Poppins', sans-serif;
-  margin: 20px 30px;
+  margin: 20px 0 20px 30px;
   font-size: 25px;
 }
 
@@ -130,11 +130,11 @@ button, .custom-file-input {
     }
 
 
-    h2 {
+    & h2 {
         color: #333;
     }
 
-    p {
+  & p {
         color: #666;
     }
 
