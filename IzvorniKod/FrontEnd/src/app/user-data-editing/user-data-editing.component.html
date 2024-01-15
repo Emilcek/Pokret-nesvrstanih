@@ -1,6 +1,6 @@
 <div class="hole-div main-container" *ngIf="currentUser">
   <div class="da" *ngIf="currentUser.Status !== 'REJECTED'">
-    <div class="upper-div"><h2>Podaci o profilu</h2></div>
+    <div class="upper-div"><h2>Podaci o profilu</h2> <h2 *ngIf="currentUser.Status === 'PENDING'" style="margin-left: 0;"> - još niste potvrđeni od administratora</h2></div>
     <div class="flex">
       <div class="flex-column form-container" [formGroup]="profileForm">
         <div class="flex main-content" style="display: flex;flex-direction: column">

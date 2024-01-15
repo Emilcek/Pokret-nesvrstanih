@@ -17,7 +17,8 @@ export class HeaderService {
     alert: boolean = false;
     isNavOpen = new Subject<boolean>();
     isOpen: boolean = false;
-
+    status: string;
+    statusS: Subject<string> = new Subject<string>();
 
   constructor(private router: Router) {
       if(localStorage.getItem("user") !== null) {
@@ -26,6 +27,13 @@ export class HeaderService {
       } else {
         this.role = "";
       }
+
+    if(localStorage.getItem("status") !== null) {
+      // @ts-ignore
+      this.status = localStorage.getItem("status");
+    } else {
+      this.status = "";
+    }
     }
 
     changeActivePage(activePage: string) {
@@ -43,6 +51,11 @@ export class HeaderService {
     roleChanged(role: string) {
       this.role = role;
       this.roleS.next(this.role);
+    }
+
+    statusChanged(status: string) {
+      this.status = status;
+      this.statusS.next(this.status);
     }
 
     logout() {
