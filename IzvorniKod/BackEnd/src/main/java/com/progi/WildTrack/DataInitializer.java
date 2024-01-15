@@ -1,10 +1,7 @@
 package com.progi.WildTrack;
 
 import com.progi.WildTrack.domain.Description;
-import com.progi.WildTrack.service.ClientService;
-import com.progi.WildTrack.service.StationService;
-import com.progi.WildTrack.service.StatusService;
-import com.progi.WildTrack.service.VehicleService;
+import com.progi.WildTrack.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -23,6 +20,8 @@ public class DataInitializer {
     private StatusService statusService;
     @Autowired
     private ClientService clientService;
+    @Autowired
+    private AnimalLocationService animalLocationService;
     private final List<String> vehicleTypes = Arrays.asList("hodanje", "dron", "auto", "brod", "motor", "helikopter");
     private final List<Description> statusTypes = Arrays.asList(Description.PENDING, Description.ACCEPTED, Description.REJECTED);
     @EventListener
@@ -35,6 +34,8 @@ public class DataInitializer {
         }
         stationService.createStations();
         clientService.createAdmin();
+        animalLocationService.createAnimals();
+
 
     }
 }

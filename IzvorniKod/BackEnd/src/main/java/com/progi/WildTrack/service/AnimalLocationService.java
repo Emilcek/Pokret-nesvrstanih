@@ -1,5 +1,6 @@
 package com.progi.WildTrack.service;
 
+import com.progi.WildTrack.domain.Animal;
 import com.progi.WildTrack.dto.AnimalDetailsDTO;
 import com.progi.WildTrack.dto.AnimalLocationDTO;
 import org.springframework.http.ResponseEntity;
@@ -16,4 +17,8 @@ public interface AnimalLocationService {
     ResponseEntity getAnimalLocations(Long animalId);
 
     ResponseEntity getAllAnimalsAllLocations();
+
+    public void createAnimals();
+
+    public void addLocations(Animal animal, String latitude, String longitude);
 }
