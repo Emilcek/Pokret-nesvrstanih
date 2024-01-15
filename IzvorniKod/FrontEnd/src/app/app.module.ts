@@ -16,11 +16,13 @@ import { ExplorerProfileComponent } from './explorer-profile/explorer-profile.co
 import { UsersRequestsListComponent } from './users-requests-list/users-requests-list.component';
 import { UsersListComponent } from './users-list/users-list.component';
 import { UserVerifiedSuccessfulComponent } from './user-verified-successful/user-verified-successful.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { UserRequestDialogComponent } from './user-request-dialog/user-request-dialog.component';
 import { MapComponent } from './map/map.component';
 import { StationInfoComponent } from './station-info/station-info.component';
 import { StationChoosingComponent } from './station-choosing/station-choosing.component';
-import {MatSelectModule} from '@angular/material/select';
-import {NgOptimizedImage} from "@angular/common";
+import { MatSelectModule } from '@angular/material/select';
+import { NgOptimizedImage } from "@angular/common";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
@@ -28,8 +30,10 @@ import { AnimalLocationComponent } from './animal-location/animal-location.compo
 import { AnimalLocationMockComponent } from './animal-location-mock/animal-location-mock.component';
 import { ActionCreationComponent } from './action-creation/action-creation.component';
 import { ActionLogComponent } from './action-log/action-log.component';
-import {ActionDetailsLeaderComponent} from "./action-details-leader/action-details-leader.component";
-import {LeaderActionHandlerComponent} from "./leader-action-handler/leader-action-handler.component";
+import { ActionDetailsComponent } from './action-details/action-details.component';
+import { ActionDetailsLeaderComponent } from "./action-details-leader/action-details-leader.component";
+import { LeaderActionHandlerComponent } from "./leader-action-handler/leader-action-handler.component";
+import { EditDataAdminDialogComponent } from './edit-data-admin-dialog/edit-data-admin-dialog.component';
 
 @NgModule({
   declarations: [
@@ -44,17 +48,19 @@ import {LeaderActionHandlerComponent} from "./leader-action-handler/leader-actio
     ExplorerProfileComponent,
     UsersRequestsListComponent,
     UsersListComponent,
+    UserRequestDialogComponent,
     ActionCreationComponent,
     UsersListComponent,
     MapComponent,
     StationInfoComponent,
     StationChoosingComponent,
-
     AnimalLocationComponent,
     AnimalLocationMockComponent,
     ActionLogComponent,
+    ActionDetailsComponent,
     ActionDetailsLeaderComponent,
-    LeaderActionHandlerComponent
+    LeaderActionHandlerComponent,
+    EditDataAdminDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,12 +69,14 @@ import {LeaderActionHandlerComponent} from "./leader-action-handler/leader-actio
     NgSelectModule,
     HttpClientModule,
     FormsModule,
+    MatDialogModule,
     MatSelectModule,
     UserVerifiedSuccessfulComponent,
     NgOptimizedImage,
     BrowserAnimationsModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

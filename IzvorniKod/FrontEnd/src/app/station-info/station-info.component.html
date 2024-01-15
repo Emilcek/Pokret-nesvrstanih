@@ -22,9 +22,9 @@
 
       <div class="tragaci flex" style="margin-top: 20px;" *ngIf="!isTragaciEmpty">
         <span class="info light-text">Tragači u postaji: </span>
-        <div class="flex-column">
-          <div class="list" style="margin-bottom: 10px;" *ngFor="let tragac of tragaci2">
-            {{tragac.clientName}}
+        <div class="flex-column list-column">
+          <div class="list" *ngFor="let tragac of tragaci2">
+            {{tragac.clientName}} - {{tragac.educatedFor}}
           </div>
           <div class="add-new-text">Dodajte nove tragače: </div>
           <mat-form-field class="add-new-text">

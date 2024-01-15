@@ -1,5 +1,6 @@
 package com.progi.WildTrack.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,7 +29,9 @@ public class Vehicle {
             joinColumns = { @JoinColumn(name = "VehicleId") },
             inverseJoinColumns = { @JoinColumn(name = "Explorername") }
     )
+    @JsonIgnore
     private Set<Explorer> explorers = new HashSet<>();
+    @JsonIgnore
     @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Task> taskList;
 

@@ -39,7 +39,7 @@ select{
   border: 1px solid black;
   border-radius: 10px;
   min-height: 10rem;
-  height:50%;
+  height:auto;
 }
 
 button {
@@ -74,7 +74,11 @@ button {
 
 .description{
   width:20rem;
-  height:5rem ;
+  height:9rem ;
+}
+
+.description.task{
+  height:7rem;
 }
 
 .sendButtonDiv{
@@ -233,7 +237,7 @@ textarea{
   }
 }
 
-@media only screen and (max-width: 807px) {
+@media only screen and (max-width: 909px) {
   .center-grid{
     flex-direction: column;
     justify-content: center;
@@ -247,5 +251,13 @@ textarea{
     width:20rem;
   }
 
+}
 
+td{
+  max-width: 100%;
+  word-wrap: break-word;
+}
+tr{
+  max-width: 10rem;
+  word-wrap: break-word;
 }

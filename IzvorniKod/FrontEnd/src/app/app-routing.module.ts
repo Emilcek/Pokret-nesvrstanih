@@ -40,8 +40,7 @@ const routes: Routes = [
   {path: 'station-info', component: StationInfoComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' }},
   {path: 'action-handling', component: LeaderActionHandlerComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' }},
   {path: 'action-details/:id', component: ActionDetailsLeaderComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' }},
-  { path: '**', component: LoginComponent, canActivate:[AuthLoginGuard]}
-
+  { path: '**', component: LoginComponent, canActivate:[AuthLoginGuard]},
 ];
 
 @NgModule({

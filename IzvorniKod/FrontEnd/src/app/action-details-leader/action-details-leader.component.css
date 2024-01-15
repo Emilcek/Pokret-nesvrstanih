@@ -1,7 +1,105 @@
 .info {
-  margin: 30px;
+  display: flex;
+  justify-content: center;
+  margin: 20px 20px 0;
 }
 
 .errorMessage {
   color: red;
 }
+
+.title-content {
+  font-size: 23px;
+  padding: 30px;
+  border-bottom: 2px solid #756E6E;
+  color: #756E6E;
+}
+.map-container {
+  height: 100%;
+  width: 100%;
+}
+
+.text {
+  height: fit-content;
+  width: 250px;
+  margin-top: 13px;
+  color: #756E6E;
+}
+
+.map-frame {
+  border: 2px solid black;
+  height: 100%;
+  width: 100%;
+}
+
+#map {
+  height: 100%;
+  width: 100%;
+}
+
+.number-of-task {
+  font-size: 20px;
+}
+
+.task-type {
+  font-size: 22px;
+  margin-left: 10px;
+}
+
+.info-text {
+  font-size: 20px;
+  margin: 5px 30px;
+}
+
+.task-title {
+  color: #756E6E;
+  margin: 10px;
+}
+
+.button {
+  background-color: #95C4E7;
+  border-radius: 20px;
+  padding: 8px 12px;
+  color: #756E6E;
+  font-size: 14px;
+  border: none;
+  margin: 12px 30px;
+  transition: 0.2s;
+
+  &.big {
+    font-size: 17px;
+  }
+
+  &.grey {
+    background: rgba(147, 113, 113, 0.45);
+
+    &:hover {
+      background-color: rgba(86, 66, 66, 0.45);
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: #5d97b6;
+  }
+}
+
+select {
+  height: fit-content;
+  margin-top: 10px;
+  border: 2px solid #756E6E;
+  border-radius: 20px;
+  font-size: 16px;
+  padding: 8px;
+  color: #756E6E;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.tasks-container {
+  margin-top: 30px;
+  overflow-y: scroll;
+}
+

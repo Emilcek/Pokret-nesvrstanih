@@ -1,0 +1,23 @@
+<p style="padding-left: 1rem;margin-bottom:0.5rem;font-weight: bold;font-size: 1.2rem;margin-top:1rem">{{data.actionName}}</p>
+<div style="display: flex"><p style="padding-left: 1rem;padding-top: 1rem"><p class="sub-title">Opis akcije</p>: {{ data.actionDescription }}</div>
+
+<div class="map-container">
+  <div class="map-frame">
+    <div id="map"></div>
+  </div>
+</div>
+
+<div class="otherData">
+  <div class="listOfTasks">
+    <label class="sub-title" >Lista zadataka</label>
+    <tr *ngFor="let n of data.actionTasks">
+      <td style="padding-left: 0.5rem"><p style="padding-left: 1rem">{{data.actionTasks.indexOf(n)+1}}. {{n.taskDescription}}, kompetencija: {{n.vehicleName}}, status: {{taskStatus[n.taskStatus]}}</p></td>
+    </tr>
+  </div>
+  <div *ngIf="data.actionExplorers.length>0">
+    <label class="sub-title">Tragači na akciji</label>
+    <tr *ngFor="let n of data.actionExplorers">
+      <td style="padding-left: 0.5rem"><p style="padding-left: 1rem">- {{n.firstName}} {{n.lastName}}</p></td>
+    </tr>
+  </div>
+</div>

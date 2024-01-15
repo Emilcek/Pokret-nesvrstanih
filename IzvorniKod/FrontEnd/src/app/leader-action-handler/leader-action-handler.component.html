@@ -1,20 +1,26 @@
 <div class="main-container">
-  <table id="table" *ngIf="allActions">
+  <table id="table" *ngIf="allActions && allActions.length > 0">
     <thead>
     <tr>
       <th>Ime akcije</th>
+      <th>Opis akcije</th>
       <th>Istraživač</th>
-      <th></th>
+      <th>Status akcije</th>
+      <th>Detalji akcije</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let action of allActions">
       <td>{{action.actionName}}</td>
+      <td>{{action.actionDescription}}</td>
       <td>{{action.actionResearcherName}}</td>
+      <td>{{action.actionStatus}}</td>
       <td>
-        <a [routerLink]="['/action-details', action.actionId]">detalji</a>
+          <button (click)="openDetailsPage(action.actionId)"><img src="assets/img/rightArrow.png">
+            </button>
       </td>
     </tr>
     </tbody>
   </table>
+  <div class="no-actions-text" *ngIf="allActions && allActions.length === 0">Nemate pristigle zahtjeve za akcijama!</div>
 </div>
