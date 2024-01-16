@@ -1,16 +1,16 @@
-import {Component, Inject,AfterViewInit,OnInit} from '@angular/core';
+import {Component, Inject, AfterViewInit, OnInit, OnDestroy} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import {environment} from "../../environments/environment";
 import {HttpHeaders,HttpClient} from "@angular/common/http";
-import {timeout} from "rxjs";
 @Component({
   selector: 'app-action-details',
   templateUrl: './action-details.component.html',
   styleUrls: ['./action-details.component.css']
 })
-export class ActionDetailsComponent implements OnInit,AfterViewInit{
+export class ActionDetailsComponent implements OnInit,AfterViewInit,OnDestroy{
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private http : HttpClient) { }
   tasks: any = [];
   taskStatus: any = {'Ongoing': 'U tijeku', 'Done': 'Izvršen'};
@@ -28,6 +28,7 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit{
   animalLayerGroup:any;
   httpGetDone:boolean=false;
   layerControl:any;
+  interval:any;
   ngOnInit(): void {
     let header = new HttpHeaders({
       'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -36,7 +37,7 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit{
     let headersObj = {
       headers: header
     };
-    this.http.get(environment.BASE_API_URL+"/action/animals/"+this.data.actionId,headersObj).subscribe({
+    this.http.get(environment.BASE_API_URL+"/animal/currentLocations/all",headersObj).subscribe({
       next: data => {
         let response: any = data;
         this.animalsData=response;
@@ -66,7 +67,7 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit{
           marker.bindPopup(element.firstName+" "+element.lastName).openPopup()
           marker.addTo(this.markersGroup);
           let Icon = L.icon({
-            iconUrl: "../../assets/img/myLoc.png", // Specify the path to your custom icon image
+            iconUrl: "../../assets/img/myLoc.png", // IKONA ZA ŽIVOTINJU
             iconSize: [28, 28], // Set the size of the icon
             iconAnchor: [16, 32], // Set the anchor point of the icon (relative to its size)
             popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
@@ -93,10 +94,20 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit{
       }
     })
     if(this.data.actionStatus=="Accepted"){
-      setInterval(() => {
-        this.markersGroup.clearLayers();
-        this.animalLayerGroup.clearLayers();
-        this.layerControl.remove();
+      this.interval=setInterval(() => {
+        if(this.markersGroup!=undefined && this.animalLayerGroup!=undefined && this.layerControl!=undefined){
+          this.markersGroup.clearLayers();
+          this.animalLayerGroup.clearLayers();
+          this.layerControl.remove();
+        }
+        this.http.get(environment.BASE_API_URL+"/animal/currentLocations/all",headersObj).subscribe({
+          next: data => {
+            let response: any = data;
+            this.animalsData=response;
+          }, error: (error) => {
+            console.log(error,"krivo dodani podaci o životinjama")
+          }
+        })
         this.http.get(environment.BASE_API_URL+"/action/explorers/"+this.data.actionId,headersObj).subscribe({
           next: data => {
             let response: any = data;
@@ -118,7 +129,7 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit{
               marker.bindPopup(element.firstName+" "+element.lastName).openPopup()
               marker.addTo(this.markersGroup);
               let Icon = L.icon({
-                iconUrl: "../../assets/img/myLoc.png", // Specify the path to your custom icon image
+                iconUrl: "../../assets/img/myLoc.png", // IKONA ZA ŽIVOTINJU
                 iconSize: [28, 28], // Set the size of the icon
                 iconAnchor: [16, 32], // Set the anchor point of the icon (relative to its size)
                 popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
@@ -148,6 +159,13 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit{
     }
 
   }
+
+  ngOnDestroy(): void {
+    if(this.interval){
+      clearInterval(this.interval)
+    }
+  }
+
   private initMap(): void {
     this.map = L.map('map', {
       center: this.center,
