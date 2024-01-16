@@ -11,22 +11,43 @@
   <div class="main-container tasks" style="width: 24%; margin-left: 30px" *ngIf="tasks && tasks.length !== 0">
     <div class="title flex-column">
       <span>Zadaci u akciji</span>
-      <span class="small">Za svaki zadatak postavljanja kamere, GPS-a ili dolaska do lokacije potrebno je označiti tu lokaciju na karti unutar područja prikazanog crvenom bojom</span>
+      <span class="small">Kod postavljanja kamere i GPS-a potrebno je označiti lokaciju na karti unutar područja prikazanog crvenom bojom.</span>
     </div>
     <div class="tasks-list">
       <ng-container class="flex-column" *ngFor="let task of tasks; let i = index">
-        <div class="flex task" (click)="onTaskClick(task, i)">
+        <div class="flex task">
           <input [id]="i" class="checkbox" type="checkbox" (change)="onCheckboxChange($event, task, i)" disabled>
           <div class="flex-column task-container">
-            <span class="task-info" style="margin-left: 20px">{{task.taskDescription.split(": ")[0]}}</span>
+            <span class="task-info" style="margin-left: 20px">{{task.taskDescription.split(": ")[0]}} <button class="arrow-button" [id]="i+'button'" type="button" (click)="onTaskClick(task, i)"><img src="assets/img/arrow.png"></button></span>
             <span class="task-info desc" style="margin-left: 20px">{{task.taskDescription.split(": ")[1]}}</span>
-            <span class="task-info desc" style="margin-left: 20px" *ngIf="task.locationSet && task.taskDescription.split(': ')[0] !== 'Prođi rutom'">Postavljena lokacija: {{task.locationSet}}</span>
-            <input [id]="i+ 'input'" class="input task-info desc" type="text" *ngIf="task.clicked">
+            <span class="task-info desc" style="margin-left: 20px" *ngIf="task.locationSet && task.taskDescription.split(': ')[0] !== 'Prođi rutom' && task.taskDescription.split(': ')[0] !== 'Dođi na lokaciju'">Postavljena lokacija: {{task.locationSet}}</span>
+            <form class="form-input-container" *ngIf="task.clicked">
+              <input [id]="i+'input'" type="text" class="form-input" placeholder=" ">
+              <label class="form-input-label">Komentar</label>
+            </form>
+            <form [formGroup]="animalForm" *ngIf="task.clicked && task.taskDescription.split(': ')[0] === 'Postavi GPS'">
+              <div class="form-input-container">
+              <input [id]="i+ 'input1'" type="text" class="form-input" placeholder=" " formControlName="animalSpecies">
+              <label class="form-input-label">Vrsta životinje</label>
+              </div>
+              <div class="form-input-container">
+                <textarea class="form-input" formControlName="animalDescription" placeholder=" " *ngIf="task.clicked"></textarea>
+                <label class="form-input-label">Opis životinje</label>
+              </div>
+              <div id="grid" *ngIf="task.clicked">
+                <label class="custom-file-input">
+                  Odaberite fotografiju
+                  <input type="file" id="myFile" name="filename"
+                         accept="image/png, image/jpeg, image/jpg" (change)="handleFileInput($event)">
+                </label>
+                <div id="imagepreview" style="max-width: 300px;max-height: 200px"></div>
+              </div>
+            </form>
+            <div [id]="i+'error'" class="error-message">{{errorMessage}}</div>
           </div>
         </div>
       </ng-container>
     </div>
-    <div class="error-message">{{errorMessage}}</div>
   </div>
 </div>
 

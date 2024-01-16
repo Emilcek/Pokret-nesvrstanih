@@ -6,6 +6,7 @@ import { environment } from "../../environments/environment";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import { AnimalCommentsDialogComponent } from '../animal-comments-dialog/animal-comments-dialog.component';
+import {FormControl, FormGroup} from "@angular/forms";
 
 interface Task {
   type: string,
@@ -38,6 +39,11 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
   private explorersMarkersLayer: any = L.layerGroup();
   idOfAction: any;
   comments: any
+  files: any = [];
+  animalForm = new FormGroup({
+    animalSpecies: new FormControl(''),
+    animalDescription: new FormControl('')
+  })
 
   customIconForMyLocation = L.icon({
     iconUrl: "assets/img/myLocation.png", // Specify the path to your custom icon image
@@ -74,12 +80,18 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
     headers: this.header
   };
 
+  latitude: any;
+  longitude: any;
+  error: string | null = null;
+  routingControl: any;
+
   constructor(private headerService: HeaderService, private http: HttpClient, private dialog: MatDialog) {
     Marker.prototype.options.icon = this.customIcon;
 
   }
 
   ngOnInit() {
+    this.getCurrentLocation();
 
     this.http.get<any>(environment.BASE_API_URL + "/explorer/tasks", this.headersObj).subscribe({
       next: (data: any) => {
@@ -100,7 +112,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
           Name: data.firstName,
           Surname: data.lastName,
           Username: data.clientName,
-          Password: data.password, 
+          Password: data.password,
           Email: data.email,
           ClientPhoto: data.clientPhoto,
           Role: data.role,
@@ -144,7 +156,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
 
       const fullDateTimeString = `${timeStamp} ${time}`;
 
-      console.log("Full DateTime String:", fullDateTimeString);
+      //console.log("Full DateTime String:", fullDateTimeString);
 
       //console.log("Username: " + this.currentUser.Username)
       const data = {
@@ -154,6 +166,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
       };
 
       //console.log("Data: " + JSON.stringify(data))
+      //onsole.log("Data: " + JSON.stringify(data))
 
       //post rekvest u bazu za lat, long, tmiestamp
       /*let header = new HttpHeaders({
@@ -166,6 +179,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
       this.http.post(environment.BASE_API_URL + "/explorerlocation/add/" + this.currentUser.Username, data, this.headersObj).subscribe({
         next: responseData => {
           //console.log("Poslana lokacija: " + responseData);
+          ////console.log("Poslana lokacija: " + responseData);
         },
         error: error => {
           console.error("Error sending location:", error);
@@ -208,7 +222,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
 
 
 
-    //moj dio za prikaz trenutne lokacije 
+    //moj dio za prikaz trenutne lokacije
       this.intervalId = setInterval(() => {
         if (!navigator.geolocation) {
           console.log("Browser ne podrzava geolocation");
@@ -224,13 +238,13 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
     }
 
   private getAllAnimals(): void {
-    console.log("Get animals")
+    //console.log("Get animals")
 
-      console.log("Prije removanja: " + this.animalMarkersLayer.getLayers().length)
+      //console.log("Prije removanja: " + this.animalMarkersLayer.getLayers().length)
 
       if(this.animalMarkersLayer) {
         this.animalMarkersLayer.clearLayers();
-        console.log("Poslije removanja: " + this.animalMarkersLayer.getLayers().length)
+        //console.log("Poslije removanja: " + this.animalMarkersLayer.getLayers().length)
       }
 
 
@@ -243,11 +257,11 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
       };*/
       this.http.get<any>(environment.BASE_API_URL + "/animal/currentLocations/all", this.headersObj).subscribe({
         next: (responseData: any) => {
-          console.log(responseData);
+          //console.log(responseData);
 
           responseData.map((element: {
             animalSpecies: string;
-            animalId: string; latitude: any; longitude: any; 
+            animalId: string; latitude: any; longitude: any;
 }) => {
             const serverLat = element.latitude;
           const serverLong = element.longitude;
@@ -255,7 +269,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
           const animalMarker = L.marker([serverLat, serverLong], { icon: this.customIconAnimal }).on("mouseover", event => {
             event.target.bindPopup(element.animalId + ':' + element.animalSpecies).openPopup();
           }).on("click", event => {
-            console.log("ID i vrsta: " + element.animalId + ", " + element.animalSpecies)
+            //console.log("ID i vrsta: " + element.animalId + ", " + element.animalSpecies)
             //get rekvest za svim komentarima vezanim uz tu zivotinju po ID-u zivotinje
             this.openDialog(element);
           })
@@ -263,23 +277,23 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
           //console.log("Die zivina: " + serverLat + ", " + serverLong)
           animalMarker.addTo(this.animalMarkersLayer)
           });
-          console.log("Layeri: " + this.animalMarkersLayer.getLayers().length)
+          //console.log("Layeri: " + this.animalMarkersLayer.getLayers().length)
           this.map.addLayer(this.animalMarkersLayer);
         },
         error: error => {
           console.error("Error getting location:", error);
         }
-      }) 
+      })
   }
 
   private getExplorers() {
-    console.log("Get explorers")
+    //console.log("Get explorers")
 
-    console.log("Prije removanja: " + this.explorersMarkersLayer.getLayers().length)
+    //console.log("Prije removanja: " + this.explorersMarkersLayer.getLayers().length)
 
     if(this.explorersMarkersLayer) {
       this.explorersMarkersLayer.clearLayers();
-      console.log("Poslije removanja: " + this.explorersMarkersLayer.getLayers().length)
+      //console.log("Poslije removanja: " + this.explorersMarkersLayer.getLayers().length)
     }
 
 
@@ -295,7 +309,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
         console.log(responseData);
 
         responseData.map((element: {
-          explorerName: string; latitude: any; longitude: any; 
+          explorerName: string; latitude: any; longitude: any;
 }) => {
         if(element.explorerName !== this.currentUser.Username) {
           const serverLat = element.latitude;
@@ -314,7 +328,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
       error: error => {
         console.error("Error getting location:", error);
       }
-    }) 
+    })
   }
 
   ngAfterViewInit(): void {
@@ -331,13 +345,22 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
 
   onTaskClick(task: any, i: any) {
     if (!task.clicked) {
+      document.getElementById(i + 'button')!.style.transform = "rotate(90deg)";
+      this.map.eachLayer((layer: L.Layer) => {
+        if (layer instanceof L.Circle) {
+          this.map.removeLayer(layer);
+        }
+        if(this.routingControl) {
+          this.routingControl.remove();
+        }
+      });
       task.clicked = true;
       let [latitude, longitude] = task.endLocation.split(',').map(Number);
       let latLng = { lat: latitude, lng: longitude };
       let newCenter = latLng; // Replace latitude and longitude with your new center coordinates
       let newZoomLevel = 10; // Replace with the desired zoom level
       this.map.setView(newCenter, newZoomLevel);
-      if (task.taskDescription.split(': ')[0] !== 'Prođi rutom') {
+      if (task.taskDescription.split(': ')[0] !== 'Prođi rutom' && task.taskDescription.split(': ')[0] !== 'Dođi na lokaciju') {
         let circle = L.circle(latLng, {
           radius: 5000,
           color: 'red',
@@ -354,42 +377,81 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
             (document.getElementById(i) as HTMLInputElement)!.disabled = false;
           }
         })
-      } else {
+      } else if(task.taskDescription.split(': ')[0] === 'Prođi rutom') {
         let startCoords = task.startLocation.split(',').map(parseFloat);
         let endCoords = task.endLocation.split(',').map(parseFloat);
-        L.Routing.control({
+        this.routingControl = L.Routing.control({
           waypoints: [L.latLng(startCoords[0], startCoords[1]),
           L.latLng(endCoords[0], endCoords[1])],
           routeWhileDragging: true,
           show: false
         }).addTo(this.map);
         (document.getElementById(i) as HTMLInputElement)!.disabled = false;
+      } else if(task.taskDescription.split(': ')[0] === 'Dođi na lokaciju') {
+        console.log(this.latitude, this.longitude);
+        let endCoords = task.endLocation.split(',').map(parseFloat);
+        this.routingControl = L.Routing.control({
+          waypoints: [L.latLng(this.latitude, this.longitude),
+            L.latLng(endCoords[0], endCoords[1])],
+          routeWhileDragging: true,
+          show: false
+        }).addTo(this.map);
+        (document.getElementById(i) as HTMLInputElement)!.disabled = false;
       }
+    } else {
+      let element = (document.getElementById(i + 'error'));
+      element!.innerHTML = "";
+      (document.getElementById(i) as HTMLInputElement)!.disabled = true;
+      document.getElementById(i + 'button')!.style.transform = "rotate(0deg)";
+      task.clicked = false;
+      this.map.eachLayer((layer: L.Layer) => {
+        if (layer instanceof L.Circle || layer instanceof L.Marker) {
+          this.map.removeLayer(layer);
+        }
+        if(this.routingControl) {
+          this.routingControl.remove();
+        }
+      });
+      task.locationSet = "";
     }
   }
 
   onCheckboxChange(event: any, task: any, i: any) {
     let id = i + 'input'
-    let body = (document.getElementById(id) as HTMLInputElement).value;
-    this.http.put<any>(environment.BASE_API_URL + "/task/" + task.taskId + "/comment", body, this.headersObj).subscribe({
-      next: data => {
-
-        this.http.put<any>(environment.BASE_API_URL + "/explorer/task/" + task.taskId + "/done", "", this.headersObj).subscribe({
-          next: (data: any) => {
-
-            this.http.get<any>(environment.BASE_API_URL + "/explorer/tasks", this.headersObj).subscribe({
-              next: (data: any) => {
-                console.log(data)
-                this.tasks = data;
-              }
-            })
-          }
-        })
-      }, error: error => {
-        this.errorMessage = "Napišite komentar";
-        (document.getElementById(i) as HTMLInputElement).checked = false;
-      }
-    })
+    console.log(id)
+    console.log((document.getElementById(String(i)) as HTMLInputElement))
+    let body = (document.getElementById(i + 'input') as HTMLInputElement).value;
+    let body2 = {
+      animalSpecies: this.animalForm.value.animalSpecies,
+      animalDescription: this.animalForm.value.animalDescription,
+      animalPhotoURL: ""
+    }
+    if(task.taskDescription.split(': ')[0] === 'Postavi GPS' && body && body2.animalSpecies !== "" && body2.animalDescription !== "") {
+      this.http.put<any>(environment.BASE_API_URL + "/task/" + task.taskId + "/comment", body, this.headersObj).subscribe();
+      this.http.put<any>(environment.BASE_API_URL + "/explorer/task/" + task.taskId + "/done", "", this.headersObj).subscribe();
+      this.http.post<any>(environment.BASE_API_URL + "/animal/add", body2,this.headersObj).subscribe();
+      this.http.get<any>(environment.BASE_API_URL + "/explorer/tasks", this.headersObj).subscribe({
+        next: (data: any) => {
+          this.tasks = data;
+        }
+      })
+    } else if(task.taskDescription.split(': ')[0] === 'Postavi GPS' && !(body && body2.animalSpecies !== "" && body2.animalDescription !== "")) {
+      let element = (document.getElementById(i + 'error'));
+      element!.innerHTML = "Popunite sva polja";
+      (document.getElementById(i) as HTMLInputElement).checked = false;
+    } else if(body && task.taskDescription.split(': ')[0] !== 'Postavi GPS') {
+      this.http.put<any>(environment.BASE_API_URL + "/task/" + task.taskId + "/comment", body, this.headersObj).subscribe();
+      this.http.put<any>(environment.BASE_API_URL + "/explorer/task/" + task.taskId + "/done", "", this.headersObj).subscribe();
+      this.http.get<any>(environment.BASE_API_URL + "/explorer/tasks", this.headersObj).subscribe({
+        next: (data: any) => {
+          this.tasks = data;
+        }
+      })
+    } else {
+      (document.getElementById(i) as HTMLInputElement).checked = false;
+      let element = (document.getElementById(i + 'error'));
+      element!.innerHTML = "Napišite komentar";
+    }
   }
 
   openDialog(animal: any) {
@@ -407,8 +469,46 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
     });
     //console.log(user)
     dialogRef.afterClosed().subscribe(result => {
-      
+
     });
+  }
+
+  handleFileInput(event: any) {
+    const fileInput = event.target;
+    const imagePreview = document.getElementById('imagepreview');
+
+    // Check if a file is selected
+    if (fileInput.files && fileInput.files[0]) {
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        // Set the preview image source
+        imagePreview!.innerHTML = `<img src="${e.target!.result}" alt="Image Preview" height="150px" width="auto">`;
+      };
+
+      // Read the selected file as a data URL
+      reader.readAsDataURL(fileInput.files[0]);
+      this.files.push(fileInput.files[0]);
+    } else if(this.files[0]==undefined){
+      // Clear the preview if no file is selected
+      imagePreview!.innerHTML = '';
+    }
+  }
+
+  getCurrentLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          this.latitude = position.coords.latitude;
+          this.longitude = position.coords.longitude;
+        },
+        (error) => {
+          this.error = error.message;
+        }
+      );
+    } else {
+      this.error = 'Geolocation is not supported by your browser.';
+    }
   }
 
 }
