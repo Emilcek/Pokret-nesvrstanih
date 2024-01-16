@@ -8,12 +8,14 @@ import {Subscription} from "rxjs";
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit{
+  @Input() status: any;
   @Input() activePage!: string;
   @Input() user!: string;
   @Input() isLoggedIn!: boolean;
   pageChange: Subscription = new Subscription();
   loggingChange: Subscription = new Subscription();
   roleChange: Subscription = new Subscription();
+  statusChange: Subscription = new Subscription();
   isNavOpen: boolean = false;
 
   constructor(public headerService: HeaderService) {
@@ -42,6 +44,12 @@ export class HeaderComponent implements OnInit{
       .subscribe(
         (role: string) => {
           this.user = role;
+        }
+      )
+    this.statusChange = this.headerService.statusS
+      .subscribe(
+        (status: string) => {
+          this.status = status;
         }
       )
   }

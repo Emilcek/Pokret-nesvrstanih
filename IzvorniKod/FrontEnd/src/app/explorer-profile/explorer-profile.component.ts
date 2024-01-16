@@ -48,7 +48,8 @@ export class ExplorerProfileComponent implements OnInit{
           Email: data.email,
           ClientPhoto: data.clientPhoto,
           Role: data.role,
-          EducatedFor: data.educatedFor
+          EducatedFor: data.educatedFor,
+          StationName: data.stationName,
         }
         //console.log(this.currentUser, "user")
       }
