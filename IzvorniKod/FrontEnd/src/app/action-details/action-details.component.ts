@@ -67,7 +67,7 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit,OnDestroy{
           marker.bindPopup(element.firstName+" "+element.lastName).openPopup()
           marker.addTo(this.markersGroup);
           let Icon = L.icon({
-            iconUrl: "../../assets/img/myLoc.png", // Specify the path to your custom icon image
+            iconUrl: "../../assets/img/myLoc.png", // IKONA ZA ŽIVOTINJU
             iconSize: [28, 28], // Set the size of the icon
             iconAnchor: [16, 32], // Set the anchor point of the icon (relative to its size)
             popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
@@ -129,7 +129,7 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit,OnDestroy{
               marker.bindPopup(element.firstName+" "+element.lastName).openPopup()
               marker.addTo(this.markersGroup);
               let Icon = L.icon({
-                iconUrl: "../../assets/img/myLoc.png", // Specify the path to your custom icon image
+                iconUrl: "../../assets/img/myLoc.png", // IKONA ZA ŽIVOTINJU
                 iconSize: [28, 28], // Set the size of the icon
                 iconAnchor: [16, 32], // Set the anchor point of the icon (relative to its size)
                 popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
