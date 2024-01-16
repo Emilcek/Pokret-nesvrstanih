@@ -10,10 +10,28 @@
   text-align: center;
   font-size: 30px;
 }
-
+.custom-file-input {
+  display: flex;
+  padding: 6px 10px;
+  cursor: pointer;
+  border: 1px solid #927979;
+  width: max-content;
+  transition: 0.2s;
+  margin: 10px 0;
+  background:#95C4E7;
+  border-radius: 10px;
+  color: rgb(117, 110, 110);
+  font-size: 0.8rem;
+  justify-content: center;
+  align-items: center;
+}
+input[type="file"]{
+  display: none;
+}
 .tasks {
   text-align: center;
-  height: fit-content;
+  height: 550px;
+  overflow-y: scroll;
 
   .title {
     font-size: 22px;
@@ -111,4 +129,10 @@
 
 .error-message {
   color: red;
+}
+
+#image-preview {
+  & img {
+    width: 250px;
+  }
 }

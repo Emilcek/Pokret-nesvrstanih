@@ -21,7 +21,18 @@
             <span class="task-info" style="margin-left: 20px">{{task.taskDescription.split(": ")[0]}}</span>
             <span class="task-info desc" style="margin-left: 20px">{{task.taskDescription.split(": ")[1]}}</span>
             <span class="task-info desc" style="margin-left: 20px" *ngIf="task.locationSet && task.taskDescription.split(': ')[0] !== 'Prođi rutom'">Postavljena lokacija: {{task.locationSet}}</span>
-            <input [id]="i+ 'input'" class="input task-info desc" type="text" *ngIf="task.clicked">
+            <form [formGroup]="animalForm">
+              <input formControlName="animalSpecies" [id]="i+ 'input1'" class="input task-info desc" type="text" *ngIf="task.clicked">
+              <textarea formControlName="animalDescription" [id]="i+ 'input'" class="input task-info desc" *ngIf="task.clicked"></textarea>
+              <div id="grid" *ngIf="task.clicked">
+                <label class="custom-file-input">
+                  Odaberite fotografiju
+                  <input type="file" id="myFile" name="filename"
+                         accept="image/png, image/jpeg, image/jpg" (change)="handleFileInput($event)">
+                </label>
+                <div id="imagepreview" style="max-width: 300px;max-height: 200px"></div>
+              </div>
+            </form>
           </div>
         </div>
       </ng-container>

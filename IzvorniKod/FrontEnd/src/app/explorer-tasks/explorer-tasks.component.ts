@@ -4,6 +4,7 @@ import * as L from "leaflet";
 import { LatLng, Marker } from "leaflet";
 import { environment } from "../../environments/environment";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import {FormControl, FormGroup} from "@angular/forms";
 
 interface Task {
   type: string,
@@ -34,6 +35,11 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
   private intervalIdAnimal: any
   currentUser: any;
   private animalMarkersLayer: L.LayerGroup | undefined;
+  files: any = [];
+  animalForm: FormGroup = new FormGroup({
+    animalSpecies: new FormControl(''),
+    animalDescription: new FormControl('')
+  })
 
   customIconForMyLocation = L.icon({
     iconUrl: "assets/img/myLocation.png", // Specify the path to your custom icon image
@@ -66,14 +72,12 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
 
     this.http.get<any>(environment.BASE_API_URL + "/explorer/tasks", this.headersObj).subscribe({
       next: (data: any) => {
-        console.log(data)
         this.tasks = data;
       }
     })
 
     this.http.get<any>(environment.BASE_API_URL + "/client", this.headersObj).subscribe({
       next: data => {
-        console.log("This is data:", data) //ispisuje se sve osim lozinke
         let res: any = data;
         this.currentUser = {
           Name: data.firstName,
@@ -90,8 +94,6 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
     })
   }
 
-
-
   private initMap(): void {
     this.map = L.map('map', {
       center: [45.1, 15.2],
@@ -106,30 +108,18 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
     let markerMyLocation: L.Marker<any>;
 
     const getPosition = (position: any) => {
-
-      console.log(position)
       const lat = position.coords.latitude;
       const long = position.coords.longitude;
       const timeStamp = new Date(position.timestamp).toISOString().slice(0, 10).replace('T', ' ');
       const time = new Date(position.timestamp).toLocaleTimeString(undefined, { hour12: false });
-      console.log("Date iz timestempa: " + new Date(position.timestamp))
-      console.log("Dan iz datea: " + new Date(position.timestamp).toLocaleDateString())
-      console.log("Sat iz datea: " + new Date(position.timestamp).toLocaleTimeString(undefined, { hour12: false }))
-      console.log("Timestamp: " + timeStamp)
       const accuracy = position.coords.accuracy;
 
       const fullDateTimeString = `${timeStamp} ${time}`;
-
-      console.log("Full DateTime String:", fullDateTimeString);
-
-      console.log("Username: " + this.currentUser.Username)
       const data = {
         longitude: long,
         latitude: lat,
         locationTimestamp: fullDateTimeString,
       };
-
-      console.log("Data: " + JSON.stringify(data))
 
       //post rekvest u bazu za lat, long, tmiestamp
       let header = new HttpHeaders({
@@ -168,9 +158,6 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
         .on("mouseout", event => {
           event.target.closePopup();
         });
-
-
-      console.log("Lat: " + lat + " Long: " + long + " Timestamp: " + timeStamp)
     }
 
     tiles.addTo(this.map);
@@ -187,7 +174,6 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   private getAllAnimals(): void {
-    console.log("Get animals")
       this.animalMarkersLayer = L.layerGroup();
 
       this.animalMarkersLayer?.clearLayers();
@@ -201,21 +187,16 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
       };
       this.http.get<any>(environment.BASE_API_URL + "/animal/currentLocations/all", headersObj).subscribe({
         next: (responseData: any) => {
-          console.log(responseData);
           if(Array.isArray(responseData)){
-            console.log("Array je")
           }
           const serverLat = responseData.latitude;
           const serverLong = responseData.longitude;
 
           responseData.map((element: { latitude: any; longitude: any; }) => {
-            console.log("IIIIIIIIIIIIIIIIIIIIIIIIDDDDDDDDDEMOOOOOOOOO")
             const serverLat = element.latitude;
           const serverLong = element.longitude;
 
           const animalMarker = L.marker([serverLat, serverLong]);
-
-          console.log("Die zivina: " + serverLat + ", " + serverLong)
 
           this.animalMarkersLayer?.addLayer(animalMarker)
           });
@@ -228,7 +209,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
         }
       })
 
-    
+
   }
 
   ngAfterViewInit(): void {
@@ -283,13 +264,35 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   onCheckboxChange(event: any, task: any, i: any) {
-    let id = i + 'input'
+    let id = i + 'input1'
     let body = (document.getElementById(id) as HTMLInputElement).value;
-    this.http.put<any>(environment.BASE_API_URL + "/task/" + task.taskId + "/comment", body, this.headersObj).subscribe({
+    let body2 = (document.getElementById(i + 'input') as HTMLInputElement).value;
+
+    let formData = new FormData();
+    formData.append("animalSpecies", this.animalForm.value.animalSpecies)
+    formData.append("animalPhotoURL", "y")
+    formData.append("animalDescription", this.animalForm.value.animalDescription)
+
+    let body3 = {
+      animalSpecies: this.animalForm.value.animalSpecies,
+      animalPhotoURL: "",
+      animalDescription: this.animalForm.value.animalDescription
+    }
+    console.log(body3)
+
+    this.http.post<any>(environment.BASE_API_URL + "/animal/add", body3, this.headersObj).subscribe({
+      next: (data: any) => {
+        console.log(data)
+      }
+    })
+
+    /*this.http.put<any>(environment.BASE_API_URL + "/task/" + task.taskId + "/comment", body, this.headersObj).subscribe({
       next: data => {
 
         this.http.put<any>(environment.BASE_API_URL + "/explorer/task/" + task.taskId + "/done", "", this.headersObj).subscribe({
           next: (data: any) => {
+
+
 
             this.http.get<any>(environment.BASE_API_URL + "/explorer/tasks", this.headersObj).subscribe({
               next: (data: any) => {
@@ -303,7 +306,30 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
         this.errorMessage = "Napišite komentar";
         (document.getElementById(i) as HTMLInputElement).checked = false;
       }
-    })
+    })*/
+  }
+
+  handleFileInput(event: any): void {
+    const fileInput = event.target;
+    const imagePreview = document.getElementById('imagepreview');
+
+    // Check if a file is selected
+    if (fileInput.files && fileInput.files[0]) {
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        // Set the preview image source
+        imagePreview!.innerHTML = `<img src="${e.target!.result}" alt="Image Preview" height="150px" width="auto">`;
+      };
+
+      // Read the selected file as a data URL
+      reader.readAsDataURL(fileInput.files[0]);
+      this.files.push(fileInput.files[0]);
+      console.log(fileInput.files[0])
+    } else if(this.files[0]==undefined){
+      // Clear the preview if no file is selected
+      imagePreview!.innerHTML = '';
+    }
   }
 
 }
