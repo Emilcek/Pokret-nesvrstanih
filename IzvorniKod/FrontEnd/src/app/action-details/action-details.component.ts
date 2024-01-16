@@ -37,7 +37,7 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit,OnDestroy{
     let headersObj = {
       headers: header
     };
-    this.http.get(environment.BASE_API_URL+"/action/animals/"+this.data.actionId,headersObj).subscribe({
+    this.http.get(environment.BASE_API_URL+"/animal/currentLocations/all",headersObj).subscribe({
       next: data => {
         let response: any = data;
         this.animalsData=response;
@@ -100,7 +100,7 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit,OnDestroy{
           this.animalLayerGroup.clearLayers();
           this.layerControl.remove();
         }
-        this.http.get(environment.BASE_API_URL+"/action/animals/"+this.data.actionId,headersObj).subscribe({
+        this.http.get(environment.BASE_API_URL+"/animal/currentLocations/all",headersObj).subscribe({
           next: data => {
             let response: any = data;
             this.animalsData=response;
