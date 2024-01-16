@@ -43,7 +43,7 @@ h2 {
 }
 
 .comment p {
-    font-size: 25px;
+    font-size: 22px;
 }
 
 button {
@@ -63,4 +63,46 @@ button {
 }
 .btn1:hover {
     background-color: rgb(136, 119, 119);
+}
+
+.comment-input {
+  margin-top: 1.5%;
+    margin-left: 15%;
+    margin-bottom: 2%;
+  width: 70%;
+  height: 15%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.no-comment p{
+  margin-top: 1.5%;
+    margin-left: 17%;
+    margin-bottom: 2%;
+    font-size: 20px;
+}
+
+@media only screen and (max-width: 600px) {
+  .btn1 {
+    width: 45%;
+    margin-left: 28%;
+    padding: 9px;
+  }
+  button {
+    font-size: 14px;
+  }
+  h2 {
+    color: #333;
+    font-size: 30px;
+  }
+  
+  .upper-div {
+    display: flex;
+    margin-left: 20px;
+    margin-top: 2%;
+    padding: 10px;
+  }
+  .no-comment p{
+      margin-bottom: 3%;
+  }
 }

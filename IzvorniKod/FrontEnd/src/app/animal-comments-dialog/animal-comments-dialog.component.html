@@ -5,9 +5,15 @@
     </div>
 </div>
 <hr style="width:90%;text-align:left;margin-left:5%">
-<div *ngFor="let comment of comments;">
-    <div class="comment">
-        <p>{{comment}}</p>
+<div *ngIf="comments.length > 0">
+    <div *ngFor="let comment of comments;">
+        <div class="comment">
+            <p>{{comment}}</p>
+        </div>
     </div>
 </div>
+<div *ngIf="comments.length === 0" class="no-comment">
+    <p>Nema komentara za zadanu životinju</p>
+</div>
+<textarea [(ngModel)]="newComment" placeholder="Unesite novi komentar" class="comment-input"></textarea>
 <button mat-button mat-dialog-close class="btn1" (click)="addComment()" type="button">Dodaj komentar</button>

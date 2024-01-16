@@ -37,6 +37,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
   private animalMarkersLayer: any = L.layerGroup();
   private explorersMarkersLayer: any = L.layerGroup();
   idOfAction: any;
+  comments: any
 
   customIconForMyLocation = L.icon({
     iconUrl: "assets/img/myLocation.png", // Specify the path to your custom icon image
@@ -46,7 +47,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
   });
   customExplorerIcon = L.icon({
     iconUrl: "assets/img/ex1.png", // Specify the path to your custom icon image
-    iconSize: [52, 42], // Set the size of the icon
+    iconSize: [52, 32], // Set the size of the icon
     iconAnchor: [16, 32], // Set the anchor point of the icon (relative to its size)
     popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
   });
@@ -126,6 +127,18 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
       console.log(position)
       const lat = position.coords.latitude;
       const long = position.coords.longitude;
+
+      //probavanje za datum
+      const utcDate = new Date(position.timestamp)
+      const timezoneOffset = 60
+      const offsetINMiliseconds = timezoneOffset * 60 * 1000;
+      //console.log("PRoba: " + new Date(utcDate.getTime() + offsetINMiliseconds).toISOString())
+      //console.log("Proba2: " + new Date(position.timestamp).toISOString())
+      const CroatianDate = new Date(utcDate.getTime() + offsetINMiliseconds) //UTC + 01 zone
+      const formatedDate = CroatianDate.toISOString().replace('T', ' ').split('.')[0]
+      console.log("Croatina time: " + formatedDate);
+      //probavanje za datum
+
       const timeStamp = new Date(position.timestamp).toISOString().slice(0, 10).replace('T', ' ');
       const time = new Date(position.timestamp).toLocaleTimeString(undefined, { hour12: false });
 
@@ -133,26 +146,26 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
 
       console.log("Full DateTime String:", fullDateTimeString);
 
-      console.log("Username: " + this.currentUser.Username)
+      //console.log("Username: " + this.currentUser.Username)
       const data = {
         longitude: long,
         latitude: lat,
-        locationTimestamp: fullDateTimeString,
+        locationTimestamp: formatedDate,
       };
 
-      console.log("Data: " + JSON.stringify(data))
+      //console.log("Data: " + JSON.stringify(data))
 
       //post rekvest u bazu za lat, long, tmiestamp
-      let header = new HttpHeaders({
+      /*let header = new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + localStorage.getItem('token'),
       });
       let headersObj = {
         headers: header
-      };
-      this.http.post(environment.BASE_API_URL + "/explorerlocation/add/" + this.currentUser.Username, data, headersObj).subscribe({
+      };*/
+      this.http.post(environment.BASE_API_URL + "/explorerlocation/add/" + this.currentUser.Username, data, this.headersObj).subscribe({
         next: responseData => {
-          console.log("Poslana lokacija: " + responseData);
+          //console.log("Poslana lokacija: " + responseData);
         },
         error: error => {
           console.error("Error sending location:", error);
@@ -188,7 +201,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
         .on("mouseout", event => {
           event.target.closePopup();
         });
-      console.log("Lat: " + lat + " Long: " + long + " Timestamp: " + timeStamp)
+      //console.log("Lat: " + lat + " Long: " + long + " Timestamp: " + timeStamp)
     }
 
     tiles.addTo(this.map);
@@ -202,7 +215,10 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
         } else {
           navigator.geolocation.getCurrentPosition(getPosition);
           this.getAllAnimals();
-          this.getExplorers();
+          if(this.idOfAction !== undefined) {
+            //console.log("JEli undefined: " + this.idOfAction)
+            this.getExplorers();
+          }
         }
       }, 5000)
     }
@@ -218,14 +234,14 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
       }
 
 
-      let header = new HttpHeaders({
+      /*let header = new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + localStorage.getItem('token'),
       });
       let headersObj = {
         headers: header
-      };
-      this.http.get<any>(environment.BASE_API_URL + "/animal/currentLocations/all", headersObj).subscribe({
+      };*/
+      this.http.get<any>(environment.BASE_API_URL + "/animal/currentLocations/all", this.headersObj).subscribe({
         next: (responseData: any) => {
           console.log(responseData);
 
@@ -244,7 +260,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
             this.openDialog(element);
           })
           ;
-          console.log("Die zivina: " + serverLat + ", " + serverLong)
+          //console.log("Die zivina: " + serverLat + ", " + serverLong)
           animalMarker.addTo(this.animalMarkersLayer)
           });
           console.log("Layeri: " + this.animalMarkersLayer.getLayers().length)
@@ -267,28 +283,30 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
     }
 
 
-    let header = new HttpHeaders({
+    /*let header = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('token'),
     });
     let headersObj = {
       headers: header
-    };
-    this.http.get<any>(environment.BASE_API_URL + "/action/explorers/" + this.idOfAction, headersObj).subscribe({
+    };*/
+    this.http.get<any>(environment.BASE_API_URL + "/action/explorers/" + this.idOfAction, this.headersObj).subscribe({
       next: (responseData: any) => {
         console.log(responseData);
 
         responseData.map((element: {
           explorerName: string; latitude: any; longitude: any; 
 }) => {
+        if(element.explorerName !== this.currentUser.Username) {
           const serverLat = element.latitude;
         const serverLong = element.longitude;
 
         const animalMarker = L.marker([serverLat, serverLong], { icon: this.customExplorerIcon }).on("mouseover", event => {
           event.target.bindPopup(element.explorerName).openPopup();
         });
-        console.log("Die explorer: " + serverLat + ", " + serverLong)
+        //console.log("Die explorer: " + serverLat + ", " + serverLong)
         animalMarker.addTo(this.explorersMarkersLayer)
+        }
         });
         console.log("Layeri: " + this.explorersMarkersLayer.getLayers().length)
         this.map.addLayer(this.explorersMarkersLayer);
@@ -375,10 +393,17 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   openDialog(animal: any) {
+    //get svih komentaraza zadani animalId i o spremiti u data
+    /*this.http.get<any>(environment.BASE_API_URL + "" + animal.animaId, this.headersObj).subscribe({
+      next: data => {
+        console.log("Getani komentari", data)
+        this.comments = data
+      }
+    })*/
     const dialogRef = this.dialog.open(AnimalCommentsDialogComponent, {
       width:'60%',
       height:'65%',
-      data: animal,
+      data: this.comments,
     });
     //console.log(user)
     dialogRef.afterClosed().subscribe(result => {

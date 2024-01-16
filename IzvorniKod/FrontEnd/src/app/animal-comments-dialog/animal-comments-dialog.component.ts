@@ -9,25 +9,43 @@ import {environment} from "../../environments/environment";
   styleUrls: ['./animal-comments-dialog.component.css']
 })
 export class AnimalCommentsDialogComponent {
-  comments = [
-    "This is a great website!",
-    "I love the content here.",
-    "Amazing work!",
-    "Keep it up!",
-    "I learned a lot from this site.",
-    "Awesome job!",
-    "This is very helpful.",
-    "I appreciate the effort.",
-    "Fantastic content!",
-    "I recommend this to everyone."
+  comments: any[] = [
+    "Desiii",
+    "Sa ilaa",
+    "kao gos gogrs grk0d grs g rdo grdo grdo grop esio fseno grio gres graen gsirep"
   ];
+  newComment: string = '';
+
+  header = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+  });
+  headersObj = {
+    headers: this.header
+  };
 
   constructor(@Inject(MAT_DIALOG_DATA) public datas: any, private http: HttpClient, private el: ElementRef) {}
 
 
   //post rekvest za dodatak komentara
   addComment() {
-    console.log("Dodaj komentar: " + this.datas.animalSpecies)
+    if(this.newComment.trim() !== '') {
+      //post rekvest za dodatak komentara po animaId
+      /*this.http.post(environment.BASE_API_URL + "" + this.datas.animaId, this.newComment, this.headersObj).subscribe({
+        next: responseData => {
+          console.log("Dodan komentar: " + responseData);
+        },
+        error: error => {
+          console.error("Error sending location:", error);
+          console.log("Error Status: " + error.status);
+          console.log("Error Message: " + error.message);
+        }
+      })*/
+      console.log("New comment: " + this.newComment)
+      this.comments.push(this.newComment)
+      this.newComment = '';
+      console.log("Dodaj komentar: " + this.datas.animalSpecies)
+    }
   }
 }
 
