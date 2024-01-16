@@ -391,23 +391,37 @@
 		
 		\section{Dijagram stanja}
 			
+			Dijagram stanja jasno prikazuje kako sustav ili njegovi dijelovi prelaze iz jednog stanja u drugo kao odgovor na vanjske ili unutarnje događaje. Na slici 4.4 prikazan je dijagram stanja za registriranog korisnika. Klikom na "Moj Profil" prikazuju mu se njegovi podaci, koje može urediti ili brisati. Ovisno o ulozi koju je odabrao pri registraciji, korisnik može biti voditelj, tragač ili istraživač. Kao voditelj, može odabrati jednu od ponuđenih slobodnih postaja. Nakon toga, ima mogućnost odabrati tragače svoje postaje, te istovremeno voditelj definira na koji način su njegovi tragači osposobljeni za izvođenje istraživanja. Voditelj također ima opciju prihvatiti ili odbiti zahtjev koji mu je poslao istraživač. Istraživač kreira akciju i zatim šalje zahtjev voditelju. Nakon što mu se odobri zahtjev, on podijeli zadatke tragačima zaduženima za tu akciju. Istraživaču se na ekranu prikazuje karta s informacijama o pozicijama životinja i tragača. Također, ima mogućnost ostavljati komentare tragačima na akciji. Tragač na karti može vidjeti svoje zadatke (usput ih obavljati), životinje te ostale tragače na istoj akciji. Prilikom obavljanja zadatka može ostaviti komentare ostalim tragačima.
 			
-			\textbf{\textit{dio 2. revizije}}\\
-			
-			\textit{Potrebno je priložiti dijagram stanja i opisati ga. Dovoljan je jedan dijagram stanja koji prikazuje \textbf{značajan dio funkcionalnosti} sustava. Na primjer, stanja korisničkog sučelja i tijek korištenja neke ključne funkcionalnosti jesu značajan dio sustava, a registracija i prijava nisu. }
-			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\textwidth]{slike/Dijagram_stanja.PNG}
+				\caption{Dijagram stanja }
+				\label{fig:dijagram_baze}
+			\end{figure}
 			
 			\eject 
 		
 		\section{Dijagram aktivnosti}
 			
-			\textbf{\textit{dio 2. revizije}}\\
-			
-			 \textit{Potrebno je priložiti dijagram aktivnosti s pripadajućim opisom. Dijagram aktivnosti treba prikazivati značajan dio sustava.}
+		Dijagram aktivnosti upotrebljava se za prikaz tijeka aktivnosti, akcija i odluka procesa u sustavu. Posebno su korisni za vizualizaciju složenih ponašanja kao npr. slijedne i paralelne aktivnosti, kao i točke odlučivanja i uvjetno grananje. U modeliranju toka upravljanja svaki novi korak poduzima se nakon završenog prethodnog, a naglasak je na jednostavnosti. Na slici 4.5 prikazan je proces kreiranja akcije. Voditelj odabire postaju i tragače te im odabire kompetencije, a zatim istraživač može poslati zahtjev voditelju. U slučaju prihvaćanja zahtjeva istraživač dalje kreira akciju i dodjeljuje zadatke tragačima. Nakon što svi tragači koji sudjeluju u toj akciji obave sve svoje zadatke akcija se smatra završenom. 
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth]{slike/Dijagram_aktivnosti.PNG}
+			\caption{Dijagram aktivnosti }
+			\label{fig:dijagram_baze}
+		\end{figure}
 			
 			\eject
+			
 		\section{Dijagram komponenti}
 		
-			\textbf{\textit{dio 2. revizije}}\\
+		Na slici 4.6 prikazan je dijagram komponenti. Korisnik putem web preglednika pristupa aplikaciji putem REST API-ja. Samu aplikaciju možemo podijeliti u dvije komponente. Prva komponenta odgovara frontendu. Ona je izgrađena korištenjem Angulara. Druga komponenta odgovara backendu te je izgrađena pomoću radnog okvira Spring Boot. Komunikacija između frontenda i backenda se odvija pomoću REST API-ja. Koristimo relacijsku bazu podataka kojoj backend pristupa slanjem SQL upita.
 		
-			 \textit{Potrebno je priložiti dijagram komponenti s pripadajućim opisom. Dijagram komponenti treba prikazivati strukturu cijele aplikacije.}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth]{slike/Dijagram_komponenti.PNG}
+			\caption{Dijagram komponenti }
+			\label{fig:dijagram_baze}
+		\end{figure}

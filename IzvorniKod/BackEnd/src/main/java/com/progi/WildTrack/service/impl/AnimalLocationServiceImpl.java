@@ -50,6 +50,9 @@ public class AnimalLocationServiceImpl implements AnimalLocationService {
             return ResponseEntity.badRequest().body("Animal not found");
         }
         AnimalLocation animalLocation = animalLocationRepo.findFirstByAnimal_AnimalIdOrderByAnimalLocationTSDesc(animalId);
+        if (animalLocation == null) {
+            return ResponseEntity.badRequest().body("Animal location not found");
+        }
         AnimalDetailsDTO animalDetailsDTO = AnimalDetailsDTO.builder()
                 .animalId(animalLocation.getAnimal().getAnimalId())
                 .animalSpecies(animalLocation.getAnimal().getSpecies())
@@ -61,25 +64,28 @@ public class AnimalLocationServiceImpl implements AnimalLocationService {
         return ResponseEntity.ok(animalDetailsDTO);
     }
 
-        @Override
-        public List<AnimalDetailsDTO> getAllAnimalsCurrentLocations() {
-            //for each animal get last location and animal details
-            List<AnimalDetailsDTO> animalDetailsDTOList = new java.util.ArrayList<>();
-            var animals = animalRepo.findAll();
-           animals.forEach(animal -> {
-               AnimalLocation animalLocation = animalLocationRepo.findFirstByAnimal_AnimalIdOrderByAnimalLocationTSDesc(animal.getAnimalId());
-               AnimalDetailsDTO animalDetailsDTO = AnimalDetailsDTO.builder()
-                       .animalId(animalLocation.getAnimal().getAnimalId())
-                       .animalSpecies(animalLocation.getAnimal().getSpecies())
-                       //.animalPhotoURL(animalLocation.getAnimal().getAnimalPhotoURL())
-                       .animalDescription(animalLocation.getAnimal().getAnimalDescription())
-                       .latitude(animalLocation.getLocationofAnimal().split(",")[0])
-                       .longitude(animalLocation.getLocationofAnimal().split(",")[1])
-                       .build();
-               animalDetailsDTOList.add(animalDetailsDTO);
-           });
-            return animalDetailsDTOList;
-        }
+    @Override
+    public List<AnimalDetailsDTO> getAllAnimalsCurrentLocations() {
+        //for each animal get last location and animal details
+        List<AnimalDetailsDTO> animalDetailsDTOList = new java.util.ArrayList<>();
+        var animals = animalRepo.findAll();
+        animals.forEach(animal -> {
+            AnimalLocation animalLocation = animalLocationRepo.findFirstByAnimal_AnimalIdOrderByAnimalLocationTSDesc(animal.getAnimalId());
+            if (animalLocation != null) {
+                AnimalDetailsDTO animalDetailsDTO = AnimalDetailsDTO.builder()
+                        .animalId(animalLocation.getAnimal().getAnimalId())
+                        .animalSpecies(animalLocation.getAnimal().getSpecies())
+                        //.animalPhotoURL(animalLocation.getAnimal().getAnimalPhotoURL())
+                        .animalDescription(animalLocation.getAnimal().getAnimalDescription())
+                        .latitude(animalLocation.getLocationofAnimal().split(",")[0])
+                        .longitude(animalLocation.getLocationofAnimal().split(",")[1])
+                        .build();
+                animalDetailsDTOList.add(animalDetailsDTO);
+            }
+
+        });
+        return animalDetailsDTOList;
+    }
 
     @Override
     public ResponseEntity getAnimalLocations(Long animalId) {
@@ -89,6 +95,9 @@ public class AnimalLocationServiceImpl implements AnimalLocationService {
             return ResponseEntity.badRequest().body("Animal does not exist");
         }
         List<AnimalLocation> animalLocationList = animalLocationRepo.findAllByAnimal_AnimalId(animalId);
+        if (animalLocationList.isEmpty()) {
+            return ResponseEntity.badRequest().body("Animal locations not found");
+        }
         List<AnimalLocationDTO> animalLocationDTOList = new java.util.ArrayList<>();
         animalLocationList.forEach(animalLocation -> {
             AnimalLocationDTO animalLocationDTO = AnimalLocationDTO.builder()
@@ -107,22 +116,22 @@ public class AnimalLocationServiceImpl implements AnimalLocationService {
         var animals = animalRepo.findAll();
         List<AnimalAllLocationsDTO> animalAllLocationsDTOList = new java.util.ArrayList<>();
         animals.forEach(animal -> {
+            List<AnimalLocationDTO> animalLocationDTOList =  animalLocationRepo.findAllByAnimal_AnimalId(animal.getAnimalId())
+                    .stream()
+                    .map(animalLocation -> AnimalLocationDTO.builder()
+                            .latitude(animalLocation.getLocationofAnimal().split(",")[0])
+                            .longitude(animalLocation.getLocationofAnimal().split(",")[1])
+                            .timestamp(animalLocation.getAnimalLocationTS().toString())
+                            .build())
+                    .toList();
             AnimalAllLocationsDTO animalAllLocationsDTO = AnimalAllLocationsDTO.builder()
                     .animalId(animal.getAnimalId())
                     .animalSpecies(animal.getSpecies())
                     //.animalPhotoURL(animal.getAnimalPhotoURL())
                     .animalDescription(animal.getAnimalDescription())
-                    .animalLocations(
-                            animalLocationRepo.findAllByAnimal_AnimalId(animal.getAnimalId())
-                                    .stream()
-                                    .map(animalLocation -> AnimalLocationDTO.builder()
-                                            .latitude(animalLocation.getLocationofAnimal().split(",")[0])
-                                            .longitude(animalLocation.getLocationofAnimal().split(",")[1])
-                                            .timestamp(animalLocation.getAnimalLocationTS().toString())
-                                            .build())
-                                    .toList()
-                    )
+                    .animalLocations(animalLocationDTOList)
                     .build();
+            animalAllLocationsDTOList.add(animalAllLocationsDTO);
         });
         return ResponseEntity.ok(animalAllLocationsDTOList);
     }
@@ -210,27 +219,27 @@ public class AnimalLocationServiceImpl implements AnimalLocationService {
         animalLocationRepo.save(animalLocation);
         Random random = new Random();
         //random number of locations between 7 and 20
-       int numberOfLocations = random.nextInt(14) + 7;
-       for (int i = 0; i < numberOfLocations; i++) {
-           //random delta latitude and longitude between -0.001 and 0.001
-           double deltaLatitude = random.nextDouble() * 0.002 - 0.001;
-           double deltaLongitude = random.nextDouble() * 0.002 - 0.001;
-           double newLatitude = Double.parseDouble(latitude) + deltaLatitude;
-           double newLongitude = Double.parseDouble(longitude) + deltaLongitude;
-           //new timestamp is old timestamp + random number between 0.5 and 5 seconds
-           Timestamp newTimestamp = new Timestamp(timestamp.getTime() + (long)((random.nextDouble() * 4.5 + 0.5) * 1000));
-              AnimalLocation newAnimalLocation = AnimalLocation.builder()
-                     .animal(animal)
-                     .locationofAnimal(String.valueOf(newLatitude) + "," + String.valueOf(newLongitude))
-                     .animalLocationTS(newTimestamp)
-                     .build();
-              animalLocationRepo.save(newAnimalLocation);
-              timestamp = newTimestamp;
-              latitude = String.valueOf(newLatitude);
-              longitude = String.valueOf(newLongitude);
+        int numberOfLocations = random.nextInt(14) + 7;
+        for (int i = 0; i < numberOfLocations; i++) {
+            //random delta latitude and longitude between -0.001 and 0.001
+            double deltaLatitude = random.nextDouble() * 0.002 - 0.001;
+            double deltaLongitude = random.nextDouble() * 0.002 - 0.001;
+            double newLatitude = Double.parseDouble(latitude) + deltaLatitude;
+            double newLongitude = Double.parseDouble(longitude) + deltaLongitude;
+            //new timestamp is old timestamp + random number between 0.5 and 5 seconds
+            Timestamp newTimestamp = new Timestamp(timestamp.getTime() + (long) ((random.nextDouble() * 4.5 + 0.5) * 1000));
+            AnimalLocation newAnimalLocation = AnimalLocation.builder()
+                    .animal(animal)
+                    .locationofAnimal(String.valueOf(newLatitude) + "," + String.valueOf(newLongitude))
+                    .animalLocationTS(newTimestamp)
+                    .build();
+            animalLocationRepo.save(newAnimalLocation);
+            timestamp = newTimestamp;
+            latitude = String.valueOf(newLatitude);
+            longitude = String.valueOf(newLongitude);
 
 
-       }
+        }
     }
 
 

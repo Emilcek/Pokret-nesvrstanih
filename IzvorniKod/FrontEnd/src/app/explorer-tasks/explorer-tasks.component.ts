@@ -4,7 +4,8 @@ import * as L from "leaflet";
 import { LatLng, Marker } from "leaflet";
 import { environment } from "../../environments/environment";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import {FormControl, FormGroup} from "@angular/forms";
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { AnimalCommentsDialogComponent } from '../animal-comments-dialog/animal-comments-dialog.component';
 
 interface Task {
   type: string,
@@ -32,14 +33,10 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
   tasks: any;
   private map: any;
   private intervalId: any
-  private intervalIdAnimal: any
   currentUser: any;
-  private animalMarkersLayer: L.LayerGroup | undefined;
-  files: any = [];
-  animalForm: FormGroup = new FormGroup({
-    animalSpecies: new FormControl(''),
-    animalDescription: new FormControl('')
-  })
+  private animalMarkersLayer: any = L.layerGroup();
+  private explorersMarkersLayer: any = L.layerGroup();
+  idOfAction: any;
 
   customIconForMyLocation = L.icon({
     iconUrl: "assets/img/myLocation.png", // Specify the path to your custom icon image
@@ -47,6 +44,19 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
     iconAnchor: [16, 32], // Set the anchor point of the icon (relative to its size)
     popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
   });
+  customExplorerIcon = L.icon({
+    iconUrl: "assets/img/ex1.png", // Specify the path to your custom icon image
+    iconSize: [52, 42], // Set the size of the icon
+    iconAnchor: [16, 32], // Set the anchor point of the icon (relative to its size)
+    popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
+  });
+  customIconAnimal = L.icon({
+    iconUrl: "assets/img/animalLoc.png", // Specify the path to your custom icon image
+    iconSize: [32, 32], // Set the size of the icon
+    iconAnchor: [16, 32], // Set the anchor point of the icon (relative to its size)
+    popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
+  });
+
 
   errorMessage: string = "";
   customIcon = L.icon({
@@ -63,7 +73,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
     headers: this.header
   };
 
-  constructor(private headerService: HeaderService, private http: HttpClient) {
+  constructor(private headerService: HeaderService, private http: HttpClient, private dialog: MatDialog) {
     Marker.prototype.options.icon = this.customIcon;
 
   }
@@ -72,24 +82,29 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
 
     this.http.get<any>(environment.BASE_API_URL + "/explorer/tasks", this.headersObj).subscribe({
       next: (data: any) => {
+        console.log(data)
         this.tasks = data;
+        this.tasks.map((zadatak: any) => {
+          this.idOfAction = zadatak.actionId
+        })
+        console.log("idOfAction: " + this.idOfAction)
       }
     })
 
     this.http.get<any>(environment.BASE_API_URL + "/client", this.headersObj).subscribe({
       next: data => {
+        console.log("This is data:", data)
         let res: any = data;
         this.currentUser = {
           Name: data.firstName,
           Surname: data.lastName,
           Username: data.clientName,
-          Password: data.password, //zbog toga ne mogu pristupiti lozinci
+          Password: data.password, 
           Email: data.email,
           ClientPhoto: data.clientPhoto,
           Role: data.role,
           EducatedFor: data.educatedFor
         }
-        //console.log(this.currentUser, "user")
       }
     })
   }
@@ -108,18 +123,24 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
     let markerMyLocation: L.Marker<any>;
 
     const getPosition = (position: any) => {
+      console.log(position)
       const lat = position.coords.latitude;
       const long = position.coords.longitude;
       const timeStamp = new Date(position.timestamp).toISOString().slice(0, 10).replace('T', ' ');
       const time = new Date(position.timestamp).toLocaleTimeString(undefined, { hour12: false });
-      const accuracy = position.coords.accuracy;
 
       const fullDateTimeString = `${timeStamp} ${time}`;
+
+      console.log("Full DateTime String:", fullDateTimeString);
+
+      console.log("Username: " + this.currentUser.Username)
       const data = {
         longitude: long,
         latitude: lat,
         locationTimestamp: fullDateTimeString,
       };
+
+      console.log("Data: " + JSON.stringify(data))
 
       //post rekvest u bazu za lat, long, tmiestamp
       let header = new HttpHeaders({
@@ -151,6 +172,15 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
       }
 
       //circle = L.circle([lat, long], {radius: accuracy}).addTo(this.map);
+      markerMyLocation = L.marker([lat, long], {icon:this.customIconForMyLocation}).addTo(this.map)
+      .on("mouseover", event => {
+        event.target.bindPopup('<h3>Moja lokacija</h3>', popupOptions).openPopup();
+      })
+      .on("mouseout", event => {
+        event.target.closePopup();
+      });
+
+      //circle = L.circle([lat, long], {radius: accuracy}).addTo(this.map);
       markerMyLocation = L.marker([lat, long], { icon: this.customIconForMyLocation }).addTo(this.map)
         .on("mouseover", event => {
           event.target.bindPopup('<h3>Moja lokacija</h3>', popupOptions).openPopup();
@@ -158,25 +188,35 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
         .on("mouseout", event => {
           event.target.closePopup();
         });
+      console.log("Lat: " + lat + " Long: " + long + " Timestamp: " + timeStamp)
     }
 
     tiles.addTo(this.map);
 
-    //moj dio za prikaz trenutne lokacije
-    if (!navigator.geolocation) {
-      console.log("Browser ne podrzava geolocation");
-    } else {
+
+
+    //moj dio za prikaz trenutne lokacije 
       this.intervalId = setInterval(() => {
-        navigator.geolocation.getCurrentPosition(getPosition);
-        this.getAllAnimals();
+        if (!navigator.geolocation) {
+          console.log("Browser ne podrzava geolocation");
+        } else {
+          navigator.geolocation.getCurrentPosition(getPosition);
+          this.getAllAnimals();
+          this.getExplorers();
+        }
       }, 5000)
     }
-  }
 
   private getAllAnimals(): void {
-      this.animalMarkersLayer = L.layerGroup();
+    console.log("Get animals")
 
-      this.animalMarkersLayer?.clearLayers();
+      console.log("Prije removanja: " + this.animalMarkersLayer.getLayers().length)
+
+      if(this.animalMarkersLayer) {
+        this.animalMarkersLayer.clearLayers();
+        console.log("Poslije removanja: " + this.animalMarkersLayer.getLayers().length)
+      }
+
 
       let header = new HttpHeaders({
         'Content-Type': 'application/json',
@@ -187,29 +227,76 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
       };
       this.http.get<any>(environment.BASE_API_URL + "/animal/currentLocations/all", headersObj).subscribe({
         next: (responseData: any) => {
-          if(Array.isArray(responseData)){
-          }
-          const serverLat = responseData.latitude;
-          const serverLong = responseData.longitude;
+          console.log(responseData);
 
-          responseData.map((element: { latitude: any; longitude: any; }) => {
+          responseData.map((element: {
+            animalSpecies: string;
+            animalId: string; latitude: any; longitude: any; 
+}) => {
             const serverLat = element.latitude;
           const serverLong = element.longitude;
 
-          const animalMarker = L.marker([serverLat, serverLong]);
-
-          this.animalMarkersLayer?.addLayer(animalMarker)
+          const animalMarker = L.marker([serverLat, serverLong], { icon: this.customIconAnimal }).on("mouseover", event => {
+            event.target.bindPopup(element.animalId + ':' + element.animalSpecies).openPopup();
+          }).on("click", event => {
+            console.log("ID i vrsta: " + element.animalId + ", " + element.animalSpecies)
+            //get rekvest za svim komentarima vezanim uz tu zivotinju po ID-u zivotinje
+            this.openDialog(element);
+          })
+          ;
+          console.log("Die zivina: " + serverLat + ", " + serverLong)
+          animalMarker.addTo(this.animalMarkersLayer)
           });
-
-
+          console.log("Layeri: " + this.animalMarkersLayer.getLayers().length)
           this.map.addLayer(this.animalMarkersLayer);
         },
         error: error => {
           console.error("Error getting location:", error);
         }
-      })
+      }) 
+  }
+
+  private getExplorers() {
+    console.log("Get explorers")
+
+    console.log("Prije removanja: " + this.explorersMarkersLayer.getLayers().length)
+
+    if(this.explorersMarkersLayer) {
+      this.explorersMarkersLayer.clearLayers();
+      console.log("Poslije removanja: " + this.explorersMarkersLayer.getLayers().length)
+    }
 
 
+    let header = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    });
+    let headersObj = {
+      headers: header
+    };
+    this.http.get<any>(environment.BASE_API_URL + "/action/explorers/" + this.idOfAction, headersObj).subscribe({
+      next: (responseData: any) => {
+        console.log(responseData);
+
+        responseData.map((element: {
+          explorerName: string; latitude: any; longitude: any; 
+}) => {
+          const serverLat = element.latitude;
+        const serverLong = element.longitude;
+
+        const animalMarker = L.marker([serverLat, serverLong], { icon: this.customExplorerIcon }).on("mouseover", event => {
+          event.target.bindPopup(element.explorerName).openPopup();
+        });
+        console.log("Die explorer: " + serverLat + ", " + serverLong)
+        animalMarker.addTo(this.explorersMarkersLayer)
+        });
+        console.log("Layeri: " + this.explorersMarkersLayer.getLayers().length)
+        this.map.addLayer(this.explorersMarkersLayer);
+      },
+      error: error => {
+        console.error("Error getting location:", error);
+      }
+    }) 
   }
 
   ngAfterViewInit(): void {
@@ -264,35 +351,13 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   onCheckboxChange(event: any, task: any, i: any) {
-    let id = i + 'input1'
+    let id = i + 'input'
     let body = (document.getElementById(id) as HTMLInputElement).value;
-    let body2 = (document.getElementById(i + 'input') as HTMLInputElement).value;
-
-    let formData = new FormData();
-    formData.append("animalSpecies", this.animalForm.value.animalSpecies)
-    formData.append("animalPhotoURL", "y")
-    formData.append("animalDescription", this.animalForm.value.animalDescription)
-
-    let body3 = {
-      animalSpecies: this.animalForm.value.animalSpecies,
-      animalPhotoURL: "",
-      animalDescription: this.animalForm.value.animalDescription
-    }
-    console.log(body3)
-
-    this.http.post<any>(environment.BASE_API_URL + "/animal/add", body3, this.headersObj).subscribe({
-      next: (data: any) => {
-        console.log(data)
-      }
-    })
-
-    /*this.http.put<any>(environment.BASE_API_URL + "/task/" + task.taskId + "/comment", body, this.headersObj).subscribe({
+    this.http.put<any>(environment.BASE_API_URL + "/task/" + task.taskId + "/comment", body, this.headersObj).subscribe({
       next: data => {
 
         this.http.put<any>(environment.BASE_API_URL + "/explorer/task/" + task.taskId + "/done", "", this.headersObj).subscribe({
           next: (data: any) => {
-
-
 
             this.http.get<any>(environment.BASE_API_URL + "/explorer/tasks", this.headersObj).subscribe({
               next: (data: any) => {
@@ -306,30 +371,19 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
         this.errorMessage = "Napišite komentar";
         (document.getElementById(i) as HTMLInputElement).checked = false;
       }
-    })*/
+    })
   }
 
-  handleFileInput(event: any): void {
-    const fileInput = event.target;
-    const imagePreview = document.getElementById('imagepreview');
-
-    // Check if a file is selected
-    if (fileInput.files && fileInput.files[0]) {
-      const reader = new FileReader();
-
-      reader.onload = function (e) {
-        // Set the preview image source
-        imagePreview!.innerHTML = `<img src="${e.target!.result}" alt="Image Preview" height="150px" width="auto">`;
-      };
-
-      // Read the selected file as a data URL
-      reader.readAsDataURL(fileInput.files[0]);
-      this.files.push(fileInput.files[0]);
-      console.log(fileInput.files[0])
-    } else if(this.files[0]==undefined){
-      // Clear the preview if no file is selected
-      imagePreview!.innerHTML = '';
-    }
+  openDialog(animal: any) {
+    const dialogRef = this.dialog.open(AnimalCommentsDialogComponent, {
+      width:'60%',
+      height:'65%',
+      data: animal,
+    });
+    //console.log(user)
+    dialogRef.afterClosed().subscribe(result => {
+      
+    });
   }
 
 }
