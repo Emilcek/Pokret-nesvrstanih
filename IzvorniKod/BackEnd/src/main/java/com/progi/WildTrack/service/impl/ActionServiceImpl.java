@@ -185,7 +185,7 @@ public class ActionServiceImpl implements ActionService {
         }
         //check if explorer/researcher is on action
         Set<Explorer> explorers = action.getExplorers();
-        if (!explorers.contains(explorer) && !action.getResearcher().equals(researcher)) {
+        if (!explorers.contains(explorer) && action.getResearcher() == null) {
             return ResponseEntity.badRequest().body("Client is not on action");
         }
         //for each explorer in explorers find last location
