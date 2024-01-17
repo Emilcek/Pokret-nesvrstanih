@@ -173,7 +173,7 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit,OnDestroy{
             console.log(error,"krivo getnje tragača")
           }
         })
-      }, 10000);
+      }, 30000);
     }
 
   }
