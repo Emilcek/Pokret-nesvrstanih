@@ -233,7 +233,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
             this.getExplorers();
           }
         }
-      }, 5000)
+      }, 3000)
     }
 
   private getAllAnimals(): void {
@@ -452,6 +452,12 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
       let element = (document.getElementById(i + 'error'));
       element!.innerHTML = "Napišite komentar";
     }
+    this.refreshData();
+  }
+
+  refreshData() {
+    this.ngOnInit();
+    location.reload();
   }
 
   openDialog(animalId: any) {
