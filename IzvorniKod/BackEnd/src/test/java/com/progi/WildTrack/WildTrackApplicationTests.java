@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class WildTrackApplicationTests {
-/*
+
     @Autowired
     private AuthenticationService authenticationService;
     @Autowired
@@ -155,5 +155,4 @@ class WildTrackApplicationTests {
     public void adminAvailable(){
         assertTrue(clientRepository.existsByClientName("admin"));
     }
-*/
 }
