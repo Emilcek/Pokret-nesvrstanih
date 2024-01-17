@@ -16,17 +16,13 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit,OnDestroy{
   taskStatus: any = {'Ongoing': 'U tijeku', 'Done': 'Izvršen'};
   private map: any;
   private center: L.LatLngExpression = L.latLng(45.1, 15.2);
-  chosenStationName: any;
   startLocation:any;
   endLocation:any;
-  taskAdded: any=false;
   markersGroup:any;
   explorersData:any=[];
   animalsData:any=[];
   tiles:any;
-  overlayMaps:any;
   animalLayerGroup:any;
-  httpGetDone:boolean=false;
   layerControl:any;
   interval:any;
   ngOnInit(): void {

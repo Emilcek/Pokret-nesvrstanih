@@ -11,7 +11,7 @@
   <div class="listOfTasks">
     <label class="sub-title" >Lista zadataka</label>
     <tr *ngFor="let n of data.actionTasks">
-      <td style="padding-left: 0.5rem"><p style="padding-left: 1rem">{{data.actionTasks.indexOf(n)+1}}. {{n.taskDescription}}, kompetencija: {{n.vehicleName}}, status: {{taskStatus[n.taskStatus]}}</p></td>
+      <td style="padding-left: 0.5rem"><p style="padding-left: 1rem">{{data.actionTasks.indexOf(n)+1}}. {{n.taskDescription}}, kompetencija: {{n.vehicleName}}<br>tragač: {{n.explorerName}}, status: {{taskStatus[n.taskStatus]}}</p></td>
     </tr>
   </div>
   <div *ngIf="data.actionExplorers.length>0">
