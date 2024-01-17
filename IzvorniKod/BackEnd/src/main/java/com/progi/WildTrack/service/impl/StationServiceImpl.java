@@ -22,6 +22,9 @@ public class StationServiceImpl implements StationService {
     }
 
     public void createStations() {
+        if (!stationRepo.findAll().isEmpty()) {
+            return;
+        }
         Station station1 = Station.builder()
                 .stationName("Postaja Sljeme")
                 .stationStatus("Inactive")
