@@ -42,6 +42,20 @@ public class StationLeadServiceImpl implements StationLeadService {
         return ResponseEntity.ok().build();
     }
 
+    public boolean assignStationToStationLeadByName(String stationLeadName, String stationName) {
+        StationLead stationLead = stationLeadRepo.findByStationLeadName(stationLeadName);
+        Station station = stationRepo.findByStationName(stationName);
+        if (stationLead != null && station != null) {
+            station.setStationStatus("active");
+            stationRepo.save(station);
+            stationLead.setStation(station);
+            stationLeadRepo.save(stationLead);
+        } else {
+            return false;
+        }
+        return true;
+    }
+
     public ResponseEntity assignExplorerToStation(String stationName, String explorerName){
         Station station = stationRepo.findByStationName(stationName);
         Explorer explorer = explorerRepo.findByExplorerName(explorerName);

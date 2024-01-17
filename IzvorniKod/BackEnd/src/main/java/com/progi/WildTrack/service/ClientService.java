@@ -21,6 +21,8 @@ public interface ClientService {
 
     ResponseEntity deleteClient();
 
+    ResponseEntity deleteClient(String clientName);
+
     ClientDetailsDTO updateClientStatusByClientName(String clientName, Integer status);
 
     ClientDetailsDTO getClient();

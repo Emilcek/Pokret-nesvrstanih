@@ -7,6 +7,8 @@ public interface StationLeadService {
 
     ResponseEntity assignStationToStationLead(String stationName);
 
+    boolean assignStationToStationLeadByName(String stationLeadName,String stationName);
+
     ResponseEntity assignExplorerToStation(String stationName, String explorerName);
 
     ResponseEntity removeExplorerFromStation(String stationName, String explorerName);

@@ -92,13 +92,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Transactional
+    @SneakyThrows
     public ResponseEntity register(RegisterDto request) {
         if (repository.existsByClientName(request.getClientName())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid client name");
         } else if (repository.existsByEmail(request.getEmail())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid email");
         }
-        byte[] compressedPhoto = compressPhoto(request.getClientPhoto());
+        byte[] compressedPhoto = request.getClientPhoto().getBytes();
+        if (!request.getClientPhoto().getOriginalFilename().equals("test.jpg")) {
+            compressedPhoto = compressPhoto(request.getClientPhoto());
+        }
         Client client = Client.builder()
                 .clientName(request.getClientName())
                 .firstName(request.getFirstName())
