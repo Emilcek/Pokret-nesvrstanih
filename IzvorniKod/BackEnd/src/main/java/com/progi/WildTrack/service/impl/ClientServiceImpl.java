@@ -182,6 +182,18 @@ public class ClientServiceImpl implements ClientService {
 
     public ResponseEntity deleteClient() {
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return deleteClient(client);
+    }
+
+    public ResponseEntity deleteClient(String clientName) {
+        Client client = clientRepo.findByClientName(clientName).orElse(null);
+        if (client == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return deleteClient(client);
+    }
+
+    private ResponseEntity deleteClient(Client client) {
         List<Token> tokens = tokenRepository.findAllValidTokenByClient(client.getClientName());
         if (!tokens.isEmpty()) {
             tokenRepository.deleteAll(tokens);

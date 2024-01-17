@@ -45,7 +45,7 @@ public class Explorer {
     private List<Task> tasks;
     @OneToMany(mappedBy = "explorer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ExplorerLocation> explorerLocations;
-    @ManyToMany(mappedBy = "explorers", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "explorers", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.EAGER)
     private Set<Vehicle> vehicles = new HashSet<>();
 
     public Explorer(Client client) {
