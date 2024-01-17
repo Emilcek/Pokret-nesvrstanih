@@ -19,33 +19,121 @@
 	
 		\section{Ispitivanje programskog rješenja}
 			
-			\textbf{\textit{dio 2. revizije}}\\
-			
-			 \textit{U ovom poglavlju je potrebno opisati provedbu ispitivanja implementiranih funkcionalnosti na razini komponenti i na razini cijelog sustava s prikazom odabranih ispitnih slučajeva. Studenti trebaju ispitati temeljnu funkcionalnost i rubne uvjete.}
-	
-			
 			\subsection{Ispitivanje komponenti}
-			\textit{Potrebno je provesti ispitivanje jedinica (engl. unit testing) nad razredima koji implementiraju temeljne funkcionalnosti. Razraditi \textbf{minimalno 6 ispitnih slučajeva} u kojima će se ispitati redovni slučajevi, rubni uvjeti te izazivanje pogreške (engl. exception throwing). Poželjno je stvoriti i ispitni slučaj koji koristi funkcionalnosti koje nisu implementirane. Potrebno je priložiti izvorni kôd svih ispitnih slučajeva te prikaz rezultata izvođenja ispita u razvojnom okruženju (prolaz/pad ispita). }
 			
+			Ispitivanje komponenti ostvareno je pomoću Spring Boot i JUnit 5 alata za ispitivanje.
 			
+			Na slikama 5.1 i 5.2 prikazani su testovi vezani uz voditelja. Oba testa pokušavaju dodati voditelja na postaju. Na slici 5.1 prikazan je kod iz testa koji uspješno dodaje voditelja na postaju. Slika 5.2 prikazuje kod iz testa gdje se provjerava može li se dodati voditelj na nepostojeću postaju. Vraća da je uspješan test ako se ne može dodati što se i očekuje s ozbirom da je u pitanju nepostojeća postaja.  
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\textwidth]{slike/voditelj1.JPEG}
+				\caption{Testiranje za uspješno dodavanje voditelja postaji}
+				\label{fig:dijagram_baze}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\textwidth]{slike/voditelj2.JPEG}
+				\caption{Testiranje za dodavanje voditelja nepostojećoj postaji}
+				\label{fig:dijagram_baze}
+			\end{figure}
+			
+			Sljedeća tri testa vezana su uz tragača. Prvi od njih nalazi se na slici 5.3 te provjerava jesu li se vozila dobro dodala na tragače pri registraciji. Sljedeći test čiji je kod prikazan na slici 5.4 dodaje tragača na postaju. Zatim provjerava je li postaja prazna? Test je uspješan ako vrati da nije prazna jer smo prethodno dodali tragača. Posljednji test vezan uz tragača miče tog tragača kojeg smo prethodno dodali iz postaje. Zatim provjerava je li postaja prazna? Ovaj put je test uspješan ako vrati da je postaja prazna. Kod je prikazan na slici 5.5. 
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\textwidth]{slike/tragac1.JPEG}
+				\caption{Testiranje jesu li se vozila dodala na tragače}
+				\label{fig:dijagram_baze}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\textwidth]{slike/tragac2.JPEG}
+				\caption{Testiranje je li postaja prazna }
+				\label{fig:dijagram_baze}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\textwidth]{slike/tragac3.JPEG}
+				\caption{Testiranje je li postaja prazna }
+				\label{fig:dijagram_baze}
+			\end{figure}
+			
+			Na slikama 5.6 i 5.7 prikazani su testovi vezani uz istraživača. Nakon što se korisnik registrira i zatraži ulogu istraživač potrebna je još dodatna potvrda od strane admina. Na slici 5.6 prikazan je test kod kojeg se prihvaća istraživač nakon registracije. U slučaju testa na slici 5.7 zahtjev je odbijen. 
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\textwidth]{slike/istrazivac1.JPEG}
+				\caption{Testiranje prihvaćanja istraživača }
+				\label{fig:dijagram_baze}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\textwidth]{slike/istrazivac2.JPEG}
+				\caption{Testiranje odbijanja istraživača }
+				\label{fig:dijagram_baze}
+			\end{figure}
+			
+			Ovaj test provjerava postoji li uopće admin u bazi. Test koda prikazan je na slici 5.8.
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\textwidth]{slike/admin1.JPEG}
+				\caption{Testiranje postoji li admin u bazi}
+				\label{fig:dijagram_baze}
+			\end{figure}
+			
+			Na slici 5.9 prikazana je snimka zaslona terminala u IntelliJ IDE-u, kao rezultat izvodenja prethodno navedenih osam ispitnih slučajeva. 
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\textwidth]{slike/ispis.JPEG}
+				\caption{Rezultati ispitivanja pomoću Spring-a i JUnit-a}
+				\label{fig:dijagram_baze}
+			\end{figure}
+			
+			\vspace{108pt}
 			
 			\subsection{Ispitivanje sustava}
 			
-			 \textit{Potrebno je provesti i opisati ispitivanje sustava koristeći radni okvir Selenium\footnote{\url{https://www.seleniumhq.org/}}. Razraditi \textbf{minimalno 4 ispitna slučaja} u kojima će se ispitati redovni slučajevi, rubni uvjeti te poziv funkcionalnosti koja nije implementirana/izaziva pogrešku kako bi se vidjelo na koji način sustav reagira kada nešto nije u potpunosti ostvareno. Ispitni slučaj se treba sastojati od ulaza (npr. korisničko ime i lozinka), očekivanog izlaza ili rezultata, koraka ispitivanja i dobivenog izlaza ili rezultata.\\ }
+			 Ispitivanje sustava provedeno je pomoću dodatka za preglednik Selenium IDE. U nastavku su opisani provedeni ispitni slučajevi. Na slici 5.10 vidimo kako se admin pokušava ulogirati sa korisničkim imenom "admin2". To je pogrešno korisničko ime te se admin neće moći prijaviti. Slika 5.12 prikazuje isto to samo admin se prijavljuje pomoću korisničkog imena "admin" koje je njegovo pravo i uspješno se prijavljuje u aplikaciju.
 			 
-			 \textit{Izradu ispitnih slučajeva pomoću radnog okvira Selenium moguće je provesti pomoću jednog od sljedeća dva alata:}
-			 \begin{itemize}
-			 	\item \textit{dodatak za preglednik \textbf{Selenium IDE} - snimanje korisnikovih akcija radi automatskog ponavljanja ispita	}
-			 	\item \textit{\textbf{Selenium WebDriver} - podrška za pisanje ispita u jezicima Java, C\#, PHP koristeći posebno programsko sučelje.}
-			 \end{itemize}
-		 	\textit{Detalji o korištenju alata Selenium bit će prikazani na posebnom predavanju tijekom semestra.}
-			
-			\eject 
+			 \begin{figure}[H]
+			 	\centering
+			 	\includegraphics[width=\textwidth]{slike/krivi.JPEG}
+			 	\caption{Parametri sa pogrešnim korisničkim imenom}
+			 	\label{fig:dijagram_baze}
+			 \end{figure}
+			 
+			 \begin{figure}[H]
+			 	\centering
+			 	\includegraphics[width=\textwidth]{slike/krivi2.JPEG}
+			 	\caption{Rezultat prvog ispitnog slučaja}
+			 	\label{fig:dijagram_baze}
+			 \end{figure}
+			 
+			 \begin{figure}[H]
+			 	\centering
+			 	\includegraphics[width=\textwidth]{slike/pravi.JPEG}
+			 	\caption{Parametri sa valjanim korisničkim imenom}
+			 	\label{fig:dijagram_baze}
+			 \end{figure}
 		
-		
+			  \begin{figure}[H]
+			 	\centering
+			 	\includegraphics[width=\textwidth]{slike/pravi2.JPEG}
+			 	\caption{Rezultat drugog ispitnog slučaja}
+			 	\label{fig:dijagram_baze}
+			 \end{figure}
+			 
+		\vspace{324pt}	 
 		\section{Dijagram razmještaja}
 			
-			Na slici 5.1 nalazi se dijagram razmještaja. Dijagram razmještaja prikazuje fizičku strukturu programskog sustava. Glavna svrha mu je pobliže prikazati arhitekturu razmještaja sustava. Korisnici pristupaju aplikaciji korištenjem web preglednika. Komunikacija se odvija putem protokola HTTP. Na platformi Render se nalaze poslužitelji za frontend, backend i bazu podataka.
+			Na slici 5.14 nalazi se dijagram razmještaja. Dijagram razmještaja prikazuje fizičku strukturu programskog sustava. Glavna svrha mu je pobliže prikazati arhitekturu razmještaja sustava. Korisnici pristupaju aplikaciji korištenjem web preglednika. Komunikacija se odvija putem protokola HTTP. Na platformi Render se nalaze poslužitelji za frontend, backend i bazu podataka.
 			
 			\begin{figure}[H]
 				\centering
@@ -59,12 +147,89 @@
 		
 		\section{Upute za puštanje u pogon}
 		
-			\textbf{\textit{dio 2. revizije}}\\
+			Pri puštanju u pogon prvo je potrebno registrirati se na stranici "Render". Preporučamo koristeći vlastiti GitHub profil. Preduvjet za puštanje web aplikacije u pogon je zasebno pustiti u pogon backend, frontend i postgreSQL bazu podataka. Za deploy baze podataka odabiremo opciju "New" $\rightarrow$  "PostgreSQL". Nakon toga potrebno je upisati ime baze i odabrati instancu. U našem slučaju ta instanca je "free". Zatim kreiramo bazu. Postupak kako to učiniti prikazan je na slikama 5.15 i 5.16. 
+			
 		
-			 \textit{U ovom poglavlju potrebno je dati upute za puštanje u pogon (engl. deployment) ostvarene aplikacije. Na primjer, za web aplikacije, opisati postupak kojim se od izvornog kôda dolazi do potpuno postavljene baze podataka i poslužitelja koji odgovara na upite korisnika. Za mobilnu aplikaciju, postupak kojim se aplikacija izgradi, te postavi na neku od trgovina. Za stolnu (engl. desktop) aplikaciju, postupak kojim se aplikacija instalira na računalo. Ukoliko mobilne i stolne aplikacije komuniciraju s poslužiteljem i/ili bazom podataka, opisati i postupak njihovog postavljanja. Pri izradi uputa preporučuje se \textbf{naglasiti korake instalacije uporabom natuknica} te koristiti što je više moguće \textbf{slike ekrana} (engl. screenshots) kako bi upute bile jasne i jednostavne za slijediti.}
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\textwidth]{slike/slika1.PNG}
+				\caption{Puštanje u pogon baze }
+				\label{fig:dijagram_baze}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.7\textwidth]{slike/slika2.PNG}
+				\caption{Puštanje u pogon baze}
+				\label{fig:dijagram_baze}
+			\end{figure}
 			
 			
-			 \textit{Dovršenu aplikaciju potrebno je pokrenuti na javno dostupnom poslužitelju. Studentima se preporuča korištenje neke od sljedećih besplatnih usluga: \href{https://aws.amazon.com/}{Amazon AWS}, \href{https://azure.microsoft.com/en-us/}{Microsoft Azure} ili \href{https://www.heroku.com/}{Heroku}. Mobilne aplikacije trebaju biti objavljene na F-Droid, Google Play ili Amazon App trgovini.}
+			Sljedeće ćemo pustiti u pogon backend. Odabiremo opciju "New" $\rightarrow$ "Web Service" $\rightarrow$ "Build and deploy from Git repo $\rightarrow$ povežete GitHub profil i odaberete projekt koji želite pustiti u pogon. Postavite ime, regiju i root direktorij. Mi koristimo takozvani "monorepo" pa u root upisujemo "IzvorniKod/BackEnd". Postupak kako pustiti u pogon backend vidljiv je na sljedećim slikama.
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\textwidth]{slike/slika3.PNG}
+				\caption{Puštanje u pogon backenda }
+				\label{fig:dijagram_baze}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\textwidth]{slike/slika4.PNG}
+				\caption{Povezivanje s GitHub profilom }
+				\label{fig:dijagram_baze}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\textwidth]{slike/slika5.PNG}
+				\caption{Postavljanje imena, regije i root direktorija}
+				\label{fig:dijagram_baze}
+			\end{figure}
+		
+			Puštanje u pogon frontenda je vrlo slično. Odaberemo opciju "New" $\rightarrow$ "Static site" $\rightarrow$ odabir projekta $\rightarrow$ postavke konfiguracije možete vidjeti na slici 5.20.
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.7\textwidth]{slike/slika6.PNG}
+				\caption{Postavke konfiguracije za frontend}
+				\label{fig:dijagram_baze}
+			\end{figure}
+			
+			\vspace{72pt}
+			Sljedeći vrlo važan korak je postavljanje environment varijabli na frontend i backend. Kako to izgleda prikazano je na slikama 5.21 i 5.22.
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\textwidth]{slike/slika7.PNG}
+				\caption{Postavljanje environment varijabli za backend}
+				\label{fig:dijagram_baze}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\textwidth]{slike/slika8.PNG}
+				\caption{Postavljanje environment varijabli za frontend}
+				\label{fig:dijagram_baze}
+			\end{figure}
 			
 			
-			\eject 
+			Kako bi ste došli do varijabli koje su vezane uz bazu na dashbordu odaberete bazu i unutar connections se nalaze sve slike, a API URL za frontend odnosno backend se nađe tako da se odabere frontend ili backend slika.
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\textwidth]{slike/slika9.PNG}
+				\caption{Prikaz connections-a}
+				\label{fig:dijagram_baze}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\textwidth]{slike/slika10.PNG}
+				\caption{API URL za frontend/backend}
+				\label{fig:dijagram_baze}
+			\end{figure}
+		
+		
