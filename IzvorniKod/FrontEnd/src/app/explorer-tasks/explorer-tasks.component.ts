@@ -133,7 +133,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
 
-    let markerMyLocation: L.Marker<any>;
+    let markerMyLocation: L.Marker<any>, circle: L.Circle<any>;
 
     const getPosition = (position: any) => {
       console.log(position)
@@ -189,16 +189,22 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
       })
 
       //getrekvest u drugoj komponenti
+      
 
       if (markerMyLocation) {
+        console.log("Uso u removanje markerea moje loacjije")
         this.map.removeLayer(markerMyLocation);
       }
+
+      /*if(circle) {
+        this.map.removeLayer(circle);
+      }*/
 
       let popupOptions = {
         "closeButton": false
       }
 
-      //circle = L.circle([lat, long], {radius: accuracy}).addTo(this.map);
+      //circle = L.circle([lat, long], {radius: position.coords.accuracy}).addTo(this.map);
       markerMyLocation = L.marker([lat, long], {icon:this.customIconForMyLocation}).addTo(this.map)
       .on("mouseover", event => {
         event.target.bindPopup('<h3>Moja lokacija</h3>', popupOptions).openPopup();
@@ -271,7 +277,8 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
           }).on("click", event => {
             //console.log("ID i vrsta: " + element.animalId + ", " + element.animalSpecies)
             //get rekvest za svim komentarima vezanim uz tu zivotinju po ID-u zivotinje
-            this.openDialog(element);
+            console.log("Element/animal: " + element.animalId)
+            this.openDialog(element.animalId);
           })
           ;
           //console.log("Die zivina: " + serverLat + ", " + serverLong)
@@ -454,24 +461,32 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
     }
   }
 
-  openDialog(animal: any) {
+  openDialog(animalId: any) {
     //get svih komentaraza zadani animalId i o spremiti u data
-    /*this.http.get<any>(environment.BASE_API_URL + "" + animal.animaId, this.headersObj).subscribe({
+    this.http.get<any>(environment.BASE_API_URL + "/animalcomment/get/" + animalId, this.headersObj).subscribe({
       next: data => {
-        console.log("Getani komentari", data)
-        this.comments = data
+        console.log("Getani komentari", data);
+        const dataForDialog = data
+        const nameOfExplorer = this.currentUser.Username
+  
+        // Move the dialog opening inside the subscribe block
+        const dialogRef = this.dialog.open(AnimalCommentsDialogComponent, {
+          width: '60%',
+          height: '65%',
+          data: { dataForDialog, animalId, nameOfExplorer },
+        });
+  
+        dialogRef.afterClosed().subscribe(result => {
+          // Handle the result if needed
+        });
+      },
+      error: error => {
+        // Handle errors if necessary
+        console.error("Error fetching comments:", error);
       }
-    })*/
-    const dialogRef = this.dialog.open(AnimalCommentsDialogComponent, {
-      width:'60%',
-      height:'65%',
-      data: this.comments,
-    });
-    //console.log(user)
-    dialogRef.afterClosed().subscribe(result => {
-
     });
   }
+  
 
   handleFileInput(event: any) {
     const fileInput = event.target;
