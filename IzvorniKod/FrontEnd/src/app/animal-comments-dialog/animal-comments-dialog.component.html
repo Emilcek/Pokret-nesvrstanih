@@ -17,5 +17,7 @@
         <p>Nema komentara za zadanu životinju</p>
     </div>
 </div>
-<textarea [(ngModel)]="newComment" placeholder="Unesite novi komentar" class="comment-input"></textarea>
+<div *ngIf="this.role === 'tragac'">
+    <textarea [(ngModel)]="newComment" placeholder="Unesite novi komentar" class="comment-input"></textarea>
 <button mat-button mat-dialog-close class="btn1" (click)="addComment()" type="button">Dodaj komentar</button>
+</div>

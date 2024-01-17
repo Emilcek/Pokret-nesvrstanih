@@ -19,6 +19,7 @@ export class AnimalCommentsDialogComponent implements OnInit{
   comments: any[] | undefined;
   animalId: any;
   newComment: string = '';
+  role: any;
 
   header = new HttpHeaders({
     'Content-Type': 'application/json',
@@ -31,6 +32,16 @@ export class AnimalCommentsDialogComponent implements OnInit{
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient, private el: ElementRef) {}
 
   ngOnInit() {
+
+    this.http.get<any>(environment.BASE_API_URL + "/client", this.headersObj).subscribe({
+      next: data => {
+        console.log("This is data:", data)
+        let res: any = data;
+        this.role = data.role
+        console.log("role: " + this.role)
+      }
+    })
+
     console.log("Comments: ", this.data.dataForDialog);
     console.log("AnimalId: ", this.data.animalId);
 

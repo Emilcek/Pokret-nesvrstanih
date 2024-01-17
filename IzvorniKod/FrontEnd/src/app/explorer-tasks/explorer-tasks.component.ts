@@ -214,13 +214,6 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
       });
 
       //circle = L.circle([lat, long], {radius: accuracy}).addTo(this.map);
-      markerMyLocation = L.marker([lat, long], { icon: this.customIconForMyLocation }).addTo(this.map)
-        .on("mouseover", event => {
-          event.target.bindPopup('<h3>Moja lokacija</h3>', popupOptions).openPopup();
-        })
-        .on("mouseout", event => {
-          event.target.closePopup();
-        });
       //console.log("Lat: " + lat + " Long: " + long + " Timestamp: " + timeStamp)
     }
 
