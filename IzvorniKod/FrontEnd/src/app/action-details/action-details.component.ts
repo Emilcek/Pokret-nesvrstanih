@@ -37,7 +37,13 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit,OnDestroy{
     let headersObj = {
       headers: header
     };
+    this.tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      minZoom: 3,
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright"></a>'
+    });
     this.markersGroup = L.layerGroup();
+    this.layerControl= L.control.layers({"Karta":this.tiles})
     this.http.get(environment.BASE_API_URL+"/animal/currentLocations/all",headersObj).subscribe({
       next: data => {
         let response: any = data;
@@ -53,8 +59,9 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit,OnDestroy{
           let e = L.latLng(element.latitude, element.longitude);
           let marker =L.marker(e,{icon:Icon})
           marker.bindPopup(element.animalId+":"+element.animalSpecies).openPopup()
-          marker.addTo(this.markersGroup);
+          marker.addTo(this.animalLayerGroup);
         })
+        this.layerControl.addOverlay(this.animalLayerGroup,"Životinje");
         console.log(response)
       }, error: (error) => {
         console.log(error,"krivo dodani podaci o životinjama")
@@ -81,18 +88,22 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit,OnDestroy{
           marker.bindPopup(element.firstName+" "+element.lastName).openPopup()
           marker.addTo(this.markersGroup);
           });
+        this.layerControl.addOverlay(this.markersGroup,"Tragači");
 
       }, error: (error) => {
         console.log(error,"krivo dodani podaci o tragačima")
       }
     })
+
     if(this.data.actionStatus=="Accepted"){
       this.interval=setInterval(() => {
-        if(this.markersGroup!=undefined && this.layerControl!=undefined){
+        console.log("interval")
+        if(this.layerControl!=undefined && this.animalLayerGroup!=undefined && this.markersGroup!=undefined){
+          this.layerControl.removeLayer(this.animalLayerGroup);
+          this.layerControl.removeLayer(this.markersGroup);
           this.markersGroup.clearLayers();
-          this.layerControl.remove();
+          this.animalLayerGroup.clearLayers();
         }
-        this.markersGroup = L.layerGroup();
         this.http.get(environment.BASE_API_URL+"/animal/currentLocations/all",headersObj).subscribe({
           next: data => {
             let response: any = data;
@@ -107,8 +118,9 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit,OnDestroy{
               let e = L.latLng(element.latitude, element.longitude);
               let marker =L.marker(e,{icon:Icon})
               marker.bindPopup(element.animalId+":"+element.animalSpecies).openPopup()
-              marker.addTo(this.markersGroup);
+              marker.addTo(this.animalLayerGroup);
             })
+            this.layerControl.addOverlay(this.animalLayerGroup,"Životinje");
           }, error: (error) => {
             console.log(error,"krivo dodani podaci o životinjama")
           }
@@ -133,7 +145,7 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit,OnDestroy{
               marker.bindPopup(element.firstName+" "+element.lastName).openPopup()
               marker.addTo(this.markersGroup);
             })
-
+            this.layerControl.addOverlay(this.markersGroup,"Tragači");
           }, error: (error) => {
             console.log(error,"krivo getnje tragača")
           }
@@ -155,14 +167,8 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit,OnDestroy{
       zoom: 7
     });
 
-    this.tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 18,
-      minZoom: 3,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright"></a>'
-    });
-
     this.tiles.addTo(this.map);
-
+    this.layerControl.addTo(this.map);
   }
   ngAfterViewInit(): void {
       this.initMap();
