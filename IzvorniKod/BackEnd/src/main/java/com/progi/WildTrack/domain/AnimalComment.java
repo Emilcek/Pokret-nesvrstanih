@@ -1,12 +1,20 @@
 package com.progi.WildTrack.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "AnimalComment")
 public class AnimalComment {
     @Id
@@ -28,8 +36,5 @@ public class AnimalComment {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "AnimalId")
     private Animal animal;
-
-    public AnimalComment() {
-    }
 
 }

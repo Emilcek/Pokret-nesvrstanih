@@ -124,14 +124,17 @@ public class AnimalLocationServiceImpl implements AnimalLocationService {
                             .timestamp(animalLocation.getAnimalLocationTS().toString())
                             .build())
                     .toList();
-            AnimalAllLocationsDTO animalAllLocationsDTO = AnimalAllLocationsDTO.builder()
-                    .animalId(animal.getAnimalId())
-                    .animalSpecies(animal.getSpecies())
-                    //.animalPhotoURL(animal.getAnimalPhotoURL())
-                    .animalDescription(animal.getAnimalDescription())
-                    .animalLocations(animalLocationDTOList)
-                    .build();
-            animalAllLocationsDTOList.add(animalAllLocationsDTO);
+            if (!animalLocationDTOList.isEmpty()) {
+                AnimalAllLocationsDTO animalAllLocationsDTO = AnimalAllLocationsDTO.builder()
+                        .animalId(animal.getAnimalId())
+                        .animalSpecies(animal.getSpecies())
+                        //.animalPhotoURL(animal.getAnimalPhotoURL())
+                        .animalDescription(animal.getAnimalDescription())
+                        .animalLocations(animalLocationDTOList)
+                        .build();
+                animalAllLocationsDTOList.add(animalAllLocationsDTO);
+            }
+
         });
         return ResponseEntity.ok(animalAllLocationsDTOList);
     }

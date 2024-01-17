@@ -24,9 +24,9 @@ public class ExplorerLocationServiceImpl implements ExplorerLocationService {
     private ExplorerRepository explorerRepo;
 
     @Override
-    public ResponseEntity addExplorerLocation(String explorerName,ExplorerLocationDTO explorerLocationDTO) {
+    public ResponseEntity addExplorerLocation(String explorerName, ExplorerLocationDTO explorerLocationDTO) {
         //check if explorer exists
-       if (!explorerRepo.existsByExplorerName(explorerName)) {
+        if (!explorerRepo.existsByExplorerName(explorerName)) {
             return ResponseEntity.badRequest().body("Explorer not found");
         }
         //if explorer exists -> create new explorer location with timestamp
@@ -35,7 +35,7 @@ public class ExplorerLocationServiceImpl implements ExplorerLocationService {
                 .locationOfExplorer(explorerLocationDTO.getLatitude() + "," + explorerLocationDTO.getLongitude())
                 .locationTimestamp(Timestamp.valueOf(explorerLocationDTO.getLocationTimestamp()))
                 .build();
-       //System.out.println("Explorer location added " + explorerLocation);
+        //System.out.println("Explorer location added " + explorerLocation);
         explorerLocationRepo.save(explorerLocation);
         return ResponseEntity.ok(explorerLocationDTO);
     }
@@ -48,6 +48,9 @@ public class ExplorerLocationServiceImpl implements ExplorerLocationService {
         }
         //if explorer exists -> get last location of explorer
         ExplorerLocation explorerLocation = explorerLocationRepo.findFirstByExplorer_ExplorerNameOrderByLocationTimestampDesc(explorerName);
+        if (explorerLocation == null) {
+            return ResponseEntity.badRequest().body("Explorer location not found");
+        }
         //var explorer = explorerRepo.findByExplorerName(explorerName);
         ExplorerDetailsDTO explorerDetailsDTO = ExplorerDetailsDTO.builder()
                 .explorerName(explorerLocation.getExplorer().getExplorerName())
@@ -71,6 +74,9 @@ public class ExplorerLocationServiceImpl implements ExplorerLocationService {
             return ResponseEntity.badRequest().body("Explorer not found");
         }
         Set<ExplorerLocation> explorerLocationList = explorerLocationRepo.findAllByExplorer_ExplorerName(explorerName);
+        if (explorerLocationList == null) {
+            return ResponseEntity.badRequest().body("Explorer locations not found");
+        }
         Set<ExplorerLocationDTO> explorerLocationDTOList = new java.util.HashSet<>();
         explorerLocationList.forEach(explorerLocation -> {
             ExplorerLocationDTO explorerLocationDTO = ExplorerLocationDTO.builder()
@@ -89,28 +95,30 @@ public class ExplorerLocationServiceImpl implements ExplorerLocationService {
         var explorers = explorerRepo.findAll();
         List<ExplorerAllLocationsDTO> explorerAllLocationsDTOList = new java.util.ArrayList<>();
         explorers.forEach(explorer -> {
-            ExplorerAllLocationsDTO explorerAllLocationsDTO = ExplorerAllLocationsDTO.builder()
-                    .explorerName(explorer.getExplorerName())
-                    .firstName(explorer.getClient().getFirstName())
-                    .lastName(explorer.getClient().getLastName())
-                    .email(explorer.getClient().getEmail())
-                    //.clientPhoto(explorer.getClient().getClientPhoto())
-                    //.status(explorer.getExplorerStatus())
-                   // .stationName(explorer.getStation().getStationName())
-                    .educatedFor(explorer.getVehicles())
-                    .explorerLocations(
-                            explorerLocationRepo.findAllByExplorer_ExplorerName(explorer.getExplorerName())
-                                    .stream()
-                                    .map(explorerLocation -> ExplorerLocationDTO.builder()
-                                            //.explorerName(explorerLocation.getExplorer().getExplorerName())
-                                            .latitude(explorerLocation.getLocationOfExplorer().split(",")[0])
-                                            .longitude(explorerLocation.getLocationOfExplorer().split(",")[1])
-                                            .locationTimestamp(explorerLocation.getLocationTimestamp().toString())
-                                            .build())
-                                    .collect(java.util.stream.Collectors.toSet())
-                    )
-                    .build();
-            explorerAllLocationsDTOList.add(explorerAllLocationsDTO);
+            var explorerLocationList = explorerLocationRepo.findAllByExplorer_ExplorerName(explorer.getExplorerName())
+                    .stream()
+                    .map(explorerLocation -> ExplorerLocationDTO.builder()
+                            //.explorerName(explorerLocation.getExplorer().getExplorerName())
+                            .latitude(explorerLocation.getLocationOfExplorer().split(",")[0])
+                            .longitude(explorerLocation.getLocationOfExplorer().split(",")[1])
+                            .locationTimestamp(explorerLocation.getLocationTimestamp().toString())
+                            .build())
+                    .collect(java.util.stream.Collectors.toSet());
+            if (!explorerLocationList.isEmpty()) {
+                ExplorerAllLocationsDTO explorerAllLocationsDTO = ExplorerAllLocationsDTO.builder()
+                        .explorerName(explorer.getExplorerName())
+                        .firstName(explorer.getClient().getFirstName())
+                        .lastName(explorer.getClient().getLastName())
+                        .email(explorer.getClient().getEmail())
+                        //.clientPhoto(explorer.getClient().getClientPhoto())
+                        //.status(explorer.getExplorerStatus())
+                        // .stationName(explorer.getStation().getStationName())
+                        .educatedFor(explorer.getVehicles())
+                        .explorerLocations(explorerLocationList)
+                        .build();
+                explorerAllLocationsDTOList.add(explorerAllLocationsDTO);
+            }
+
         });
 
         return ResponseEntity.ok(explorerAllLocationsDTOList);
@@ -122,19 +130,22 @@ public class ExplorerLocationServiceImpl implements ExplorerLocationService {
         List<ExplorerDetailsDTO> explorerDetailsDTOList = new java.util.ArrayList<>();
         explorers.forEach(explorer -> {
             ExplorerLocation explorerLocation = explorerLocationRepo.findFirstByExplorer_ExplorerNameOrderByLocationTimestampDesc(explorer.getExplorerName());
-            ExplorerDetailsDTO explorerDetailsDTO = ExplorerDetailsDTO.builder()
-                    .explorerName(explorerLocation.getExplorer().getExplorerName())
-                    .firstName(explorerLocation.getExplorer().getClient().getFirstName())
-                    .lastName(explorerLocation.getExplorer().getClient().getLastName())
-                    .email(explorerLocation.getExplorer().getClient().getEmail())
-                    //.clientPhoto(explorerLocation.getExplorer().getClient().getClientPhoto())
-                    //.status(explorerLocation.getExplorer().getExplorerStatus())
-                   // .stationName(explorerLocation.getExplorer().getStation().getStationName())
-                    .educatedFor(explorerLocation.getExplorer().getVehicles())
-                    .latitude(explorerLocation.getLocationOfExplorer().split(",")[0])
-                    .longitude(explorerLocation.getLocationOfExplorer().split(",")[1])
-                    .build();
-            explorerDetailsDTOList.add(explorerDetailsDTO);
+            if (explorerLocation != null) {
+                ExplorerDetailsDTO explorerDetailsDTO = ExplorerDetailsDTO.builder()
+                        .explorerName(explorerLocation.getExplorer().getExplorerName())
+                        .firstName(explorerLocation.getExplorer().getClient().getFirstName())
+                        .lastName(explorerLocation.getExplorer().getClient().getLastName())
+                        .email(explorerLocation.getExplorer().getClient().getEmail())
+                        //.clientPhoto(explorerLocation.getExplorer().getClient().getClientPhoto())
+                        //.status(explorerLocation.getExplorer().getExplorerStatus())
+                        // .stationName(explorerLocation.getExplorer().getStation().getStationName())
+                        .educatedFor(explorerLocation.getExplorer().getVehicles())
+                        .latitude(explorerLocation.getLocationOfExplorer().split(",")[0])
+                        .longitude(explorerLocation.getLocationOfExplorer().split(",")[1])
+                        .build();
+                explorerDetailsDTOList.add(explorerDetailsDTO);
+            }
+
         });
         return ResponseEntity.ok(explorerDetailsDTOList);
     }
