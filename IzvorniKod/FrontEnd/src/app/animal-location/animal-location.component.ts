@@ -101,15 +101,15 @@ export class AnimalLocationComponent implements AfterViewInit, OnDestroy{
         this.map.removeLayer(marker);
       }
 
-      if(circle) {
+      /*if(circle) {
         this.map.removeLayer(circle);
-      }
+      }*/
 
       let popupOptions = {
         "closeButton":false
       }
       
-      circle = L.circle([lat, long], {radius: position.accuracy}).addTo(this.map);
+      //circle = L.circle([lat, long]).addTo(this.map);
       marker = L.marker([lat, long], {icon:customIcon}).addTo(this.map)
       .on("mouseover", event => {
         event.target.bindPopup('<h3>' +this.id+ '</h3>', popupOptions).openPopup();
