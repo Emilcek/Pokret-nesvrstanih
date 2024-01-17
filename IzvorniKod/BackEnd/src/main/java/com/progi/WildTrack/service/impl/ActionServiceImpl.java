@@ -70,7 +70,7 @@ public class ActionServiceImpl implements ActionService {
                 .build();
         actionRepo.save(action);
 
-        for(TaskDTO task : request.getTasks()) {
+        for (TaskDTO task : request.getTasks()) {
             Vehicle vehicle = (Vehicle) vehicleRepo.findByVehicleType(task.getTaskVehicle()).orElseThrow();
             System.out.println("task " + task.getTaskVehicle());
             Task build = new Task(task, vehicle, action);
@@ -137,14 +137,14 @@ public class ActionServiceImpl implements ActionService {
         }
         //check if client is researcher or explorer
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Explorer explorer = explorerRepo.findByExplorerName(client.getClientName());
-        Researcher researcher = researcherRepo.findByResearcherName(client.getClientName());
+        Explorer explorer = client.getExplorer();
+        Researcher researcher = client.getResearcher();
         if (explorer == null && researcher == null) {
             return ResponseEntity.badRequest().body("Client not found");
         }
         //check if explorer/researcher is on action
         Set<Explorer> explorers = action.getExplorers();
-        if (!explorers.contains(explorer) && action.getResearcher() == null) {
+        if (!explorers.contains(explorer) && !action.getResearcher().equals(researcher)) {
             return ResponseEntity.badRequest().body("Client is not on action");
         }
 
@@ -154,17 +154,18 @@ public class ActionServiceImpl implements ActionService {
             Animal animal = task.getAnimal();
             if (animal != null) {
                 AnimalLocation animalLocation = animalLocationRepo.findFirstByAnimal_AnimalIdOrderByAnimalLocationTSDesc(animal.getAnimalId());
-                AnimalDetailsDTO animalDetailsDTO = AnimalDetailsDTO.builder()
-                        .animalId(animal.getAnimalId())
-                        .animalSpecies(animal.getSpecies())
-                        //.animalPhotoURL(animal.getAnimalPhotoURL())
-                        .animalDescription(animal.getAnimalDescription())
-                        .latitude(animalLocation.getLocationofAnimal().split(",")[0])
-                        .longitude(animalLocation.getLocationofAnimal().split(",")[1])
-                        .build();
-                animalDetailsDTOList.add(animalDetailsDTO);
+                if (animalLocation != null) {
+                    AnimalDetailsDTO animalDetailsDTO = AnimalDetailsDTO.builder()
+                            .animalId(animal.getAnimalId())
+                            .animalSpecies(animal.getSpecies())
+                            //.animalPhotoURL(animal.getAnimalPhotoURL())
+                            .animalDescription(animal.getAnimalDescription())
+                            .latitude(animalLocation.getLocationofAnimal().split(",")[0])
+                            .longitude(animalLocation.getLocationofAnimal().split(",")[1])
+                            .build();
+                    animalDetailsDTOList.add(animalDetailsDTO);
+                }
             }
-
         });
 
         return ResponseEntity.ok(animalDetailsDTOList);
@@ -178,8 +179,8 @@ public class ActionServiceImpl implements ActionService {
         }
         //check if client is researcher or explorer
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Explorer explorer = explorerRepo.findByExplorerName(client.getClientName());
-        Researcher researcher = researcherRepo.findByResearcherName(client.getClientName());
+        Explorer explorer = client.getExplorer();
+        Researcher researcher = client.getResearcher();
         if (explorer == null && researcher == null) {
             return ResponseEntity.badRequest().body("Client not found");
         }
@@ -192,19 +193,21 @@ public class ActionServiceImpl implements ActionService {
         List<ExplorerDetailsDTO> explorerDetailsDTOList = new java.util.ArrayList<>();
         explorers.forEach(explorer1 -> {
             ExplorerLocation explorerLocation = explorerLocationRepo.findFirstByExplorer_ExplorerNameOrderByLocationTimestampDesc(explorer1.getExplorerName());
-            ExplorerDetailsDTO explorerDetailsDTO = ExplorerDetailsDTO.builder()
-                    .explorerName(explorer1.getExplorerName())
-                    .firstName(explorer1.getClient().getFirstName())
-                    .lastName(explorer1.getClient().getLastName())
-                    .email(explorer1.getClient().getEmail())
-                    //.clientPhoto(explorer1.getClient().getClientPhoto())
-                    //.status(explorer1.getExplorerStatus())
-                   // .stationName(explorer1.getStation().getStationName())
-                    .educatedFor(explorer1.getVehicles())
-                    .latitude(explorerLocation.getLocationOfExplorer().split(",")[0])
-                    .longitude(explorerLocation.getLocationOfExplorer().split(",")[1])
-                    .build();
-            explorerDetailsDTOList.add(explorerDetailsDTO);
+            if (explorerLocation != null) {
+                ExplorerDetailsDTO explorerDetailsDTO = ExplorerDetailsDTO.builder()
+                        .explorerName(explorer1.getExplorerName())
+                        .firstName(explorer1.getClient().getFirstName())
+                        .lastName(explorer1.getClient().getLastName())
+                        .email(explorer1.getClient().getEmail())
+                        //.clientPhoto(explorer1.getClient().getClientPhoto())
+                        //.status(explorer1.getExplorerStatus())
+                        // .stationName(explorer1.getStation().getStationName())
+                        .educatedFor(explorer1.getVehicles())
+                        .latitude(explorerLocation.getLocationOfExplorer().split(",")[0])
+                        .longitude(explorerLocation.getLocationOfExplorer().split(",")[1])
+                        .build();
+                explorerDetailsDTOList.add(explorerDetailsDTO);
+            }
         });
 
         return ResponseEntity.ok(explorerDetailsDTOList);

@@ -34,6 +34,7 @@ import { ActionDetailsComponent } from './action-details/action-details.componen
 import { ActionDetailsLeaderComponent } from "./action-details-leader/action-details-leader.component";
 import { LeaderActionHandlerComponent } from "./leader-action-handler/leader-action-handler.component";
 import { EditDataAdminDialogComponent } from './edit-data-admin-dialog/edit-data-admin-dialog.component';
+import { AnimalCommentsDialogComponent } from './animal-comments-dialog/animal-comments-dialog.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { EditDataAdminDialogComponent } from './edit-data-admin-dialog/edit-data
     ActionDetailsLeaderComponent,
     LeaderActionHandlerComponent,
     EditDataAdminDialogComponent,
+    AnimalCommentsDialogComponent,
   ],
   imports: [
     BrowserModule,

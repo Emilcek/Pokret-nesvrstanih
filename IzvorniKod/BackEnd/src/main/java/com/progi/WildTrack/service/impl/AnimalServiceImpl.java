@@ -1,8 +1,10 @@
 package com.progi.WildTrack.service.impl;
 
+import com.progi.WildTrack.dao.AnimalLocationRepository;
 import com.progi.WildTrack.dao.AnimalRepository;
 import com.progi.WildTrack.dao.TaskRepository;
 import com.progi.WildTrack.domain.Animal;
+import com.progi.WildTrack.domain.AnimalLocation;
 import com.progi.WildTrack.dto.AnimalDTO;
 import com.progi.WildTrack.service.AnimalService;
 import jakarta.transaction.Transactional;
@@ -17,6 +19,7 @@ public class AnimalServiceImpl implements AnimalService {
     @Autowired
     private AnimalRepository animalRepo;
 
+
     @Transactional
     @Override
     public ResponseEntity addAnimal(AnimalDTO animalDTO) {
@@ -25,7 +28,7 @@ public class AnimalServiceImpl implements AnimalService {
             return ResponseEntity.badRequest().body("Animal already exists");
         }
         Animal animal = Animal.builder()
-                //.animalPhotoURL(animalDTO.getAnimalPhotoURL())
+                .animalPhotoURL(animalDTO.getAnimalPhotoURL())
                 .animalDescription(animalDTO.getAnimalDescription())
                 .species(animalDTO.getAnimalSpecies())
                 .build();
@@ -40,6 +43,8 @@ public class AnimalServiceImpl implements AnimalService {
         //map each animal to animalDTO
         return animalRepo.findAll().stream().map(AnimalDTO::new).toList();
     }
+
+
 
 
 }

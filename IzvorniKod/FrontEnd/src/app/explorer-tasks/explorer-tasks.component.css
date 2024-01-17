@@ -14,7 +14,8 @@
 
 .tasks {
   text-align: center;
-  height: fit-content;
+  overflow-y: scroll;
+  height: 550px;
 
   .title {
     font-size: 22px;
@@ -36,10 +37,7 @@
       background: #d4cbcb;
       border-radius: 15px;
       padding: 10px;
-
-      &:hover {
-        cursor: pointer;
-      }
+      width: 100%;
     }
   }
 
@@ -112,6 +110,10 @@
 
 .error-message {
   color: red;
+  font-size: 16px;
+  text-align: start;
+  margin-left: 20px;
+  margin-top: 7px;
 }
 
 .no-actions-text {
@@ -120,4 +122,81 @@
   line-height: 30px;
   text-align: center;
   max-width: 300px;
+}
+
+.custom-file-input {
+  display: flex;
+  padding: 6px 10px;
+  cursor: pointer;
+  border: 1px solid #927979;
+  width: max-content;
+  transition: 0.2s;
+  margin: 10px 20px;
+  background:#95C4E7;
+  border-radius: 10px;
+  color: rgb(117, 110, 110);
+  font-size: 0.8rem;
+  justify-content: center;
+  align-items: center;
+}
+input[type="file"]{
+  display: none;
+}
+
+.form-input-container {
+  margin: 20px;
+  margin-bottom: 0px;
+  position: relative;
+  width: 70%;
+
+  .form-input {
+    border: 2px solid #756E6E;
+    border-radius: 10px;
+    padding: 8px;
+    background-color: #d4cbcb;
+    width: 100%;
+
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  .form-input-label {
+    color: #756E6E;
+    position: absolute;
+    top: 12px;
+    left: 14px;
+    transition: .3s;
+    padding: 0 2px;
+    line-height: 15px;
+    font-size: 18px;
+  }
+
+  .form-input:focus + .form-input-label,
+  .form-input:not(:placeholder-shown) + .form-input-label {
+    top: -8px;
+    background-color: #d4cbcb;
+    outline: none;
+  }
+
+  .form-input:focus + .form-input {
+    border: 2px solid #756E6E;
+    outline: none;
+  }
+}
+
+.task-container {
+  width: 100%;
+}
+
+img {
+  height: 20px;
+}
+
+.arrow-button {
+  background: none;
+  border: none;
+  &:hover {
+    cursor: pointer;
+  }
 }

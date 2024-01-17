@@ -46,9 +46,22 @@ export class AnimalLocationComponent implements AfterViewInit, OnDestroy{
       console.log(position)
       const lat = position.coords.latitude;
       const long = position.coords.longitude;
-      const timeStamp = new Date(position.timestamp).toISOString().slice(0, 19).replace('T', ' ');
-      console.log("Timestamp: " + timeStamp)
-      const accuracy = position.coords.accuracy;
+      console.log("Staee: " + new Date(position.timestamp).toLocaleDateString())
+      const timeStamp = new Date(position.timestamp).toISOString().slice(0, 10).replace('T', ' ');
+      const time = new Date(position.timestamp).toLocaleTimeString(undefined, { hour12: false });
+
+      //probavanje za datum
+      const utcDate = new Date(position.timestamp)
+      const timezoneOffset = 60
+      const offsetINMiliseconds = timezoneOffset * 60 * 1000;
+      const CroatianDate = new Date(utcDate.getTime() + offsetINMiliseconds)
+      const formatedDate = CroatianDate.toISOString().replace('T', ' ').split('.')[0]
+      console.log("Croatina time: " + formatedDate);
+      //probavanje za datum
+
+      const fullDateTimeString = `${timeStamp} ${time}`;
+
+      console.log("Full DateTime String:", fullDateTimeString);
 
 
       const idFromRoute = this.route.snapshot.paramMap.get('id');
@@ -58,7 +71,7 @@ export class AnimalLocationComponent implements AfterViewInit, OnDestroy{
       const data = {
         longitude: long,
         latitude: lat,
-        timestamp: timeStamp,
+        timestamp: formatedDate,
       };
 
       console.log("Data: " + JSON.stringify(data))
@@ -88,15 +101,15 @@ export class AnimalLocationComponent implements AfterViewInit, OnDestroy{
         this.map.removeLayer(marker);
       }
 
-      if(circle) {
+      /*if(circle) {
         this.map.removeLayer(circle);
-      }
+      }*/
 
       let popupOptions = {
         "closeButton":false
       }
       
-      //circle = L.circle([lat, long], {radius: accuracy}).addTo(this.map);
+      //circle = L.circle([lat, long]).addTo(this.map);
       marker = L.marker([lat, long], {icon:customIcon}).addTo(this.map)
       .on("mouseover", event => {
         event.target.bindPopup('<h3>' +this.id+ '</h3>', popupOptions).openPopup();

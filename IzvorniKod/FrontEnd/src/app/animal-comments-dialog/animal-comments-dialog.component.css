@@ -1,0 +1,109 @@
+h2 {
+    color: #333;
+    font-size: 39px;
+  }
+  
+  .upper-div {
+    display: flex;
+    margin-left: 70px;
+    margin-top: 2%;
+    padding: 30px;
+  }
+
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  
+  .close-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .close-btn:hover {
+    color: red;
+  }
+
+  .comment {
+    background-color: rgba(149, 196, 231, 0.41);
+    margin-top: 1.5%;
+    margin-left: 15%;
+    margin-bottom: 2%;
+    width: 70%;
+    height: 15%;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    border: 1px solid #ddd;
+}
+
+.comment p {
+    font-size: 20px;
+    line-height: 1.5;
+}
+
+button {
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 19px;
+}
+
+.btn1 {
+    background-color: rgb(198, 192, 192);
+    padding: 10px;
+    width: 30%;
+    margin-left: 33%;
+    margin-bottom: 2%;
+}
+.btn1:hover {
+    background-color: rgb(136, 119, 119);
+}
+
+.comment-input {
+  margin-top: 1.5%;
+    margin-left: 15%;
+    margin-bottom: 2%;
+  width: 70%;
+  height: 15%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.no-comment p{
+  margin-top: 1.5%;
+    margin-left: 17%;
+    margin-bottom: 2%;
+    font-size: 20px;
+}
+
+@media only screen and (max-width: 600px) {
+  .btn1 {
+    width: 45%;
+    margin-left: 28%;
+    padding: 9px;
+  }
+  button {
+    font-size: 14px;
+  }
+  h2 {
+    color: #333;
+    font-size: 30px;
+  }
+  
+  .upper-div {
+    display: flex;
+    margin-left: 20px;
+    margin-top: 2%;
+    padding: 10px;
+  }
+  .no-comment p{
+      margin-bottom: 3%;
+  }
+}
