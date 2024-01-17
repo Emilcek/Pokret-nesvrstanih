@@ -140,6 +140,9 @@ public class AnimalLocationServiceImpl implements AnimalLocationService {
     }
 
     public void createAnimals() {
+        if (!animalRepo.findAll().isEmpty()) {
+            return;
+        }
         Animal animal1 = Animal.builder()
                 .animalDescription("Mrki smeđi medvjed sa crnim krznom oko očiju - mužjak")
                 .species("Medvjed")
