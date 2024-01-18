@@ -68,8 +68,6 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit,OnDestroy{
           marker.on("mouseover", event => {
             event.target.bindPopup(element.animalId + ':' + element.animalSpecies).openPopup();
           }).on("click", event => {
-            //console.log("ID i vrsta: " + element.animalId + ", " + element.animalSpecies)
-            //get rekvest za svim komentarima vezanim uz tu zivotinju po ID-u zivotinje
             console.log("Element/animal: " + element.animalId)
             this.openDialog(element.animalId);
           });
@@ -89,12 +87,6 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit,OnDestroy{
           this.explorersData.push(element);
         })
         this.explorersData=response;
-        /*var customIcon = L.icon({
-          iconUrl: "../../assets/img/myLocation.png", // Specify the path to your custom icon image
-          iconSize: [35, 35], // Set the size of the icon
-          iconAnchor: [16, 32], // Set the anchor point of the icon (relative to its size)
-          popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
-        });*/
         this.map.addLayer(this.markersGroup);
         this.explorersData.forEach((element:any) => {
           let e = L.latLng(element.latitude, element.longitude);
@@ -135,8 +127,6 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit,OnDestroy{
               marker.on("mouseover", event => {
                 event.target.bindPopup(element.animalId + ':' + element.animalSpecies).openPopup();
               }).on("click", event => {
-                //console.log("ID i vrsta: " + element.animalId + ", " + element.animalSpecies)
-                //get rekvest za svim komentarima vezanim uz tu zivotinju po ID-u zivotinje
                 console.log("Element/animal: " + element.animalId)
                 this.openDialog(element.animalId);
               });
@@ -154,12 +144,6 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit,OnDestroy{
               this.explorersData.push(element);
             })
             this.explorersData=response;
-            /*var customIcon = L.icon({
-              iconUrl: "../../assets/img/myLocation.png", // Specify the path to your custom icon image
-              iconSize: [35, 35], // Set the size of the icon
-              iconAnchor: [16, 32], // Set the anchor point of the icon (relative to its size)
-              popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
-            });*/
             this.map.addLayer(this.markersGroup);
             this.explorersData.forEach((element:any) => {
               let e = L.latLng(element.latitude, element.longitude);
@@ -205,14 +189,12 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit,OnDestroy{
     let headersObj = {
       headers: header
     };
-    //get svih komentaraza zadani animalId i o spremiti u data
     this.http.get<any>(environment.BASE_API_URL + "/animalcomment/get/" + animalId, headersObj).subscribe({
       next: data => {
         console.log("Getani komentari", data);
         const dataForDialog = data
         const nameOfExplorer = "Ivan"
   
-        // Move the dialog opening inside the subscribe block
         const dialogRef = this.dialog.open(AnimalCommentsDialogComponent, {
           width: '60%',
           height: '65%',
@@ -220,11 +202,9 @@ export class ActionDetailsComponent implements OnInit,AfterViewInit,OnDestroy{
         });
   
         dialogRef.afterClosed().subscribe(result => {
-          // Handle the result if needed
         });
       },
       error: error => {
-        // Handle errors if necessary
         console.error("Error fetching comments:", error);
       }
     });

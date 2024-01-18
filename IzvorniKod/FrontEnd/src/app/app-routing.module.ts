@@ -34,7 +34,6 @@ const routes: Routes = [
   { path: 'action-log', component: ActionLogComponent, canActivate:[AuthGuard], data: { requiredRole: 'istrazivac' } },
   { path: 'station-leader-profile', component: StationLeaderProfileComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' } },
   { path: 'animallocation/:id' , component: AnimalLocationComponent, canActivate:[AuthGuard], data: { requiredRole: ['tragac', 'istrazivac', 'voditeljPostaje', 'admin'] }},
-  //kak namjestit da mogu tragac ili istrazivac
   { path: 'animal/location/:id' , component: AnimalLocationMockComponent, canActivate:[AuthGuard], data: { requiredRole: ['tragac', 'istrazivac', 'admin'] }},
   {path: 'station-choosing', component: StationChoosingComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' }},
   {path: 'station-info', component: StationInfoComponent, canActivate:[AuthGuard], data: { requiredRole: 'voditeljPostaje' }},

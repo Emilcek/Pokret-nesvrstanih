@@ -45,23 +45,20 @@ export class AnimalCommentsDialogComponent implements OnInit{
     console.log("Comments: ", this.data.dataForDialog);
     console.log("AnimalId: ", this.data.animalId);
 
-    // Assign data to component properties
     this.comments = this.data.dataForDialog.map((comment: { animalComment: any; }) => comment.animalComment);
     console.log("Commestn2: " + this.comments)
     this.animalId = this.data.animalId;
   }
 
-  //post rekvest za dodatak komentara
   addComment() {
     if(this.newComment.trim() !== '') {
 
       const commentData: postData = {
-        commentTimestamp: "2024-01-17 13:38:57", // You can use a library like moment.js for more formatting options
+        commentTimestamp: "2024-01-17 13:38:57", 
         animalComment: this.newComment,
-        explorerName: this.data.nameOfExplorer // Replace with the actual explorer name
+        explorerName: this.data.nameOfExplorer
     };
     console.log("Data for post: " + JSON.stringify(commentData) )
-      //post rekvest za dodatak komentara po animaId
       this.http.post(environment.BASE_API_URL + "/animalcomment/create/" + this.data.animalId, commentData, this.headersObj).subscribe({
         next: responseData => {
           console.log("Dodan komentar: " + responseData);

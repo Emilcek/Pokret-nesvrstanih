@@ -34,10 +34,10 @@ export class AnimalLocationComponent implements AfterViewInit, OnDestroy{
     });
 
     const customIcon = L.icon({
-      iconUrl: "assets/img/myLoc.png", // Specify the path to your custom icon image
-      iconSize: [32, 32], // Set the size of the icon
-      iconAnchor: [16, 32], // Set the anchor point of the icon (relative to its size)
-      popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
+      iconUrl: "assets/img/myLoc.png", 
+      iconSize: [32, 32], 
+      iconAnchor: [16, 32], 
+      popupAnchor: [0, -32] 
     });
 
     let marker: L.Marker<any>, circle: L.Circle<any>;
@@ -50,14 +50,12 @@ export class AnimalLocationComponent implements AfterViewInit, OnDestroy{
       const timeStamp = new Date(position.timestamp).toISOString().slice(0, 10).replace('T', ' ');
       const time = new Date(position.timestamp).toLocaleTimeString(undefined, { hour12: false });
 
-      //probavanje za datum
       const utcDate = new Date(position.timestamp)
       const timezoneOffset = 60
       const offsetINMiliseconds = timezoneOffset * 60 * 1000;
       const CroatianDate = new Date(utcDate.getTime() + offsetINMiliseconds)
       const formatedDate = CroatianDate.toISOString().replace('T', ' ').split('.')[0]
       console.log("Croatina time: " + formatedDate);
-      //probavanje za datum
 
       const fullDateTimeString = `${timeStamp} ${time}`;
 
@@ -76,7 +74,6 @@ export class AnimalLocationComponent implements AfterViewInit, OnDestroy{
 
       console.log("Data: " + JSON.stringify(data))
 
-      //post rekvest u bazu za lat, long, tmiestamp
       let header = new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -95,21 +92,14 @@ export class AnimalLocationComponent implements AfterViewInit, OnDestroy{
         }
       })
 
-      //getrekvest u drugoj komponenti
-
       if(marker) {
         this.map.removeLayer(marker);
       }
-
-      /*if(circle) {
-        this.map.removeLayer(circle);
-      }*/
 
       let popupOptions = {
         "closeButton":false
       }
       
-      //circle = L.circle([lat, long]).addTo(this.map);
       marker = L.marker([lat, long], {icon:customIcon}).addTo(this.map)
       .on("mouseover", event => {
         event.target.bindPopup('<h3>' +this.id+ '</h3>', popupOptions).openPopup();
@@ -139,7 +129,6 @@ export class AnimalLocationComponent implements AfterViewInit, OnDestroy{
   ngOnDestroy(): void {
     if(this.intervalId) {
       clearInterval(this.intervalId)
-      //this.map.remove()
       console.log("Ociscen interval i maknuta karta")
     }
   }

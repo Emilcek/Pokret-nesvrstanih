@@ -15,7 +15,6 @@ import { EditDataAdminDialogComponent } from '../edit-data-admin-dialog/edit-dat
 })
 export class UsersListComponent implements OnInit {
   userlist: any
-  //dataSource: any
   userFor: any
 
   displayedColumns: string[] = ['clientName', 'firstName', 'lastName', 'email', 'role', 'Update'];
@@ -49,7 +48,6 @@ export class UsersListComponent implements OnInit {
 
   LoadUser() {
     this.GetAll().subscribe(res => {
-      //this.dataSource = res;
       console.log(this.dataSource);
     });
   }
