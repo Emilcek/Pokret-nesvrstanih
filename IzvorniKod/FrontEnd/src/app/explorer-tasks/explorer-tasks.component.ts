@@ -48,31 +48,31 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
 
 
   customIconForMyLocation = L.icon({
-    iconUrl: "assets/img/myLocation.png", 
-    iconSize: [32, 32], 
-    iconAnchor: [16, 32], 
-    popupAnchor: [0, -32] 
+    iconUrl: "assets/img/myLocation.png",
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32]
   });
   customExplorerIcon = L.icon({
-    iconUrl: "assets/img/ex1.png", 
+    iconUrl: "assets/img/ex1.png",
     iconSize: [52, 32],
-    iconAnchor: [16, 32], 
-    popupAnchor: [0, -32] 
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32]
   });
   customIconAnimal = L.icon({
-    iconUrl: "assets/img/animalLoc.png", 
+    iconUrl: "assets/img/animalLoc.png",
     iconSize: [32, 32],
-    iconAnchor: [16, 32], 
-    popupAnchor: [0, -32] 
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32]
   });
 
 
   errorMessage: string = "";
   customIcon = L.icon({
-    iconUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-icon.png", 
-    iconSize: [22, 32], 
-    iconAnchor: [16, 32], 
-    popupAnchor: [0, -32] 
+    iconUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-icon.png",
+    iconSize: [22, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32]
   });
   header = new HttpHeaders({
     'Content-Type': 'application/json',
@@ -144,7 +144,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
       minZoom: 3,
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
-    
+
     tiles.addTo(this.map);
 
       this.intervalId = setInterval(() => {
@@ -157,7 +157,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
         } else {
           navigator.geolocation.getCurrentPosition(this.getPosition);
         }
-      }, 30000)
+      }, 100000)
     }
 
     private getPosition = (position: any) => {
@@ -167,7 +167,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
       const utcDate = new Date(position.timestamp)
       const timezoneOffset = 60
       const offsetINMiliseconds = timezoneOffset * 60 * 1000;
-      const CroatianDate = new Date(utcDate.getTime() + offsetINMiliseconds) 
+      const CroatianDate = new Date(utcDate.getTime() + offsetINMiliseconds)
       const formatedDate = CroatianDate.toISOString().replace('T', ' ').split('.')[0]
       console.log("Croatina time: " + formatedDate);
 
@@ -190,7 +190,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
           console.log("Error Message: " + error.message);
         }
       })
-      
+
 
       if (this.markerMyLocation) {
         console.log("Uso u removanje markerea moje loacjije")
@@ -295,8 +295,8 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
       task.clicked = true;
       let [latitude, longitude] = task.endLocation.split(',').map(Number);
       let latLng = { lat: latitude, lng: longitude };
-      let newCenter = latLng; 
-      let newZoomLevel = 10; 
+      let newCenter = latLng;
+      let newZoomLevel = 10;
       this.map.setView(newCenter, newZoomLevel);
       if (task.taskDescription.split(': ')[0] !== 'Prođi rutom' && task.taskDescription.split(': ')[0] !== 'Dođi na lokaciju') {
         let circle = L.circle(latLng, {
@@ -410,7 +410,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
           height: '65%',
           data: { dataForDialog, animalId, nameOfExplorer },
         });
-  
+
         dialogRef.afterClosed().subscribe(result => {
         });
       },
@@ -419,7 +419,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
       }
     });
   }
-  
+
 
   handleFileInput(event: any) {
     const fileInput = event.target;
