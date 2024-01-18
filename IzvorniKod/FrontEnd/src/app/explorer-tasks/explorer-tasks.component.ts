@@ -390,13 +390,7 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
       let element = (document.getElementById(i + 'error'));
       element!.innerHTML = "Napišite komentar";
     }
-    this.refreshData();
   }
-
-  refreshData() {
-    location.reload();
-  }
-
   openDialog(animalId: any) {
     this.http.get<any>(environment.BASE_API_URL + "/animalcomment/get/" + animalId, this.headersObj).subscribe({
       next: data => {
