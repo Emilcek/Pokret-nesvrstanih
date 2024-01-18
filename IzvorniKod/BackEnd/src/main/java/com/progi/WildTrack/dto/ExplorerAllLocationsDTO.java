@@ -18,7 +18,6 @@ public class ExplorerAllLocationsDTO {
     private String firstName;
     private String lastName;
     private String email;
-    //private byte[] clientPhoto;
     private Set<Vehicle> educatedFor;
     private String stationName;
     private String status;

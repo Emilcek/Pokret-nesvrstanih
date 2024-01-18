@@ -17,7 +17,6 @@ import java.util.List;
 public class AnimalAllLocationsDTO {
     private Long animalId;
     private String animalSpecies;
-    //private String animalPhotoURL;
     private String animalDescription;
     private List<AnimalLocationDTO> animalLocations;
 }

@@ -14,11 +14,9 @@ import lombok.NoArgsConstructor;
 public class AnimalDetailsDTO {
     private Long animalId;
     private String animalSpecies;
-   // private String animalPhotoURL;
     private String animalDescription;
     private String longitude;
     private String latitude;
-    //private String timestamp;
 
 
 }

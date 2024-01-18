@@ -18,7 +18,7 @@ public interface AnimalLocationService {
 
     ResponseEntity getAllAnimalsAllLocations();
 
-    public void createAnimals();
+     void createAnimals();
 
-    public void addLocations(Animal animal, String latitude, String longitude);
+     void addLocations(Animal animal, String latitude, String longitude);
 }
