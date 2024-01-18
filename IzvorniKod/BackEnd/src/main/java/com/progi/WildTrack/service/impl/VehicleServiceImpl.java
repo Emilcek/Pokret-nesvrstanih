@@ -28,7 +28,6 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     public void addExplorerToVehicle(Vehicle vehicle, Explorer explorer) {
-//        System.out.println("add explorer: " + vehicle.getVehicleType() + " " + explorer);
         vehicle.getExplorers().add(explorer);
         explorer.getVehicles().add(vehicle);
         vehicleRepo.save(vehicle);

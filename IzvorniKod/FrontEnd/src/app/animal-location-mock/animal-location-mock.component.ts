@@ -45,13 +45,12 @@ export class AnimalLocationMockComponent implements AfterViewInit, OnDestroy{
       console.log("ID: " + this.id)
 
       const customIcon = L.icon({
-        iconUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-icon.png", // Specify the path to your custom icon image
-        iconSize: [22, 32], // Set the size of the icon
-        iconAnchor: [16, 32], // Set the anchor point of the icon (relative to its size)
-        popupAnchor: [0, -32] // Set the anchor point for popups (relative to its size)
+        iconUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-icon.png", 
+        iconSize: [22, 32], 
+        iconAnchor: [16, 32], 
+        popupAnchor: [0, -32] 
       });
 
-      //post rekvest u bazu za lat, long, tmiestamp
       let header = new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -65,7 +64,6 @@ export class AnimalLocationMockComponent implements AfterViewInit, OnDestroy{
           const serverLat = responseData.latitude;
           const serverLong = responseData.longitude;
 
-          // Display location on the map
           if (this.marker) {
             this.map.removeLayer(this.marker);
           }
@@ -77,14 +75,6 @@ export class AnimalLocationMockComponent implements AfterViewInit, OnDestroy{
         }
       })
     }
-
-    /*if(!navigator.geolocation) {
-      console.log("Browser ne podrzava geolocation");
-    } else {
-      setInterval(() => {
-        navigator.geolocation.getCurrentPosition(getPosition);
-      }, 5000)
-    }*/
 
 
   ngOnDestroy(): void {
@@ -110,7 +100,6 @@ export class AnimalLocationMockComponent implements AfterViewInit, OnDestroy{
 interface LocationResponse {
   latitude: number;
   longitude: number;
-  // Add other properties if needed
 }
 
 

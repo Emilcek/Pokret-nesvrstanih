@@ -20,7 +20,6 @@ public class AnimalDTO {
     public AnimalDTO(Animal animal) {
         this.animalId = animal.getAnimalId();
         this.animalSpecies = animal.getSpecies();
-       // this.animalPhotoURL = animal.getAnimalPhotoURL();
         this.animalDescription = animal.getAnimalDescription();
     }
 }

@@ -35,7 +35,6 @@ public class ExplorerLocationServiceImpl implements ExplorerLocationService {
                 .locationOfExplorer(explorerLocationDTO.getLatitude() + "," + explorerLocationDTO.getLongitude())
                 .locationTimestamp(Timestamp.valueOf(explorerLocationDTO.getLocationTimestamp()))
                 .build();
-        //System.out.println("Explorer location added " + explorerLocation);
         explorerLocationRepo.save(explorerLocation);
         return ResponseEntity.ok(explorerLocationDTO);
     }
@@ -57,9 +56,6 @@ public class ExplorerLocationServiceImpl implements ExplorerLocationService {
                 .firstName(explorerLocation.getExplorer().getClient().getFirstName())
                 .lastName(explorerLocation.getExplorer().getClient().getLastName())
                 .email(explorerLocation.getExplorer().getClient().getEmail())
-                //.clientPhoto(explorerLocation.getExplorer().getClient().getClientPhoto())
-                //.status(explorerLocation.getExplorer().getExplorerStatus())
-                //.stationName(explorerLocation.getExplorer().getStation().getStationName())
                 .educatedFor(explorerLocation.getExplorer().getVehicles())
                 .latitude(explorerLocation.getLocationOfExplorer().split(",")[0])
                 .longitude(explorerLocation.getLocationOfExplorer().split(",")[1])
@@ -80,7 +76,6 @@ public class ExplorerLocationServiceImpl implements ExplorerLocationService {
         Set<ExplorerLocationDTO> explorerLocationDTOList = new java.util.HashSet<>();
         explorerLocationList.forEach(explorerLocation -> {
             ExplorerLocationDTO explorerLocationDTO = ExplorerLocationDTO.builder()
-                    //.explorerName(explorerLocation.getExplorer().getExplorerName())
                     .latitude(explorerLocation.getLocationOfExplorer().split(",")[0])
                     .longitude(explorerLocation.getLocationOfExplorer().split(",")[1])
                     .locationTimestamp(explorerLocation.getLocationTimestamp().toString())
@@ -98,7 +93,6 @@ public class ExplorerLocationServiceImpl implements ExplorerLocationService {
             var explorerLocationList = explorerLocationRepo.findAllByExplorer_ExplorerName(explorer.getExplorerName())
                     .stream()
                     .map(explorerLocation -> ExplorerLocationDTO.builder()
-                            //.explorerName(explorerLocation.getExplorer().getExplorerName())
                             .latitude(explorerLocation.getLocationOfExplorer().split(",")[0])
                             .longitude(explorerLocation.getLocationOfExplorer().split(",")[1])
                             .locationTimestamp(explorerLocation.getLocationTimestamp().toString())
@@ -110,9 +104,6 @@ public class ExplorerLocationServiceImpl implements ExplorerLocationService {
                         .firstName(explorer.getClient().getFirstName())
                         .lastName(explorer.getClient().getLastName())
                         .email(explorer.getClient().getEmail())
-                        //.clientPhoto(explorer.getClient().getClientPhoto())
-                        //.status(explorer.getExplorerStatus())
-                        // .stationName(explorer.getStation().getStationName())
                         .educatedFor(explorer.getVehicles())
                         .explorerLocations(explorerLocationList)
                         .build();
@@ -136,9 +127,6 @@ public class ExplorerLocationServiceImpl implements ExplorerLocationService {
                         .firstName(explorerLocation.getExplorer().getClient().getFirstName())
                         .lastName(explorerLocation.getExplorer().getClient().getLastName())
                         .email(explorerLocation.getExplorer().getClient().getEmail())
-                        //.clientPhoto(explorerLocation.getExplorer().getClient().getClientPhoto())
-                        //.status(explorerLocation.getExplorer().getExplorerStatus())
-                        // .stationName(explorerLocation.getExplorer().getStation().getStationName())
                         .educatedFor(explorerLocation.getExplorer().getVehicles())
                         .latitude(explorerLocation.getLocationOfExplorer().split(",")[0])
                         .longitude(explorerLocation.getLocationOfExplorer().split(",")[1])

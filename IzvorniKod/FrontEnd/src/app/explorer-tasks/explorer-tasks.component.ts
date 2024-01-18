@@ -103,8 +103,13 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
           this.idOfAction = zadatak.actionId
         })
         console.log("idOfAction: " + this.idOfAction)
+         if(this.idOfAction !== undefined) {
+            this.getExplorers();
+          }
       }
     })
+
+    this.getAllAnimals();
 
     this.http.get<any>(environment.BASE_API_URL + "/client", this.headersObj).subscribe({
       next: data => {
@@ -124,10 +129,6 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
           console.log("Browser ne podrzava geolocation");
         } else {
           navigator.geolocation.getCurrentPosition(this.getPosition);
-          this.getAllAnimals();
-          if(this.idOfAction !== undefined) {
-            this.getExplorers();
-          }
         }
       }
     })
@@ -143,22 +144,18 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
       minZoom: 3,
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
-
     
     tiles.addTo(this.map);
 
-
-
-
       this.intervalId = setInterval(() => {
+        this.getAllAnimals();
+        if(this.idOfAction !== undefined) {
+          this.getExplorers();
+        }
         if (!navigator.geolocation) {
           console.log("Browser ne podrzava geolocation");
         } else {
           navigator.geolocation.getCurrentPosition(this.getPosition);
-          this.getAllAnimals();
-          if(this.idOfAction !== undefined) {
-            this.getExplorers();
-          }
         }
       }, 30000)
     }

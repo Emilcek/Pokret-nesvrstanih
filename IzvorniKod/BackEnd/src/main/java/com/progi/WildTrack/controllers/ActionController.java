@@ -14,13 +14,12 @@ public class ActionController {
 
     private final ActionServiceImpl actionService;
 
-    //ide u action controller
+
     //list of locations of all animals that are on same action
     @GetMapping("/animals/{actionId}")
     public ResponseEntity getActionAnimals(@PathVariable Long actionId) {
         return actionService.getActionAnimalLocations(actionId);
     }
-    //ide u action controller
     //list of locations of all explorers that are on same action
     @GetMapping("/explorers/{actionId}")
     public ResponseEntity getActionExplorers(@PathVariable Long actionId) {
