@@ -394,7 +394,6 @@ export class ExplorerTasksComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   refreshData() {
-    this.ngOnInit();
     location.reload();
   }
 
